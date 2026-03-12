@@ -6,12 +6,16 @@ on:
     paths:
       - 'config.yaml'
       - '.github/actions/**'
+      - 'projects/kubernetes/**'
+      - 'projects/containerd/**'
       - '.github/workflows/node-e2e.yml'
   pull_request:
     branches: [main]
     paths:
       - 'config.yaml'
       - '.github/actions/**'
+      - 'projects/kubernetes/**'
+      - 'projects/containerd/**'
       - '.github/workflows/node-e2e.yml'
   schedule:
     - cron: '0 */6 * * *'
@@ -41,12 +45,19 @@ jobs:
           path: src/github.com/containerd/containerd
           fetch-depth: 0
 
+      - name: Apply containerd patches
+        uses: ./.github/actions/apply-format-patches
+        with:
+          repo-path: src/github.com/containerd/containerd
+          patch-dir: projects/containerd
+
       - uses: ./.github/actions/setup-kubernetes
         with:
           repository: ${{ steps.config.outputs.kubernetes-repo }}
           ref: ${{ steps.config.outputs.kubernetes-sha }}
           path: src/k8s.io/kubernetes
           fetch-depth: 0
+          patches-dir: projects/kubernetes
 
       - uses: ./.github/actions/report-revisions
         with:
