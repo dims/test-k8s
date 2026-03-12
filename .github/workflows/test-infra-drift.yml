@@ -1,0 +1,63 @@
+name: Test-Infra Drift
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'Makefile'
+      - 'scripts/**'
+      - '.github/workflows/test-infra-drift.yml'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'Makefile'
+      - 'scripts/**'
+      - '.github/workflows/test-infra-drift.yml'
+  schedule:
+    - cron: '17 6 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  drift:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
+
+      - name: Checkout test-infra
+        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
+        with:
+          repository: kubernetes/test-infra
+          path: test-infra
+          fetch-depth: 1
+
+      - name: Run drift detector
+        shell: bash
+        run: |
+          set -o pipefail
+          make test-infra-drift TEST_INFRA_DIR="${GITHUB_WORKSPACE}/test-infra" | tee drift-report.txt
+
+      - name: Add drift summary
+        if: always()
+        shell: bash
+        run: |
+          if [ -f drift-report.txt ]; then
+            {
+              echo '### Test-Infra Drift Report'
+              echo
+              echo '```text'
+              cat drift-report.txt
+              echo '```'
+            } >> "$GITHUB_STEP_SUMMARY"
+          fi
+
+      - name: Upload drift report
+        if: always()
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6.0.0
+        with:
+          name: test-infra-drift-report
+          path: drift-report.txt
+          if-no-files-found: error
