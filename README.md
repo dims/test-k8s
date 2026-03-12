@@ -11,33 +11,20 @@ Each job resolves those refs to exact commit SHAs at runtime, prints both SHAs i
 
 ## Actions
 
-[![Verify](https://github.com/dims/test-k8s/actions/workflows/verify.yml/badge.svg?branch=main)](https://github.com/dims/test-k8s/actions/workflows/verify.yml)
-[![Unit Tests](https://github.com/dims/test-k8s/actions/workflows/unit.yml/badge.svg?branch=main)](https://github.com/dims/test-k8s/actions/workflows/unit.yml)
-[![Integration Tests](https://github.com/dims/test-k8s/actions/workflows/integration.yml/badge.svg?branch=main)](https://github.com/dims/test-k8s/actions/workflows/integration.yml)
-[![Typecheck](https://github.com/dims/test-k8s/actions/workflows/typecheck.yml/badge.svg?branch=main)](https://github.com/dims/test-k8s/actions/workflows/typecheck.yml)
-[![Dependencies](https://github.com/dims/test-k8s/actions/workflows/dependencies.yml/badge.svg?branch=main)](https://github.com/dims/test-k8s/actions/workflows/dependencies.yml)
-[![Cmd Tests](https://github.com/dims/test-k8s/actions/workflows/cmd-tests.yml/badge.svg?branch=main)](https://github.com/dims/test-k8s/actions/workflows/cmd-tests.yml)
-[![Linter Hints](https://github.com/dims/test-k8s/actions/workflows/linter-hints.yml/badge.svg?branch=main)](https://github.com/dims/test-k8s/actions/workflows/linter-hints.yml)
-[![E2E (kind)](https://github.com/dims/test-k8s/actions/workflows/e2e-kind.yml/badge.svg?branch=main)](https://github.com/dims/test-k8s/actions/workflows/e2e-kind.yml)
-[![Conformance (kind, GA-only)](https://github.com/dims/test-k8s/actions/workflows/conformance-kind.yml/badge.svg?branch=main)](https://github.com/dims/test-k8s/actions/workflows/conformance-kind.yml)
-[![Node E2E](https://github.com/dims/test-k8s/actions/workflows/node-e2e.yml/badge.svg?branch=main)](https://github.com/dims/test-k8s/actions/workflows/node-e2e.yml)
-
 Full run history: <https://github.com/dims/test-k8s/actions>
 
-## What Runs
-
-| Workflow | Purpose | Command |
-| --- | --- | --- |
-| `Verify` | Kubernetes verify lane, excluding typecheck and dependency verification which run separately | `./hack/jenkins/verify-dockerized.sh` |
-| `Unit Tests` | Kubernetes unit tests | `make test` |
-| `Integration Tests` | Kubernetes integration tests | `./hack/jenkins/test-integration-dockerized.sh` |
-| `Typecheck` | Kubernetes typecheck verify target | `make verify WHAT=typecheck` |
-| `Dependencies` | Dependency and vendor verification | `make verify WHAT="external-dependencies-version vendor vendor-licenses"` |
-| `Cmd Tests` | Kubernetes command/integration-style command tests | `./hack/jenkins/test-cmd-dockerized.sh` |
-| `Linter Hints` | `golangci-lint` PR hints lane | `make verify WHAT=golangci-lint-pr-hints` |
-| `E2E (kind)` | Focused non-slow, non-disruptive kind-based e2e lane | `e2e-k8s.sh` |
-| `Conformance (kind, GA-only)` | kind-based conformance with alpha and beta APIs disabled | `e2e-k8s.sh` |
-| `Node E2E` | Builds containerd from the configured ref, wires it into the runner, then runs Kubernetes node e2e | `make test-e2e-node` |
+| Workflow | Status | Purpose | Command |
+| --- | --- | --- | --- |
+| `Verify` | [![Verify](https://github.com/dims/test-k8s/actions/workflows/verify.yml/badge.svg?branch=main)](https://github.com/dims/test-k8s/actions/workflows/verify.yml) | Kubernetes verify lane, excluding typecheck and dependency verification which run separately | `./hack/jenkins/verify-dockerized.sh` |
+| `Unit Tests` | [![Unit Tests](https://github.com/dims/test-k8s/actions/workflows/unit.yml/badge.svg?branch=main)](https://github.com/dims/test-k8s/actions/workflows/unit.yml) | Kubernetes unit tests | `make test` |
+| `Integration Tests` | [![Integration Tests](https://github.com/dims/test-k8s/actions/workflows/integration.yml/badge.svg?branch=main)](https://github.com/dims/test-k8s/actions/workflows/integration.yml) | Kubernetes integration tests | `./hack/jenkins/test-integration-dockerized.sh` |
+| `Typecheck` | [![Typecheck](https://github.com/dims/test-k8s/actions/workflows/typecheck.yml/badge.svg?branch=main)](https://github.com/dims/test-k8s/actions/workflows/typecheck.yml) | Kubernetes typecheck verify target | `make verify WHAT=typecheck` |
+| `Dependencies` | [![Dependencies](https://github.com/dims/test-k8s/actions/workflows/dependencies.yml/badge.svg?branch=main)](https://github.com/dims/test-k8s/actions/workflows/dependencies.yml) | Dependency and vendor verification | `make verify WHAT="external-dependencies-version vendor vendor-licenses"` |
+| `Cmd Tests` | [![Cmd Tests](https://github.com/dims/test-k8s/actions/workflows/cmd-tests.yml/badge.svg?branch=main)](https://github.com/dims/test-k8s/actions/workflows/cmd-tests.yml) | Kubernetes command/integration-style command tests | `./hack/jenkins/test-cmd-dockerized.sh` |
+| `Linter Hints` | [![Linter Hints](https://github.com/dims/test-k8s/actions/workflows/linter-hints.yml/badge.svg?branch=main)](https://github.com/dims/test-k8s/actions/workflows/linter-hints.yml) | `golangci-lint` PR hints lane | `make verify WHAT=golangci-lint-pr-hints` |
+| `E2E (kind)` | [![E2E (kind)](https://github.com/dims/test-k8s/actions/workflows/e2e-kind.yml/badge.svg?branch=main)](https://github.com/dims/test-k8s/actions/workflows/e2e-kind.yml) | Focused non-slow, non-disruptive kind-based e2e lane | `e2e-k8s.sh` |
+| `Conformance (kind, GA-only)` | [![Conformance (kind, GA-only)](https://github.com/dims/test-k8s/actions/workflows/conformance-kind.yml/badge.svg?branch=main)](https://github.com/dims/test-k8s/actions/workflows/conformance-kind.yml) | kind-based conformance with alpha and beta APIs disabled | `e2e-k8s.sh` |
+| `Node E2E` | [![Node E2E](https://github.com/dims/test-k8s/actions/workflows/node-e2e.yml/badge.svg?branch=main)](https://github.com/dims/test-k8s/actions/workflows/node-e2e.yml) | Builds containerd from the configured ref, wires it into the runner, then runs Kubernetes node e2e | `make test-e2e-node` |
 
 ## Triggers
 
