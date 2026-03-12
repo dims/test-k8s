@@ -45,6 +45,7 @@ jobs:
           EXCLUDE_TYPECHECK: "y"
           EXCLUDE_GODEP: "y"
           KUBE_VERIFY_GIT_BRANCH: master
+          WORKSPACE: ${{ github.workspace }}/kubernetes
         run: ./hack/jenkins/verify-dockerized.sh
       - uses: ./.github/actions/collect-logs
         if: failure()
@@ -153,6 +154,7 @@ jobs:
           repository: ${{ needs.load-config.outputs.kubernetes-repo }}
           ref: ${{ needs.load-config.outputs.kubernetes-ref }}
           path: kubernetes
+          fetch-depth: 0
       - name: Cmd Tests
         working-directory: kubernetes
         env:
