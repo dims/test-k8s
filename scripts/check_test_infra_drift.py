@@ -4,6 +4,7 @@ import argparse
 import json
 import os
 import re
+import subprocess
 import sys
 from pathlib import Path
 from typing import Dict, List, Optional, Set, Tuple
@@ -22,6 +23,26 @@ def load_spec(root: Path) -> List[Dict]:
         return json.load(stream)["items"]
 
 
+def gopath_test_infra_dir() -> Optional[Path]:
+    try:
+        output = subprocess.check_output(
+            ["go", "env", "GOPATH"],
+            stderr=subprocess.DEVNULL,
+            universal_newlines=True,
+        ).strip()
+    except (OSError, subprocess.CalledProcessError):
+        return None
+
+    if not output:
+        return None
+
+    first_entry = output.split(os.pathsep)[0].strip()
+    if not first_entry:
+        return None
+
+    return Path(first_entry).expanduser() / "src" / "k8s.io" / "test-infra"
+
+
 def candidate_test_infra_dirs(root: Path, explicit: Optional[str]) -> List[Path]:
     candidates: List[Path] = []
     if explicit:
@@ -29,6 +50,9 @@ def candidate_test_infra_dirs(root: Path, explicit: Optional[str]) -> List[Path]
     env_value = os.environ.get("TEST_INFRA_DIR")
     if env_value:
         candidates.append(Path(env_value).expanduser())
+    go_env_dir = gopath_test_infra_dir()
+    if go_env_dir is not None:
+        candidates.append(go_env_dir)
     candidates.append(root.parent.parent.parent / "k8s.io" / "test-infra")
     candidates.append(root.parent / "test-infra")
     return candidates

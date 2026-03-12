@@ -48,4 +48,4 @@ Every workflow runs:
 
 - `Linter Hints` is configured with `continue-on-error`, so it is informational rather than a hard gate.
 - The Actions page is the main dashboard for this repo because each CI lane is split into its own top-level workflow.
-- To compare these workflows against the curated upstream `test-infra` jobs, run `make test-infra-drift TEST_INFRA_DIR=/path/to/test-infra`.
+- To compare these workflows against the curated upstream `test-infra` jobs, run `make test-infra-drift`. It defaults `TEST_INFRA_DIR` from `go env GOPATH`, and you can still override it explicitly.
