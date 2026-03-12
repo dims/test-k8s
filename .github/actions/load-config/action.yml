@@ -1,0 +1,42 @@
+name: Load Config
+description: Parse config.yaml and expose repository and ref settings
+
+outputs:
+  kubernetes-repo:
+    description: Kubernetes repository (owner/repo)
+    value: ${{ steps.config.outputs.kubernetes-repo }}
+  kubernetes-ref:
+    description: Kubernetes git ref
+    value: ${{ steps.config.outputs.kubernetes-ref }}
+  containerd-repo:
+    description: containerd repository (owner/repo)
+    value: ${{ steps.config.outputs.containerd-repo }}
+  containerd-ref:
+    description: containerd git ref
+    value: ${{ steps.config.outputs.containerd-ref }}
+
+runs:
+  using: composite
+  steps:
+    - name: Parse config.yaml
+      id: config
+      shell: bash
+      run: |
+        ruby <<'RUBY'
+        require "yaml"
+        require "uri"
+
+        def repo_from_url(url)
+          path = URI.parse(url).path.sub(%r{^/}, "")
+          path.sub(/\.git$/, "")
+        end
+
+        cfg = YAML.load_file("config.yaml")
+
+        File.open(ENV.fetch("GITHUB_OUTPUT"), "a") do |out|
+          out.puts("kubernetes-repo=#{repo_from_url(cfg.fetch("kubernetes").fetch("url"))}")
+          out.puts("kubernetes-ref=#{cfg.fetch("kubernetes").fetch("ref")}")
+          out.puts("containerd-repo=#{repo_from_url(cfg.fetch("containerd").fetch("url"))}")
+          out.puts("containerd-ref=#{cfg.fetch("containerd").fetch("ref")}")
+        end
+        RUBY

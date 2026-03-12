@@ -1,0 +1,49 @@
+name: E2E (kind)
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'config.yaml'
+      - '.github/actions/**'
+      - '.github/workflows/e2e-kind.yml'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'config.yaml'
+      - '.github/actions/**'
+      - '.github/workflows/e2e-kind.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  e2e-kind:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 75
+    env:
+      GOPATH: ${{ github.workspace }}/go
+    steps:
+      - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
+      - id: config
+        uses: ./.github/actions/load-config
+      - uses: ./.github/actions/cleanup-disk
+      - uses: ./.github/actions/setup-kubernetes
+        with:
+          repository: ${{ steps.config.outputs.kubernetes-repo }}
+          ref: ${{ steps.config.outputs.kubernetes-ref }}
+          path: go/src/k8s.io/kubernetes
+          fetch-depth: 0
+      - uses: ./.github/actions/install-kind
+      - name: Run E2E Tests
+        working-directory: go/src/k8s.io/kubernetes
+        env:
+          LABEL_FILTER: "Feature: isEmpty && !Slow && !Disruptive && !Flaky"
+          PARALLEL: "true"
+          ARTIFACTS: ${{ github.workspace }}/_artifacts
+        run: e2e-k8s.sh
+      - uses: ./.github/actions/collect-logs
+        if: failure()
+        with:
+          name: e2e-kind-logs

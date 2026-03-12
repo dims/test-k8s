@@ -1,0 +1,47 @@
+name: Cmd Tests
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'config.yaml'
+      - '.github/actions/**'
+      - '.github/workflows/cmd-tests.yml'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'config.yaml'
+      - '.github/actions/**'
+      - '.github/workflows/cmd-tests.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  cmd:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 90
+    env:
+      GOPATH: ${{ github.workspace }}/go
+    steps:
+      - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
+      - id: config
+        uses: ./.github/actions/load-config
+      - uses: ./.github/actions/cleanup-disk
+      - uses: ./.github/actions/setup-kubernetes
+        with:
+          repository: ${{ steps.config.outputs.kubernetes-repo }}
+          ref: ${{ steps.config.outputs.kubernetes-ref }}
+          path: go/src/k8s.io/kubernetes
+          fetch-depth: 0
+      - name: Cmd Tests
+        working-directory: go/src/k8s.io/kubernetes
+        env:
+          KUBE_INTEGRATION_TEST_MAX_CONCURRENCY: "8"
+          KUBE_TIMEOUT: "-timeout=30m"
+        run: ./hack/jenkins/test-cmd-dockerized.sh
+      - uses: ./.github/actions/collect-logs
+        if: failure()
+        with:
+          name: cmd-logs

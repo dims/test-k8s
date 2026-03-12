@@ -6,14 +6,12 @@ on:
     paths:
       - 'config.yaml'
       - '.github/actions/**'
-      - '.github/workflows/load-config.yml'
       - '.github/workflows/node-e2e.yml'
   pull_request:
     branches: [main]
     paths:
       - 'config.yaml'
       - '.github/actions/**'
-      - '.github/workflows/load-config.yml'
       - '.github/workflows/node-e2e.yml'
   workflow_dispatch:
 
@@ -21,30 +19,28 @@ permissions:
   contents: read
 
 jobs:
-  load-config:
-    uses: ./.github/workflows/load-config.yml
-
   node-e2e-k8s:
     name: Kubernetes Node E2E
-    needs: load-config
     runs-on: ubuntu-24.04
     timeout-minutes: 90
     steps:
       - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
+      - id: config
+        uses: ./.github/actions/load-config
       - uses: ./.github/actions/cleanup-disk
 
       - name: Checkout containerd
         uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
         with:
-          repository: ${{ needs.load-config.outputs.containerd-repo }}
-          ref: ${{ needs.load-config.outputs.containerd-ref }}
+          repository: ${{ steps.config.outputs.containerd-repo }}
+          ref: ${{ steps.config.outputs.containerd-ref }}
           path: src/github.com/containerd/containerd
           fetch-depth: 0
 
       - uses: ./.github/actions/setup-kubernetes
         with:
-          repository: ${{ needs.load-config.outputs.kubernetes-repo }}
-          ref: ${{ needs.load-config.outputs.kubernetes-ref }}
+          repository: ${{ steps.config.outputs.kubernetes-repo }}
+          ref: ${{ steps.config.outputs.kubernetes-ref }}
           path: src/k8s.io/kubernetes
           fetch-depth: 0
 

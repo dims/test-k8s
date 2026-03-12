@@ -1,0 +1,49 @@
+name: Verify
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'config.yaml'
+      - '.github/actions/**'
+      - '.github/workflows/verify.yml'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'config.yaml'
+      - '.github/actions/**'
+      - '.github/workflows/verify.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 90
+    env:
+      GOPATH: ${{ github.workspace }}/go
+    steps:
+      - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
+      - id: config
+        uses: ./.github/actions/load-config
+      - uses: ./.github/actions/cleanup-disk
+      - uses: ./.github/actions/setup-kubernetes
+        with:
+          repository: ${{ steps.config.outputs.kubernetes-repo }}
+          ref: ${{ steps.config.outputs.kubernetes-ref }}
+          path: go/src/k8s.io/kubernetes
+          fetch-depth: 0
+      - name: Verify
+        working-directory: go/src/k8s.io/kubernetes
+        env:
+          EXCLUDE_TYPECHECK: "y"
+          EXCLUDE_GODEP: "y"
+          KUBE_VERIFY_GIT_BRANCH: master
+          WORKSPACE: ${{ github.workspace }}/go/src/k8s.io/kubernetes
+        run: ./hack/jenkins/verify-dockerized.sh
+      - uses: ./.github/actions/collect-logs
+        if: failure()
+        with:
+          name: verify-logs
