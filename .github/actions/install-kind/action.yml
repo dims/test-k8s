@@ -1,0 +1,15 @@
+name: Install kind
+description: Install kind binary and e2e-k8s.sh test runner from the kind project
+
+runs:
+  using: composite
+  steps:
+    - name: Install kind and e2e-k8s.sh
+      shell: bash
+      run: |
+        curl -Lo /usr/local/bin/kind https://kind.sigs.k8s.io/dl/latest/kind-linux-amd64
+        chmod +x /usr/local/bin/kind
+        kind version
+        curl -Lo /usr/local/bin/e2e-k8s.sh \
+          https://raw.githubusercontent.com/kubernetes-sigs/kind/main/hack/ci/e2e-k8s.sh
+        chmod +x /usr/local/bin/e2e-k8s.sh

@@ -1,0 +1,55 @@
+name: Load Config
+
+on:
+  workflow_call:
+    outputs:
+      kubernetes-repo:
+        description: 'Kubernetes repository (owner/repo)'
+        value: ${{ jobs.parse.outputs.kubernetes-repo }}
+      kubernetes-ref:
+        description: 'Kubernetes git ref'
+        value: ${{ jobs.parse.outputs.kubernetes-ref }}
+      containerd-repo:
+        description: 'containerd repository (owner/repo)'
+        value: ${{ jobs.parse.outputs.containerd-repo }}
+      containerd-ref:
+        description: 'containerd git ref'
+        value: ${{ jobs.parse.outputs.containerd-ref }}
+
+permissions:
+  contents: read
+
+jobs:
+  parse:
+    name: Load Config
+    runs-on: ubuntu-24.04
+    outputs:
+      kubernetes-repo: ${{ steps.config.outputs.kubernetes-repo }}
+      kubernetes-ref: ${{ steps.config.outputs.kubernetes-ref }}
+      containerd-repo: ${{ steps.config.outputs.containerd-repo }}
+      containerd-ref: ${{ steps.config.outputs.containerd-ref }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
+
+      - name: Parse config.yaml
+        id: config
+        run: |
+          python3 -c "
+          import yaml, os
+          from urllib.parse import urlparse
+
+          def repo_from_url(url):
+              path = urlparse(url).path.strip('/')
+              if path.endswith('.git'):
+                  path = path[:-4]
+              return path
+
+          with open('config.yaml') as f:
+              cfg = yaml.safe_load(f)
+          with open(os.environ['GITHUB_OUTPUT'], 'a') as out:
+              out.write(f\"kubernetes-repo={repo_from_url(cfg['kubernetes']['url'])}\n\")
+              out.write(f\"kubernetes-ref={cfg['kubernetes']['ref']}\n\")
+              out.write(f\"containerd-repo={repo_from_url(cfg['containerd']['url'])}\n\")
+              out.write(f\"containerd-ref={cfg['containerd']['ref']}\n\")
+          "

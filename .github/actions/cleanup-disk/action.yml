@@ -1,0 +1,16 @@
+name: Clean up disk space
+description: Remove unnecessary pre-installed software to free ~30GB on the runner
+
+runs:
+  using: composite
+  steps:
+    - name: Clean up disk space
+      shell: bash
+      run: |
+        sudo rm -rf /usr/share/dotnet /usr/local/graalvm /usr/local/.ghcup \
+          /usr/local/share/powershell /usr/local/share/chromium \
+          /usr/local/share/firefox /usr/local/lib/android \
+          /usr/local/lib/node_modules /usr/local/share/podman \
+          /usr/local/aws-cli/ /usr/local/lib/heroku \
+          /usr/local/rustup /usr/local/cargo /usr/local/google-cloud-sdk
+        df -h

@@ -1,0 +1,39 @@
+name: Collect and upload logs
+description: Gather test artifacts and logs on failure and upload them
+
+inputs:
+  name:
+    description: 'Artifact name for the upload'
+    required: true
+  artifacts-dir:
+    description: 'Path to artifacts directory'
+    default: '_artifacts'
+
+runs:
+  using: composite
+  steps:
+    - name: Collect Logs
+      if: failure()
+      shell: bash
+      run: |
+        mkdir -p "${{ inputs.artifacts-dir }}"
+        # Capture Docker daemon logs if available
+        if systemctl is-active docker &>/dev/null; then
+          sudo journalctl -u docker --no-pager > "${{ inputs.artifacts-dir }}/docker.log" 2>/dev/null || true
+        fi
+        # Capture containerd logs if available
+        if systemctl is-active containerd &>/dev/null; then
+          sudo journalctl -u containerd --no-pager > "${{ inputs.artifacts-dir }}/containerd.log" 2>/dev/null || true
+        fi
+        # Capture kubelet logs if available
+        KUBELET_LOG=$(sudo find /tmp/_artifacts -name "kubelet.log" 2>/dev/null | head -n 1)
+        if [ -f "$KUBELET_LOG" ]; then
+          sudo cp "$KUBELET_LOG" "${{ inputs.artifacts-dir }}/kubelet.log"
+        fi
+
+    - name: Upload Artifacts
+      if: failure()
+      uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6.0.0
+      with:
+        name: ${{ inputs.name }}
+        path: ${{ inputs.artifacts-dir }}/

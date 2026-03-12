@@ -1,0 +1,32 @@
+name: Setup Kubernetes
+description: Checkout Kubernetes source and install the matching Go version
+
+inputs:
+  repository:
+    description: 'owner/repo for Kubernetes (e.g. kubernetes/kubernetes)'
+    required: true
+  ref:
+    description: 'Git ref (branch, tag, or SHA) to checkout'
+    required: true
+  fetch-depth:
+    description: 'Number of commits to fetch (0 for full history)'
+    default: '1'
+  path:
+    description: 'Relative path to checkout into'
+    default: ''
+
+runs:
+  using: composite
+  steps:
+    - name: Checkout Kubernetes
+      uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
+      with:
+        repository: ${{ inputs.repository }}
+        ref: ${{ inputs.ref }}
+        path: ${{ inputs.path }}
+        fetch-depth: ${{ inputs.fetch-depth }}
+
+    - name: Install Go
+      uses: actions/setup-go@0aaccfd150d50ccaeb58ebd88d36e91967a5f35b # v5.4.0
+      with:
+        go-version-file: ${{ inputs.path && format('{0}/.go-version', inputs.path) || '.go-version' }}

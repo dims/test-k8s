@@ -1,0 +1,115 @@
+name: Node E2E
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'config.yaml'
+      - '.github/actions/**'
+      - '.github/workflows/load-config.yml'
+      - '.github/workflows/node-e2e.yml'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'config.yaml'
+      - '.github/actions/**'
+      - '.github/workflows/load-config.yml'
+      - '.github/workflows/node-e2e.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  load-config:
+    uses: ./.github/workflows/load-config.yml
+
+  node-e2e-k8s:
+    name: Kubernetes Node E2E
+    needs: load-config
+    runs-on: ubuntu-24.04
+    timeout-minutes: 90
+    steps:
+      - uses: ./.github/actions/cleanup-disk
+
+      - name: Checkout containerd
+        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
+        with:
+          repository: ${{ needs.load-config.outputs.containerd-repo }}
+          ref: ${{ needs.load-config.outputs.containerd-ref }}
+          path: src/github.com/containerd/containerd
+          fetch-depth: 0
+
+      - uses: ./.github/actions/setup-kubernetes
+        with:
+          repository: ${{ needs.load-config.outputs.kubernetes-repo }}
+          ref: ${{ needs.load-config.outputs.kubernetes-ref }}
+          path: src/k8s.io/kubernetes
+          fetch-depth: 0
+
+      - name: Set Up Environment
+        run: |
+          set -e -x
+          sudo swapoff -a
+          sudo apt-get update
+          sudo apt-get install -y gperf build-essential pkg-config
+          echo "GOPATH=${{ github.workspace }}" >> "$GITHUB_ENV"
+          echo "${{ github.workspace }}/bin" >> "$GITHUB_PATH"
+
+      - name: Build and Install containerd
+        working-directory: ./src/github.com/containerd/containerd
+        run: |
+          set -e -x
+          script/setup/install-seccomp
+          script/setup/install-runc
+          script/setup/install-cni "$(grep containernetworking/plugins go.mod | awk '{print $2}')"
+          make binaries GO_BUILD_FLAGS="-mod=vendor"
+          sudo make install
+
+      - name: Configure and Start containerd
+        run: |
+          set -e -x
+          if sudo systemctl is-active --quiet containerd; then
+            sudo systemctl stop containerd
+          fi
+          if sudo systemctl is-enabled --quiet containerd; then
+            sudo systemctl disable containerd
+          fi
+
+          sudo mkdir -p /etc/containerd
+          sudo tee /etc/containerd/config.toml > /dev/null <<EOF
+          version = 2
+          required_plugins = ["io.containerd.grpc.v1.cri"]
+          [plugins."io.containerd.grpc.v1.cri".containerd]
+            default_runtime_name = "runc"
+          [plugins."io.containerd.grpc.v1.cri".containerd.runtimes.runc]
+            runtime_type = "io.containerd.runc.v2"
+          [plugins."io.containerd.grpc.v1.cri".containerd.runtimes.runc.options]
+            BinaryName = "/usr/local/sbin/runc"
+            SystemdCgroup = true
+          [plugins."io.containerd.grpc.v1.cri".containerd.runtimes.test-handler]
+            runtime_type = "io.containerd.runc.v2"
+          [plugins."io.containerd.grpc.v1.cri".containerd.runtimes.test-handler.options]
+            BinaryName = "/usr/local/sbin/runc"
+            SystemdCgroup = true
+          EOF
+
+          sudo cp ./src/github.com/containerd/containerd/containerd.service /etc/systemd/system/
+          sudo systemctl daemon-reload
+          sudo systemctl start containerd
+
+          sleep 5
+          sudo ctr version
+
+      - name: Run Node E2E Tests
+        working-directory: ./src/k8s.io/kubernetes
+        run: |
+          sudo make test-e2e-node \
+            FOCUS='\[NodeConformance\]|\[Feature:.+\]|\[Feature\]' \
+            SKIP='\[Flaky\]|\[Slow\]|\[Serial\]|\[Feature:UserNamespacesSupport\]|\[Feature:PodLifecycleSleepActionAllowZero\]|\[Feature:UserNamespacesPodSecurityStandards\]|\[Feature:KubeletCredentialProviders\]|\[Feature:LockContention\]|\[Feature:SCTPConnectivity\]|\[Alpha\]' \
+            TEST_ARGS='--feature-gates=PodAndContainerStatsFromCRI=true --kubelet-flags="--cgroup-driver=systemd --cgroups-per-qos=true --cgroup-root=/ --runtime-cgroups=/system.slice/containerd.service --feature-gates=PodAndContainerStatsFromCRI=true"'
+
+      - uses: ./.github/actions/collect-logs
+        if: failure()
+        with:
+          name: node-e2e-logs
