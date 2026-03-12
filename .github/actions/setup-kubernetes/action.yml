@@ -37,14 +37,3 @@ runs:
       run: |
         echo "GOPATH=${GOPATH:-$HOME/go}" >> "$GITHUB_ENV"
         echo "TERM=xterm" >> "$GITHUB_ENV"
-
-    - name: Create GOPATH symlink for kubernetes
-      shell: bash
-      run: |
-        GOPATH_VAL="${GOPATH:-$HOME/go}"
-        K8S_DIR="${GOPATH_VAL}/src/k8s.io/kubernetes"
-        CHECKOUT_DIR="${GITHUB_WORKSPACE}/${{ inputs.path }}"
-        if [ "$CHECKOUT_DIR" != "$K8S_DIR" ] && [ ! -e "$K8S_DIR" ]; then
-          mkdir -p "$(dirname "$K8S_DIR")"
-          ln -s "$CHECKOUT_DIR" "$K8S_DIR"
-        fi
