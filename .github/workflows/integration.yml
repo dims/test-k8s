@@ -6,12 +6,14 @@ on:
     paths:
       - 'config.yaml'
       - '.github/actions/**'
+      - 'projects/kubernetes/**'
       - '.github/workflows/integration.yml'
   pull_request:
     branches: [main]
     paths:
       - 'config.yaml'
       - '.github/actions/**'
+      - 'projects/kubernetes/**'
       - '.github/workflows/integration.yml'
   schedule:
     - cron: '0 */6 * * *'
@@ -38,6 +40,7 @@ jobs:
           ref: ${{ steps.config.outputs.kubernetes-sha }}
           path: go/src/k8s.io/kubernetes
           fetch-depth: 0
+          patches-dir: projects/kubernetes
       - uses: ./.github/actions/report-revisions
         with:
           kubernetes-repo: ${{ steps.config.outputs.kubernetes-repo }}

@@ -1,0 +1,74 @@
+name: Apply Format Patches
+description: Apply local git format-patch files to a checked out repository
+
+inputs:
+  repo-path:
+    description: Relative path to the checked out repository from the workspace root
+    default: ''
+  patch-dir:
+    description: Relative path to the directory containing *.patch files
+    required: true
+
+runs:
+  using: composite
+  steps:
+    - name: Apply patches
+      shell: bash
+      run: |
+        set -euo pipefail
+
+        repo_path="${{ inputs.repo-path }}"
+        patch_dir="${{ inputs.patch-dir }}"
+
+        if [[ -z "$repo_path" ]]; then
+          repo_path="$GITHUB_WORKSPACE"
+        elif [[ "$repo_path" != /* ]]; then
+          repo_path="$GITHUB_WORKSPACE/$repo_path"
+        fi
+
+        if [[ "$patch_dir" != /* ]]; then
+          patch_dir="$GITHUB_WORKSPACE/$patch_dir"
+        fi
+
+        if ! git -C "$repo_path" rev-parse --git-dir >/dev/null 2>&1; then
+          echo "::error title=Repository not found::$repo_path is not a git checkout"
+          exit 1
+        fi
+
+        if [[ ! -d "$patch_dir" ]]; then
+          echo "No patch directory found at $patch_dir; skipping."
+          exit 0
+        fi
+
+        shopt -s nullglob
+        patches=("$patch_dir"/*.patch)
+        shopt -u nullglob
+
+        if ((${#patches[@]} == 0)); then
+          echo "No patch files found in $patch_dir; skipping."
+          exit 0
+        fi
+
+        mapfile -t patches < <(printf '%s\n' "${patches[@]}" | LC_ALL=C sort)
+
+        git -C "$repo_path" config user.name "test-k8s patch applier"
+        git -C "$repo_path" config user.email "test-k8s-patches@users.noreply.github.com"
+
+        applied_notice=""
+        for patch in "${patches[@]}"; do
+          subject="$(sed -n '/^Subject: /{s/^Subject: //; s/^\[PATCH[^]]*\] //; p; q; }' "$patch")"
+
+          echo "Applying $(basename "$patch")${subject:+: $subject}"
+          if ! git -C "$repo_path" am --3way "$patch"; then
+            git -C "$repo_path" am --abort || true
+            echo "::error title=Patch apply failed::$(basename "$patch")"
+            exit 1
+          fi
+
+          if [[ -n "$applied_notice" ]]; then
+            applied_notice="${applied_notice}; "
+          fi
+          applied_notice="${applied_notice}${subject:-$(basename "$patch")}"
+        done
+
+        echo "::notice title=Applied local patches::$applied_notice"

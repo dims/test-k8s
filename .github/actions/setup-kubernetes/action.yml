@@ -14,6 +14,9 @@ inputs:
   path:
     description: 'Relative path to checkout into'
     default: ''
+  patches-dir:
+    description: 'Relative path to git format-patch files to apply after checkout'
+    default: ''
 
 runs:
   using: composite
@@ -25,6 +28,13 @@ runs:
         ref: ${{ inputs.ref }}
         path: ${{ inputs.path }}
         fetch-depth: ${{ inputs.fetch-depth }}
+
+    - name: Apply local patches
+      if: ${{ inputs.patches-dir != '' }}
+      uses: ./.github/actions/apply-format-patches
+      with:
+        repo-path: ${{ inputs.path }}
+        patch-dir: ${{ inputs.patches-dir }}
 
     - name: Install Go
       uses: actions/setup-go@0aaccfd150d50ccaeb58ebd88d36e91967a5f35b # v5.4.0
