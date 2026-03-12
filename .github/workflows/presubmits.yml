@@ -31,13 +31,16 @@ jobs:
     runs-on: ubuntu-24.04
     timeout-minutes: 90
     steps:
+      - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
       - uses: ./.github/actions/cleanup-disk
       - uses: ./.github/actions/setup-kubernetes
         with:
           repository: ${{ needs.load-config.outputs.kubernetes-repo }}
           ref: ${{ needs.load-config.outputs.kubernetes-ref }}
+          path: kubernetes
           fetch-depth: 0
       - name: Verify
+        working-directory: kubernetes
         env:
           EXCLUDE_TYPECHECK: "y"
           EXCLUDE_GODEP: "y"
@@ -55,12 +58,15 @@ jobs:
     runs-on: ubuntu-24.04
     timeout-minutes: 90
     steps:
+      - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
       - uses: ./.github/actions/cleanup-disk
       - uses: ./.github/actions/setup-kubernetes
         with:
           repository: ${{ needs.load-config.outputs.kubernetes-repo }}
           ref: ${{ needs.load-config.outputs.kubernetes-ref }}
+          path: kubernetes
       - name: Unit Tests
+        working-directory: kubernetes
         run: make test
       - uses: ./.github/actions/collect-logs
         if: failure()
@@ -74,12 +80,15 @@ jobs:
     runs-on: ubuntu-24.04
     timeout-minutes: 120
     steps:
+      - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
       - uses: ./.github/actions/cleanup-disk
       - uses: ./.github/actions/setup-kubernetes
         with:
           repository: ${{ needs.load-config.outputs.kubernetes-repo }}
           ref: ${{ needs.load-config.outputs.kubernetes-ref }}
+          path: kubernetes
       - name: Integration Tests
+        working-directory: kubernetes
         run: ./hack/jenkins/test-integration-dockerized.sh
       - uses: ./.github/actions/collect-logs
         if: failure()
@@ -93,12 +102,15 @@ jobs:
     runs-on: ubuntu-24.04
     timeout-minutes: 45
     steps:
+      - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
       - uses: ./.github/actions/cleanup-disk
       - uses: ./.github/actions/setup-kubernetes
         with:
           repository: ${{ needs.load-config.outputs.kubernetes-repo }}
           ref: ${{ needs.load-config.outputs.kubernetes-ref }}
+          path: kubernetes
       - name: Typecheck
+        working-directory: kubernetes
         run: make verify WHAT=typecheck
       - uses: ./.github/actions/collect-logs
         if: failure()
@@ -112,12 +124,15 @@ jobs:
     runs-on: ubuntu-24.04
     timeout-minutes: 30
     steps:
+      - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
       - uses: ./.github/actions/cleanup-disk
       - uses: ./.github/actions/setup-kubernetes
         with:
           repository: ${{ needs.load-config.outputs.kubernetes-repo }}
           ref: ${{ needs.load-config.outputs.kubernetes-ref }}
+          path: kubernetes
       - name: Verify Dependencies
+        working-directory: kubernetes
         run: make verify WHAT="external-dependencies-version vendor vendor-licenses"
       - uses: ./.github/actions/collect-logs
         if: failure()
@@ -131,12 +146,15 @@ jobs:
     runs-on: ubuntu-24.04
     timeout-minutes: 90
     steps:
+      - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
       - uses: ./.github/actions/cleanup-disk
       - uses: ./.github/actions/setup-kubernetes
         with:
           repository: ${{ needs.load-config.outputs.kubernetes-repo }}
           ref: ${{ needs.load-config.outputs.kubernetes-ref }}
+          path: kubernetes
       - name: Cmd Tests
+        working-directory: kubernetes
         env:
           KUBE_INTEGRATION_TEST_MAX_CONCURRENCY: "8"
           KUBE_TIMEOUT: "-timeout=30m"
@@ -154,13 +172,16 @@ jobs:
     timeout-minutes: 45
     continue-on-error: true
     steps:
+      - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
       - uses: ./.github/actions/cleanup-disk
       - uses: ./.github/actions/setup-kubernetes
         with:
           repository: ${{ needs.load-config.outputs.kubernetes-repo }}
           ref: ${{ needs.load-config.outputs.kubernetes-ref }}
+          path: kubernetes
           fetch-depth: 0
       - name: Linter Hints
+        working-directory: kubernetes
         run: make verify WHAT=golangci-lint-pr-hints
       - uses: ./.github/actions/collect-logs
         if: failure()
@@ -174,13 +195,16 @@ jobs:
     runs-on: ubuntu-24.04
     timeout-minutes: 120
     steps:
+      - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
       - uses: ./.github/actions/cleanup-disk
       - uses: ./.github/actions/setup-kubernetes
         with:
           repository: ${{ needs.load-config.outputs.kubernetes-repo }}
           ref: ${{ needs.load-config.outputs.kubernetes-ref }}
+          path: kubernetes
       - uses: ./.github/actions/install-kind
       - name: Run E2E Tests
+        working-directory: kubernetes
         env:
           LABEL_FILTER: "Feature: isEmpty && !Slow && !Disruptive && !Flaky"
           PARALLEL: "true"
@@ -198,13 +222,16 @@ jobs:
     runs-on: ubuntu-24.04
     timeout-minutes: 120
     steps:
+      - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
       - uses: ./.github/actions/cleanup-disk
       - uses: ./.github/actions/setup-kubernetes
         with:
           repository: ${{ needs.load-config.outputs.kubernetes-repo }}
           ref: ${{ needs.load-config.outputs.kubernetes-ref }}
+          path: kubernetes
       - uses: ./.github/actions/install-kind
       - name: Run Conformance Tests
+        working-directory: kubernetes
         env:
           FEATURE_GATES: '{"AllAlpha":false,"AllBeta":false}'
           RUNTIME_CONFIG: '{"api/alpha":"false","api/beta":"false"}'
