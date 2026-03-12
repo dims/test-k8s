@@ -1,0 +1,258 @@
+{
+  "items": [
+    {
+      "id": "install-kind",
+      "description": "Shared kind installer used by kind-based workflows",
+      "local_file": ".github/actions/install-kind/action.yml",
+      "upstream_file": "config/jobs/kubernetes/sig-testing/kubernetes-kind-presubmits.yaml",
+      "upstream_job": "pull-kubernetes-e2e-kind",
+      "checks": [
+        {
+          "name": "kind download track",
+          "kind": "contains_both",
+          "needle": "kind.sigs.k8s.io/dl/latest"
+        },
+        {
+          "name": "kind e2e runner",
+          "kind": "contains_both",
+          "needle": "e2e-k8s.sh"
+        }
+      ]
+    },
+    {
+      "id": "verify",
+      "description": "Verify workflow against pull-kubernetes-verify",
+      "local_file": ".github/workflows/verify.yml",
+      "upstream_file": "config/jobs/kubernetes/sig-testing/verify.yaml",
+      "upstream_job": "pull-kubernetes-verify",
+      "checks": [
+        {
+          "name": "command",
+          "kind": "presence_regex",
+          "local_regex": "run:\\s*\\./hack/jenkins/verify-dockerized\\.sh\\b",
+          "upstream_regex": "args:\\s*\\n\\s*-\\s*\\./hack/jenkins/verify-dockerized\\.sh\\b"
+        },
+        {
+          "name": "EXCLUDE_TYPECHECK",
+          "kind": "capture_eq",
+          "local_regex": "EXCLUDE_TYPECHECK:\\s*\"([^\"]+)\"",
+          "upstream_regex": "- name:\\s*EXCLUDE_TYPECHECK\\s*\\n\\s*value:\\s*\"([^\"]+)\""
+        },
+        {
+          "name": "EXCLUDE_GODEP",
+          "kind": "capture_eq",
+          "local_regex": "EXCLUDE_GODEP:\\s*\"([^\"]+)\"",
+          "upstream_regex": "- name:\\s*EXCLUDE_GODEP\\s*\\n\\s*value:\\s*\"([^\"]+)\""
+        },
+        {
+          "name": "KUBE_VERIFY_GIT_BRANCH",
+          "kind": "capture_eq",
+          "local_regex": "KUBE_VERIFY_GIT_BRANCH:\\s*([^\\n]+)",
+          "upstream_regex": "- name:\\s*KUBE_VERIFY_GIT_BRANCH\\s*\\n\\s*value:\\s*([^\\n]+)"
+        }
+      ]
+    },
+    {
+      "id": "linter-hints",
+      "description": "Linter hints workflow against pull-kubernetes-linter-hints",
+      "local_file": ".github/workflows/linter-hints.yml",
+      "upstream_file": "config/jobs/kubernetes/sig-testing/verify.yaml",
+      "upstream_job": "pull-kubernetes-linter-hints",
+      "checks": [
+        {
+          "name": "WHAT value",
+          "kind": "capture_eq",
+          "local_regex": "run:\\s*make verify WHAT=([^\\s]+)",
+          "upstream_regex": "-\\s+WHAT=([^\\s]+)"
+        },
+        {
+          "name": "optional semantics",
+          "kind": "capture_eq",
+          "local_regex": "continue-on-error:\\s*(true|false)",
+          "upstream_regex": "optional:\\s*(true|false)"
+        }
+      ]
+    },
+    {
+      "id": "unit",
+      "description": "Unit workflow against pull-kubernetes-unit",
+      "local_file": ".github/workflows/unit.yml",
+      "upstream_file": "config/jobs/kubernetes/sig-testing/make-test.yaml",
+      "upstream_job": "pull-kubernetes-unit",
+      "checks": [
+        {
+          "name": "make test command",
+          "kind": "presence_regex",
+          "local_regex": "run:\\s*make test\\b",
+          "upstream_regex": "command:\\s*\\n\\s*-\\s*make\\s*\\n\\s*-\\s*test\\b"
+        }
+      ]
+    },
+    {
+      "id": "integration",
+      "description": "Integration workflow against pull-kubernetes-integration",
+      "local_file": ".github/workflows/integration.yml",
+      "upstream_file": "config/jobs/kubernetes/sig-testing/integration.yaml",
+      "upstream_job": "pull-kubernetes-integration",
+      "checks": [
+        {
+          "name": "command",
+          "kind": "presence_regex",
+          "local_regex": "run:\\s*\\./hack/jenkins/test-integration-dockerized\\.sh\\b",
+          "upstream_regex": "args:\\s*\\n\\s*-\\s*\\./hack/jenkins/test-integration-dockerized\\.sh\\b"
+        }
+      ]
+    },
+    {
+      "id": "typecheck",
+      "description": "Typecheck workflow against pull-kubernetes-typecheck",
+      "local_file": ".github/workflows/typecheck.yml",
+      "upstream_file": "config/jobs/kubernetes/sig-testing/typecheck.yaml",
+      "upstream_job": "pull-kubernetes-typecheck",
+      "checks": [
+        {
+          "name": "WHAT value",
+          "kind": "capture_eq",
+          "local_regex": "run:\\s*make verify WHAT=([^\\s]+)",
+          "upstream_regex": "- name:\\s*WHAT\\s*\\n\\s*value:\\s*([^\\n]+)"
+        }
+      ]
+    },
+    {
+      "id": "dependencies",
+      "description": "Dependencies workflow against pull-kubernetes-dependencies",
+      "local_file": ".github/workflows/dependencies.yml",
+      "upstream_file": "config/jobs/kubernetes/sig-testing/dependencies.yaml",
+      "upstream_job": "pull-kubernetes-dependencies",
+      "checks": [
+        {
+          "name": "WHAT value",
+          "kind": "capture_eq",
+          "local_regex": "run:\\s*make verify WHAT=\"([^\"]+)\"",
+          "upstream_regex": "- name:\\s*WHAT\\s*\\n\\s*value:\\s*\"([^\"]+)\""
+        }
+      ]
+    },
+    {
+      "id": "cmd",
+      "description": "Cmd workflow against pull-kubernetes-cmd",
+      "local_file": ".github/workflows/cmd-tests.yml",
+      "upstream_file": "config/jobs/kubernetes/sig-testing/cmd.yaml",
+      "upstream_job": "pull-kubernetes-cmd",
+      "checks": [
+        {
+          "name": "command",
+          "kind": "presence_regex",
+          "local_regex": "run:\\s*\\./hack/jenkins/test-cmd-dockerized\\.sh\\b",
+          "upstream_regex": "args:\\s*\\n\\s*-\\s*\\./hack/jenkins/test-cmd-dockerized\\.sh\\b"
+        },
+        {
+          "name": "KUBE_INTEGRATION_TEST_MAX_CONCURRENCY",
+          "kind": "capture_eq",
+          "local_regex": "KUBE_INTEGRATION_TEST_MAX_CONCURRENCY:\\s*\"([^\"]+)\"",
+          "upstream_regex": "- name:\\s*KUBE_INTEGRATION_TEST_MAX_CONCURRENCY\\s*\\n\\s*value:\\s*\"([^\"]+)\""
+        },
+        {
+          "name": "KUBE_TIMEOUT",
+          "kind": "capture_eq",
+          "local_regex": "KUBE_TIMEOUT:\\s*\"([^\"]+)\"",
+          "upstream_regex": "- name:\\s*KUBE_TIMEOUT\\s*\\n\\s*value:\\s*\"([^\"]+)\""
+        }
+      ]
+    },
+    {
+      "id": "e2e-kind",
+      "description": "Kind e2e workflow against pull-kubernetes-e2e-kind",
+      "local_file": ".github/workflows/e2e-kind.yml",
+      "upstream_file": "config/jobs/kubernetes/sig-testing/kubernetes-kind-presubmits.yaml",
+      "upstream_job": "pull-kubernetes-e2e-kind",
+      "checks": [
+        {
+          "name": "LABEL_FILTER",
+          "kind": "capture_eq",
+          "local_regex": "LABEL_FILTER:\\s*\"([^\"]+)\"",
+          "upstream_regex": "- name:\\s*LABEL_FILTER\\s*\\n\\s*value:\\s*\"([^\"]+)\""
+        },
+        {
+          "name": "PARALLEL",
+          "kind": "capture_eq",
+          "local_regex": "PARALLEL:\\s*\"([^\"]+)\"",
+          "upstream_regex": "- name:\\s*PARALLEL\\s*\\n\\s*value:\\s*\"([^\"]+)\""
+        }
+      ]
+    },
+    {
+      "id": "conformance-kind",
+      "description": "GA-only kind conformance workflow against pull-kubernetes-conformance-kind-ga-only-parallel",
+      "local_file": ".github/workflows/conformance-kind.yml",
+      "upstream_file": "config/jobs/kubernetes/sig-testing/kubernetes-kind-presubmits.yaml",
+      "upstream_job": "pull-kubernetes-conformance-kind-ga-only-parallel",
+      "checks": [
+        {
+          "name": "FEATURE_GATES",
+          "kind": "capture_eq",
+          "local_regex": "FEATURE_GATES:\\s*'([^']+)'",
+          "upstream_regex": "- name:\\s*FEATURE_GATES\\s*\\n\\s*value:\\s*'([^']+)'"
+        },
+        {
+          "name": "RUNTIME_CONFIG",
+          "kind": "capture_eq",
+          "local_regex": "RUNTIME_CONFIG:\\s*'([^']+)'",
+          "upstream_regex": "- name:\\s*RUNTIME_CONFIG\\s*\\n\\s*value:\\s*'([^']+)'",
+          "normalize": "nospace"
+        },
+        {
+          "name": "PARALLEL",
+          "kind": "capture_eq",
+          "local_regex": "PARALLEL:\\s*\"([^\"]+)\"",
+          "upstream_regex": "- name:\\s*PARALLEL\\s*\\n\\s*value:\\s*\"([^\"]+)\""
+        }
+      ]
+    },
+    {
+      "id": "node-e2e",
+      "description": "Local node-e2e adaptation against pull-kubernetes-node-e2e-containerd",
+      "local_file": ".github/workflows/node-e2e.yml",
+      "upstream_file": "config/jobs/kubernetes/sig-node/sig-node-presubmit.yaml",
+      "upstream_job": "pull-kubernetes-node-e2e-containerd",
+      "checks": [
+        {
+          "name": "job timeout",
+          "kind": "capture_eq",
+          "local_regex": "timeout-minutes:\\s*(\\d+)",
+          "upstream_regex": "decoration_config:\\s*\\n\\s*timeout:\\s*(\\d+)m"
+        },
+        {
+          "name": "NodeConformance focus",
+          "kind": "contains_both",
+          "needle": "NodeConformance"
+        },
+        {
+          "name": "Flaky skip",
+          "kind": "contains_both",
+          "needle": "\\[Flaky\\]"
+        },
+        {
+          "name": "Slow skip",
+          "kind": "contains_both",
+          "needle": "\\[Slow\\]"
+        },
+        {
+          "name": "Serial skip",
+          "kind": "contains_both",
+          "needle": "\\[Serial\\]"
+        },
+        {
+          "name": "systemd cgroup driver",
+          "kind": "contains_both",
+          "needle": "--cgroup-driver=systemd"
+        },
+        {
+          "name": "containerd runtime cgroups",
+          "kind": "contains_both",
+          "needle": "--runtime-cgroups=/system.slice/containerd.service"
+        }
+      ]
+    }
+  ]
+}
