@@ -202,6 +202,7 @@ jobs:
           repository: ${{ needs.load-config.outputs.kubernetes-repo }}
           ref: ${{ needs.load-config.outputs.kubernetes-ref }}
           path: kubernetes
+          fetch-depth: 0
       - uses: ./.github/actions/install-kind
       - name: Run E2E Tests
         working-directory: kubernetes
@@ -229,6 +230,7 @@ jobs:
           repository: ${{ needs.load-config.outputs.kubernetes-repo }}
           ref: ${{ needs.load-config.outputs.kubernetes-ref }}
           path: kubernetes
+          fetch-depth: 0
       - uses: ./.github/actions/install-kind
       - name: Run Conformance Tests
         working-directory: kubernetes
