@@ -1,0 +1,50 @@
+name: E2E (kind, alpha-beta-features)
+
+on:
+  schedule:
+    - cron: '23 7 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  e2e-kind-alpha-beta-features:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 75
+    env:
+      ARTIFACTS: ${{ github.workspace }}/_artifacts
+      GOPATH: ${{ github.workspace }}/go
+    steps:
+      - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
+      - id: config
+        uses: ./.github/actions/load-config
+      - uses: ./.github/actions/cleanup-disk
+      - uses: ./.github/actions/setup-kubernetes
+        with:
+          repository: ${{ steps.config.outputs.kubernetes-repo }}
+          ref: ${{ steps.config.outputs.kubernetes-sha }}
+          path: go/src/k8s.io/kubernetes
+          fetch-depth: 0
+      - uses: ./.github/actions/report-revisions
+        with:
+          kubernetes-repo: ${{ steps.config.outputs.kubernetes-repo }}
+          kubernetes-ref: ${{ steps.config.outputs.kubernetes-ref }}
+          kubernetes-sha: ${{ steps.config.outputs.kubernetes-sha }}
+          containerd-repo: ${{ steps.config.outputs.containerd-repo }}
+          containerd-ref: ${{ steps.config.outputs.containerd-ref }}
+          containerd-sha: ${{ steps.config.outputs.containerd-sha }}
+      - uses: ./.github/actions/install-kind
+      - name: Run Alpha/Beta Feature E2E Tests
+        working-directory: go/src/k8s.io/kubernetes
+        env:
+          FEATURE_GATES: '{"AllAlpha":true,"AllBeta":true,"EventedPLEG":false}'
+          RUNTIME_CONFIG: '{"api/all":"true"}'
+          LABEL_FILTER: "Feature: isSubsetOf OffByDefault && !Deprecated && !Slow && !Disruptive && !Flaky"
+          PARALLEL: "true"
+        run: e2e-k8s.sh
+      - uses: ./.github/actions/collect-logs
+        if: always()
+        with:
+          artifacts-dir: ${{ env.ARTIFACTS }}
+          name: e2e-kind-alpha-beta-features-logs

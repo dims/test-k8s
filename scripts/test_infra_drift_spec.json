@@ -182,6 +182,41 @@
       ]
     },
     {
+      "id": "e2e-kind-alpha-beta-features",
+      "description": "Kind alpha/beta off-by-default feature workflow against pull-kubernetes-e2e-kind-alpha-beta-features",
+      "local_file": ".github/workflows/e2e-kind-alpha-beta-features.yml",
+      "upstream_file": "config/jobs/kubernetes/sig-testing/kubernetes-kind-presubmits.yaml",
+      "upstream_job": "pull-kubernetes-e2e-kind-alpha-beta-features",
+      "checks": [
+        {
+          "name": "FEATURE_GATES",
+          "kind": "capture_eq",
+          "local_regex": "FEATURE_GATES:\\s*'([^']+)'",
+          "upstream_regex": "- name:\\s*FEATURE_GATES\\s*\\n\\s*value:\\s*'([^']+)'",
+          "normalize": "nospace"
+        },
+        {
+          "name": "RUNTIME_CONFIG",
+          "kind": "capture_eq",
+          "local_regex": "RUNTIME_CONFIG:\\s*'([^']+)'",
+          "upstream_regex": "- name:\\s*RUNTIME_CONFIG\\s*\\n\\s*value:\\s*'([^']+)'",
+          "normalize": "nospace"
+        },
+        {
+          "name": "LABEL_FILTER",
+          "kind": "capture_eq",
+          "local_regex": "LABEL_FILTER:\\s*\"([^\"]+)\"",
+          "upstream_regex": "- name:\\s*LABEL_FILTER\\s*\\n\\s*value:\\s*\"([^\"]+)\""
+        },
+        {
+          "name": "PARALLEL",
+          "kind": "capture_eq",
+          "local_regex": "PARALLEL:\\s*\"([^\"]+)\"",
+          "upstream_regex": "- name:\\s*PARALLEL\\s*\\n\\s*value:\\s*\"([^\"]+)\""
+        }
+      ]
+    },
+    {
       "id": "conformance-kind",
       "description": "GA-only kind conformance workflow against pull-kubernetes-conformance-kind-ga-only-parallel",
       "local_file": ".github/workflows/conformance-kind.yml",

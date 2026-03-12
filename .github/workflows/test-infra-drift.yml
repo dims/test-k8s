@@ -6,12 +6,16 @@ on:
     paths:
       - 'Makefile'
       - 'scripts/**'
+      - '.github/actions/install-kind/**'
+      - '.github/workflows/**'
       - '.github/workflows/test-infra-drift.yml'
   pull_request:
     branches: [main]
     paths:
       - 'Makefile'
       - 'scripts/**'
+      - '.github/actions/install-kind/**'
+      - '.github/workflows/**'
       - '.github/workflows/test-infra-drift.yml'
   schedule:
     - cron: '17 6 * * *'
