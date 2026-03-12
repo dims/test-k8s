@@ -188,12 +188,12 @@ jobs:
         with:
           name: linter-logs
 
-  # pull-kubernetes-e2e-kind
+  # pull-kubernetes-e2e-kind (prow: 60m timeout + 15m grace)
   e2e-kind:
     name: E2E (kind)
     needs: load-config
     runs-on: ubuntu-24.04
-    timeout-minutes: 120
+    timeout-minutes: 75
     steps:
       - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
       - uses: ./.github/actions/cleanup-disk
@@ -215,12 +215,12 @@ jobs:
         with:
           name: e2e-kind-logs
 
-  # pull-kubernetes-conformance-kind-ga-only-parallel
+  # pull-kubernetes-conformance-kind-ga-only-parallel (prow: 60m timeout + 15m grace)
   conformance-kind:
     name: Conformance (kind, GA-only)
     needs: load-config
     runs-on: ubuntu-24.04
-    timeout-minutes: 120
+    timeout-minutes: 75
     steps:
       - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
       - uses: ./.github/actions/cleanup-disk

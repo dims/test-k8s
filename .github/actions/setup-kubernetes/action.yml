@@ -30,3 +30,10 @@ runs:
       uses: actions/setup-go@0aaccfd150d50ccaeb58ebd88d36e91967a5f35b # v5.4.0
       with:
         go-version-file: ${{ inputs.path && format('{0}/.go-version', inputs.path) || '.go-version' }}
+        cache-dependency-path: ${{ inputs.path && format('{0}/go.sum', inputs.path) || 'go.sum' }}
+
+    - name: Set up environment
+      shell: bash
+      run: |
+        echo "GOPATH=${GOPATH:-$HOME/go}" >> "$GITHUB_ENV"
+        echo "TERM=dumb" >> "$GITHUB_ENV"
