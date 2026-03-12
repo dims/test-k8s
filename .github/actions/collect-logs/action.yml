@@ -1,5 +1,5 @@
 name: Collect and upload logs
-description: Gather test artifacts and logs on failure and upload them
+description: Gather test artifacts and logs and upload them
 
 inputs:
   name:
@@ -12,28 +12,41 @@ inputs:
 runs:
   using: composite
   steps:
+    - name: Merge ARTIFACTS output
+      shell: bash
+      run: |
+        artifacts_dir="${{ inputs.artifacts-dir }}"
+
+        mkdir -p "${artifacts_dir}"
+
+        if [ -d /tmp/_artifacts ] && [ "/tmp/_artifacts" != "${artifacts_dir}" ]; then
+          sudo cp -R /tmp/_artifacts/. "${artifacts_dir}/" 2>/dev/null || true
+        fi
+
     - name: Collect Logs
       if: failure()
       shell: bash
       run: |
-        mkdir -p "${{ inputs.artifacts-dir }}"
+        artifacts_dir="${{ inputs.artifacts-dir }}"
+        mkdir -p "${artifacts_dir}"
+
         # Capture Docker daemon logs if available
         if systemctl is-active docker &>/dev/null; then
-          sudo journalctl -u docker --no-pager > "${{ inputs.artifacts-dir }}/docker.log" 2>/dev/null || true
+          sudo journalctl -u docker --no-pager > "${artifacts_dir}/docker.log" 2>/dev/null || true
         fi
         # Capture containerd logs if available
         if systemctl is-active containerd &>/dev/null; then
-          sudo journalctl -u containerd --no-pager > "${{ inputs.artifacts-dir }}/containerd.log" 2>/dev/null || true
+          sudo journalctl -u containerd --no-pager > "${artifacts_dir}/containerd.log" 2>/dev/null || true
         fi
         # Capture kubelet logs if available
         KUBELET_LOG=$(sudo find /tmp/_artifacts -name "kubelet.log" 2>/dev/null | head -n 1)
         if [ -f "$KUBELET_LOG" ]; then
-          sudo cp "$KUBELET_LOG" "${{ inputs.artifacts-dir }}/kubelet.log"
+          sudo cp "$KUBELET_LOG" "${artifacts_dir}/kubelet.log"
         fi
 
     - name: Upload Artifacts
-      if: failure()
       uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6.0.0
       with:
         name: ${{ inputs.name }}
         path: ${{ inputs.artifacts-dir }}/
+        if-no-files-found: ignore

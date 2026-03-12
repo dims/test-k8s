@@ -23,6 +23,7 @@ jobs:
     runs-on: ubuntu-24.04
     timeout-minutes: 30
     env:
+      ARTIFACTS: ${{ github.workspace }}/_artifacts
       GOPATH: ${{ github.workspace }}/go
     steps:
       - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
@@ -39,6 +40,7 @@ jobs:
         working-directory: go/src/k8s.io/kubernetes
         run: make verify WHAT="external-dependencies-version vendor vendor-licenses"
       - uses: ./.github/actions/collect-logs
-        if: failure()
+        if: always()
         with:
+          artifacts-dir: ${{ env.ARTIFACTS }}
           name: dependencies-logs

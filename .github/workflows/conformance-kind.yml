@@ -23,6 +23,7 @@ jobs:
     runs-on: ubuntu-24.04
     timeout-minutes: 75
     env:
+      ARTIFACTS: ${{ github.workspace }}/_artifacts
       GOPATH: ${{ github.workspace }}/go
     steps:
       - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
@@ -42,9 +43,9 @@ jobs:
           FEATURE_GATES: '{"AllAlpha":false,"AllBeta":false}'
           RUNTIME_CONFIG: '{"api/alpha":"false","api/beta":"false"}'
           PARALLEL: "true"
-          ARTIFACTS: ${{ github.workspace }}/_artifacts
         run: e2e-k8s.sh
       - uses: ./.github/actions/collect-logs
-        if: failure()
+        if: always()
         with:
+          artifacts-dir: ${{ env.ARTIFACTS }}
           name: conformance-kind-logs

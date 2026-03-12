@@ -23,6 +23,7 @@ jobs:
     runs-on: ubuntu-24.04
     timeout-minutes: 75
     env:
+      ARTIFACTS: ${{ github.workspace }}/_artifacts
       GOPATH: ${{ github.workspace }}/go
     steps:
       - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
@@ -41,9 +42,9 @@ jobs:
         env:
           LABEL_FILTER: "Feature: isEmpty && !Slow && !Disruptive && !Flaky"
           PARALLEL: "true"
-          ARTIFACTS: ${{ github.workspace }}/_artifacts
         run: e2e-k8s.sh
       - uses: ./.github/actions/collect-logs
-        if: failure()
+        if: always()
         with:
+          artifacts-dir: ${{ env.ARTIFACTS }}
           name: e2e-kind-logs
