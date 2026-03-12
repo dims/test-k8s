@@ -1,0 +1,38 @@
+name: Report Revisions
+description: Print the Kubernetes and containerd revisions being tested
+
+inputs:
+  kubernetes-repo:
+    description: Kubernetes repository (owner/repo)
+    required: true
+  kubernetes-ref:
+    description: Kubernetes git ref from config.yaml
+    required: true
+  kubernetes-sha:
+    description: Resolved Kubernetes commit SHA
+    required: true
+  containerd-repo:
+    description: containerd repository (owner/repo)
+    required: true
+  containerd-ref:
+    description: containerd git ref from config.yaml
+    required: true
+  containerd-sha:
+    description: Resolved containerd commit SHA
+    required: true
+
+runs:
+  using: composite
+  steps:
+    - name: Print tested revisions
+      shell: bash
+      run: |
+        echo "Kubernetes: ${{ inputs.kubernetes-repo }} @ ${{ inputs.kubernetes-ref }} => ${{ inputs.kubernetes-sha }}"
+        echo "containerd: ${{ inputs.containerd-repo }} @ ${{ inputs.containerd-ref }} => ${{ inputs.containerd-sha }}"
+        echo "::notice title=Test revisions::Kubernetes ${{ inputs.kubernetes-sha }} | containerd ${{ inputs.containerd-sha }}"
+        {
+          echo "### Test revisions"
+          echo
+          echo "- Kubernetes: \`${{ inputs.kubernetes-repo }}@${{ inputs.kubernetes-ref }} => ${{ inputs.kubernetes-sha }}\`"
+          echo "- containerd: \`${{ inputs.containerd-repo }}@${{ inputs.containerd-ref }} => ${{ inputs.containerd-sha }}\`"
+        } >> "$GITHUB_STEP_SUMMARY"

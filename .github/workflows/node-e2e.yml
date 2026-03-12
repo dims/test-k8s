@@ -13,6 +13,8 @@ on:
       - 'config.yaml'
       - '.github/actions/**'
       - '.github/workflows/node-e2e.yml'
+  schedule:
+    - cron: '0 */6 * * *'
   workflow_dispatch:
 
 permissions:
@@ -35,16 +37,25 @@ jobs:
         uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
         with:
           repository: ${{ steps.config.outputs.containerd-repo }}
-          ref: ${{ steps.config.outputs.containerd-ref }}
+          ref: ${{ steps.config.outputs.containerd-sha }}
           path: src/github.com/containerd/containerd
           fetch-depth: 0
 
       - uses: ./.github/actions/setup-kubernetes
         with:
           repository: ${{ steps.config.outputs.kubernetes-repo }}
-          ref: ${{ steps.config.outputs.kubernetes-ref }}
+          ref: ${{ steps.config.outputs.kubernetes-sha }}
           path: src/k8s.io/kubernetes
           fetch-depth: 0
+
+      - uses: ./.github/actions/report-revisions
+        with:
+          kubernetes-repo: ${{ steps.config.outputs.kubernetes-repo }}
+          kubernetes-ref: ${{ steps.config.outputs.kubernetes-ref }}
+          kubernetes-sha: ${{ steps.config.outputs.kubernetes-sha }}
+          containerd-repo: ${{ steps.config.outputs.containerd-repo }}
+          containerd-ref: ${{ steps.config.outputs.containerd-ref }}
+          containerd-sha: ${{ steps.config.outputs.containerd-sha }}
 
       - name: Set Up Environment
         run: |

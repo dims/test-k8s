@@ -13,6 +13,8 @@ on:
       - 'config.yaml'
       - '.github/actions/**'
       - '.github/workflows/cmd-tests.yml'
+  schedule:
+    - cron: '0 */6 * * *'
   workflow_dispatch:
 
 permissions:
@@ -33,9 +35,17 @@ jobs:
       - uses: ./.github/actions/setup-kubernetes
         with:
           repository: ${{ steps.config.outputs.kubernetes-repo }}
-          ref: ${{ steps.config.outputs.kubernetes-ref }}
+          ref: ${{ steps.config.outputs.kubernetes-sha }}
           path: go/src/k8s.io/kubernetes
           fetch-depth: 0
+      - uses: ./.github/actions/report-revisions
+        with:
+          kubernetes-repo: ${{ steps.config.outputs.kubernetes-repo }}
+          kubernetes-ref: ${{ steps.config.outputs.kubernetes-ref }}
+          kubernetes-sha: ${{ steps.config.outputs.kubernetes-sha }}
+          containerd-repo: ${{ steps.config.outputs.containerd-repo }}
+          containerd-ref: ${{ steps.config.outputs.containerd-ref }}
+          containerd-sha: ${{ steps.config.outputs.containerd-sha }}
       - name: Cmd Tests
         working-directory: go/src/k8s.io/kubernetes
         env:

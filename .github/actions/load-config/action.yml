@@ -8,12 +8,18 @@ outputs:
   kubernetes-ref:
     description: Kubernetes git ref
     value: ${{ steps.config.outputs.kubernetes-ref }}
+  kubernetes-sha:
+    description: Resolved Kubernetes commit SHA
+    value: ${{ steps.config.outputs.kubernetes-sha }}
   containerd-repo:
     description: containerd repository (owner/repo)
     value: ${{ steps.config.outputs.containerd-repo }}
   containerd-ref:
     description: containerd git ref
     value: ${{ steps.config.outputs.containerd-ref }}
+  containerd-sha:
+    description: Resolved containerd commit SHA
+    value: ${{ steps.config.outputs.containerd-sha }}
 
 runs:
   using: composite
@@ -21,8 +27,11 @@ runs:
     - name: Parse config.yaml
       id: config
       shell: bash
+      env:
+        GH_TOKEN: ${{ github.token }}
       run: |
         ruby <<'RUBY'
+        require "open3"
         require "yaml"
         require "uri"
 
@@ -31,12 +40,25 @@ runs:
           path.sub(/\.git$/, "")
         end
 
+        def resolve_sha(repo, ref)
+          stdout, status = Open3.capture2e("gh", "api", "repos/#{repo}/commits/#{ref}", "--jq", ".sha")
+          raise "failed to resolve #{repo}@#{ref}: #{stdout}" unless status.success?
+
+          stdout.strip
+        end
+
         cfg = YAML.load_file("config.yaml")
+        kubernetes_repo = repo_from_url(cfg.fetch("kubernetes").fetch("url"))
+        kubernetes_ref = cfg.fetch("kubernetes").fetch("ref")
+        containerd_repo = repo_from_url(cfg.fetch("containerd").fetch("url"))
+        containerd_ref = cfg.fetch("containerd").fetch("ref")
 
         File.open(ENV.fetch("GITHUB_OUTPUT"), "a") do |out|
-          out.puts("kubernetes-repo=#{repo_from_url(cfg.fetch("kubernetes").fetch("url"))}")
-          out.puts("kubernetes-ref=#{cfg.fetch("kubernetes").fetch("ref")}")
-          out.puts("containerd-repo=#{repo_from_url(cfg.fetch("containerd").fetch("url"))}")
-          out.puts("containerd-ref=#{cfg.fetch("containerd").fetch("ref")}")
+          out.puts("kubernetes-repo=#{kubernetes_repo}")
+          out.puts("kubernetes-ref=#{kubernetes_ref}")
+          out.puts("kubernetes-sha=#{resolve_sha(kubernetes_repo, kubernetes_ref)}")
+          out.puts("containerd-repo=#{containerd_repo}")
+          out.puts("containerd-ref=#{containerd_ref}")
+          out.puts("containerd-sha=#{resolve_sha(containerd_repo, containerd_ref)}")
         end
         RUBY
