@@ -1,8 +1,20 @@
 name: E2E (kind, alpha-beta-features)
 
 on:
+  push:
+    branches: [main]
+    paths:
+      - 'config.yaml'
+      - '.github/actions/**'
+      - '.github/workflows/e2e-kind-alpha-beta-features.yml'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'config.yaml'
+      - '.github/actions/**'
+      - '.github/workflows/e2e-kind-alpha-beta-features.yml'
   schedule:
-    - cron: '23 7 * * *'
+    - cron: '0 */6 * * *'
   workflow_dispatch:
 
 permissions:
