@@ -24,41 +24,45 @@ outputs:
 runs:
   using: composite
   steps:
+    - name: Install yq
+      if: ${{ !hashFiles('/usr/bin/yq', '/usr/local/bin/yq') }}
+      shell: bash
+      run: |
+        if ! command -v yq &>/dev/null; then
+          sudo wget -qO /usr/local/bin/yq https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64
+          sudo chmod +x /usr/local/bin/yq
+        fi
     - name: Parse config.yaml
       id: config
       shell: bash
       env:
         GH_TOKEN: ${{ github.token }}
       run: |
-        ruby <<'RUBY'
-        require "open3"
-        require "yaml"
-        require "uri"
+        repo_from_url() {
+          echo "$1" | sed -E 's|^https?://[^/]+/||; s|\.git$||'
+        }
 
-        def repo_from_url(url)
-          path = URI.parse(url).path.sub(%r{^/}, "")
-          path.sub(/\.git$/, "")
-        end
+        resolve_sha() {
+          local repo="$1" ref="$2"
+          sha=$(gh api "repos/${repo}/commits/${ref}" --jq '.sha') || {
+            echo "failed to resolve ${repo}@${ref}" >&2; exit 1
+          }
+          echo "$sha"
+        }
 
-        def resolve_sha(repo, ref)
-          stdout, status = Open3.capture2e("gh", "api", "repos/#{repo}/commits/#{ref}", "--jq", ".sha")
-          raise "failed to resolve #{repo}@#{ref}: #{stdout}" unless status.success?
+        kubernetes_url=$(yq '.kubernetes.url' config.yaml)
+        kubernetes_ref=$(yq '.kubernetes.ref' config.yaml)
+        kubernetes_repo=$(repo_from_url "$kubernetes_url")
 
-          stdout.strip
-        end
+        containerd_url=$(yq '.containerd.url' config.yaml)
+        containerd_ref=$(yq '.containerd.ref' config.yaml)
+        containerd_repo=$(repo_from_url "$containerd_url")
 
-        cfg = YAML.load_file("config.yaml")
-        kubernetes_repo = repo_from_url(cfg.fetch("kubernetes").fetch("url"))
-        kubernetes_ref = cfg.fetch("kubernetes").fetch("ref")
-        containerd_repo = repo_from_url(cfg.fetch("containerd").fetch("url"))
-        containerd_ref = cfg.fetch("containerd").fetch("ref")
-
-        File.open(ENV.fetch("GITHUB_OUTPUT"), "a") do |out|
-          out.puts("kubernetes-repo=#{kubernetes_repo}")
-          out.puts("kubernetes-ref=#{kubernetes_ref}")
-          out.puts("kubernetes-sha=#{resolve_sha(kubernetes_repo, kubernetes_ref)}")
-          out.puts("containerd-repo=#{containerd_repo}")
-          out.puts("containerd-ref=#{containerd_ref}")
-          out.puts("containerd-sha=#{resolve_sha(containerd_repo, containerd_ref)}")
-        end
-        RUBY
+        {
+          echo "kubernetes-repo=${kubernetes_repo}"
+          echo "kubernetes-ref=${kubernetes_ref}"
+          echo "kubernetes-sha=$(resolve_sha "$kubernetes_repo" "$kubernetes_ref")"
+          echo "containerd-repo=${containerd_repo}"
+          echo "containerd-ref=${containerd_ref}"
+          echo "containerd-sha=$(resolve_sha "$containerd_repo" "$containerd_ref")"
+        } >> "$GITHUB_OUTPUT"
