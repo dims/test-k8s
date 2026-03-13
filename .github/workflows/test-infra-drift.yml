@@ -2,7 +2,9 @@ name: Test-Infra Drift
 
 on:
   push:
-    branches: [main]
+    branches:
+      - main
+      - 'pull-request/[0-9]*'
     paths:
       - 'Makefile'
       - 'scripts/**'
@@ -26,7 +28,7 @@ permissions:
 
 jobs:
   drift:
-    runs-on: ubuntu-24.04
+    runs-on: ${{ github.repository == 'dims/test-k8s' && 'ubuntu-24.04' || 'linux-amd64-cpu8' }}
     timeout-minutes: 20
     steps:
       - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1

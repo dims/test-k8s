@@ -2,7 +2,9 @@ name: E2E (kind, alpha-beta-features)
 
 on:
   push:
-    branches: [main]
+    branches:
+      - main
+      - 'pull-request/[0-9]*'
     paths:
       - 'config.yaml'
       - '.github/actions/**'
@@ -24,7 +26,7 @@ permissions:
 
 jobs:
   e2e-kind-alpha-beta-features:
-    runs-on: ubuntu-24.04
+    runs-on: ${{ github.repository == 'dims/test-k8s' && 'ubuntu-24.04' || 'linux-amd64-cpu16' }}
     timeout-minutes: 75
     env:
       ARTIFACTS: ${{ github.workspace }}/_artifacts

@@ -2,7 +2,9 @@ name: Unit Tests
 
 on:
   push:
-    branches: [main]
+    branches:
+      - main
+      - 'pull-request/[0-9]*'
     paths:
       - 'config.yaml'
       - '.github/actions/**'
@@ -24,7 +26,7 @@ permissions:
 
 jobs:
   unit:
-    runs-on: ubuntu-24.04
+    runs-on: ${{ github.repository == 'dims/test-k8s' && 'ubuntu-24.04' || 'linux-amd64-cpu8' }}
     timeout-minutes: 90
     env:
       ARTIFACTS: ${{ github.workspace }}/_artifacts
