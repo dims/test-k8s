@@ -1,0 +1,43 @@
+name: Set up runner dependencies
+description: Ensure NFS utilities, loop devices, and inotify limits are available
+
+runs:
+  using: composite
+  steps:
+    - name: Install NFS utilities
+      shell: bash
+      run: |
+        missing=()
+        dpkg -s nfs-common &>/dev/null || missing+=(nfs-common)
+        dpkg -s nfs-kernel-server &>/dev/null || missing+=(nfs-kernel-server)
+        if [ ${#missing[@]} -gt 0 ]; then
+          echo "Installing ${missing[*]}..."
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq "${missing[@]}"
+        fi
+
+    - name: Load kernel modules
+      shell: bash
+      run: |
+        for mod in nfs nfsd nfs_common sunrpc lockd loop; do
+          if ! lsmod | grep -qw "$mod"; then
+            sudo modprobe "$mod" 2>/dev/null || echo "::warning::Could not load kernel module $mod"
+          fi
+        done
+        echo "Loaded NFS-related modules:"
+        lsmod | grep -E "nfs|sunrpc|lockd" || echo "::warning::No NFS kernel modules found"
+
+    - name: Ensure loop devices exist
+      shell: bash
+      run: |
+        for i in $(seq 0 15); do
+          if [ ! -e "/dev/loop$i" ]; then
+            sudo mknod "/dev/loop$i" b 7 "$i"
+          fi
+        done
+
+    - name: Increase inotify limits
+      shell: bash
+      run: |
+        sudo sysctl -w fs.inotify.max_user_instances=8192 -q
+        sudo sysctl -w fs.inotify.max_user_watches=524288 -q

@@ -34,6 +34,7 @@ jobs:
       - id: config
         uses: ./.github/actions/load-config
       - uses: ./.github/actions/cleanup-disk
+      - uses: ./.github/actions/setup-runner
       - uses: ./.github/actions/setup-kubernetes
         with:
           repository: ${{ steps.config.outputs.kubernetes-repo }}
