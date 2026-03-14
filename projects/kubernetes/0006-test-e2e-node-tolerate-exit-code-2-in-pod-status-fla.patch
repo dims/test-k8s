@@ -1,0 +1,39 @@
+From c5c46739012cf0d76173e122e1e6e01070facc3e Mon Sep 17 00:00:00 2001
+From: Davanum Srinivas <davanum@gmail.com>
+Date: Sat, 14 Mar 2026 14:31:46 -0400
+Subject: [PATCH] test/e2e/node: tolerate exit code 2 in pod status flake
+
+The fast-delete pod status tests currently require the intentionally failing "fail" container to report exit code 1. In CI, some runtimes occasionally report exit code 2 with reason=Error even though the tested invariant still holds: the container failed and the blocked workload container never started.
+
+The latest dims/test-k8s failure on master showed exactly that state: the pod remained Failed, Initialized=False, the blocked container reported started=false, and only the failing init container drifted from exit 1 to exit 2. This matches kubernetes/kubernetes#135713 and the related pending-container history in #131605.
+
+Accept exit code 2 in this verifier so the test continues to assert the behavior it is meant to cover instead of a lower-layer exit-code detail.
+
+Fixes #135713
+
+Tested:
+- hack/verify-gofmt.sh
+- hack/verify-test-code.sh
+- hack/verify-typecheck.sh ./test/e2e/node/...
+- go test ./test/e2e/node -run TestNonExistent -count=1
+---
+ test/e2e/node/pods.go | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/test/e2e/node/pods.go b/test/e2e/node/pods.go
+index c61fcb6507e..64e6343e962 100644
+--- a/test/e2e/node/pods.go
++++ b/test/e2e/node/pods.go
+@@ -1001,6 +1001,9 @@ func (v *podStartVerifier) Verify(event watch.Event) error {
+ 		switch {
+ 		case t.ExitCode == 1:
+ 			// expected
++		case t.ExitCode == 2 && t.Reason == "Error":
++			// Some runtimes occasionally surface /bin/false as exit code 2 in these
++			// fast-delete scenarios. The test only cares that the container failed.
+ 		case t.ExitCode == 137 && (t.Reason == "ContainerStatusUnknown" || t.Reason == "Error"):
+ 			// expected, pod was force-killed after grace period
+ 		case t.ExitCode == 128 && (t.Reason == "StartError" || t.Reason == "ContainerCannotRun") && reBug88766.MatchString(t.Message):
+-- 
+2.50.1 (Apple Git-155)
+
