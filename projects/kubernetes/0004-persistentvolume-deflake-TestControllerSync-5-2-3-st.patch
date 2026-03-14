@@ -1,8 +1,23 @@
-From c8b2fc16b32cdcec013ca2e98332d775dd621306 Mon Sep 17 00:00:00 2001
+From 3f07ff2345ca39c15c3f59999a59ab3e4c2bbcfd Mon Sep 17 00:00:00 2001
 From: Davanum Srinivas <davanum@gmail.com>
-Date: Sat, 14 Mar 2026 09:49:13 -0400
+Date: Sat, 14 Mar 2026 10:11:47 -0400
 Subject: [PATCH 4/5] persistentvolume: deflake TestControllerSync 5-2-3
+ startup race
 
+Subtest 5-2-3 starts the controller with both the claim and the volume
+already present and with the volume annotated as controller-bound. That
+setup depends on watch/list ordering during controller startup: if the
+initial objects are observed in a different order, the test can time out
+even though the controller later converges to the expected state.
+
+Model the scenario more explicitly. Start with the unbound volume only,
+then inject the claim through AddClaimEvent after the controller is
+running. Also drop the pre-set controller-bound annotation from the
+initial volume since the binding is what the test wants the controller to
+establish.
+
+Tested:
+go test -race ./pkg/controller/volume/persistentvolume -run TestControllerSync -count=50
 ---
  .../volume/persistentvolume/pv_controller_test.go           | 6 ++++--
  1 file changed, 4 insertions(+), 2 deletions(-)

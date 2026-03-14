@@ -1,8 +1,20 @@
-From a9a03323bec521fff55642d205d3902a195d968e Mon Sep 17 00:00:00 2001
+From 3f3eb08cd0a673fa04124f48578d17ce30a39d90 Mon Sep 17 00:00:00 2001
 From: Davanum Srinivas <davanum@gmail.com>
-Date: Sat, 14 Mar 2026 09:49:07 -0400
-Subject: [PATCH 2/5] kubectl/drain: deflake namespace terminating retry test
+Date: Sat, 14 Mar 2026 10:11:26 -0400
+Subject: [PATCH 2/5] kubectl/drain: widen namespace termination retry timeout
 
+TestEvictDuringNamespaceTerminating intentionally exercises the retry path
+but only allows 10ms of total time. The production loop sleeps, refreshes
+state, and retries under that same deadline, so a single retry plus
+scheduler jitter is enough to exhaust the budget under -race or on busy
+CI workers.
+
+Keep the retry interval small so the test still covers the retry behavior,
+but widen the overall timeout so the assertion measures semantics instead
+of machine speed.
+
+Tested:
+go test -race ./staging/src/k8s.io/kubectl/pkg/drain -run TestEvictDuringNamespaceTerminating -count=100
 ---
  staging/src/k8s.io/kubectl/pkg/drain/drain_test.go | 4 +++-
  1 file changed, 3 insertions(+), 1 deletion(-)

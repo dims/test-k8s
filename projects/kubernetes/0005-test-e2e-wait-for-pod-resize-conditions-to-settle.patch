@@ -1,8 +1,22 @@
-From 71b7438d42db2f6dbb6b07d3742977054e89489d Mon Sep 17 00:00:00 2001
+From 46ec62f917312aa161498574c3a7396b5bd6122c Mon Sep 17 00:00:00 2001
 From: Davanum Srinivas <davanum@gmail.com>
-Date: Sat, 14 Mar 2026 09:49:20 -0400
-Subject: [PATCH 5/5] test/e2e: deflake pod resize condition verification
+Date: Sat, 14 Mar 2026 10:11:58 -0400
+Subject: [PATCH 5/5] test/e2e: wait for pod resize conditions to settle
 
+WaitForPodResizeActuation can return once the kubelet has applied the new
+resources even though the apiserver still briefly reports
+PodResizeInProgress on a subsequent GET. ExpectPodResized immediately
+re-fetches the pod and treats that transient condition as a hard failure,
+which flakes the resize suites when status updates arrive out of order.
+
+After actuation succeeds, keep polling the pod until the resource checks
+pass and the resize conditions have cleared on a fresh read. This matches
+what the helper is trying to assert: the resize is complete and the pod
+status has settled, not just that one intermediate poll happened to look
+clean.
+
+Tested:
+go test ./test/e2e/common/node/framework/podresize -run TestNonExistent
 ---
  .../common/node/framework/podresize/resize.go | 27 +++++++++++++++++++
  1 file changed, 27 insertions(+)

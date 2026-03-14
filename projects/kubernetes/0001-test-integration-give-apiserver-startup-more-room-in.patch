@@ -1,8 +1,17 @@
-From e219002cab678619b88d49e2c78fce528b1aa82b Mon Sep 17 00:00:00 2001
+From 76aa8ac9ef2aad414367ae4aee72eb3f64ae1d3d Mon Sep 17 00:00:00 2001
 From: Davanum Srinivas <davanum@gmail.com>
-Date: Sat, 14 Mar 2026 09:49:03 -0400
-Subject: [PATCH 1/5] test/integration: allow more time for apiserver startup
+Date: Sat, 14 Mar 2026 10:11:11 -0400
+Subject: [PATCH 1/5] test/integration: give apiserver startup more room in CI
 
+Integration flakes on slower runners fail before the local test server
+ever becomes healthy. In those failures the embedded etcd/apiserver pair
+is still starting, the health probe keeps seeing connection refused, and
+the framework hits the hard 10s PollImmediate timeout in StartTestServer.
+
+The framework only needs to wait a bit longer for bootstrap; once the
+server is up, the test behavior is unchanged. Raise the startup budget to
+30s so slow or contended environments do not fail before RBAC bootstrap
+finishes.
 ---
  test/integration/framework/test_server.go | 4 +++-
  1 file changed, 3 insertions(+), 1 deletion(-)

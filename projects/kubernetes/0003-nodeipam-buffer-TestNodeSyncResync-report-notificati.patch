@@ -1,8 +1,21 @@
-From cb878e43063fecd4ee9121323aa5bde045af1969 Mon Sep 17 00:00:00 2001
+From 1f8ee538ce3ff99ba34767ef167ee540e6bd17a5 Mon Sep 17 00:00:00 2001
 From: Davanum Srinivas <davanum@gmail.com>
-Date: Sat, 14 Mar 2026 09:49:10 -0400
-Subject: [PATCH 3/5] nodeipam: deflake TestNodeSyncResync shutdown race
+Date: Sat, 14 Mar 2026 10:11:38 -0400
+Subject: [PATCH 3/5] nodeipam: buffer TestNodeSyncResync report notifications
 
+TestNodeSyncResync closes opChan after observing the first resync and then
+waits for the loop to exit. There is still a small window where the 1ms
+resync timer fires again before the select notices the closed channel.
+When that happens ReportResult sends a second notification on the
+unbuffered reportChan, the loop blocks in the send, and the test waits
+forever on doneChan.
+
+Allow one queued notification so the loop can drain that race and reach
+the closed opChan case. The test still validates that a resync happened;
+it just stops depending on exact scheduling between two ready events.
+
+Tested:
+go test -race ./pkg/controller/nodeipam/ipam/sync -run TestNodeSyncResync -count=200
 ---
  pkg/controller/nodeipam/ipam/sync/sync_test.go | 6 ++++--
  1 file changed, 4 insertions(+), 2 deletions(-)
