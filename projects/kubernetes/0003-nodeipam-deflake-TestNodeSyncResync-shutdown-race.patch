@@ -1,0 +1,29 @@
+From cb878e43063fecd4ee9121323aa5bde045af1969 Mon Sep 17 00:00:00 2001
+From: Davanum Srinivas <davanum@gmail.com>
+Date: Sat, 14 Mar 2026 09:49:10 -0400
+Subject: [PATCH 3/5] nodeipam: deflake TestNodeSyncResync shutdown race
+
+---
+ pkg/controller/nodeipam/ipam/sync/sync_test.go | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
+
+diff --git a/pkg/controller/nodeipam/ipam/sync/sync_test.go b/pkg/controller/nodeipam/ipam/sync/sync_test.go
+index baff7abe2d7..1737d10e917 100644
+--- a/pkg/controller/nodeipam/ipam/sync/sync_test.go
++++ b/pkg/controller/nodeipam/ipam/sync/sync_test.go
+@@ -231,8 +231,10 @@ func TestNodeSyncResync(t *testing.T) {
+ 	fake := &fakeAPIs{
+ 		nodeRet:       nodeWithCIDRRange,
+ 		resyncTimeout: time.Millisecond,
+-		reportChan:    make(chan struct{}),
+-		logger:        logger,
++		// Allow one extra resync notification to land while the test is
++		// closing the loop down.
++		reportChan: make(chan struct{}, 1),
++		logger:     logger,
+ 	}
+ 	cidr, _ := cidrset.NewCIDRSet(clusterCIDRRange, 24)
+ 	sync := New(fake, fake, fake, SyncFromCluster, "node1", cidr)
+-- 
+2.50.1 (Apple Git-155)
+

@@ -1,0 +1,50 @@
+From 71b7438d42db2f6dbb6b07d3742977054e89489d Mon Sep 17 00:00:00 2001
+From: Davanum Srinivas <davanum@gmail.com>
+Date: Sat, 14 Mar 2026 09:49:20 -0400
+Subject: [PATCH 5/5] test/e2e: deflake pod resize condition verification
+
+---
+ .../common/node/framework/podresize/resize.go | 27 +++++++++++++++++++
+ 1 file changed, 27 insertions(+)
+
+diff --git a/test/e2e/common/node/framework/podresize/resize.go b/test/e2e/common/node/framework/podresize/resize.go
+index 0ccee72ea16..4af934d37f5 100644
+--- a/test/e2e/common/node/framework/podresize/resize.go
++++ b/test/e2e/common/node/framework/podresize/resize.go
+@@ -406,6 +406,33 @@ func WaitForPodResizeActuation(ctx context.Context, f *framework.Framework, podC
+ func ExpectPodResized(ctx context.Context, f *framework.Framework, resizedPod *v1.Pod, expectedContainers []ResizableContainerInfo) {
+ 	ginkgo.GinkgoHelper()
+ 
++	// Pod resize conditions can briefly reappear after WaitForPodResizeActuation
++	// returns. Re-read until the pod status settles again before asserting the
++	// final resize state.
++	framework.ExpectNoError(framework.Gomega().
++		Eventually(ctx, framework.RetryNotFound(framework.GetObject(f.ClientSet.CoreV1().Pods(resizedPod.Namespace).Get, resizedPod.Name, metav1.GetOptions{}))).
++		WithTimeout(framework.PollShortTimeout).
++		Should(framework.MakeMatcher(func(pod *v1.Pod) (func() string, error) {
++			if resourceErrs := VerifyPodStatusResources(pod, expectedContainers); resourceErrs != nil {
++				return func() string {
++					return fmt.Sprintf("container status resources don't match expected: %v", formatErrors(resourceErrs))
++				}, nil
++			}
++			for _, condition := range pod.Status.Conditions {
++				if condition.Type == v1.PodResizeInProgress || condition.Type == v1.PodResizePending {
++					return func() string {
++						return fmt.Sprintf("resize status %v is still present in the pod status", condition)
++					}, nil
++				}
++			}
++			return nil, nil
++		})),
++	)
++
++	refreshedPod, err := framework.GetObject(f.ClientSet.CoreV1().Pods(resizedPod.Namespace).Get, resizedPod.Name, metav1.GetOptions{})(ctx)
++	framework.ExpectNoError(err, "failed to refresh resized pod")
++	resizedPod = refreshedPod
++
+ 	// Verify Pod Containers Cgroup Values
+ 	var errs []error
+ 
+-- 
+2.50.1 (Apple Git-155)
+

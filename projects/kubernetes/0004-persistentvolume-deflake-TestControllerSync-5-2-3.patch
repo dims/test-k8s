@@ -1,0 +1,34 @@
+From c8b2fc16b32cdcec013ca2e98332d775dd621306 Mon Sep 17 00:00:00 2001
+From: Davanum Srinivas <davanum@gmail.com>
+Date: Sat, 14 Mar 2026 09:49:13 -0400
+Subject: [PATCH 4/5] persistentvolume: deflake TestControllerSync 5-2-3
+
+---
+ .../volume/persistentvolume/pv_controller_test.go           | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
+
+diff --git a/pkg/controller/volume/persistentvolume/pv_controller_test.go b/pkg/controller/volume/persistentvolume/pv_controller_test.go
+index 28d02080dda..6aaef718344 100644
+--- a/pkg/controller/volume/persistentvolume/pv_controller_test.go
++++ b/pkg/controller/volume/persistentvolume/pv_controller_test.go
+@@ -85,13 +85,15 @@ func TestControllerSync(t *testing.T) {
+ 		},
+ 		{
+ 			name:            "5-2-3 - complete bind when PV and PVC both exist and PV has AnnPreResizeCapacity annotation",
+-			initialVolumes:  volumesWithAnnotation(util.AnnPreResizeCapacity, "1Gi", newVolumeArray("volume5-2", "2Gi", "", "", v1.VolumeAvailable, v1.PersistentVolumeReclaimRetain, classEmpty, volume.AnnBoundByController)),
++			initialVolumes:  volumesWithAnnotation(util.AnnPreResizeCapacity, "1Gi", newVolumeArray("volume5-2", "2Gi", "", "", v1.VolumeAvailable, v1.PersistentVolumeReclaimRetain, classEmpty)),
+ 			expectedVolumes: volumesWithAnnotation(util.AnnPreResizeCapacity, "1Gi", newVolumeArray("volume5-2", "2Gi", "uid5-2", "claim5-2", v1.VolumeBound, v1.PersistentVolumeReclaimRetain, classEmpty, volume.AnnBoundByController)),
+-			initialClaims:   withExpectedCapacity("2Gi", newClaimArray("claim5-2", "uid5-2", "2Gi", "", v1.ClaimPending, nil)),
++			initialClaims:   noclaims,
+ 			expectedClaims:  withExpectedCapacity("1Gi", newClaimArray("claim5-2", "uid5-2", "2Gi", "volume5-2", v1.ClaimBound, nil, volume.AnnBoundByController, volume.AnnBindCompleted)),
+ 			expectedEvents:  noevents,
+ 			errors:          noerrors,
+ 			test: func(ctrl *PersistentVolumeController, reactor *pvtesting.VolumeReactor, test controllerTest) error {
++				claim := withExpectedCapacity("2Gi", newClaimArray("claim5-2", "uid5-2", "2Gi", "", v1.ClaimPending, nil))[0]
++				reactor.AddClaimEvent(claim)
+ 				return nil
+ 			},
+ 		},
+-- 
+2.50.1 (Apple Git-155)
+

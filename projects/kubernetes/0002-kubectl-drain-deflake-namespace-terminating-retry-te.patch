@@ -1,0 +1,27 @@
+From a9a03323bec521fff55642d205d3902a195d968e Mon Sep 17 00:00:00 2001
+From: Davanum Srinivas <davanum@gmail.com>
+Date: Sat, 14 Mar 2026 09:49:07 -0400
+Subject: [PATCH 2/5] kubectl/drain: deflake namespace terminating retry test
+
+---
+ staging/src/k8s.io/kubectl/pkg/drain/drain_test.go | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+diff --git a/staging/src/k8s.io/kubectl/pkg/drain/drain_test.go b/staging/src/k8s.io/kubectl/pkg/drain/drain_test.go
+index 373241054b6..60fabb9f01d 100644
+--- a/staging/src/k8s.io/kubectl/pkg/drain/drain_test.go
++++ b/staging/src/k8s.io/kubectl/pkg/drain/drain_test.go
+@@ -536,7 +536,9 @@ func TestEvictDuringNamespaceTerminating(t *testing.T) {
+ 	testNamespace := "default"
+ 
+ 	retryDelay := 5 * time.Millisecond
+-	globalTimeout := 2 * retryDelay
++	// Give the helper enough room for a retry plus scheduler jitter on loaded CI
++	// hosts. A 10ms total timeout is too small under -race.
++	globalTimeout := 20 * retryDelay
+ 
+ 	tests := []struct {
+ 		description string
+-- 
+2.50.1 (Apple Git-155)
+
