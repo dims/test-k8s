@@ -1,0 +1,85 @@
+From afed0bd683faefe4643e53b5841a017e8950a571 Mon Sep 17 00:00:00 2001
+From: Davanum Srinivas <davanum@gmail.com>
+Date: Sun, 15 Mar 2026 15:59:43 -0400
+Subject: [PATCH] test/e2e: count PLR pod-level limit restarts in expectations
+
+The PLR alpha/beta lane is still failing on the guaranteed "only pod-level cpu" case even after the earlier convergence deflake. The failing pod has already reached the expected pod-level cgroup values, but both c1 and c1-init report restartCount 1 while the test still expects 0.
+
+That expectation is inconsistent with kubelet's resize logic. computePodResizeAction derives each container's effective desired resources from both the container resources and pod.Spec.Resources. A pod-level limit-only resize therefore changes the effective container limit, and a RestartContainer policy on that resource can legitimately restart the container even when the container's own resource stanza is unchanged.
+
+Update the PLR expectations to count those restarts for the guaranteed and burstable pod-level limit cases. This keeps the e2e aligned with kubelet's effective-resource calculation instead of treating those restarts as flakes.
+
+Tested:
+- hack/verify-gofmt.sh
+- hack/verify-test-code.sh
+- hack/verify-typecheck.sh ./test/e2e/common/node/...
+- go test ./test/e2e/common/node/... -run TestNonExistent -count=1
+---
+ .../common/node/pod_level_resources_resize.go | 37 +++++++++++--------
+ 1 file changed, 21 insertions(+), 16 deletions(-)
+
+diff --git a/test/e2e/common/node/pod_level_resources_resize.go b/test/e2e/common/node/pod_level_resources_resize.go
+index e4695f2dd76..33cf28ebca4 100644
+--- a/test/e2e/common/node/pod_level_resources_resize.go
++++ b/test/e2e/common/node/pod_level_resources_resize.go
+@@ -41,6 +41,15 @@ import (
+ 	"github.com/onsi/ginkgo/v2"
+ )
+ 
++// Pod-level limits participate in the container's effective desired resources,
++// so a pod-level limit-only resize can still require a container restart.
++func expectRestartForPolicy(policy v1.ResourceResizeRestartPolicy, containerChanged, podLevelLimitChanged bool) int32 {
++	if policy == v1.RestartContainer && (containerChanged || podLevelLimitChanged) {
++		return 1
++	}
++	return 0
++}
++
+ // TODO(ndixita): de-dup tests and common helpers from test/e2e/common/node/pod_resize.go
+ func doGuaranteedPodLevelResizeTests(f *framework.Framework) {
+ 	ginkgo.DescribeTableSubtree("PLR guaranteed qos - 1 container with resize policy", func(cpuPolicy, memPolicy v1.ResourceResizeRestartPolicy, resizeInitCtrs bool) {
+@@ -76,14 +85,9 @@ func doGuaranteedPodLevelResizeTests(f *framework.Framework) {
+ 					expectedContainers[i] = c
+ 					continue
+ 				}
+-				// For containers where the resize policy is "restart", we expect a restart.
+-				expectRestart := int32(0)
+-				if cpuPolicy == v1.RestartContainer && desiredCtrCPU != originalCtrCPU {
+-					expectRestart = 1
+-				}
+-				if memPolicy == v1.RestartContainer && desiredCtrMem != originalCtrMem {
+-					expectRestart = 1
+-				}
++				cpuRestart := expectRestartForPolicy(cpuPolicy, desiredCtrCPU != originalCtrCPU, desiredPodCPU != "" && desiredPodCPU != originalCPU)
++				memRestart := expectRestartForPolicy(memPolicy, desiredCtrMem != originalCtrMem, desiredPodMem != "" && desiredPodMem != originalMem)
++				expectRestart := max(cpuRestart, memRestart)
+ 				c.RestartCount = expectRestart
+ 				expectedContainers[i] = c
+ 			}
+@@ -221,14 +225,15 @@ func doBurstablePodLevelResizeTests(f *framework.Framework) {
+ 			originalContainers := makeBurstableContainers(1, cpuPolicy, memPolicy, originalCPU, originalCPULimit, originalMem, originalMemLimit)
+ 			expectedContainers := makeBurstableContainers(1, cpuPolicy, memPolicy, desiredContainerResources.cpuReq, desiredContainerResources.cpuLim, desiredContainerResources.memReq, desiredContainerResources.memLim)
+ 			for i, c := range expectedContainers {
+-				// For containers where the resize policy is "restart", we expect a restart.
+-				expectRestart := int32(0)
+-				if cpuPolicy == v1.RestartContainer && (desiredContainerResources.cpuReq != originalCPU || desiredContainerResources.cpuLim != originalCPULimit) {
+-					expectRestart = 1
+-				}
+-				if memPolicy == v1.RestartContainer && (desiredContainerResources.memReq != originalMem || desiredContainerResources.memLim != originalMemLimit) {
+-					expectRestart = 1
+-				}
++				cpuRestart := expectRestartForPolicy(cpuPolicy,
++					desiredContainerResources.cpuReq != originalCPU || desiredContainerResources.cpuLim != originalCPULimit,
++					desiredPodLevelResources.cpuLim != "" && desiredPodLevelResources.cpuLim != originalCPULimit,
++				)
++				memRestart := expectRestartForPolicy(memPolicy,
++					desiredContainerResources.memReq != originalMem || desiredContainerResources.memLim != originalMemLimit,
++					desiredPodLevelResources.memLim != "" && desiredPodLevelResources.memLim != originalMemLimit,
++				)
++				expectRestart := max(cpuRestart, memRestart)
+ 				c.RestartCount = expectRestart
+ 				expectedContainers[i] = c
+ 			}
+-- 
+2.50.1 (Apple Git-155)
+
