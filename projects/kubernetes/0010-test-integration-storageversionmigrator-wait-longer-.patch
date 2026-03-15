@@ -1,0 +1,36 @@
+From a90d9b398eea2bd0a871af4f320da533a1dd8a96 Mon Sep 17 00:00:00 2001
+From: Davanum Srinivas <davanum@gmail.com>
+Date: Sun, 15 Mar 2026 11:27:55 -0400
+Subject: [PATCH 10/10] test/integration/storageversionmigrator: wait longer
+ for CRD updates
+
+waitForCRDUpdate polls discovery until the CRD serves the expected versions and reports the expected storage version hash. That helper currently gives the apiextensions and discovery controllers 60 seconds. The recent test-k8s failure in TestStorageVersionMigrationWithCRD timed out in that helper with 'Failed to update a CRD' and then passed on rerun on the same SHA, which points to CI convergence lag rather than a deterministic regression.
+
+Increase the wait budget to 2 minutes so the test keeps checking the same condition, but does not fail on slower controller and discovery propagation.
+
+Tested:
+- /opt/homebrew/bin/bash ./hack/verify-gofmt.sh
+- /opt/homebrew/bin/bash ./hack/verify-typecheck.sh ./test/integration/storageversionmigrator/...
+- go test ./test/integration/storageversionmigrator -run TestStorageVersionMigrationWithCRD -count=3
+---
+ test/integration/storageversionmigrator/util.go | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+diff --git a/test/integration/storageversionmigrator/util.go b/test/integration/storageversionmigrator/util.go
+index e2c64f593a5..4778a6b9fa2 100644
+--- a/test/integration/storageversionmigrator/util.go
++++ b/test/integration/storageversionmigrator/util.go
+@@ -800,7 +800,9 @@ func (svm *svmTest) waitForCRDUpdate(
+ 	err := wait.PollUntilContextTimeout(
+ 		ctx,
+ 		500*time.Millisecond,
+-		time.Second*60,
++		// CRD discovery and storage-version reporting can lag well beyond 1 minute
++		// on contended CI nodes while the apiextensions controllers converge.
++		2*time.Minute,
+ 		true,
+ 		func(ctx context.Context) (bool, error) {
+ 			apiGroups, _, err := svm.discoveryClient.ServerGroupsAndResources()
+-- 
+2.50.1 (Apple Git-155)
+

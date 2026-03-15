@@ -1,0 +1,53 @@
+From a3039037c05ac32261a457b6cb339e2dce2eaf79 Mon Sep 17 00:00:00 2001
+From: Davanum Srinivas <davanum@gmail.com>
+Date: Sun, 15 Mar 2026 11:27:36 -0400
+Subject: [PATCH 08/10] volumebinding: give binder test caches more time to
+ sync
+
+The binder tests update fake PV and PVC objects and then wait for the internal informer caches to observe the new resource versions before calling checkBindings. The helper only waits 3 seconds today, which is enough to fail intermittently on slower CI nodes even when the cache catches up a moment later. The recent test-k8s failure in TestCheckBindings/tolerate-provisioning-pvc-bound-pv-not-found timed out in updateClaims before the actual binding assertion ran.
+
+Raise the shared cache update timeout to 10 seconds so these tests still verify cache convergence, but stop depending on a 3 second wall-clock budget.
+
+Tested:
+- /opt/homebrew/bin/bash ./hack/verify-gofmt.sh
+- /opt/homebrew/bin/bash ./hack/verify-typecheck.sh ./pkg/scheduler/framework/plugins/volumebinding/...
+- go test -race ./pkg/scheduler/framework/plugins/volumebinding -run 'TestCheckBindings/tolerate-provisioning-pvc-bound-pv-not-found$' -count=100
+---
+ .../framework/plugins/volumebinding/binder_test.go         | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
+
+diff --git a/pkg/scheduler/framework/plugins/volumebinding/binder_test.go b/pkg/scheduler/framework/plugins/volumebinding/binder_test.go
+index d57bf0dd8b2..4f3c8323dda 100644
+--- a/pkg/scheduler/framework/plugins/volumebinding/binder_test.go
++++ b/pkg/scheduler/framework/plugins/volumebinding/binder_test.go
+@@ -48,6 +48,9 @@ import (
+ 	"k8s.io/kubernetes/pkg/scheduler/framework/plugins/feature"
+ )
+ 
++// Allow informer caches to observe API updates on slower CI nodes.
++const cacheUpdateTimeout = 10 * time.Second
++
+ var (
+ 	provisioner = "test-provisioner"
+ 
+@@ -334,7 +337,7 @@ func (env *testEnv) updateVolumes(ctx context.Context, pvs []*v1.PersistentVolum
+ 		}
+ 		pvs[i] = newPv
+ 	}
+-	return wait.PollUntilContextTimeout(ctx, 100*time.Millisecond, 3*time.Second, false, func(ctx context.Context) (bool, error) {
++	return wait.PollUntilContextTimeout(ctx, 100*time.Millisecond, cacheUpdateTimeout, false, func(ctx context.Context) (bool, error) {
+ 		for _, pv := range pvs {
+ 			pvInCache, err := env.internalBinder.pvCache.GetAPIObj(pv.Name)
+ 			if pvInCache == nil || err != nil {
+@@ -356,7 +359,7 @@ func (env *testEnv) updateClaims(ctx context.Context, pvcs []*v1.PersistentVolum
+ 		}
+ 		pvcs[i] = newPvc
+ 	}
+-	return wait.PollUntilContextTimeout(ctx, 100*time.Millisecond, 3*time.Second, false, func(ctx context.Context) (bool, error) {
++	return wait.PollUntilContextTimeout(ctx, 100*time.Millisecond, cacheUpdateTimeout, false, func(ctx context.Context) (bool, error) {
+ 		for _, pvc := range pvcs {
+ 			pvcInCache, err := env.internalBinder.pvcCache.GetAPIObj(getPVCName(pvc))
+ 			if pvcInCache == nil || err != nil {
+-- 
+2.50.1 (Apple Git-155)
+

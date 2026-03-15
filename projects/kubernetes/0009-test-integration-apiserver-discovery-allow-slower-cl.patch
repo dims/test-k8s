@@ -1,0 +1,36 @@
+From 995e6fe3ef072972201601f196ac4c68cb56252d Mon Sep 17 00:00:00 2001
+From: Davanum Srinivas <davanum@gmail.com>
+Date: Sun, 15 Mar 2026 11:27:47 -0400
+Subject: [PATCH 09/10] test/integration/apiserver/discovery: allow slower
+ cleanup in CI
+
+The declarative discovery integration tests use a single 30 second timeout for APIService cleanup, CRD cleanup, and discovery convergence checks. On contended CI runners that budget is sometimes too short. The recent test-k8s failure in TestCRD/Race timed out while waiting for v1.stable.example.com to disappear during cleanup, even though the next rerun on the same SHA passed.
+
+Increase the shared discovery test timeout to 60 seconds so the suite remains sensitive to real hangs, but no longer flakes on slow aggregator and API registration resync paths.
+
+Tested:
+- /opt/homebrew/bin/bash ./hack/verify-gofmt.sh
+- /opt/homebrew/bin/bash ./hack/verify-typecheck.sh ./test/integration/apiserver/discovery/...
+- go test ./test/integration/apiserver/discovery -run 'TestCRD/Race$' -count=10
+---
+ test/integration/apiserver/discovery/framework.go | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+diff --git a/test/integration/apiserver/discovery/framework.go b/test/integration/apiserver/discovery/framework.go
+index bb335f885d7..d2d2d857bea 100644
+--- a/test/integration/apiserver/discovery/framework.go
++++ b/test/integration/apiserver/discovery/framework.go
+@@ -46,7 +46,9 @@ const acceptV1JSON = "application/json"
+ const acceptV2JSON = "application/json;g=apidiscovery.k8s.io;v=v2;as=APIGroupDiscoveryList"
+ const acceptV2JSONNoPeer = "application/json;g=apidiscovery.k8s.io;v=v2;as=APIGroupDiscoveryList;profile=nopeer"
+ 
+-const maxTimeout = 30 * time.Second
++// Discovery integration tests frequently need to wait through aggregator and
++// API registration resync paths on contended CI nodes.
++const maxTimeout = 60 * time.Second
+ 
+ type testClient interface {
+ 	kubernetes.Interface
+-- 
+2.50.1 (Apple Git-155)
+
