@@ -1,0 +1,84 @@
+name: Patch Apply
+
+on:
+  push:
+    branches:
+      - main
+      - 'pull-request/[0-9]*'
+    paths:
+      - 'config.yaml'
+      - '.github/actions/**'
+      - 'projects/**'
+      - '.github/workflows/patch-apply.yml'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'config.yaml'
+      - '.github/actions/**'
+      - 'projects/**'
+      - '.github/workflows/patch-apply.yml'
+  schedule:
+    - cron: '0 */2 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  kubernetes-patches:
+    name: Kubernetes Patch Apply
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
+      - id: config
+        uses: ./.github/actions/load-config
+      - uses: ./.github/actions/report-revisions
+        with:
+          kubernetes-repo: ${{ steps.config.outputs.kubernetes-repo }}
+          kubernetes-ref: ${{ steps.config.outputs.kubernetes-ref }}
+          kubernetes-sha: ${{ steps.config.outputs.kubernetes-sha }}
+          containerd-repo: ${{ steps.config.outputs.containerd-repo }}
+          containerd-ref: ${{ steps.config.outputs.containerd-ref }}
+          containerd-sha: ${{ steps.config.outputs.containerd-sha }}
+      - name: Checkout Kubernetes
+        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
+        with:
+          repository: ${{ steps.config.outputs.kubernetes-repo }}
+          ref: ${{ steps.config.outputs.kubernetes-sha }}
+          path: src/k8s.io/kubernetes
+          fetch-depth: 0
+      - name: Apply Kubernetes patches
+        uses: ./.github/actions/apply-format-patches
+        with:
+          repo-path: src/k8s.io/kubernetes
+          patch-dir: projects/kubernetes
+
+  containerd-patches:
+    name: Containerd Patch Apply
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
+      - id: config
+        uses: ./.github/actions/load-config
+      - uses: ./.github/actions/report-revisions
+        with:
+          kubernetes-repo: ${{ steps.config.outputs.kubernetes-repo }}
+          kubernetes-ref: ${{ steps.config.outputs.kubernetes-ref }}
+          kubernetes-sha: ${{ steps.config.outputs.kubernetes-sha }}
+          containerd-repo: ${{ steps.config.outputs.containerd-repo }}
+          containerd-ref: ${{ steps.config.outputs.containerd-ref }}
+          containerd-sha: ${{ steps.config.outputs.containerd-sha }}
+      - name: Checkout containerd
+        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
+        with:
+          repository: ${{ steps.config.outputs.containerd-repo }}
+          ref: ${{ steps.config.outputs.containerd-sha }}
+          path: src/github.com/containerd/containerd
+          fetch-depth: 0
+      - name: Apply containerd patches
+        uses: ./.github/actions/apply-format-patches
+        with:
+          repo-path: src/github.com/containerd/containerd
+          patch-dir: projects/containerd

@@ -1,0 +1,38 @@
+From 006378ae38bf04f5484766c6bed18eec87850d44 Mon Sep 17 00:00:00 2001
+From: Davanum Srinivas <davanum@gmail.com>
+Date: Sun, 15 Mar 2026 23:02:13 -0400
+Subject: [PATCH] test/integration/dra: avoid duplicate sequential sharing
+ stress
+
+TestDRA currently runs ShareResourceClaimSequentially in both the GA and all configurations. The test does not depend on GA-only behavior, and the duplicate invocation adds package wall time without expanding the behavior being exercised.
+
+On slower self-hosted integration runners, the DRA package is close enough to the go test suite deadline that later PublishResourceSlices subtests start failing while the framework is already canceling for cleanup. Keep the stress test in the richer all configuration and drop the GA copy so the package has more headroom.
+
+Tested:
+
+./hack/verify-gofmt.sh
+
+./hack/verify-typecheck.sh ./test/integration/dra/...
+
+go test ./test/integration/dra -run TestDRA/(GA|all)/(ShareResourceClaimSequentially|PublishResourceSlices)$ -count=1 -timeout 30m
+---
+ test/integration/dra/dra_test.go | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/test/integration/dra/dra_test.go b/test/integration/dra/dra_test.go
+index 84e9cd2c04b..d7270019875 100644
+--- a/test/integration/dra/dra_test.go
++++ b/test/integration/dra/dra_test.go
+@@ -174,7 +174,8 @@ func TestDRA(t *testing.T) {
+ 					tCtx = tCtx.WithNamespace(namespace)
+ 					TestCreateResourceSlices(tCtx, 100)
+ 				})
+-				tCtx.Run("ShareResourceClaimSequentially", testShareResourceClaimSequentially)
++				// The same sequential-sharing stress path runs in the "all" scenario.
++				// Keep only one copy to reduce package wall time on slower CI runners.
+ 				tCtx.Run("UsesAllResources", testUsesAllResources)
+ 			},
+ 		},
+-- 
+2.50.1 (Apple Git-155)
+
