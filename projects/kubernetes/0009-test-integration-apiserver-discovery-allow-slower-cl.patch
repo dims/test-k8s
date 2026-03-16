@@ -1,23 +1,26 @@
-From 995e6fe3ef072972201601f196ac4c68cb56252d Mon Sep 17 00:00:00 2001
+From 77a99cfd157796354c656a4d5db1309a73abcd8c Mon Sep 17 00:00:00 2001
 From: Davanum Srinivas <davanum@gmail.com>
-Date: Sun, 15 Mar 2026 11:27:47 -0400
-Subject: [PATCH 09/10] test/integration/apiserver/discovery: allow slower
- cleanup in CI
+Date: Sun, 15 Mar 2026 23:26:28 -0400
+Subject: [PATCH] test/integration/apiserver/discovery: give convergence more
+ time
 
-The declarative discovery integration tests use a single 30 second timeout for APIService cleanup, CRD cleanup, and discovery convergence checks. On contended CI runners that budget is sometimes too short. The recent test-k8s failure in TestCRD/Race timed out while waiting for v1.stable.example.com to disappear during cleanup, even though the next rerun on the same SHA passed.
+The local discovery stabilization patch already increased the shared polling budget in test/integration/apiserver/discovery, but the NVIDIA self-hosted integration lane is still timing out while waiting for v2 group versions to disappear in TestCRD/CRDAPIServiceSameGroupDifferentVersions.
 
-Increase the shared discovery test timeout to 60 seconds so the suite remains sensitive to real hangs, but no longer flakes on slow aggregator and API registration resync paths.
+Increase the shared discovery timeout again so cleanup, APIService removal, CRD removal, and v1/v2 discovery convergence have more headroom on slower CI runners. This is the same slow-convergence family as the earlier TestCRD/Race cleanup timeout.
 
 Tested:
-- /opt/homebrew/bin/bash ./hack/verify-gofmt.sh
-- /opt/homebrew/bin/bash ./hack/verify-typecheck.sh ./test/integration/apiserver/discovery/...
-- go test ./test/integration/apiserver/discovery -run 'TestCRD/Race$' -count=10
+
+./hack/verify-gofmt.sh
+
+./hack/verify-typecheck.sh ./test/integration/apiserver/discovery/...
+
+go test ./test/integration/apiserver/discovery -run 'TestCRD/(Race|CRDAPIServiceSameGroupDifferentVersions)$' -count=3 -timeout 30m
 ---
  test/integration/apiserver/discovery/framework.go | 4 +++-
  1 file changed, 3 insertions(+), 1 deletion(-)
 
 diff --git a/test/integration/apiserver/discovery/framework.go b/test/integration/apiserver/discovery/framework.go
-index bb335f885d7..d2d2d857bea 100644
+index bb335f885d7..3e8801d2e98 100644
 --- a/test/integration/apiserver/discovery/framework.go
 +++ b/test/integration/apiserver/discovery/framework.go
 @@ -46,7 +46,9 @@ const acceptV1JSON = "application/json"
@@ -25,9 +28,9 @@ index bb335f885d7..d2d2d857bea 100644
  const acceptV2JSONNoPeer = "application/json;g=apidiscovery.k8s.io;v=v2;as=APIGroupDiscoveryList;profile=nopeer"
  
 -const maxTimeout = 30 * time.Second
-+// Discovery integration tests frequently need to wait through aggregator and
-+// API registration resync paths on contended CI nodes.
-+const maxTimeout = 60 * time.Second
++// Discovery integration tests frequently need to wait through aggregator,
++// API registration, and discovery document convergence on contended CI nodes.
++const maxTimeout = 120 * time.Second
  
  type testClient interface {
  	kubernetes.Interface
