@@ -54,7 +54,41 @@ jobs:
           containerd-sha: ${{ steps.config.outputs.containerd-sha }}
       - name: Integration Tests
         working-directory: go/src/k8s.io/kubernetes
-        run: ./hack/jenkins/test-integration-dockerized.sh
+        shell: bash
+        run: |
+          set -o pipefail
+
+          metadata_file="${ARTIFACTS}/integration-step-metadata.txt"
+          mkdir -p "${ARTIFACTS}"
+          started_at="$(date -Iseconds)"
+          started_epoch="$(date +%s)"
+
+          {
+            echo "started_at=${started_at}"
+            echo "runner_name=${RUNNER_NAME:-}"
+            echo "workspace=${GITHUB_WORKSPACE:-}"
+            echo "tmpdir=${TMPDIR:-}"
+          } > "${metadata_file}"
+
+          set +e
+          ./hack/jenkins/test-integration-dockerized.sh 2>&1 | tee "${ARTIFACTS}/integration.log"
+          test_status="${PIPESTATUS[0]}"
+          set -e
+
+          ended_at="$(date -Iseconds)"
+          ended_epoch="$(date +%s)"
+          {
+            echo "ended_at=${ended_at}"
+            echo "duration_seconds=$((ended_epoch - started_epoch))"
+            echo "exit_code=${test_status}"
+          } >> "${metadata_file}"
+
+          exit "${test_status}"
+      - uses: ./.github/actions/collect-runner-diagnostics
+        if: failure() && github.repository != 'dims/test-k8s'
+        with:
+          artifacts-dir: ${{ env.ARTIFACTS }}
+          log-path: ${{ env.ARTIFACTS }}/integration.log
       - uses: ./.github/actions/collect-logs
         if: always()
         with:

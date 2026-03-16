@@ -1,15 +1,16 @@
 name: Set up runner dependencies
-description: Ensure NFS utilities, loop devices, and inotify limits are available
+description: Ensure NFS utilities, loop devices, inotify limits, and runner diagnostics tooling are available
 
 runs:
   using: composite
   steps:
-    - name: Install NFS utilities
+    - name: Install runner utilities
       shell: bash
       run: |
         missing=()
         dpkg -s nfs-common &>/dev/null || missing+=(nfs-common)
         dpkg -s nfs-kernel-server &>/dev/null || missing+=(nfs-kernel-server)
+        dpkg -s sysstat &>/dev/null || missing+=(sysstat)
         if [ ${#missing[@]} -gt 0 ]; then
           echo "Installing ${missing[*]}..."
           sudo apt-get update -qq
