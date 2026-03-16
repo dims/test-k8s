@@ -1,0 +1,76 @@
+From c4e816002c38ab3f86c1f7ec46536a58370e94c8 Mon Sep 17 00:00:00 2001
+From: Davanum Srinivas <davanum@gmail.com>
+Date: Mon, 16 Mar 2026 17:34:47 -0400
+Subject: [PATCH] test/integration/apiserver: poll schema activation in CRD
+ validator test
+
+TestCustomResourceValidatorsWithSchemaConversion updates the CRD schema and immediately updates an existing custom resource expecting the new CEL validation error to appear synchronously. In practice schema propagation is asynchronous, so the update can race the new schema and make the test flap.
+
+Poll the unrelated CR update until the expected rule compiler initialization error appears. That makes the test wait for the new schema to become active instead of assuming immediate propagation.
+
+This matches open upstream flake issue 135540 and the proposed fix in PR 135660.
+
+Tested:
+
+- /opt/homebrew/bin/bash hack/verify-gofmt.sh
+
+- go test ./test/integration/apiserver -run 'TestCustomResourceValidatorsWithSchemaConversion$' -count=1
+---
+ .../crd_validation_expressions_test.go        | 27 ++++++++++++-------
+ 1 file changed, 18 insertions(+), 9 deletions(-)
+
+diff --git a/test/integration/apiserver/crd_validation_expressions_test.go b/test/integration/apiserver/crd_validation_expressions_test.go
+index a6b58a23686..3a12786a761 100644
+--- a/test/integration/apiserver/crd_validation_expressions_test.go
++++ b/test/integration/apiserver/crd_validation_expressions_test.go
+@@ -21,6 +21,7 @@ import (
+ 	"fmt"
+ 	"strings"
+ 	"testing"
++	"time"
+ 
+ 	apiextensionsv1 "k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1"
+ 	apiextensionsv1beta1 "k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1beta1"
+@@ -30,6 +31,7 @@ import (
+ 	"k8s.io/apimachinery/pkg/apis/meta/v1/unstructured"
+ 	"k8s.io/apimachinery/pkg/runtime/schema"
+ 	"k8s.io/apimachinery/pkg/util/json"
++	"k8s.io/apimachinery/pkg/util/wait"
+ 	"k8s.io/apiserver/pkg/storage/names"
+ 	"k8s.io/client-go/dynamic"
+ 	apiservertesting "k8s.io/kubernetes/cmd/kube-apiserver/app/testing"
+@@ -711,15 +713,22 @@ func TestCustomResourceValidatorsWithSchemaConversion(t *testing.T) {
+ 	if err != nil {
+ 		t.Fatal(err)
+ 	}
+-	// Make an unrelated update to the previous persisted CR instance to make sure CRD handler doesn't panic
+-	oldCR, err := crClient.Get(context.TODO(), name1, metav1.GetOptions{})
+-	if err != nil {
+-		t.Fatal(err)
+-	}
+-	oldCR.Object["metadata"].(map[string]interface{})["labels"] = map[string]interface{}{"key": "value"}
+-	_, err = crClient.Update(context.TODO(), oldCR, metav1.UpdateOptions{})
+-	if err == nil || !strings.Contains(err.Error(), "rule compiler initialization error: failed to convert to declType for CEL validation rules") {
+-		t.Fatalf("expect error to contain \rule compiler initialization error: failed to convert to declType for CEL validation rules\" but get: %v", err)
++	// Keep retrying the update until the expected error confirms the new schema is active.
++	var updateErr error
++	pollErr := wait.PollUntilContextTimeout(context.Background(), 100*time.Millisecond, wait.ForeverTestTimeout, true, func(ctx context.Context) (bool, error) {
++		oldCR, getErr := crClient.Get(ctx, name1, metav1.GetOptions{})
++		if getErr != nil {
++			return false, getErr
++		}
++		oldCR.Object["metadata"].(map[string]interface{})["labels"] = map[string]interface{}{"key": "value"}
++		_, updateErr = crClient.Update(ctx, oldCR, metav1.UpdateOptions{})
++		if updateErr != nil && strings.Contains(updateErr.Error(), "rule compiler initialization error: failed to convert to declType for CEL validation rules") {
++			return true, nil
++		}
++		return false, nil
++	})
++	if pollErr != nil {
++		t.Fatalf("timed out waiting for CRD schema update: %v (last error: %v)", pollErr, updateErr)
+ 	}
+ 	// Create another CR instance with an array and be rejected
+ 	name2 := names.SimpleNameGenerator.GenerateName("cr-2")
+-- 
+2.50.1 (Apple Git-155)
+
