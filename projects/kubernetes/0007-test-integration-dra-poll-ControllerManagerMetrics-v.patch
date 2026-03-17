@@ -1,79 +1,83 @@
-From dc6080da2dd23b005b3c1aa22d99723f84fabff3 Mon Sep 17 00:00:00 2001
+From dd671cc22588cf144847fd9857277b6b6c486bec Mon Sep 17 00:00:00 2001
 From: Davanum Srinivas <davanum@gmail.com>
-Date: Sun, 15 Mar 2026 11:27:28 -0400
-Subject: [PATCH 07/10] test/integration/dra: poll ControllerManagerMetrics
- values
+Date: Tue, 17 Mar 2026 06:57:11 -0400
+Subject: [PATCH] test/integration/dra: poll ControllerManagerMetrics values
 
-ControllerManagerMetrics currently sleeps for 200 milliseconds after creating pods and then checks the success counters once. On slower or contended CI nodes that fixed delay is not enough for the claim controller to process the new ResourceClaimTemplate, update the metrics, and surface the increment. The test then fails even though the controller eventually does the right thing.
+The ResourceClaim controller metrics test still uses fixed 200ms sleeps before asserting that the success counters incremented. On slower CI nodes that leaves the test reading the metrics endpoint before the controller work has finished, which makes ControllerManagerMetrics fail even though the controller later converges.
 
-Replace the fixed sleep with an Eventually helper that polls the metric values until they reach the expected count. That keeps the assertion focused on the behavior under test instead of machine speed.
+Upstream DRA integration tests were recently split into multiple files, so the old test-k8s patch no longer applies cleanly against kubernetes master. Rebase the same narrow fix onto test/integration/dra/core.go by replacing the fixed sleeps with Eventually polling on the metric values.
 
-Tested:
-- /opt/homebrew/bin/bash ./hack/verify-gofmt.sh
-- /opt/homebrew/bin/bash ./hack/verify-test-code.sh
-- /opt/homebrew/bin/bash ./hack/verify-typecheck.sh ./test/integration/dra/...
-- go test ./test/integration/dra -run 'TestDRA/.*/ControllerManagerMetrics$' -count=10
+This keeps the scope limited to the test timing assumption and avoids changing controller behavior.
+
+Tested: go test ./test/integration/dra -run '^$' -count=1
 ---
- test/integration/dra/dra_test.go | 25 ++++++++++---------------
- 1 file changed, 10 insertions(+), 15 deletions(-)
+ test/integration/dra/core.go | 35 +++++++++++++++++------------------
+ 1 file changed, 17 insertions(+), 18 deletions(-)
 
-diff --git a/test/integration/dra/dra_test.go b/test/integration/dra/dra_test.go
-index 84e9cd2c04b..7356eaf8873 100644
---- a/test/integration/dra/dra_test.go
-+++ b/test/integration/dra/dra_test.go
-@@ -1545,6 +1545,12 @@ func testControllerManagerMetrics(tCtx ktesting.TContext) {
- 	// Get initial success metrics (only testing success cases since failure cases are not easily testable)
+diff --git a/test/integration/dra/core.go b/test/integration/dra/core.go
+index 6d4bacdf849..a8437df6d20 100644
+--- a/test/integration/dra/core.go
++++ b/test/integration/dra/core.go
+@@ -558,6 +558,15 @@ func testControllerManagerMetrics(tCtx ktesting.TContext) {
  	initialSuccessNoAdmin := getMetricValue("success", "false")
  	initialSuccessWithAdmin := getMetricValue("success", "true")
+ 
 +	expectMetricValue := func(status, adminAccess string, want float64, message string) {
 +		tCtx.Eventually(func(tCtx ktesting.TContext) float64 {
 +			return getMetricValue(status, adminAccess)
-+		}).WithTimeout(30*time.Second).WithPolling(200*time.Millisecond).
++		}).
++			WithTimeout(30*time.Second).
++			WithPolling(200*time.Millisecond).
 +			Should(gomega.BeNumerically("~", want, 0.1), message)
 +	}
- 
++
  	// Test 1: Create Pod with ResourceClaimTemplate without admin access (should succeed and trigger controller)
  	template1 := &resourceapi.ResourceClaimTemplate{
-@@ -1592,11 +1598,8 @@ func testControllerManagerMetrics(tCtx ktesting.TContext) {
+ 		ObjectMeta: metav1.ObjectMeta{
+@@ -604,11 +613,8 @@ func testControllerManagerMetrics(tCtx ktesting.TContext) {
  	_, err = tCtx.Client().CoreV1().Pods(namespace).Create(tCtx, pod1, metav1.CreateOptions{FieldValidation: "Strict"})
  	tCtx.ExpectNoError(err, "create Pod with ResourceClaimTemplate without admin access")
  
 -	time.Sleep(200 * time.Millisecond)
 -
- 	// Verify metrics: success counter with admin_access=false should increment
+-	// Verify metrics: success counter with admin_access=false should increment
 -	successNoAdmin := getMetricValue("success", "false")
 -	require.InDelta(tCtx, initialSuccessNoAdmin+1, successNoAdmin, 0.1, "success metric with admin_access=false should increment")
-+	expectMetricValue("success", "false", initialSuccessNoAdmin+1, "success metric with admin_access=false should increment")
++	expectMetricValue("success", "false", initialSuccessNoAdmin+1,
++		"success metric with admin_access=false should increment")
  
  	// Test 2: Create admin namespace and Pod with ResourceClaimTemplate with admin access (should succeed)
  	adminNS := createTestNamespace(tCtx, map[string]string{"resource.kubernetes.io/admin-access": "true"})
-@@ -1646,11 +1649,8 @@ func testControllerManagerMetrics(tCtx ktesting.TContext) {
+@@ -658,11 +664,8 @@ func testControllerManagerMetrics(tCtx ktesting.TContext) {
  	_, err = tCtx.Client().CoreV1().Pods(adminNS).Create(tCtx, pod2, metav1.CreateOptions{FieldValidation: "Strict"})
  	tCtx.ExpectNoError(err, "create Pod with ResourceClaimTemplate with admin access in admin namespace")
  
 -	time.Sleep(200 * time.Millisecond)
 -
- 	// Verify metrics: success counter with admin_access=true should increment
+-	// Verify metrics: success counter with admin_access=true should increment
 -	successWithAdmin := getMetricValue("success", "true")
 -	require.InDelta(tCtx, initialSuccessWithAdmin+1, successWithAdmin, 0.1, "success metric with admin_access=true should increment")
-+	expectMetricValue("success", "true", initialSuccessWithAdmin+1, "success metric with admin_access=true should increment")
++	expectMetricValue("success", "true", initialSuccessWithAdmin+1,
++		"success metric with admin_access=true should increment")
  
  	// Test 3: Try to create ResourceClaimTemplate with admin access in non-admin namespace
  	// should fail at API level, controller not triggered, no metrics change expected
-@@ -1721,14 +1721,9 @@ func testControllerManagerMetrics(tCtx ktesting.TContext) {
+@@ -733,14 +736,10 @@ func testControllerManagerMetrics(tCtx ktesting.TContext) {
  	_, err = tCtx.Client().CoreV1().Pods(namespace).Create(tCtx, pod4, metav1.CreateOptions{FieldValidation: "Strict"})
  	tCtx.ExpectNoError(err, "create second Pod with ResourceClaimTemplate without admin access")
  
 -	time.Sleep(200 * time.Millisecond)
 -
- 	// Verify final metrics
+-	// Verify final metrics
 -	finalSuccessNoAdmin := getMetricValue("success", "false")
 -	finalSuccessWithAdmin := getMetricValue("success", "true")
 -
 -	require.InDelta(tCtx, initialSuccessNoAdmin+2, finalSuccessNoAdmin, 0.1, "should have 2 more success metrics with admin_access=false")
 -	require.InDelta(tCtx, initialSuccessWithAdmin+1, finalSuccessWithAdmin, 0.1, "should have 1 more success metric with admin_access=true")
-+	expectMetricValue("success", "false", initialSuccessNoAdmin+2, "should have 2 more success metrics with admin_access=false")
-+	expectMetricValue("success", "true", initialSuccessWithAdmin+1, "should have 1 more success metric with admin_access=true")
++	expectMetricValue("success", "false", initialSuccessNoAdmin+2,
++		"should have 2 more success metrics with admin_access=false")
++	expectMetricValue("success", "true", initialSuccessWithAdmin+1,
++		"should have 1 more success metric with admin_access=true")
  
  	tCtx.Log("ResourceClaim controller success metrics correctly track operations with admin_access labels")
  }
