@@ -87,6 +87,33 @@ th {
   gap: 0.45rem;
 }
 
+.parity-pill {
+  display: inline-block;
+  padding: 0.25rem 0.55rem;
+  border-radius: 999px;
+  font-size: 0.82rem;
+  line-height: 1.2;
+  text-decoration: none;
+  color: white;
+  white-space: nowrap;
+}
+
+.parity-pill.match {
+  background: var(--success);
+}
+
+.parity-pill.mismatch {
+  background: var(--failure);
+}
+
+.parity-pill.warning {
+  background: var(--cancelled);
+}
+
+.parity-pill.not-required {
+  background: var(--unknown);
+}
+
 .attempt-chip {
   display: inline-block;
   padding: 0.25rem 0.55rem;

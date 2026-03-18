@@ -21,6 +21,51 @@ function chipClass(result) {
   }
 }
 
+function parityClass(status) {
+  switch (status) {
+    case "match":
+      return "parity-pill match";
+    case "not-required":
+      return "parity-pill not-required";
+    case "upstream-reference-missing":
+    case "upstream-reference-error":
+    case "upstream-fetch-error":
+    case "upstream-tests-missing":
+    case "local-tests-missing":
+      return "parity-pill warning";
+    default:
+      return "parity-pill mismatch";
+  }
+}
+
+function formatParity(row) {
+  const status = row.inventory_parity_status || "unknown";
+  if (status === "match") {
+    return "match";
+  }
+  if (status === "not-required") {
+    return "n/a";
+  }
+  if (status === "upstream-reference-missing") {
+    return "no upstream";
+  }
+  if (status === "upstream-reference-error") {
+    return "reference error";
+  }
+  if (status === "upstream-fetch-error") {
+    return "fetch error";
+  }
+  if (status === "upstream-tests-missing") {
+    return "no upstream junit";
+  }
+  if (status === "local-tests-missing") {
+    return "no local tests";
+  }
+  const extra = row.local_only_count ?? 0;
+  const missing = row.upstream_only_count ?? 0;
+  return `extra ${extra} / missing ${missing}`;
+}
+
 function formatAttempt(attempt) {
   return `#${attempt.run_id}.${attempt.run_attempt}`;
 }
@@ -31,6 +76,9 @@ function formatTooltip(attempt) {
     `Kubernetes: ${attempt.kubernetes_sha || "unknown"}`,
     `containerd: ${attempt.containerd_sha || "unknown"}`,
     `Failed tests: ${attempt.failed_tests}`,
+    `Parity: ${attempt.inventory_parity_status || "unknown"}`,
+    `Local-only tests: ${attempt.local_only_count ?? 0}`,
+    `Upstream-only tests: ${attempt.upstream_only_count ?? 0}`,
     `Duration: ${attempt.duration_seconds ?? "unknown"}s`,
     `Completed: ${attempt.completed_at || "unknown"}`
   ].join("\n");
@@ -71,6 +119,18 @@ async function renderSummary() {
       upstreamCell.textContent = "repo-local";
     }
     tr.appendChild(upstreamCell);
+
+    const parityCell = document.createElement("td");
+    const parity = document.createElement(row.reference_run_url ? "a" : "span");
+    parity.className = parityClass(row.inventory_parity_status);
+    parity.textContent = formatParity(row);
+    if (row.reference_run_url) {
+      parity.href = row.reference_run_url;
+      parity.target = "_blank";
+      parity.rel = "noreferrer";
+    }
+    parityCell.appendChild(parity);
+    tr.appendChild(parityCell);
 
     const attemptsCell = document.createElement("td");
     attemptsCell.className = "attempts";

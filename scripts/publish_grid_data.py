@@ -5,14 +5,19 @@ import json
 import shutil
 import subprocess
 import tempfile
+import xml.etree.ElementTree as ET
 from collections import defaultdict
 from datetime import datetime, timezone
 from pathlib import Path
+from urllib.parse import quote
 
 
 ALLOWED_EVENTS = {"push", "schedule", "workflow_dispatch"}
 SCHEMA_VERSION = 1
 RECENT_ATTEMPTS = 10
+UPSTREAM_PR_SEARCH_LIMIT = 25
+UPSTREAM_TEST_SAMPLE_LIMIT = 20
+PROW_VIEW_PREFIX = "https://prow.k8s.io/view/gs/"
 
 
 def utc_now():
@@ -48,6 +53,14 @@ def run_cmd(args, cwd=None):
     return proc.stdout
 
 
+def read_url_text(url: str):
+    return run_cmd(["curl", "-fsSL", url])
+
+
+def read_url_json(url: str):
+    return json.loads(read_url_text(url))
+
+
 def load_catalog(path: Path):
     payload = read_json(path)
     entries = payload.get("jobs", [])
@@ -55,6 +68,164 @@ def load_catalog(path: Path):
     for entry in entries:
         by_key[(entry["workflow_file"], entry["job_name"])] = entry
     return payload, by_key
+
+
+def canonical_test_name(test):
+    classname = (test.get("classname") or test.get("suite") or "").strip()
+    name = (test.get("name") or "").strip()
+    if classname and name:
+        return f"{classname}::{name}"
+    return name or classname
+
+
+def parse_junit_test_names(xml_text: str):
+    root = ET.fromstring(xml_text)
+    if root.tag == "testsuite":
+        suite_nodes = [root]
+    elif root.tag == "testsuites":
+        suite_nodes = [node for node in root if node.tag == "testsuite"]
+    else:
+        suite_nodes = []
+
+    names = set()
+    for suite in suite_nodes:
+        suite_name = suite.attrib.get("name") or ""
+        for testcase in suite.iter("testcase"):
+            names.add(
+                canonical_test_name(
+                    {
+                        "classname": testcase.attrib.get("classname") or suite_name,
+                        "suite": suite_name,
+                        "name": testcase.attrib.get("name") or "",
+                    }
+                )
+            )
+    return {name for name in names if name}
+
+
+def extract_gcs_object_prefix(prow_target_url: str):
+    if not prow_target_url.startswith(PROW_VIEW_PREFIX):
+        return None
+    return prow_target_url[len(PROW_VIEW_PREFIX) :]
+
+
+def build_gcs_objects_url(bucket: str, prefix: str, page_token: str | None = None):
+    url = f"https://storage.googleapis.com/storage/v1/b/{bucket}/o?prefix={quote(prefix, safe='/')}"
+    if page_token:
+        url += f"&pageToken={quote(page_token, safe='')}"
+    return url
+
+
+def list_gcs_objects(bucket: str, prefix: str):
+    items = []
+    page_token = None
+    while True:
+        payload = read_url_json(build_gcs_objects_url(bucket, prefix, page_token))
+        items.extend(payload.get("items", []))
+        page_token = payload.get("nextPageToken")
+        if not page_token:
+            break
+    return items
+
+
+def is_junit_artifact_name(name: str):
+    base = Path(name).name.lower()
+    return base.endswith(".xml") and ("junit" in base or "ginkgo" in name.lower())
+
+
+def fetch_upstream_test_inventory(reference):
+    object_prefix = extract_gcs_object_prefix(reference["target_url"])
+    if not object_prefix:
+        raise RuntimeError(f"unsupported upstream target url: {reference['target_url']}")
+
+    parts = object_prefix.split("/", 1)
+    bucket = parts[0]
+    run_prefix = parts[1]
+    objects = list_gcs_objects(bucket, f"{run_prefix}/artifacts/")
+    junit_objects = [item for item in objects if is_junit_artifact_name(item["name"])]
+    if not junit_objects:
+        return {
+            "reference": reference,
+            "tests": set(),
+            "junit_files": [],
+            "missing_junit": True,
+        }
+
+    tests = set()
+    parse_errors = []
+    for item in junit_objects:
+        try:
+            tests.update(parse_junit_test_names(read_url_text(item["mediaLink"])))
+        except Exception as exc:
+            parse_errors.append(f"{item['name']}: {exc}")
+
+    started = {}
+    try:
+        started = read_url_json(f"https://storage.googleapis.com/{bucket}/{run_prefix}/started.json")
+    except Exception:
+        started = {}
+
+    return {
+        "reference": reference,
+        "bucket": bucket,
+        "run_prefix": run_prefix,
+        "started": started,
+        "tests": tests,
+        "junit_files": [item["name"] for item in junit_objects],
+        "parse_errors": parse_errors,
+    }
+
+
+def discover_upstream_references(mirrored_jobs):
+    if not mirrored_jobs:
+        return {}
+
+    payload = json.loads(
+        run_cmd(
+            [
+                "gh",
+                "pr",
+                "list",
+                "--repo",
+                "kubernetes/kubernetes",
+                "--state",
+                "all",
+                "--search",
+                "sort:updated-desc",
+                "--limit",
+                str(UPSTREAM_PR_SEARCH_LIMIT),
+                "--json",
+                "number,updatedAt,statusCheckRollup",
+            ]
+        )
+    )
+
+    references = {}
+    pending = set(mirrored_jobs)
+    for pr in payload:
+        contexts = pr.get("statusCheckRollup") or []
+        for context in contexts:
+            if context.get("__typename") != "StatusContext":
+                continue
+            name = context.get("context")
+            if name not in pending:
+                continue
+            if context.get("state") != "SUCCESS":
+                continue
+            target_url = context.get("targetUrl") or ""
+            if not target_url.startswith(PROW_VIEW_PREFIX):
+                continue
+            references[name] = {
+                "job_name": name,
+                "target_url": target_url,
+                "pr_number": pr["number"],
+                "pr_updated_at": pr.get("updatedAt"),
+                "started_at": context.get("startedAt"),
+            }
+            pending.discard(name)
+        if not pending:
+            break
+    return references
 
 
 def discover_local_bundles(root: Path):
@@ -209,6 +380,99 @@ def enrich_record(bundle, run_info, catalog_by_key):
     return record
 
 
+def classify_inventory_parity(local_only, upstream_only):
+    if not local_only and not upstream_only:
+        return "match"
+    if upstream_only and not local_only:
+        return "missing-local-tests"
+    if local_only and not upstream_only:
+        return "extra-local-tests"
+    return "mismatch"
+
+
+def apply_upstream_comparison(records):
+    mirrored_jobs = sorted(
+        {
+            record["metadata"].get("mirrored_prow_job")
+            for record in records
+            if record["metadata"].get("comparison_required") and record["metadata"].get("mirrored_prow_job")
+        }
+    )
+    if not mirrored_jobs:
+        return
+
+    try:
+        references = discover_upstream_references(mirrored_jobs)
+    except Exception as exc:
+        for record in records:
+            comparison = record["metadata"].setdefault("upstream_comparison", {})
+            if record["metadata"].get("comparison_required"):
+                comparison["inventory_parity_status"] = "upstream-reference-error"
+                comparison["error"] = str(exc)
+        return
+    inventory_cache = {}
+    for record in records:
+        metadata = record["metadata"]
+        comparison = metadata.setdefault("upstream_comparison", {})
+        if not metadata.get("comparison_required"):
+            comparison["inventory_parity_status"] = "not-required"
+            continue
+
+        mirrored_job = metadata.get("mirrored_prow_job")
+        reference = references.get(mirrored_job)
+        if not reference:
+            comparison["inventory_parity_status"] = "upstream-reference-missing"
+            continue
+
+        if mirrored_job not in inventory_cache:
+            try:
+                inventory_cache[mirrored_job] = fetch_upstream_test_inventory(reference)
+            except Exception as exc:
+                inventory_cache[mirrored_job] = {"error": str(exc), "reference": reference}
+
+        inventory = inventory_cache[mirrored_job]
+        comparison["reference_job_name"] = mirrored_job
+        comparison["reference_run_url"] = reference.get("target_url")
+        comparison["reference_pr_number"] = reference.get("pr_number")
+        comparison["reference_started_at"] = reference.get("started_at")
+        comparison["reference_pr_updated_at"] = reference.get("pr_updated_at")
+
+        if "error" in inventory:
+            comparison["inventory_parity_status"] = "upstream-fetch-error"
+            comparison["error"] = inventory["error"]
+            continue
+        if inventory.get("missing_junit"):
+            comparison["inventory_parity_status"] = "upstream-tests-missing"
+            comparison["upstream_test_count"] = 0
+            comparison["local_test_count"] = len({canonical_test_name(test) for test in record["tests"] if canonical_test_name(test)})
+            continue
+
+        local_tests = {canonical_test_name(test) for test in record["tests"] if canonical_test_name(test)}
+        upstream_tests = inventory["tests"]
+        if not local_tests:
+            comparison["inventory_parity_status"] = "local-tests-missing"
+            comparison["upstream_test_count"] = len(upstream_tests)
+            comparison["local_test_count"] = 0
+            comparison["junit_files"] = inventory.get("junit_files", [])
+            continue
+
+        local_only = sorted(local_tests - upstream_tests)
+        upstream_only = sorted(upstream_tests - local_tests)
+        comparison["inventory_parity_status"] = classify_inventory_parity(local_only, upstream_only)
+        comparison["upstream_test_count"] = len(upstream_tests)
+        comparison["local_test_count"] = len(local_tests)
+        comparison["local_only_count"] = len(local_only)
+        comparison["upstream_only_count"] = len(upstream_only)
+        comparison["local_only_sample"] = local_only[:UPSTREAM_TEST_SAMPLE_LIMIT]
+        comparison["upstream_only_sample"] = upstream_only[:UPSTREAM_TEST_SAMPLE_LIMIT]
+        comparison["junit_files"] = inventory.get("junit_files", [])
+        if inventory.get("parse_errors"):
+            comparison["parse_errors"] = inventory["parse_errors"]
+        started = inventory.get("started") or {}
+        if started:
+            comparison["reference_started_json"] = started
+
+
 def copy_site_assets(site_dir: Path, output_dir: Path):
     if not site_dir.exists():
         raise FileNotFoundError(f"site directory not found: {site_dir}")
@@ -264,6 +528,9 @@ def write_run_files(records, output_dir: Path):
                 "tests": record["summary"].get("tests", 0),
                 "upstream_testgrid_url": metadata.get("upstream_testgrid_url"),
                 "inventory_parity_status": metadata.get("upstream_comparison", {}).get("inventory_parity_status", "unknown"),
+                "upstream_only_count": metadata.get("upstream_comparison", {}).get("upstream_only_count", 0),
+                "local_only_count": metadata.get("upstream_comparison", {}).get("local_only_count", 0),
+                "reference_run_url": metadata.get("upstream_comparison", {}).get("reference_run_url"),
             }
         )
 
@@ -292,6 +559,10 @@ def write_run_files(records, output_dir: Path):
             "comparison_required": metadata.get("comparison_required", False),
             "recent_attempts": attempts[:RECENT_ATTEMPTS],
             "latest_result": latest["result"],
+            "inventory_parity_status": metadata.get("upstream_comparison", {}).get("inventory_parity_status", "unknown"),
+            "upstream_only_count": metadata.get("upstream_comparison", {}).get("upstream_only_count", 0),
+            "local_only_count": metadata.get("upstream_comparison", {}).get("local_only_count", 0),
+            "reference_run_url": metadata.get("upstream_comparison", {}).get("reference_run_url"),
         }
         summary_rows.append(row_payload)
         history_path = output_dir / "data" / "index" / "job-history" / f"{repo_key}__{workflow_slug}__{job_slug}.json"
@@ -319,6 +590,8 @@ def collect_records(args, catalog_entries, catalog_by_key):
     for item in bundles:
         bundle = load_bundle(item["bundle_dir"])
         records.append(enrich_record(bundle, item["run_info"], catalog_by_key))
+    if not args.skip_upstream_comparison:
+        apply_upstream_comparison(records)
     return records
 
 
@@ -340,6 +613,7 @@ def parse_args():
     parser.add_argument("--repo", action="append", default=[])
     parser.add_argument("--branch", default="main")
     parser.add_argument("--max-runs-per-workflow", type=int, default=20)
+    parser.add_argument("--skip-upstream-comparison", action="store_true")
     return parser.parse_args()
 
 
