@@ -1,0 +1,155 @@
+:root {
+  --bg: #f3f0e8;
+  --surface: #fffdf7;
+  --border: #d8d0c0;
+  --text: #1e1c18;
+  --muted: #6f675a;
+  --success: #3c8d43;
+  --failure: #b63a32;
+  --cancelled: #8a6f00;
+  --skipped: #6b6fb8;
+  --unknown: #7a7a7a;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", serif;
+  background: linear-gradient(180deg, #f7f2e8 0%, #efe7d7 100%);
+  color: var(--text);
+}
+
+.page-header {
+  padding: 2rem 2rem 1rem;
+}
+
+.page-header h1 {
+  margin: 0;
+  font-size: 2.4rem;
+}
+
+.page-header p {
+  color: var(--muted);
+  margin-top: 0.35rem;
+}
+
+.layout {
+  padding: 0 2rem 2rem;
+  display: grid;
+  gap: 1rem;
+}
+
+.summary-card,
+.grid-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 1rem 1.2rem;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
+}
+
+.summary-meta {
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th,
+td {
+  text-align: left;
+  padding: 0.85rem 0.6rem;
+  border-bottom: 1px solid var(--border);
+  vertical-align: top;
+}
+
+th {
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+}
+
+.subtle {
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.attempts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+
+.attempt-chip {
+  display: inline-block;
+  padding: 0.25rem 0.55rem;
+  border-radius: 999px;
+  text-decoration: none;
+  color: white;
+  font-size: 0.85rem;
+  line-height: 1.2;
+  min-width: 5.5rem;
+  text-align: center;
+}
+
+.attempt-chip.success {
+  background: var(--success);
+}
+
+.attempt-chip.failure {
+  background: var(--failure);
+}
+
+.attempt-chip.cancelled {
+  background: var(--cancelled);
+}
+
+.attempt-chip.skipped {
+  background: var(--skipped);
+}
+
+.attempt-chip.unknown {
+  background: var(--unknown);
+}
+
+a {
+  color: #0f4f8a;
+}
+
+@media (max-width: 900px) {
+  .page-header,
+  .layout {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  table,
+  thead,
+  tbody,
+  th,
+  td,
+  tr {
+    display: block;
+  }
+
+  thead {
+    display: none;
+  }
+
+  tr {
+    border-bottom: 1px solid var(--border);
+    padding: 0.5rem 0;
+  }
+
+  td {
+    border: 0;
+    padding: 0.35rem 0;
+  }
+}

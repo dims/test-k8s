@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>test-k8s Grid</title>
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <header class="page-header">
+    <h1>test-k8s Grid</h1>
+    <p>Recent workflow attempts, revisions, and upstream TestGrid links.</p>
+  </header>
+
+  <main class="layout">
+    <section class="summary-card">
+      <div id="summary-meta" class="summary-meta">Loading summary...</div>
+    </section>
+
+    <section class="grid-card">
+      <table id="summary-grid">
+        <thead>
+          <tr>
+            <th>Workflow</th>
+            <th>Repo</th>
+            <th>Upstream</th>
+            <th>Recent Attempts</th>
+          </tr>
+        </thead>
+        <tbody id="summary-body"></tbody>
+      </table>
+    </section>
+  </main>
+
+  <template id="attempt-template">
+    <a class="attempt-chip" target="_blank" rel="noreferrer"></a>
+  </template>
+
+  <script src="./app.js"></script>
+</body>
+</html>

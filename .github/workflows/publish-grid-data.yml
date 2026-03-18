@@ -1,0 +1,52 @@
+name: Publish Grid Data
+
+on:
+  workflow_run:
+    workflows:
+      - Unit Tests
+      - Integration Tests
+      - Verify
+      - Linter Hints
+      - Typecheck
+      - Dependencies
+      - Cmd Tests
+      - E2E (kind)
+      - E2E (kind, alpha-beta-features)
+      - Conformance (kind, GA-only)
+      - Node E2E
+      - Patch Apply
+      - Test-Infra Drift
+    types:
+      - completed
+  schedule:
+    - cron: '37 5 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: publish-grid-data
+  cancel-in-progress: false
+
+jobs:
+  build-grid-data:
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.head_branch == 'main'
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
+
+      - name: Build site data
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          python3 scripts/publish_grid_data.py \
+            --repo "${GITHUB_REPOSITORY}" \
+            --output-dir _site
+
+      - name: Upload site preview
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6.0.0
+        with:
+          name: grid-site-preview
+          path: _site/
+          if-no-files-found: error

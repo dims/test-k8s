@@ -1,0 +1,159 @@
+{
+  "schema_version": 1,
+  "jobs": [
+    {
+      "workflow_file": ".github/workflows/unit.yml",
+      "workflow_name": "Unit Tests",
+      "workflow_slug": "unit-tests",
+      "job_name": "Unit Tests",
+      "job_slug": "unit-tests",
+      "display_order": 100,
+      "mirrored_prow_job": "pull-kubernetes-unit",
+      "upstream_testgrid_url": "https://testgrid.k8s.io/presubmits-kubernetes-blocking#pull-kubernetes-unit",
+      "comparison_required": true
+    },
+    {
+      "workflow_file": ".github/workflows/integration.yml",
+      "workflow_name": "Integration Tests",
+      "workflow_slug": "integration-tests",
+      "job_name": "Integration Tests",
+      "job_slug": "integration-tests",
+      "display_order": 110,
+      "mirrored_prow_job": "pull-kubernetes-integration",
+      "upstream_testgrid_url": "https://testgrid.k8s.io/presubmits-kubernetes-blocking#pull-kubernetes-integration",
+      "comparison_required": true
+    },
+    {
+      "workflow_file": ".github/workflows/verify.yml",
+      "workflow_name": "Verify",
+      "workflow_slug": "verify",
+      "job_name": "Verify",
+      "job_slug": "verify",
+      "display_order": 120,
+      "mirrored_prow_job": "pull-kubernetes-verify",
+      "upstream_testgrid_url": "https://testgrid.k8s.io/presubmits-kubernetes-blocking#pull-kubernetes-verify",
+      "comparison_required": true
+    },
+    {
+      "workflow_file": ".github/workflows/linter-hints.yml",
+      "workflow_name": "Linter Hints",
+      "workflow_slug": "linter-hints",
+      "job_name": "Linter Hints",
+      "job_slug": "linter-hints",
+      "display_order": 130,
+      "mirrored_prow_job": "pull-kubernetes-linter-hints",
+      "upstream_testgrid_url": null,
+      "comparison_required": false
+    },
+    {
+      "workflow_file": ".github/workflows/typecheck.yml",
+      "workflow_name": "Typecheck",
+      "workflow_slug": "typecheck",
+      "job_name": "Typecheck",
+      "job_slug": "typecheck",
+      "display_order": 140,
+      "mirrored_prow_job": "pull-kubernetes-typecheck",
+      "upstream_testgrid_url": "https://testgrid.k8s.io/presubmits-kubernetes-blocking#pull-kubernetes-typecheck",
+      "comparison_required": true
+    },
+    {
+      "workflow_file": ".github/workflows/dependencies.yml",
+      "workflow_name": "Dependencies",
+      "workflow_slug": "dependencies",
+      "job_name": "Dependencies",
+      "job_slug": "dependencies",
+      "display_order": 150,
+      "mirrored_prow_job": "pull-kubernetes-dependencies",
+      "upstream_testgrid_url": "https://testgrid.k8s.io/presubmits-kubernetes-blocking#pull-kubernetes-dependencies",
+      "comparison_required": true
+    },
+    {
+      "workflow_file": ".github/workflows/cmd-tests.yml",
+      "workflow_name": "Cmd Tests",
+      "workflow_slug": "cmd-tests",
+      "job_name": "Cmd Tests",
+      "job_slug": "cmd-tests",
+      "display_order": 160,
+      "mirrored_prow_job": "pull-kubernetes-cmd",
+      "upstream_testgrid_url": "https://testgrid.k8s.io/presubmits-kubernetes-blocking#pull-kubernetes-cmd",
+      "comparison_required": true
+    },
+    {
+      "workflow_file": ".github/workflows/e2e-kind.yml",
+      "workflow_name": "E2E (kind)",
+      "workflow_slug": "e2e-kind",
+      "job_name": "E2E (kind)",
+      "job_slug": "e2e-kind",
+      "display_order": 170,
+      "mirrored_prow_job": "pull-kubernetes-e2e-kind",
+      "upstream_testgrid_url": "https://testgrid.k8s.io/presubmits-kubernetes-blocking#pull-kubernetes-e2e-kind",
+      "comparison_required": true
+    },
+    {
+      "workflow_file": ".github/workflows/e2e-kind-alpha-beta-features.yml",
+      "workflow_name": "E2E (kind, alpha-beta-features)",
+      "workflow_slug": "e2e-kind-alpha-beta-features",
+      "job_name": "E2E (kind, alpha-beta-features)",
+      "job_slug": "e2e-kind-alpha-beta-features",
+      "display_order": 180,
+      "mirrored_prow_job": "pull-kubernetes-e2e-kind-alpha-beta-features",
+      "upstream_testgrid_url": "https://testgrid.k8s.io/presubmits-kubernetes-nonblocking#pull-kubernetes-e2e-kind-alpha-beta-features",
+      "comparison_required": true
+    },
+    {
+      "workflow_file": ".github/workflows/conformance-kind.yml",
+      "workflow_name": "Conformance (kind, GA-only)",
+      "workflow_slug": "conformance-kind-ga-only",
+      "job_name": "Conformance (kind, GA-only)",
+      "job_slug": "conformance-kind-ga-only",
+      "display_order": 190,
+      "mirrored_prow_job": "pull-kubernetes-conformance-kind-ga-only-parallel",
+      "upstream_testgrid_url": "https://testgrid.k8s.io/presubmits-kubernetes-blocking#pull-kubernetes-conformance-kind-ga-only-parallel",
+      "comparison_required": true
+    },
+    {
+      "workflow_file": ".github/workflows/node-e2e.yml",
+      "workflow_name": "Node E2E",
+      "workflow_slug": "node-e2e",
+      "job_name": "Kubernetes Node E2E",
+      "job_slug": "kubernetes-node-e2e",
+      "display_order": 200,
+      "mirrored_prow_job": "pull-kubernetes-node-e2e-containerd",
+      "upstream_testgrid_url": "https://testgrid.k8s.io/presubmits-kubernetes-blocking#pull-kubernetes-node-e2e-containerd",
+      "comparison_required": true
+    },
+    {
+      "workflow_file": ".github/workflows/patch-apply.yml",
+      "workflow_name": "Patch Apply",
+      "workflow_slug": "patch-apply",
+      "job_name": "Kubernetes Patch Apply",
+      "job_slug": "kubernetes-patch-apply",
+      "display_order": 210,
+      "mirrored_prow_job": null,
+      "upstream_testgrid_url": null,
+      "comparison_required": false
+    },
+    {
+      "workflow_file": ".github/workflows/patch-apply.yml",
+      "workflow_name": "Patch Apply",
+      "workflow_slug": "patch-apply",
+      "job_name": "Containerd Patch Apply",
+      "job_slug": "containerd-patch-apply",
+      "display_order": 211,
+      "mirrored_prow_job": null,
+      "upstream_testgrid_url": null,
+      "comparison_required": false
+    },
+    {
+      "workflow_file": ".github/workflows/test-infra-drift.yml",
+      "workflow_name": "Test-Infra Drift",
+      "workflow_slug": "test-infra-drift",
+      "job_name": "Test-Infra Drift",
+      "job_slug": "test-infra-drift",
+      "display_order": 220,
+      "mirrored_prow_job": null,
+      "upstream_testgrid_url": null,
+      "comparison_required": false
+    }
+  ]
+}
