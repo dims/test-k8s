@@ -46,6 +46,7 @@ jobs:
           patches-dir: projects/kubernetes
       - uses: ./.github/actions/report-revisions
         with:
+          output-dir: ${{ env.ARTIFACTS }}
           kubernetes-repo: ${{ steps.config.outputs.kubernetes-repo }}
           kubernetes-ref: ${{ steps.config.outputs.kubernetes-ref }}
           kubernetes-sha: ${{ steps.config.outputs.kubernetes-sha }}
@@ -54,12 +55,27 @@ jobs:
           containerd-sha: ${{ steps.config.outputs.containerd-sha }}
       - uses: ./.github/actions/install-kind
       - name: Run Conformance Tests
+        id: conformance
         working-directory: go/src/k8s.io/kubernetes
         env:
           FEATURE_GATES: '{"AllAlpha":false,"AllBeta":false}'
           RUNTIME_CONFIG: '{"api/alpha":"false","api/beta":"false"}'
           PARALLEL: "true"
-        run: e2e-k8s.sh
+        shell: bash
+        run: |
+          set -o pipefail
+          e2e-k8s.sh 2>&1 | tee "${ARTIFACTS}/build-log.txt"
+          exit "${PIPESTATUS[0]}"
+      - uses: ./.github/actions/collect-test-results
+        if: always()
+        with:
+          artifact-name: conformance-results
+          artifacts-dir: ${{ env.ARTIFACTS }}
+          workflow-file: .github/workflows/conformance-kind.yml
+          job-name: Conformance (kind, GA-only)
+          job-status: ${{ steps.conformance.outcome }}
+          mirrored-prow-job: pull-kubernetes-conformance-kind-ga-only-parallel
+          build-log-path: ${{ env.ARTIFACTS }}/build-log.txt
       - uses: ./.github/actions/collect-logs
         if: always()
         with:

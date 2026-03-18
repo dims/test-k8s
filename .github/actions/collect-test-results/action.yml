@@ -1,0 +1,61 @@
+name: Collect test results
+description: Normalize junit or synthetic results into a publish-friendly artifact
+
+inputs:
+  artifact-name:
+    description: Artifact name for normalized result bundle upload
+    required: true
+  artifacts-dir:
+    description: Path to the artifacts directory for this workflow job
+    default: _artifacts
+  workflow-file:
+    description: Source workflow file path
+    required: true
+  job-name:
+    description: Display name for the current GitHub job
+    required: true
+  job-status:
+    description: Current GitHub job status or step outcome
+    required: true
+  mirrored-prow-job:
+    description: Equivalent upstream Prow job name
+    required: false
+  upstream-testgrid-url:
+    description: Equivalent upstream TestGrid URL
+    required: false
+  build-log-path:
+    description: Optional explicit build log path
+    required: false
+  synthetic-suite-name:
+    description: Optional synthetic suite name when no junit exists
+    required: false
+  synthetic-cases:
+    description: Optional newline-separated synthetic cases as name|status|duration|message
+    required: false
+
+runs:
+  using: composite
+  steps:
+    - name: Normalize test results
+      shell: bash
+      env:
+        INPUT_ARTIFACT_NAME: ${{ inputs.artifact-name }}
+        INPUT_ARTIFACTS_DIR: ${{ inputs.artifacts-dir }}
+        INPUT_WORKFLOW_FILE: ${{ inputs.workflow-file }}
+        INPUT_JOB_NAME: ${{ inputs.job-name }}
+        INPUT_JOB_STATUS: ${{ inputs.job-status }}
+        INPUT_MIRRORED_PROW_JOB: ${{ inputs.mirrored-prow-job }}
+        INPUT_UPSTREAM_TESTGRID_URL: ${{ inputs.upstream-testgrid-url }}
+        INPUT_BUILD_LOG_PATH: ${{ inputs.build-log-path }}
+        INPUT_SYNTHETIC_SUITE_NAME: ${{ inputs.synthetic-suite-name }}
+        INPUT_SYNTHETIC_CASES: ${{ inputs.synthetic-cases }}
+      run: |
+        python3 "${{ github.action_path }}/collect.py"
+
+    - name: Upload normalized results
+      uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6.0.0
+      with:
+        name: ${{ inputs.artifact-name }}
+        path: ${{ inputs.artifacts-dir }}/normalized-results/
+        if-no-files-found: error
+

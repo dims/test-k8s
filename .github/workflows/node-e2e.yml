@@ -64,6 +64,7 @@ jobs:
 
       - uses: ./.github/actions/report-revisions
         with:
+          output-dir: ${{ env.ARTIFACTS }}
           kubernetes-repo: ${{ steps.config.outputs.kubernetes-repo }}
           kubernetes-ref: ${{ steps.config.outputs.kubernetes-ref }}
           kubernetes-sha: ${{ steps.config.outputs.kubernetes-sha }}
@@ -126,12 +127,24 @@ jobs:
           sudo ctr version
 
       - name: Run Node E2E Tests
+        id: node-e2e
         working-directory: ./src/k8s.io/kubernetes
         run: |
           sudo make test-e2e-node \
             FOCUS='\[NodeConformance\]|\[Feature:.+\]|\[Feature\]' \
             SKIP='\[Flaky\]|\[Slow\]|\[Serial\]|\[Feature:UserNamespacesSupport\]|\[Feature:PodLifecycleSleepActionAllowZero\]|\[Feature:UserNamespacesPodSecurityStandards\]|\[Feature:KubeletCredentialProviders\]|\[Feature:LockContention\]|\[Feature:SCTPConnectivity\]|\[Alpha\]' \
             TEST_ARGS='--feature-gates=PodAndContainerStatsFromCRI=true --kubelet-flags="--cgroup-driver=systemd --cgroups-per-qos=true --cgroup-root=/ --runtime-cgroups=/system.slice/containerd.service --feature-gates=PodAndContainerStatsFromCRI=true"'
+
+      - uses: ./.github/actions/collect-test-results
+        if: always()
+        with:
+          artifact-name: node-e2e-results
+          artifacts-dir: ${{ env.ARTIFACTS }}
+          workflow-file: .github/workflows/node-e2e.yml
+          job-name: Kubernetes Node E2E
+          job-status: ${{ steps.node-e2e.outcome }}
+          mirrored-prow-job: pull-kubernetes-node-e2e-containerd
+          build-log-path: ${{ env.ARTIFACTS }}/build-log.txt
 
       - uses: ./.github/actions/collect-logs
         if: always()

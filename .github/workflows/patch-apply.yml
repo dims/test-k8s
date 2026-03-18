@@ -29,12 +29,15 @@ jobs:
     name: Kubernetes Patch Apply
     runs-on: ubuntu-24.04
     timeout-minutes: 15
+    env:
+      ARTIFACTS: ${{ github.workspace }}/_artifacts
     steps:
       - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
       - id: config
         uses: ./.github/actions/load-config
       - uses: ./.github/actions/report-revisions
         with:
+          output-dir: ${{ env.ARTIFACTS }}
           kubernetes-repo: ${{ steps.config.outputs.kubernetes-repo }}
           kubernetes-ref: ${{ steps.config.outputs.kubernetes-ref }}
           kubernetes-sha: ${{ steps.config.outputs.kubernetes-sha }}
@@ -49,21 +52,36 @@ jobs:
           path: src/k8s.io/kubernetes
           fetch-depth: 0
       - name: Apply Kubernetes patches
+        id: kubernetes-apply
         uses: ./.github/actions/apply-format-patches
         with:
           repo-path: src/k8s.io/kubernetes
           patch-dir: projects/kubernetes
+      - uses: ./.github/actions/collect-test-results
+        if: always()
+        with:
+          artifact-name: patch-apply-kubernetes-results
+          artifacts-dir: ${{ env.ARTIFACTS }}
+          workflow-file: .github/workflows/patch-apply.yml
+          job-name: Kubernetes Patch Apply
+          job-status: ${{ steps.kubernetes-apply.outcome }}
+          synthetic-suite-name: Patch Apply
+          synthetic-cases: |
+            Kubernetes Patch Apply|${{ steps.kubernetes-apply.outcome }}
 
   containerd-patches:
     name: Containerd Patch Apply
     runs-on: ubuntu-24.04
     timeout-minutes: 15
+    env:
+      ARTIFACTS: ${{ github.workspace }}/_artifacts
     steps:
       - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
       - id: config
         uses: ./.github/actions/load-config
       - uses: ./.github/actions/report-revisions
         with:
+          output-dir: ${{ env.ARTIFACTS }}
           kubernetes-repo: ${{ steps.config.outputs.kubernetes-repo }}
           kubernetes-ref: ${{ steps.config.outputs.kubernetes-ref }}
           kubernetes-sha: ${{ steps.config.outputs.kubernetes-sha }}
@@ -78,7 +96,19 @@ jobs:
           path: src/github.com/containerd/containerd
           fetch-depth: 0
       - name: Apply containerd patches
+        id: containerd-apply
         uses: ./.github/actions/apply-format-patches
         with:
           repo-path: src/github.com/containerd/containerd
           patch-dir: projects/containerd
+      - uses: ./.github/actions/collect-test-results
+        if: always()
+        with:
+          artifact-name: patch-apply-containerd-results
+          artifacts-dir: ${{ env.ARTIFACTS }}
+          workflow-file: .github/workflows/patch-apply.yml
+          job-name: Containerd Patch Apply
+          job-status: ${{ steps.containerd-apply.outcome }}
+          synthetic-suite-name: Patch Apply
+          synthetic-cases: |
+            Containerd Patch Apply|${{ steps.containerd-apply.outcome }}

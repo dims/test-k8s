@@ -10,6 +10,7 @@ on:
       - 'Makefile'
       - 'projects/**'
       - '.github/actions/apply-format-patches/**'
+      - '.github/actions/collect-test-results/**'
       - '.github/actions/load-config/**'
       - '.github/actions/report-revisions/**'
       - 'scripts/**'
@@ -23,6 +24,7 @@ on:
       - 'Makefile'
       - 'projects/**'
       - '.github/actions/apply-format-patches/**'
+      - '.github/actions/collect-test-results/**'
       - '.github/actions/load-config/**'
       - '.github/actions/report-revisions/**'
       - 'scripts/**'
@@ -40,6 +42,8 @@ jobs:
   drift:
     runs-on: ${{ github.repository == 'dims/test-k8s' && 'ubuntu-24.04' || 'linux-amd64-cpu8' }}
     timeout-minutes: 20
+    env:
+      ARTIFACTS: ${{ github.workspace }}/_artifacts
     steps:
       - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
 
@@ -48,6 +52,7 @@ jobs:
 
       - uses: ./.github/actions/report-revisions
         with:
+          output-dir: ${{ env.ARTIFACTS }}
           kubernetes-repo: ${{ steps.config.outputs.kubernetes-repo }}
           kubernetes-ref: ${{ steps.config.outputs.kubernetes-ref }}
           kubernetes-sha: ${{ steps.config.outputs.kubernetes-sha }}
@@ -109,6 +114,8 @@ jobs:
             echo "- Kubernetes patch apply: ${{ steps.kubernetes-patches.outcome }}"
             echo "- containerd patch apply: ${{ steps.containerd-patches.outcome }}"
           } >> drift-report.txt
+          mkdir -p "${ARTIFACTS}"
+          cp drift-report.txt "${ARTIFACTS}/drift-report.txt"
 
       - name: Add drift summary
         if: always()
@@ -128,6 +135,21 @@ jobs:
               echo "- containerd patch apply: `${{ steps.containerd-patches.outcome }}`"
             } >> "$GITHUB_STEP_SUMMARY"
           fi
+
+      - uses: ./.github/actions/collect-test-results
+        if: always()
+        with:
+          artifact-name: test-infra-drift-results
+          artifacts-dir: ${{ env.ARTIFACTS }}
+          workflow-file: .github/workflows/test-infra-drift.yml
+          job-name: Test-Infra Drift
+          job-status: ${{ steps.infra-drift.outcome }}
+          build-log-path: ${{ env.ARTIFACTS }}/drift-report.txt
+          synthetic-suite-name: Test-Infra Drift
+          synthetic-cases: |
+            Workflow Drift|${{ steps.infra-drift.outcome }}
+            Kubernetes Patch Stack|${{ steps.kubernetes-patches.outcome }}
+            Containerd Patch Stack|${{ steps.containerd-patches.outcome }}
 
       - name: Upload drift report
         if: always()

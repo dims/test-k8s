@@ -2,6 +2,9 @@ name: Report Revisions
 description: Print the Kubernetes and containerd revisions being tested
 
 inputs:
+  output-dir:
+    description: Optional directory where tested-revisions.json should be written
+    required: false
   kubernetes-repo:
     description: Kubernetes repository (owner/repo)
     required: true
@@ -30,6 +33,25 @@ runs:
         echo "Kubernetes: ${{ inputs.kubernetes-repo }} @ ${{ inputs.kubernetes-ref }} => ${{ inputs.kubernetes-sha }}"
         echo "containerd: ${{ inputs.containerd-repo }} @ ${{ inputs.containerd-ref }} => ${{ inputs.containerd-sha }}"
         echo "::notice title=Test revisions::Kubernetes ${{ inputs.kubernetes-sha }} | containerd ${{ inputs.containerd-sha }}"
+
+        if [ -n "${{ inputs.output-dir }}" ]; then
+          mkdir -p "${{ inputs.output-dir }}"
+          cat > "${{ inputs.output-dir }}/tested-revisions.json" <<'EOF'
+        {
+          "kubernetes": {
+            "repo": "${{ inputs.kubernetes-repo }}",
+            "ref": "${{ inputs.kubernetes-ref }}",
+            "sha": "${{ inputs.kubernetes-sha }}"
+          },
+          "containerd": {
+            "repo": "${{ inputs.containerd-repo }}",
+            "ref": "${{ inputs.containerd-ref }}",
+            "sha": "${{ inputs.containerd-sha }}"
+          }
+        }
+        EOF
+        fi
+
         {
           echo "### Test revisions"
           echo

@@ -46,6 +46,7 @@ jobs:
           patches-dir: projects/kubernetes
       - uses: ./.github/actions/report-revisions
         with:
+          output-dir: ${{ env.ARTIFACTS }}
           kubernetes-repo: ${{ steps.config.outputs.kubernetes-repo }}
           kubernetes-ref: ${{ steps.config.outputs.kubernetes-ref }}
           kubernetes-sha: ${{ steps.config.outputs.kubernetes-sha }}
@@ -53,8 +54,11 @@ jobs:
           containerd-ref: ${{ steps.config.outputs.containerd-ref }}
           containerd-sha: ${{ steps.config.outputs.containerd-sha }}
       - name: Integration Tests
+        id: integration
         working-directory: go/src/k8s.io/kubernetes
         shell: bash
+        env:
+          KUBE_JUNIT_REPORT_DIR: ${{ env.ARTIFACTS }}
         run: |
           set -o pipefail
 
@@ -84,6 +88,16 @@ jobs:
           } >> "${metadata_file}"
 
           exit "${test_status}"
+      - uses: ./.github/actions/collect-test-results
+        if: always()
+        with:
+          artifact-name: integration-results
+          artifacts-dir: ${{ env.ARTIFACTS }}
+          workflow-file: .github/workflows/integration.yml
+          job-name: Integration Tests
+          job-status: ${{ steps.integration.outcome }}
+          mirrored-prow-job: pull-kubernetes-integration
+          build-log-path: ${{ env.ARTIFACTS }}/integration.log
       - uses: ./.github/actions/collect-runner-diagnostics
         if: failure() && github.repository != 'dims/test-k8s'
         with:

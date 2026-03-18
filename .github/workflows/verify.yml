@@ -45,6 +45,7 @@ jobs:
           patches-dir: projects/kubernetes
       - uses: ./.github/actions/report-revisions
         with:
+          output-dir: ${{ env.ARTIFACTS }}
           kubernetes-repo: ${{ steps.config.outputs.kubernetes-repo }}
           kubernetes-ref: ${{ steps.config.outputs.kubernetes-ref }}
           kubernetes-sha: ${{ steps.config.outputs.kubernetes-sha }}
@@ -52,13 +53,29 @@ jobs:
           containerd-ref: ${{ steps.config.outputs.containerd-ref }}
           containerd-sha: ${{ steps.config.outputs.containerd-sha }}
       - name: Verify
+        id: verify
         working-directory: go/src/k8s.io/kubernetes
         env:
           EXCLUDE_TYPECHECK: "y"
           EXCLUDE_GODEP: "y"
+          KUBE_JUNIT_REPORT_DIR: ${{ env.ARTIFACTS }}
           KUBE_VERIFY_GIT_BRANCH: master
           WORKSPACE: ${{ github.workspace }}/go/src/k8s.io/kubernetes
-        run: ./hack/jenkins/verify-dockerized.sh
+        shell: bash
+        run: |
+          set -o pipefail
+          ./hack/jenkins/verify-dockerized.sh 2>&1 | tee "${ARTIFACTS}/build-log.txt"
+          exit "${PIPESTATUS[0]}"
+      - uses: ./.github/actions/collect-test-results
+        if: always()
+        with:
+          artifact-name: verify-results
+          artifacts-dir: ${{ env.ARTIFACTS }}
+          workflow-file: .github/workflows/verify.yml
+          job-name: Verify
+          job-status: ${{ steps.verify.outcome }}
+          mirrored-prow-job: pull-kubernetes-verify
+          build-log-path: ${{ env.ARTIFACTS }}/build-log.txt
       - uses: ./.github/actions/collect-logs
         if: always()
         with:
