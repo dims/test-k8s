@@ -515,6 +515,7 @@ def write_run_files(records, output_dir: Path):
             {
                 "run_id": run_id,
                 "run_attempt": attempt,
+                "run_path": str(run_path.relative_to(output_dir)),
                 "result": metadata.get("result"),
                 "html_url": metadata.get("html_url"),
                 "github_sha": metadata.get("github_sha"),
@@ -565,8 +566,11 @@ def write_run_files(records, output_dir: Path):
             "reference_run_url": metadata.get("upstream_comparison", {}).get("reference_run_url"),
         }
         summary_rows.append(row_payload)
+        history_payload = dict(row_payload)
+        history_payload["attempts"] = attempts
+        history_payload["latest_run_path"] = latest["run_path"]
         history_path = output_dir / "data" / "index" / "job-history" / f"{repo_key}__{workflow_slug}__{job_slug}.json"
-        write_json(history_path, row_payload)
+        write_json(history_path, history_payload)
 
     summary_rows.sort(key=lambda row: (row["display_order"], row["repo_slug"], row["job_slug"]))
     write_json(output_dir / "data" / "published-runs.json", {"generated_at": utc_now(), "runs": published_runs})

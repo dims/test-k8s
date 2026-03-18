@@ -8,29 +8,19 @@
 </head>
 <body>
   <header class="page-header">
-    <h1>test-k8s Grid</h1>
-    <p>Recent workflow attempts, revisions, and upstream TestGrid links.</p>
+    <div>
+      <h1>test-k8s Grid</h1>
+      <p>Workflow history, testcase inventories, and upstream parity for mirrored Kubernetes jobs.</p>
+    </div>
+    <nav id="breadcrumbs" class="breadcrumbs"></nav>
   </header>
 
-  <main class="layout">
+  <main id="app" class="layout">
     <section class="summary-card">
-      <div id="summary-meta" class="summary-meta">Loading summary...</div>
+      <div id="summary-meta" class="summary-meta">Loading…</div>
     </section>
 
-    <section class="grid-card">
-      <table id="summary-grid">
-        <thead>
-          <tr>
-            <th>Workflow</th>
-            <th>Repo</th>
-            <th>Upstream</th>
-            <th>Parity</th>
-            <th>Recent Attempts</th>
-          </tr>
-        </thead>
-        <tbody id="summary-body"></tbody>
-      </table>
-    </section>
+    <section id="content" class="content-grid"></section>
   </main>
 
   <template id="attempt-template">
