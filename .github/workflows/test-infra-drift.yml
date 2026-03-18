@@ -6,7 +6,12 @@ on:
       - main
       - 'pull-request/[0-9]*'
     paths:
+      - 'config.yaml'
       - 'Makefile'
+      - 'projects/**'
+      - '.github/actions/apply-format-patches/**'
+      - '.github/actions/load-config/**'
+      - '.github/actions/report-revisions/**'
       - 'scripts/**'
       - '.github/actions/install-kind/**'
       - '.github/workflows/**'
@@ -14,7 +19,12 @@ on:
   pull_request:
     branches: [main]
     paths:
+      - 'config.yaml'
       - 'Makefile'
+      - 'projects/**'
+      - '.github/actions/apply-format-patches/**'
+      - '.github/actions/load-config/**'
+      - '.github/actions/report-revisions/**'
       - 'scripts/**'
       - '.github/actions/install-kind/**'
       - '.github/workflows/**'
@@ -33,6 +43,18 @@ jobs:
     steps:
       - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
 
+      - id: config
+        uses: ./.github/actions/load-config
+
+      - uses: ./.github/actions/report-revisions
+        with:
+          kubernetes-repo: ${{ steps.config.outputs.kubernetes-repo }}
+          kubernetes-ref: ${{ steps.config.outputs.kubernetes-ref }}
+          kubernetes-sha: ${{ steps.config.outputs.kubernetes-sha }}
+          containerd-repo: ${{ steps.config.outputs.containerd-repo }}
+          containerd-ref: ${{ steps.config.outputs.containerd-ref }}
+          containerd-sha: ${{ steps.config.outputs.containerd-sha }}
+
       - name: Checkout test-infra
         uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
         with:
@@ -40,11 +62,53 @@ jobs:
           path: test-infra
           fetch-depth: 1
 
+      - name: Checkout Kubernetes
+        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
+        with:
+          repository: ${{ steps.config.outputs.kubernetes-repo }}
+          ref: ${{ steps.config.outputs.kubernetes-sha }}
+          path: src/k8s.io/kubernetes
+          fetch-depth: 0
+
+      - name: Checkout containerd
+        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
+        with:
+          repository: ${{ steps.config.outputs.containerd-repo }}
+          ref: ${{ steps.config.outputs.containerd-sha }}
+          path: src/github.com/containerd/containerd
+          fetch-depth: 0
+
       - name: Run drift detector
+        id: infra-drift
         shell: bash
         run: |
           set -o pipefail
           make test-infra-drift TEST_INFRA_DIR="${GITHUB_WORKSPACE}/test-infra" | tee drift-report.txt
+
+      - name: Check Kubernetes patch stack
+        id: kubernetes-patches
+        uses: ./.github/actions/apply-format-patches
+        with:
+          repo-path: src/k8s.io/kubernetes
+          patch-dir: projects/kubernetes
+
+      - name: Check containerd patch stack
+        id: containerd-patches
+        uses: ./.github/actions/apply-format-patches
+        with:
+          repo-path: src/github.com/containerd/containerd
+          patch-dir: projects/containerd
+
+      - name: Append patch stack status
+        if: always()
+        shell: bash
+        run: |
+          {
+            echo
+            echo 'Patch stack status'
+            echo "- Kubernetes patch apply: ${{ steps.kubernetes-patches.outcome }}"
+            echo "- containerd patch apply: ${{ steps.containerd-patches.outcome }}"
+          } >> drift-report.txt
 
       - name: Add drift summary
         if: always()
@@ -57,6 +121,11 @@ jobs:
               echo '```text'
               cat drift-report.txt
               echo '```'
+              echo
+              echo '### Patch Stack Status'
+              echo
+              echo "- Kubernetes patch apply: `${{ steps.kubernetes-patches.outcome }}`"
+              echo "- containerd patch apply: `${{ steps.containerd-patches.outcome }}`"
             } >> "$GITHUB_STEP_SUMMARY"
           fi
 
