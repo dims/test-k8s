@@ -72,6 +72,11 @@ jobs:
           job-status: ${{ steps.dependencies.outcome }}
           mirrored-prow-job: pull-kubernetes-dependencies
           build-log-path: ${{ env.ARTIFACTS }}/build-log.txt
+          fallback-synthetic-suite-name: Dependencies
+          fallback-synthetic-cases: |
+            external-dependencies-version|${{ steps.dependencies.outcome }}
+            vendor|${{ steps.dependencies.outcome }}
+            vendor-licenses|${{ steps.dependencies.outcome }}
       - uses: ./.github/actions/collect-logs
         if: always()
         with:

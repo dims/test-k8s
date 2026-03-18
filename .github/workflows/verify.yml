@@ -76,6 +76,9 @@ jobs:
           job-status: ${{ steps.verify.outcome }}
           mirrored-prow-job: pull-kubernetes-verify
           build-log-path: ${{ env.ARTIFACTS }}/build-log.txt
+          fallback-synthetic-suite-name: Verify
+          fallback-synthetic-cases: |
+            hack/jenkins/verify-dockerized.sh|${{ steps.verify.outcome }}
       - uses: ./.github/actions/collect-logs
         if: always()
         with:

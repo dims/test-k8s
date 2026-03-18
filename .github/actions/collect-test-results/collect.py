@@ -305,6 +305,13 @@ def main():
             job_status,
         )
         source_kind = "synthetic"
+    elif not all_tests and getenv("INPUT_FALLBACK_SYNTHETIC_CASES"):
+        all_suites, all_tests = parse_synthetic_cases(
+            getenv("INPUT_FALLBACK_SYNTHETIC_CASES"),
+            getenv("INPUT_FALLBACK_SYNTHETIC_SUITE_NAME") or job_name,
+            job_status,
+        )
+        source_kind = "synthetic-fallback"
 
     metadata = {
         "schema_version": 1,
@@ -341,6 +348,7 @@ def main():
             "result_source": source_kind,
             "junit_found": bool(junit_files),
             "synthetic_cases": bool(getenv("INPUT_SYNTHETIC_CASES")),
+            "fallback_synthetic_cases": bool(getenv("INPUT_FALLBACK_SYNTHETIC_CASES")),
             "inventory_state": "present" if all_tests else "missing",
         },
         "artifacts": {

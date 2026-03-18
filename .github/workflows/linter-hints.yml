@@ -73,6 +73,9 @@ jobs:
           job-status: ${{ steps.linter.outcome }}
           mirrored-prow-job: pull-kubernetes-linter-hints
           build-log-path: ${{ env.ARTIFACTS }}/build-log.txt
+          fallback-synthetic-suite-name: Linter Hints
+          fallback-synthetic-cases: |
+            verify WHAT=golangci-lint-pr-hints|${{ steps.linter.outcome }}
       - uses: ./.github/actions/collect-logs
         if: always()
         with:

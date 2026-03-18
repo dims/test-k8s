@@ -74,6 +74,9 @@ jobs:
           job-status: ${{ steps.cmd.outcome }}
           mirrored-prow-job: pull-kubernetes-cmd
           build-log-path: ${{ env.ARTIFACTS }}/build-log.txt
+          fallback-synthetic-suite-name: Cmd Tests
+          fallback-synthetic-cases: |
+            hack/jenkins/test-cmd-dockerized.sh|${{ steps.cmd.outcome }}
       - uses: ./.github/actions/collect-logs
         if: always()
         with:

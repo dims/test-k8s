@@ -72,6 +72,9 @@ jobs:
           job-status: ${{ steps.typecheck.outcome }}
           mirrored-prow-job: pull-kubernetes-typecheck
           build-log-path: ${{ env.ARTIFACTS }}/build-log.txt
+          fallback-synthetic-suite-name: Typecheck
+          fallback-synthetic-cases: |
+            verify WHAT=typecheck|${{ steps.typecheck.outcome }}
       - uses: ./.github/actions/collect-logs
         if: always()
         with:

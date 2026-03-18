@@ -32,6 +32,12 @@ inputs:
   synthetic-cases:
     description: Optional newline-separated synthetic cases as name|status|duration|message
     required: false
+  fallback-synthetic-suite-name:
+    description: Optional synthetic suite name to use only when junit discovery is empty
+    required: false
+  fallback-synthetic-cases:
+    description: Optional newline-separated synthetic cases used only when junit discovery is empty
+    required: false
 
 runs:
   using: composite
@@ -49,6 +55,8 @@ runs:
         INPUT_BUILD_LOG_PATH: ${{ inputs.build-log-path }}
         INPUT_SYNTHETIC_SUITE_NAME: ${{ inputs.synthetic-suite-name }}
         INPUT_SYNTHETIC_CASES: ${{ inputs.synthetic-cases }}
+        INPUT_FALLBACK_SYNTHETIC_SUITE_NAME: ${{ inputs.fallback-synthetic-suite-name }}
+        INPUT_FALLBACK_SYNTHETIC_CASES: ${{ inputs.fallback-synthetic-cases }}
       run: |
         python3 "${{ github.action_path }}/collect.py"
 
@@ -58,4 +66,3 @@ runs:
         name: ${{ inputs.artifact-name }}
         path: ${{ inputs.artifacts-dir }}/normalized-results/
         if-no-files-found: error
-
