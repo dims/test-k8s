@@ -232,7 +232,7 @@ def discover_local_bundles(root: Path):
     bundles = []
     for metadata_path in root.glob("**/normalized-results/metadata.json"):
         bundle_dir = metadata_path.parent
-        bundles.append({"bundle_dir": bundle_dir, "run_info": {}})
+        bundles.append({"bundle": load_bundle(bundle_dir), "run_info": {}})
     return bundles
 
 
@@ -266,13 +266,14 @@ def download_result_artifacts(repo: str, run, download_root: Path):
     except RuntimeError:
         return bundles
     for metadata_path in target_dir.glob("**/normalized-results/metadata.json"):
+        bundle_dir = metadata_path.parent
         bundles.append(
             {
-                "bundle_dir": metadata_path.parent,
+                "bundle": load_bundle(bundle_dir),
                 "run_info": {
                     "repo": repo,
                     "run_id": run_id,
-                    "run_attempt": read_json(metadata_path.parent / "metadata.json").get("run_attempt", 1),
+                    "run_attempt": read_json(bundle_dir / "metadata.json").get("run_attempt", 1),
                     "conclusion": run.get("conclusion"),
                     "status": run.get("status"),
                     "html_url": run.get("url"),
@@ -581,8 +582,7 @@ def collect_records(args, catalog_entries, catalog_by_key):
 
     records = []
     for item in bundles:
-        bundle = load_bundle(item["bundle_dir"])
-        records.append(enrich_record(bundle, item["run_info"], catalog_by_key))
+        records.append(enrich_record(item["bundle"], item["run_info"], catalog_by_key))
     if not args.skip_upstream_comparison:
         apply_upstream_comparison(records)
     return records
