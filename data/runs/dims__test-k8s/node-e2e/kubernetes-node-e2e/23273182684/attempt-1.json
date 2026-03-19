@@ -67,10 +67,10 @@
     "upstream_comparison": {
       "inventory_parity_status": "mismatch",
       "junit_files": [
-        "pr-logs/pull/137684/pull-kubernetes-node-e2e-containerd/2034440078335414272/artifacts/junit_cos01.xml",
-        "pr-logs/pull/137684/pull-kubernetes-node-e2e-containerd/2034440078335414272/artifacts/junit_ubuntu01.xml"
+        "pr-logs/pull/137870/pull-kubernetes-node-e2e-containerd/2034481804689281024/artifacts/junit_cos01.xml",
+        "pr-logs/pull/137870/pull-kubernetes-node-e2e-containerd/2034481804689281024/artifacts/junit_ubuntu01.xml"
       ],
-      "local_only_count": 134,
+      "local_only_count": 9,
       "local_only_sample": [
         "E2eNode Suite::Ensure Credential Pulled Images pulling images with credentials [FeatureGate:KubeletEnsureSecretPulledImages] [Beta] [Serial] IfNotPresent pod with invalid PullSecret cannot access previously pulled private image",
         "E2eNode Suite::Ensure Credential Pulled Images pulling images with credentials [FeatureGate:KubeletEnsureSecretPulledImages] [Beta] [Serial] IfNotPresent pod with the same PullSecret can access previously pulled image",
@@ -80,39 +80,28 @@
         "E2eNode Suite::Ensure Credential Pulled Images pulling images with credentials [FeatureGate:KubeletEnsureSecretPulledImages] [Beta] [Serial] Never pod with the same PullSecret can access previously pulled image",
         "E2eNode Suite::Ensure Credential Pulled Images pulling images with credentials [FeatureGate:KubeletEnsureSecretPulledImages] [Beta] [Serial] Never pod with the same credentials in a different secret can access previously pulled image",
         "E2eNode Suite::Ensure Credential Pulled Images pulling images with credentials [FeatureGate:KubeletEnsureSecretPulledImages] [Beta] [Serial] Never pod without PullSecret cannot access previously pulled private image",
-        "E2eNode Suite::PLR Pod InPlace Resize [FeatureGate:InPlacePodLevelResourcesVerticalScaling] [Alpha] [Feature:OffByDefault] PLR guaranteed qos - 1 container with resize policy cpu & mem restart + resize initContainers resizing cpu",
-        "E2eNode Suite::PLR Pod InPlace Resize [FeatureGate:InPlacePodLevelResourcesVerticalScaling] [Alpha] [Feature:OffByDefault] PLR guaranteed qos - 1 container with resize policy cpu & mem restart + resize initContainers resizing cpu & mem in opposite directions",
-        "E2eNode Suite::PLR Pod InPlace Resize [FeatureGate:InPlacePodLevelResourcesVerticalScaling] [Alpha] [Feature:OffByDefault] PLR guaranteed qos - 1 container with resize policy cpu & mem restart + resize initContainers resizing cpu & mem in the same direction",
-        "E2eNode Suite::PLR Pod InPlace Resize [FeatureGate:InPlacePodLevelResourcesVerticalScaling] [Alpha] [Feature:OffByDefault] PLR guaranteed qos - 1 container with resize policy cpu & mem restart + resize initContainers resizing mem",
-        "E2eNode Suite::PLR Pod InPlace Resize [FeatureGate:InPlacePodLevelResourcesVerticalScaling] [Alpha] [Feature:OffByDefault] PLR guaranteed qos - 1 container with resize policy cpu & mem restart + resize initContainers resizing only pod-level cpu",
-        "E2eNode Suite::PLR Pod InPlace Resize [FeatureGate:InPlacePodLevelResourcesVerticalScaling] [Alpha] [Feature:OffByDefault] PLR guaranteed qos - 1 container with resize policy cpu & mem restart + resize initContainers resizing only pod-level mem",
-        "E2eNode Suite::PLR Pod InPlace Resize [FeatureGate:InPlacePodLevelResourcesVerticalScaling] [Alpha] [Feature:OffByDefault] PLR guaranteed qos - 1 container with resize policy cpu & mem restart + resize initContainers resizing pod-level cpu",
-        "E2eNode Suite::PLR Pod InPlace Resize [FeatureGate:InPlacePodLevelResourcesVerticalScaling] [Alpha] [Feature:OffByDefault] PLR guaranteed qos - 1 container with resize policy cpu & mem restart + resize initContainers resizing pod-level cpu & mem in opposite directions",
-        "E2eNode Suite::PLR Pod InPlace Resize [FeatureGate:InPlacePodLevelResourcesVerticalScaling] [Alpha] [Feature:OffByDefault] PLR guaranteed qos - 1 container with resize policy cpu & mem restart + resize initContainers resizing pod-level cpu & mem in the same direction",
-        "E2eNode Suite::PLR Pod InPlace Resize [FeatureGate:InPlacePodLevelResourcesVerticalScaling] [Alpha] [Feature:OffByDefault] PLR guaranteed qos - 1 container with resize policy cpu & mem restart + resize initContainers resizing pod-level mem",
-        "E2eNode Suite::PLR Pod InPlace Resize [FeatureGate:InPlacePodLevelResourcesVerticalScaling] [Alpha] [Feature:OffByDefault] PLR guaranteed qos - 1 container with resize policy cpu & mem restart resizing cpu",
-        "E2eNode Suite::PLR Pod InPlace Resize [FeatureGate:InPlacePodLevelResourcesVerticalScaling] [Alpha] [Feature:OffByDefault] PLR guaranteed qos - 1 container with resize policy cpu & mem restart resizing cpu & mem in opposite directions"
+        "E2eNode Suite::Pod InPlace Resize Container apply invalid resize patch requests [Feature:InPlacePodVerticalScaling] Burstable pod - nonrestartable initContainer"
       ],
       "local_test_count": 1138,
       "reference_job_name": "pull-kubernetes-node-e2e-containerd",
-      "reference_kubernetes_base_sha": "ca5c40e58a9a44bec8cc021cd4aefe797a199c47",
+      "reference_kubernetes_base_sha": "880a6dda4cb642221ebbc9638f669aaa2adc83a4",
       "reference_matches_kubernetes_sha": false,
-      "reference_pr_number": 137684,
-      "reference_pr_updated_at": "2026-03-19T04:34:02Z",
-      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/137684/pull-kubernetes-node-e2e-containerd/2034440078335414272",
+      "reference_pr_number": 137870,
+      "reference_pr_updated_at": "2026-03-19T04:42:40Z",
+      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/137870/pull-kubernetes-node-e2e-containerd/2034481804689281024",
       "reference_selection": "recent-success",
-      "reference_started_at": "2026-03-19T01:57:17Z",
+      "reference_started_at": "2026-03-19T04:42:40Z",
       "reference_started_json": {
-        "pull": "137684",
-        "repo-commit": "a8a46f4d372257647cc749cb0dc9352065ebb947",
-        "repo-version": "a8a46f4d372257647cc749cb0dc9352065ebb947",
+        "pull": "137870",
+        "repo-commit": "b82a7a89b0b8b5deaacec58130abc2f0141be062",
+        "repo-version": "b82a7a89b0b8b5deaacec58130abc2f0141be062",
         "repos": {
-          "kubernetes/kubernetes": "master:ca5c40e58a9a44bec8cc021cd4aefe797a199c47,137684:b869bf2c333ce3e8f87802d76adfadee4ed112a0",
+          "kubernetes/kubernetes": "master:880a6dda4cb642221ebbc9638f669aaa2adc83a4,137870:b2e5cbbc0bd4d75ed455a019976f95af9c4a8acc",
           "kubernetes/test-infra": "master"
         },
-        "timestamp": 1773883329
+        "timestamp": 1773893264
       },
-      "upstream_only_count": 185,
+      "upstream_only_count": 64,
       "upstream_only_sample": [
         "E2eNode Suite::Ensure Credential Pulled Images pulling images with credentials [FeatureGate:KubeletEnsureSecretPulledImages] [Beta] [Serial] AlwaysVerify IfNotPresent pod with invalid PullSecret accessing previously pulled private image",
         "E2eNode Suite::Ensure Credential Pulled Images pulling images with credentials [FeatureGate:KubeletEnsureSecretPulledImages] [Beta] [Serial] AlwaysVerify IfNotPresent pod with the same PullSecret accessing previously pulled image",
@@ -135,7 +124,7 @@
         "E2eNode Suite::Ensure Credential Pulled Images pulling images with credentials [FeatureGate:KubeletEnsureSecretPulledImages] [Beta] [Serial] NeverVerifyAllowlistedImages IfNotPresent pod with the same PullSecret accessing previously pulled image",
         "E2eNode Suite::Ensure Credential Pulled Images pulling images with credentials [FeatureGate:KubeletEnsureSecretPulledImages] [Beta] [Serial] NeverVerifyAllowlistedImages IfNotPresent pod with the same credentials in a different secret accessing previously pulled image"
       ],
-      "upstream_test_count": 1189
+      "upstream_test_count": 1193
     },
     "upstream_testgrid_url": "https://testgrid.k8s.io/presubmits-kubernetes-blocking#pull-kubernetes-node-e2e-containerd",
     "workflow_file": ".github/workflows/node-e2e.yml",
