@@ -70,22 +70,6 @@ def load_catalog(path: Path):
     return payload, by_key
 
 
-def fetch_repo_workflows(repo: str):
-    payload = json.loads(run_cmd(["gh", "api", f"repos/{repo}/actions/workflows", "-f", "per_page=100"]))
-    return payload.get("workflows", [])
-
-
-def workflow_id_map(repo: str):
-    workflows = fetch_repo_workflows(repo)
-    mapping = {}
-    for workflow in workflows:
-        path = workflow.get("path") or ""
-        if path:
-            mapping[path] = workflow.get("id")
-            mapping[Path(path).name] = workflow.get("id")
-    return mapping
-
-
 def canonical_test_name(test):
     classname = (test.get("classname") or test.get("suite") or "").strip()
     name = (test.get("name") or "").strip()
@@ -252,76 +236,56 @@ def discover_local_bundles(root: Path):
     return bundles
 
 
-def fetch_runs_for_workflow(repo: str, workflow_id: int, branch: str, max_runs: int):
-    page = 1
-    runs = []
-    while len(runs) < max_runs:
-        output = run_cmd(
+def fetch_recent_runs(repo: str, branch: str, limit: int):
+    return json.loads(
+        run_cmd(
             [
                 "gh",
-                "api",
-                f"repos/{repo}/actions/workflows/{workflow_id}/runs",
-                "-f",
-                f"branch={branch}",
-                "-f",
-                "per_page=100",
-                "-f",
-                f"page={page}",
+                "run",
+                "list",
+                "--repo",
+                repo,
+                "--branch",
+                branch,
+                "--limit",
+                str(limit),
+                "--json",
+                "databaseId,workflowName,headSha,status,conclusion,event,createdAt,updatedAt,startedAt,url,headBranch,displayTitle",
             ]
         )
-        payload = json.loads(output)
-        batch = payload.get("workflow_runs", [])
-        if not batch:
-            break
-        for run in batch:
-            if run.get("event") not in ALLOWED_EVENTS:
-                continue
-            if run.get("status") != "completed":
-                continue
-            runs.append(run)
-            if len(runs) >= max_runs:
-                break
-        if len(batch) < 100:
-            break
-        page += 1
-    return runs[:max_runs]
-
-
-def fetch_artifacts_for_run(repo: str, run_id: int):
-    output = run_cmd(["gh", "api", f"repos/{repo}/actions/runs/{run_id}/artifacts"])
-    payload = json.loads(output)
-    return payload.get("artifacts", [])
+    )
 
 
 def download_result_artifacts(repo: str, run, download_root: Path):
-    artifacts = fetch_artifacts_for_run(repo, run["id"])
-    result_names = [artifact["name"] for artifact in artifacts if artifact["name"].endswith("-results") and not artifact.get("expired")]
+    run_id = run["databaseId"]
     bundles = []
-    for artifact_name in result_names:
-        target_dir = download_root / repo_slug(repo) / str(run["id"]) / f"attempt-{run.get('run_attempt', 1)}" / artifact_name
-        target_dir.mkdir(parents=True, exist_ok=True)
-        run_cmd(["gh", "run", "download", str(run["id"]), "--repo", repo, "-n", artifact_name, "-D", str(target_dir)])
-        for metadata_path in target_dir.glob("**/normalized-results/metadata.json"):
-            bundles.append(
-                {
-                    "bundle_dir": metadata_path.parent,
-                    "run_info": {
-                        "repo": repo,
-                        "run_id": run["id"],
-                        "run_attempt": run.get("run_attempt", 1),
-                        "conclusion": run.get("conclusion"),
-                        "status": run.get("status"),
-                        "html_url": run.get("html_url"),
-                        "created_at": run.get("created_at"),
-                        "updated_at": run.get("updated_at"),
-                        "run_started_at": run.get("run_started_at"),
-                        "head_sha": run.get("head_sha"),
-                        "event": run.get("event"),
-                        "head_branch": run.get("head_branch"),
-                        "display_title": run.get("display_title"),
-                    },
-                }
-            )
+    target_dir = download_root / repo_slug(repo) / str(run_id)
+    target_dir.mkdir(parents=True, exist_ok=True)
+    try:
+        run_cmd(["gh", "run", "download", str(run_id), "--repo", repo, "-D", str(target_dir)])
+    except RuntimeError:
+        return bundles
+    for metadata_path in target_dir.glob("**/normalized-results/metadata.json"):
+        bundles.append(
+            {
+                "bundle_dir": metadata_path.parent,
+                "run_info": {
+                    "repo": repo,
+                    "run_id": run_id,
+                    "run_attempt": read_json(metadata_path.parent / "metadata.json").get("run_attempt", 1),
+                    "conclusion": run.get("conclusion"),
+                    "status": run.get("status"),
+                    "html_url": run.get("url"),
+                    "created_at": run.get("createdAt"),
+                    "updated_at": run.get("updatedAt"),
+                    "run_started_at": run.get("startedAt"),
+                    "head_sha": run.get("headSha"),
+                    "event": run.get("event"),
+                    "head_branch": run.get("headBranch"),
+                    "display_title": run.get("displayTitle"),
+                },
+            }
+        )
     return bundles
 
 
@@ -329,16 +293,22 @@ def fetch_remote_bundles(repos, catalog_entries, branch, max_runs):
     bundles = []
     with tempfile.TemporaryDirectory(prefix="publish-grid-data-") as tmp:
         download_root = Path(tmp)
-        workflows = sorted({entry["workflow_file"] for entry in catalog_entries})
+        workflow_names = sorted({entry["workflow_name"] for entry in catalog_entries})
+        run_limit = max(100, max_runs * max(1, len(workflow_names)) * 3)
         for repo in repos:
-            workflow_ids = workflow_id_map(repo)
-            for workflow_file in workflows:
-                workflow_id = workflow_ids.get(workflow_file) or workflow_ids.get(Path(workflow_file).name)
-                if not workflow_id:
+            per_workflow_counts = defaultdict(int)
+            for run in fetch_recent_runs(repo, branch, run_limit):
+                workflow_name = run.get("workflowName")
+                if workflow_name not in workflow_names:
                     continue
-                runs = fetch_runs_for_workflow(repo, workflow_id, branch, max_runs)
-                for run in runs:
-                    bundles.extend(download_result_artifacts(repo, run, download_root))
+                if run.get("event") not in ALLOWED_EVENTS:
+                    continue
+                if run.get("status") != "completed":
+                    continue
+                if per_workflow_counts[workflow_name] >= max_runs:
+                    continue
+                per_workflow_counts[workflow_name] += 1
+                bundles.extend(download_result_artifacts(repo, run, download_root))
     return bundles
 
 
