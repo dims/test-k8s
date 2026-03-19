@@ -105,6 +105,52 @@ function formatSha(sha) {
   return sha ? sha.slice(0, 12) : "unknown";
 }
 
+function shortTestStatus(status) {
+  switch (status) {
+    case "passed":
+      return "pass";
+    case "failed":
+      return "fail";
+    case "skipped":
+      return "skip";
+    case "cancelled":
+      return "cancel";
+    default:
+      return "unknown";
+  }
+}
+
+function formatMatrixDuration(status, seconds) {
+  if (seconds === null || seconds === undefined) {
+    return "";
+  }
+  if (status === "skipped" || status === "cancelled" || seconds === 0) {
+    return "";
+  }
+  if (seconds < 1) {
+    return `${seconds.toFixed(2)}s`;
+  }
+  if (seconds < 10) {
+    return `${seconds.toFixed(1)}s`;
+  }
+  return formatDuration(seconds);
+}
+
+function canonicalTestKey(test) {
+  return `${test.classname || test.suite || ""}\u0000${test.name || ""}`;
+}
+
+function buildRunRouteParams(history, attempt) {
+  return {
+    view: "run",
+    repo: history.repo_slug,
+    workflow: history.workflow_slug,
+    job: history.job_slug,
+    run: String(attempt.run_id),
+    attempt: String(attempt.run_attempt),
+  };
+}
+
 function formatParity(row) {
   const status = row.inventory_parity_status || "unknown";
   if (status === "match") {
@@ -416,6 +462,271 @@ function renderSuites(record) {
   return section;
 }
 
+function buildTestGridRows(attemptRecords) {
+  const attemptKeys = attemptRecords.map(({ attempt }) => `${attempt.run_id}.${attempt.run_attempt}`);
+  const rows = new Map();
+
+  for (const { attempt, record } of attemptRecords) {
+    const attemptKey = `${attempt.run_id}.${attempt.run_attempt}`;
+    for (const test of record.tests || []) {
+      const key = canonicalTestKey(test);
+      if (!rows.has(key)) {
+        rows.set(key, {
+          key,
+          name: test.name || "",
+          classname: test.classname || test.suite || "",
+          suite: test.suite || "",
+          cells: {},
+        });
+      }
+      rows.get(key).cells[attemptKey] = {
+        status: test.status || "unknown",
+        duration_seconds: test.duration_seconds,
+        failure_text: test.failure_text || "",
+      };
+    }
+  }
+
+  return Array.from(rows.values())
+    .map((row) => {
+      const cellValues = attemptKeys.map((key) => row.cells[key]).filter(Boolean);
+      const statuses = new Set(cellValues.map((value) => value.status));
+      const presentCount = cellValues.length;
+      const hasFailure = cellValues.some((value) => ["failed", "cancelled", "unknown"].includes(value.status));
+      const changed = statuses.size > 1 || presentCount !== attemptKeys.length;
+      const skippedOnly = cellValues.length > 0 && cellValues.every((value) => value.status === "skipped");
+      return {
+        ...row,
+        presentCount,
+        hasFailure,
+        changed,
+        skippedOnly,
+      };
+    })
+    .sort((left, right) => {
+      if (left.hasFailure !== right.hasFailure) {
+        return left.hasFailure ? -1 : 1;
+      }
+      if (left.changed !== right.changed) {
+        return left.changed ? -1 : 1;
+      }
+      return left.name.localeCompare(right.name);
+    });
+}
+
+function matchesGridFilter(row, filterValue, searchValue) {
+  const haystack = `${row.classname} ${row.name}`.toLowerCase();
+  if (searchValue && !haystack.includes(searchValue)) {
+    return false;
+  }
+
+  switch (filterValue) {
+    case "failed":
+      return row.hasFailure;
+    case "changed":
+      return row.changed;
+    case "non-skipped":
+      return !row.skippedOnly;
+    case "interesting":
+      return row.hasFailure || row.changed;
+    default:
+      return true;
+  }
+}
+
+function renderGridAttemptHeader(history, attempt) {
+  const container = el("div", "matrix-attempt-header");
+  container.appendChild(routeLink(buildRunRouteParams(history, attempt), formatAttempt(attempt)));
+  container.appendChild(el("div", "subtle", attempt.completed_at || "unknown"));
+  container.appendChild(el("div", "subtle", attempt.result || "unknown"));
+  return container;
+}
+
+function renderMatrixCell(cellData) {
+  const cell = el("td", `matrix-cell ${cellData ? cellData.status || "unknown" : "missing"}`);
+  if (!cellData) {
+    cell.appendChild(el("div", "matrix-status", "—"));
+    return cell;
+  }
+
+  const status = cellData.status || "unknown";
+  const title = [
+    `Status: ${status}`,
+    `Duration: ${formatDuration(cellData.duration_seconds)}`,
+    cellData.failure_text ? `Failure: ${cellData.failure_text}` : "",
+  ]
+    .filter(Boolean)
+    .join("\n");
+  if (title) {
+    cell.title = title;
+  }
+
+  cell.appendChild(el("div", "matrix-status", shortTestStatus(status)));
+  const duration = formatMatrixDuration(status, cellData.duration_seconds);
+  cell.appendChild(el("div", "matrix-duration", duration));
+  return cell;
+}
+
+function createLoadingCard(title, message) {
+  const section = el("section", "grid-card");
+  section.appendChild(el("h2", "section-title", title));
+  section.appendChild(el("div", "subtle", message));
+  return section;
+}
+
+async function populateTestGrid(section, history) {
+  const attempts = (history.attempts || history.recent_attempts || []).slice(0, 10);
+  if (!attempts.length) {
+    section.replaceChildren(el("h2", "section-title", "Test Grid"), el("div", "subtle", "No attempts available."));
+    return;
+  }
+
+  const loaded = await Promise.all(
+    attempts.map(async (attempt) => {
+      try {
+        return {
+          attempt,
+          record: await loadJson(`./${attempt.run_path}`),
+        };
+      } catch (error) {
+        return { attempt, error };
+      }
+    })
+  );
+
+  const allAttemptRecords = loaded.filter((entry) => entry.record);
+  const failedLoads = loaded.filter((entry) => entry.error);
+  const latestGithubSha = attempts[0]?.github_sha || "";
+
+  section.replaceChildren();
+  section.appendChild(el("h2", "section-title", "Test Grid"));
+  section.appendChild(
+    el(
+      "div",
+      "subtle",
+      "Rows are canonical testcase names. Columns are recent attempts for this workflow, similar to upstream TestGrid."
+    )
+  );
+
+  if (!allAttemptRecords.length) {
+    section.appendChild(el("pre", "failure-block", "Could not load any run bundles for this job."));
+    return;
+  }
+
+  if (failedLoads.length) {
+    section.appendChild(
+      el(
+        "pre",
+        "failure-block",
+        `Failed to load ${failedLoads.length} attempt bundle(s): ${failedLoads.map((entry) => formatAttempt(entry.attempt)).join(", ")}`
+      )
+    );
+  }
+
+  const rows = buildTestGridRows(attemptRecords);
+  const controls = el("div", "matrix-controls");
+  const scope = document.createElement("select");
+  scope.className = "matrix-select";
+  [
+    ["current-sha", "Current SHA"],
+    ["all-recent", "All recent attempts"],
+  ].forEach(([value, label]) => {
+    const option = document.createElement("option");
+    option.value = value;
+    option.textContent = label;
+    scope.appendChild(option);
+  });
+  const filter = document.createElement("select");
+  filter.className = "matrix-select";
+  [
+    ["interesting", "Interesting"],
+    ["all", "All tests"],
+    ["failed", "Failed only"],
+    ["changed", "Changed only"],
+    ["non-skipped", "Non-skipped"],
+  ].forEach(([value, label]) => {
+    const option = document.createElement("option");
+    option.value = value;
+    option.textContent = label;
+    filter.appendChild(option);
+  });
+
+  const search = document.createElement("input");
+  search.className = "matrix-input";
+  search.type = "search";
+  search.placeholder = "Filter test names";
+
+  const summary = el("div", "subtle");
+  controls.appendChild(scope);
+  controls.appendChild(filter);
+  controls.appendChild(search);
+  controls.appendChild(summary);
+  section.appendChild(controls);
+
+  const wrapper = el("div", "matrix-wrapper");
+  section.appendChild(wrapper);
+
+  let renderTimer = null;
+  const renderRows = () => {
+    const attemptRecords =
+      scope.value === "all-recent"
+        ? allAttemptRecords
+        : allAttemptRecords.filter((entry) => entry.attempt.github_sha === latestGithubSha);
+    const rows = buildTestGridRows(attemptRecords);
+    const filterValue = filter.value;
+    const searchValue = search.value.trim().toLowerCase();
+    const visibleRows = rows.filter((row) => matchesGridFilter(row, filterValue, searchValue));
+    summary.textContent = `${visibleRows.length} of ${rows.length} tests shown across ${attemptRecords.length} attempts`;
+
+    const table = el("table", "matrix-table");
+    const thead = el("thead");
+    const headerRow = el("tr");
+    headerRow.appendChild(el("th", "matrix-test-column", "Test"));
+    for (const { attempt } of attemptRecords) {
+      const th = el("th", "matrix-run-column");
+      th.appendChild(renderGridAttemptHeader(history, attempt));
+      headerRow.appendChild(th);
+    }
+    thead.appendChild(headerRow);
+    table.appendChild(thead);
+
+    const tbody = el("tbody");
+    const fragment = document.createDocumentFragment();
+    for (const row of visibleRows) {
+      const tr = el("tr");
+      const nameCell = el("td", "matrix-test-column");
+      nameCell.appendChild(el("div", "matrix-test-name", row.name));
+      if (row.classname) {
+        nameCell.appendChild(el("div", "matrix-test-class subtle", row.classname));
+      }
+      tr.appendChild(nameCell);
+
+      for (const { attempt } of attemptRecords) {
+        const attemptKey = `${attempt.run_id}.${attempt.run_attempt}`;
+        tr.appendChild(renderMatrixCell(row.cells[attemptKey]));
+      }
+
+      fragment.appendChild(tr);
+    }
+
+    tbody.appendChild(fragment);
+    table.appendChild(tbody);
+    wrapper.replaceChildren(table);
+  };
+
+  const scheduleRender = () => {
+    if (renderTimer) {
+      clearTimeout(renderTimer);
+    }
+    renderTimer = window.setTimeout(renderRows, 75);
+  };
+
+  scope.addEventListener("change", renderRows);
+  filter.addEventListener("change", renderRows);
+  search.addEventListener("input", scheduleRender);
+  renderRows();
+}
+
 function renderTests(record) {
   const section = el("section", "grid-card");
   section.appendChild(el("h2", "section-title", "Tests"));
@@ -508,6 +819,15 @@ async function renderJobView(params) {
   }
 
   content.appendChild(renderAttemptTable(history));
+
+  const testGridSection = createLoadingCard("Test Grid", "Loading testcase matrix for recent attempts...");
+  content.appendChild(testGridSection);
+  populateTestGrid(testGridSection, history).catch((error) => {
+    testGridSection.replaceChildren(
+      el("h2", "section-title", "Test Grid"),
+      el("pre", "failure-block", error.stack || error.message)
+    );
+  });
 }
 
 async function renderRunView(params) {
