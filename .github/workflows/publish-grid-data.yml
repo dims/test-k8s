@@ -58,6 +58,7 @@ jobs:
         run: |
           set -euo pipefail
           repo_url="https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+          site_dir="${GITHUB_WORKSPACE}/_site"
           publish_dir="$(mktemp -d)"
 
           if git ls-remote --exit-code --heads "${repo_url}" gh-pages >/dev/null 2>&1; then
@@ -69,7 +70,7 @@ jobs:
           fi
 
           find "${publish_dir}" -mindepth 1 -maxdepth 1 ! -name .git -exec rm -rf {} +
-          cp -a _site/. "${publish_dir}/"
+          cp -a "${site_dir}/." "${publish_dir}/"
 
           cd "${publish_dir}"
           touch .nojekyll
