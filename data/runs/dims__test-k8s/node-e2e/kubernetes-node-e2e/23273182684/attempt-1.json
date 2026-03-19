@@ -67,10 +67,10 @@
     "upstream_comparison": {
       "inventory_parity_status": "mismatch",
       "junit_files": [
-        "pr-logs/pull/137028/pull-kubernetes-node-e2e-containerd/2034631453353971712/artifacts/junit_cos01.xml",
-        "pr-logs/pull/137028/pull-kubernetes-node-e2e-containerd/2034631453353971712/artifacts/junit_ubuntu01.xml"
+        "pr-logs/pull/136989/pull-kubernetes-node-e2e-containerd/2034446083328839680/artifacts/junit_cos01.xml",
+        "pr-logs/pull/136989/pull-kubernetes-node-e2e-containerd/2034446083328839680/artifacts/junit_ubuntu01.xml"
       ],
-      "local_only_count": 9,
+      "local_only_count": 8,
       "local_only_sample": [
         "E2eNode Suite::Ensure Credential Pulled Images pulling images with credentials [FeatureGate:KubeletEnsureSecretPulledImages] [Beta] [Serial] IfNotPresent pod with invalid PullSecret cannot access previously pulled private image",
         "E2eNode Suite::Ensure Credential Pulled Images pulling images with credentials [FeatureGate:KubeletEnsureSecretPulledImages] [Beta] [Serial] IfNotPresent pod with the same PullSecret can access previously pulled image",
@@ -79,34 +79,29 @@
         "E2eNode Suite::Ensure Credential Pulled Images pulling images with credentials [FeatureGate:KubeletEnsureSecretPulledImages] [Beta] [Serial] Never pod with invalid PullSecret cannot access previously pulled private image",
         "E2eNode Suite::Ensure Credential Pulled Images pulling images with credentials [FeatureGate:KubeletEnsureSecretPulledImages] [Beta] [Serial] Never pod with the same PullSecret can access previously pulled image",
         "E2eNode Suite::Ensure Credential Pulled Images pulling images with credentials [FeatureGate:KubeletEnsureSecretPulledImages] [Beta] [Serial] Never pod with the same credentials in a different secret can access previously pulled image",
-        "E2eNode Suite::Ensure Credential Pulled Images pulling images with credentials [FeatureGate:KubeletEnsureSecretPulledImages] [Beta] [Serial] Never pod without PullSecret cannot access previously pulled private image",
-        "E2eNode Suite::Pod InPlace Resize Container apply invalid resize patch requests [Feature:InPlacePodVerticalScaling] Burstable pod - nonrestartable initContainer"
+        "E2eNode Suite::Ensure Credential Pulled Images pulling images with credentials [FeatureGate:KubeletEnsureSecretPulledImages] [Beta] [Serial] Never pod without PullSecret cannot access previously pulled private image"
       ],
       "local_test_count": 1138,
       "reference_job_name": "pull-kubernetes-node-e2e-containerd",
-      "reference_kubernetes_base_sha": "ac10370ad2aebde82c2d268dd80d08df0ffc2532",
+      "reference_kubernetes_base_sha": "98bb6823a890eb924b048cc9de34fdc625e33c87",
       "reference_matches_kubernetes_sha": false,
-      "reference_pr_number": 137028,
-      "reference_pr_updated_at": "2026-03-19T14:48:08Z",
-      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/137028/pull-kubernetes-node-e2e-containerd/2034631453353971712",
+      "reference_pr_number": 136989,
+      "reference_pr_updated_at": "2026-03-19T14:55:05Z",
+      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/136989/pull-kubernetes-node-e2e-containerd/2034446083328839680",
       "reference_selection": "recent-success",
-      "reference_started_at": "2026-03-19T14:38:47Z",
+      "reference_started_at": "2026-03-19T02:22:40Z",
       "reference_started_json": {
-        "pull": "137028",
-        "repo-commit": "8939d45fc04cbc33fe3a09d3e03ae7580c8f8225",
-        "repo-version": "8939d45fc04cbc33fe3a09d3e03ae7580c8f8225",
+        "pull": "136989",
+        "repo-commit": "3e423f542f19ac1f0c5954e51b4f588d75c83ae1",
+        "repo-version": "3e423f542f19ac1f0c5954e51b4f588d75c83ae1",
         "repos": {
-          "kubernetes/kubernetes": "master:ac10370ad2aebde82c2d268dd80d08df0ffc2532,137028:8be00142b8d739373985474c920cdeae4d603bd9",
+          "kubernetes/kubernetes": "master:98bb6823a890eb924b048cc9de34fdc625e33c87,136989:5ef08bbb54ce237aa1f502f0fc9d6c21243407cc",
           "kubernetes/test-infra": "master"
         },
-        "timestamp": 1773928949
+        "timestamp": 1773884751
       },
-      "upstream_only_count": 69,
+      "upstream_only_count": 59,
       "upstream_only_sample": [
-        "E2eNode Suite::CRI streaming list operations [Feature:CriProxy] [FeatureGate:CRIListStreaming] [Alpha] [Feature:OffByDefault] should fall back to unary RPC when streaming returns Unimplemented",
-        "E2eNode Suite::CRI streaming list operations [Feature:CriProxy] [FeatureGate:CRIListStreaming] [Alpha] [Feature:OffByDefault] should handle mid-stream errors",
-        "E2eNode Suite::CRI streaming list operations [Feature:CriProxy] [FeatureGate:CRIListStreaming] [Alpha] [Feature:OffByDefault] should handle streaming timeout",
-        "E2eNode Suite::CRI streaming list operations [Feature:CriProxy] [FeatureGate:CRIListStreaming] [Alpha] [Feature:OffByDefault] should use streaming RPCs for listing pods and containers",
         "E2eNode Suite::Ensure Credential Pulled Images pulling images with credentials [FeatureGate:KubeletEnsureSecretPulledImages] [Beta] [Serial] AlwaysVerify IfNotPresent pod with invalid PullSecret accessing previously pulled private image",
         "E2eNode Suite::Ensure Credential Pulled Images pulling images with credentials [FeatureGate:KubeletEnsureSecretPulledImages] [Beta] [Serial] AlwaysVerify IfNotPresent pod with the same PullSecret accessing previously pulled image",
         "E2eNode Suite::Ensure Credential Pulled Images pulling images with credentials [FeatureGate:KubeletEnsureSecretPulledImages] [Beta] [Serial] AlwaysVerify IfNotPresent pod with the same credentials in a different secret accessing previously pulled image",
@@ -122,9 +117,13 @@
         "E2eNode Suite::Ensure Credential Pulled Images pulling images with credentials [FeatureGate:KubeletEnsureSecretPulledImages] [Beta] [Serial] NeverVerify Never pod with invalid PullSecret accessing previously pulled private image",
         "E2eNode Suite::Ensure Credential Pulled Images pulling images with credentials [FeatureGate:KubeletEnsureSecretPulledImages] [Beta] [Serial] NeverVerify Never pod with the same PullSecret accessing previously pulled image",
         "E2eNode Suite::Ensure Credential Pulled Images pulling images with credentials [FeatureGate:KubeletEnsureSecretPulledImages] [Beta] [Serial] NeverVerify Never pod with the same credentials in a different secret accessing previously pulled image",
-        "E2eNode Suite::Ensure Credential Pulled Images pulling images with credentials [FeatureGate:KubeletEnsureSecretPulledImages] [Beta] [Serial] NeverVerify Never pod without PullSecret accessing previously pulled private image"
+        "E2eNode Suite::Ensure Credential Pulled Images pulling images with credentials [FeatureGate:KubeletEnsureSecretPulledImages] [Beta] [Serial] NeverVerify Never pod without PullSecret accessing previously pulled private image",
+        "E2eNode Suite::Ensure Credential Pulled Images pulling images with credentials [FeatureGate:KubeletEnsureSecretPulledImages] [Beta] [Serial] NeverVerifyAllowlistedImages IfNotPresent [NeverVerifyAllowListedImages specific tests] pod without PullSecret accessing previously pulled private image which is allowlisted",
+        "E2eNode Suite::Ensure Credential Pulled Images pulling images with credentials [FeatureGate:KubeletEnsureSecretPulledImages] [Beta] [Serial] NeverVerifyAllowlistedImages IfNotPresent pod with invalid PullSecret accessing previously pulled private image",
+        "E2eNode Suite::Ensure Credential Pulled Images pulling images with credentials [FeatureGate:KubeletEnsureSecretPulledImages] [Beta] [Serial] NeverVerifyAllowlistedImages IfNotPresent pod with the same PullSecret accessing previously pulled image",
+        "E2eNode Suite::Ensure Credential Pulled Images pulling images with credentials [FeatureGate:KubeletEnsureSecretPulledImages] [Beta] [Serial] NeverVerifyAllowlistedImages IfNotPresent pod with the same credentials in a different secret accessing previously pulled image"
       ],
-      "upstream_test_count": 1198
+      "upstream_test_count": 1189
     },
     "upstream_testgrid_url": "https://testgrid.k8s.io/presubmits-kubernetes-blocking#pull-kubernetes-node-e2e-containerd",
     "workflow_file": ".github/workflows/node-e2e.yml",
