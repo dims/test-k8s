@@ -1,5 +1,5 @@
 name: Load Config
-description: Parse config.yaml and expose repository and ref settings
+description: Parse config.yaml and expose repository, ref, and resolved commit settings
 
 outputs:
   kubernetes-repo:
@@ -50,19 +50,30 @@ runs:
           echo "$sha"
         }
 
+        resolve_target() {
+          local repo="$1" ref="$2" pinned_sha="$3"
+          if [[ -n "$pinned_sha" && "$pinned_sha" != "null" ]]; then
+            resolve_sha "$repo" "$pinned_sha"
+            return
+          fi
+          resolve_sha "$repo" "$ref"
+        }
+
         kubernetes_url=$(yq '.kubernetes.url' config.yaml)
         kubernetes_ref=$(yq '.kubernetes.ref' config.yaml)
+        kubernetes_sha=$(yq '.kubernetes.sha // ""' config.yaml)
         kubernetes_repo=$(repo_from_url "$kubernetes_url")
 
         containerd_url=$(yq '.containerd.url' config.yaml)
         containerd_ref=$(yq '.containerd.ref' config.yaml)
+        containerd_sha=$(yq '.containerd.sha // ""' config.yaml)
         containerd_repo=$(repo_from_url "$containerd_url")
 
         {
           echo "kubernetes-repo=${kubernetes_repo}"
           echo "kubernetes-ref=${kubernetes_ref}"
-          echo "kubernetes-sha=$(resolve_sha "$kubernetes_repo" "$kubernetes_ref")"
+          echo "kubernetes-sha=$(resolve_target "$kubernetes_repo" "$kubernetes_ref" "$kubernetes_sha")"
           echo "containerd-repo=${containerd_repo}"
           echo "containerd-ref=${containerd_ref}"
-          echo "containerd-sha=$(resolve_sha "$containerd_repo" "$containerd_ref")"
+          echo "containerd-sha=$(resolve_target "$containerd_repo" "$containerd_ref" "$containerd_sha")"
         } >> "$GITHUB_OUTPUT"
