@@ -768,30 +768,130 @@ function renderTests(record) {
   const table = el("table");
   const thead = el("thead");
   const headerRow = el("tr");
-  ["Status", "Duration", "Suite", "Class", "Name", "Failure"].forEach((label) => headerRow.appendChild(el("th", "", label)));
-  thead.appendChild(headerRow);
-  table.appendChild(thead);
+  const sortableColumns = [
+    { key: "status", label: "Status" },
+    { key: "duration", label: "Duration" },
+    { key: "suite", label: "Suite" },
+    { key: "classname", label: "Class" },
+    { key: "name", label: "Name" },
+  ];
+  let sortState = { key: "name", direction: "asc" };
+  const indexedTests = (record.tests || []).map((test, index) => ({ test, index }));
+  const statusOrder = {
+    failed: 0,
+    cancelled: 1,
+    unknown: 2,
+    passed: 3,
+    skipped: 4,
+  };
+
+  const compareValues = (left, right) => {
+    if (left === right) {
+      return 0;
+    }
+    if (left === null || left === undefined || left === "") {
+      return 1;
+    }
+    if (right === null || right === undefined || right === "") {
+      return -1;
+    }
+    if (typeof left === "number" && typeof right === "number") {
+      return left - right;
+    }
+    return String(left).localeCompare(String(right), undefined, { sensitivity: "base" });
+  };
+
+  const valueForSort = (test, key) => {
+    switch (key) {
+      case "status":
+        return statusOrder[test.status] ?? statusOrder.unknown;
+      case "duration":
+        return test.duration_seconds ?? Number.POSITIVE_INFINITY;
+      case "suite":
+        return test.suite || "";
+      case "classname":
+        return test.classname || "";
+      case "name":
+        return test.name || "";
+      default:
+        return "";
+    }
+  };
+
+  const sortTests = () =>
+    [...indexedTests].sort((left, right) => {
+      const leftValue = valueForSort(left.test, sortState.key);
+      const rightValue = valueForSort(right.test, sortState.key);
+      const compared = compareValues(leftValue, rightValue);
+      if (compared !== 0) {
+        return sortState.direction === "asc" ? compared : -compared;
+      }
+      return left.index - right.index;
+    });
+
+  const sortIndicator = (key) => {
+    if (sortState.key !== key) {
+      return "";
+    }
+    return sortState.direction === "asc" ? " ▲" : " ▼";
+  };
 
   const tbody = el("tbody");
-  for (const test of record.tests) {
-    const tr = el("tr");
-    const status = el("td");
-    status.appendChild(el("span", chipClass(test.status === "passed" ? "success" : test.status), test.status));
-    tr.appendChild(status);
-    tr.appendChild(el("td", "", formatDuration(test.duration_seconds)));
-    tr.appendChild(el("td", "", test.suite || ""));
-    tr.appendChild(el("td", "subtle", test.classname || ""));
-    tr.appendChild(el("td", "", test.name || ""));
-    const failure = el("td");
-    if (test.failure_text) {
-      failure.appendChild(el("pre", "failure-block inline", test.failure_text));
-    } else {
-      failure.textContent = "";
+  const renderRows = () => {
+    tbody.replaceChildren();
+    for (const { test } of sortTests()) {
+      const tr = el("tr");
+      const status = el("td");
+      status.appendChild(el("span", chipClass(test.status === "passed" ? "success" : test.status), test.status));
+      tr.appendChild(status);
+      tr.appendChild(el("td", "", formatDuration(test.duration_seconds)));
+      tr.appendChild(el("td", "", test.suite || ""));
+      tr.appendChild(el("td", "subtle", test.classname || ""));
+      tr.appendChild(el("td", "", test.name || ""));
+      const failure = el("td");
+      if (test.failure_text) {
+        failure.appendChild(el("pre", "failure-block inline", test.failure_text));
+      } else {
+        failure.textContent = "";
+      }
+      tr.appendChild(failure);
+      tbody.appendChild(tr);
     }
-    tr.appendChild(failure);
-    tbody.appendChild(tr);
+
+    for (const column of sortableColumns) {
+      const button = headerRow.querySelector(`[data-sort-key="${column.key}"]`);
+      if (button) {
+        button.setAttribute("aria-sort", sortState.key === column.key ? sortState.direction : "none");
+        button.textContent = `${column.label}${sortIndicator(column.key)}`;
+      }
+    }
+  };
+
+  for (const column of sortableColumns) {
+    const th = el("th", "");
+    const button = el("button", "sort-button", column.label);
+    button.type = "button";
+    button.dataset.sortKey = column.key;
+    button.title = `Sort by ${column.label.toLowerCase()}`;
+    button.addEventListener("click", () => {
+      if (sortState.key === column.key) {
+        sortState = {
+          key: column.key,
+          direction: sortState.direction === "asc" ? "desc" : "asc",
+        };
+      } else {
+        sortState = { key: column.key, direction: "asc" };
+      }
+      renderRows();
+    });
+    th.appendChild(button);
+    headerRow.appendChild(th);
   }
+  headerRow.appendChild(el("th", "", "Failure"));
+  thead.appendChild(headerRow);
+  table.appendChild(thead);
   table.appendChild(tbody);
+  renderRows();
   section.appendChild(table);
   return section;
 }
