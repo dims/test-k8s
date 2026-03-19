@@ -657,7 +657,6 @@ async function populateTestGrid(section, history) {
     );
   }
 
-  const rows = buildTestGridRows(attemptRecords);
   const controls = el("div", "matrix-controls");
   const scope = document.createElement("select");
   scope.className = "matrix-select";
