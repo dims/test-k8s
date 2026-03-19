@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>test-k8s Grid</title>
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <header class="page-header">
+    <div>
+      <h1>test-k8s Grid</h1>
+      <p>Workflow history, testcase inventories, and upstream parity for mirrored Kubernetes jobs.</p>
+    </div>
+    <nav id="breadcrumbs" class="breadcrumbs"></nav>
+  </header>
+
+  <main id="app" class="layout">
+    <section class="summary-card">
+      <div id="summary-meta" class="summary-meta">Loading…</div>
+    </section>
+
+    <section id="content" class="content-grid"></section>
+  </main>
+
+  <template id="attempt-template">
+    <a class="attempt-chip" target="_blank" rel="noreferrer"></a>
+  </template>
+
+  <script src="./app.js"></script>
+</body>
+</html>

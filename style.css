@@ -1,0 +1,296 @@
+:root {
+  --bg: #f3f0e8;
+  --surface: #fffdf7;
+  --surface-strong: #f6efe2;
+  --border: #d8d0c0;
+  --text: #1e1c18;
+  --muted: #6f675a;
+  --link: #0f4f8a;
+  --success: #3c8d43;
+  --failure: #b63a32;
+  --cancelled: #8a6f00;
+  --skipped: #6b6fb8;
+  --unknown: #7a7a7a;
+  --shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", serif;
+  background: linear-gradient(180deg, #f7f2e8 0%, #efe7d7 100%);
+  color: var(--text);
+}
+
+a {
+  color: var(--link);
+}
+
+.page-header {
+  padding: 2rem 2rem 1rem;
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.page-header h1 {
+  margin: 0;
+  font-size: 2.5rem;
+}
+
+.page-header p {
+  margin: 0.35rem 0 0;
+  color: var(--muted);
+}
+
+.breadcrumbs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+.breadcrumb-separator {
+  color: var(--muted);
+}
+
+.breadcrumb-current {
+  font-weight: 600;
+  color: var(--text);
+}
+
+.layout {
+  padding: 0 2rem 2rem;
+  display: grid;
+  gap: 1rem;
+}
+
+.content-grid {
+  display: grid;
+  gap: 1rem;
+}
+
+.summary-card,
+.detail-card,
+.grid-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 1rem 1.2rem;
+  box-shadow: var(--shadow);
+}
+
+.summary-meta,
+.subtle {
+  color: var(--muted);
+}
+
+.section-title,
+.subsection-title {
+  margin: 0 0 0.85rem;
+}
+
+.subsection-title {
+  margin-top: 1rem;
+  font-size: 1rem;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 0.85rem;
+}
+
+.stat-card {
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 0.8rem 0.9rem;
+  background: var(--surface-strong);
+}
+
+.stat-label {
+  font-size: 0.82rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+}
+
+.stat-value {
+  margin-top: 0.4rem;
+  font-size: 1.05rem;
+  font-weight: 700;
+}
+
+.meta-list {
+  margin-top: 1rem;
+  display: grid;
+  gap: 0.6rem;
+}
+
+.meta-row {
+  display: grid;
+  grid-template-columns: 140px 1fr;
+  gap: 0.75rem;
+  padding-top: 0.55rem;
+  border-top: 1px solid var(--border);
+}
+
+.meta-label {
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-size: 0.8rem;
+}
+
+.meta-value {
+  overflow-wrap: anywhere;
+}
+
+.pill-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  align-items: center;
+}
+
+.reference-link,
+.route-link {
+  font-weight: 600;
+  text-decoration: none;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th,
+td {
+  text-align: left;
+  padding: 0.85rem 0.6rem;
+  border-bottom: 1px solid var(--border);
+  vertical-align: top;
+}
+
+th {
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+}
+
+.attempts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+
+.attempt-chip,
+.parity-pill {
+  display: inline-block;
+  padding: 0.25rem 0.55rem;
+  border-radius: 999px;
+  text-decoration: none;
+  color: white;
+  font-size: 0.85rem;
+  line-height: 1.2;
+  min-width: 5.5rem;
+  text-align: center;
+}
+
+.parity-pill {
+  min-width: 0;
+  white-space: nowrap;
+}
+
+.attempt-chip.success,
+.parity-pill.match {
+  background: var(--success);
+}
+
+.attempt-chip.failure,
+.parity-pill.mismatch {
+  background: var(--failure);
+}
+
+.attempt-chip.cancelled,
+.parity-pill.warning {
+  background: var(--cancelled);
+}
+
+.attempt-chip.skipped {
+  background: var(--skipped);
+}
+
+.attempt-chip.unknown,
+.parity-pill.not-required {
+  background: var(--unknown);
+}
+
+.failure-block {
+  margin: 0.75rem 0 0;
+  padding: 0.85rem 0.95rem;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: #f8f1ed;
+  color: #4a1d17;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.failure-block.inline {
+  margin: 0;
+  max-height: 12rem;
+  overflow: auto;
+  font-size: 0.85rem;
+}
+
+.sample-list {
+  margin: 0.4rem 0 0;
+  padding-left: 1.2rem;
+}
+
+@media (max-width: 900px) {
+  .page-header,
+  .layout {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  .page-header {
+    display: block;
+  }
+
+  .meta-row {
+    grid-template-columns: 1fr;
+    gap: 0.3rem;
+  }
+
+  table,
+  thead,
+  tbody,
+  th,
+  td,
+  tr {
+    display: block;
+  }
+
+  thead {
+    display: none;
+  }
+
+  tr {
+    border-bottom: 1px solid var(--border);
+    padding: 0.5rem 0;
+  }
+
+  td {
+    border: 0;
+    padding: 0.35rem 0;
+  }
+}
