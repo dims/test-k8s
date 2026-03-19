@@ -672,8 +672,8 @@ async function populateTestGrid(section, history) {
   const filter = document.createElement("select");
   filter.className = "matrix-select";
   [
-    ["interesting", "Interesting"],
     ["all", "All tests"],
+    ["interesting", "Interesting"],
     ["failed", "Failed only"],
     ["changed", "Changed only"],
     ["non-skipped", "Non-skipped"],
@@ -683,6 +683,7 @@ async function populateTestGrid(section, history) {
     option.textContent = label;
     filter.appendChild(option);
   });
+  filter.value = "all";
 
   const search = document.createElement("input");
   search.className = "matrix-input";
