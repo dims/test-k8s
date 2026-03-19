@@ -42,6 +42,14 @@ function routeLink(params, label) {
   return link;
 }
 
+function externalLink(url, label) {
+  const link = el("a", "route-link", label);
+  link.href = url;
+  link.target = "_blank";
+  link.rel = "noreferrer";
+  return link;
+}
+
 function jobHistoryPath(repoSlug, workflowSlug, jobSlug) {
   return `./data/index/job-history/${repoSlug}__${workflowSlug}__${jobSlug}.json`;
 }
@@ -149,6 +157,25 @@ function buildRunRouteParams(history, attempt) {
     run: String(attempt.run_id),
     attempt: String(attempt.run_attempt),
   };
+}
+
+function githubRunUrl(meta) {
+  if (meta.html_url) {
+    const base = meta.html_url.replace(/\/attempts\/\d+$/, "").replace(/\/$/, "");
+    if ((meta.run_attempt || 1) > 1) {
+      return `${base}/attempts/${meta.run_attempt}`;
+    }
+    return base;
+  }
+  if (!meta.repo || !meta.run_id) {
+    return "";
+  }
+  const server = meta.github_server_url || "https://github.com";
+  const base = `${server}/${meta.repo}/actions/runs/${meta.run_id}`;
+  if ((meta.run_attempt || 1) > 1) {
+    return `${base}/attempts/${meta.run_attempt}`;
+  }
+  return base;
 }
 
 function formatParity(row) {
@@ -415,11 +442,12 @@ function renderRunMetadata(record) {
   section.appendChild(stats);
 
   const list = el("div", "meta-list");
+  const runUrl = githubRunUrl(meta);
   const fields = [
     ["Repo", meta.repo],
     ["Workflow", meta.workflow_name],
     ["Job", meta.job_name],
-    ["Run", `${meta.run_id}.${meta.run_attempt}`],
+    ["Run", runUrl ? externalLink(runUrl, `${meta.run_id}.${meta.run_attempt}`) : `${meta.run_id}.${meta.run_attempt}`],
     ["GitHub SHA", meta.github_sha],
     ["Build log", meta.artifacts?.build_log || "none"],
     ["Result source", meta.data_quality?.result_source || "unknown"],
@@ -428,7 +456,13 @@ function renderRunMetadata(record) {
   for (const [label, value] of fields) {
     const row = el("div", "meta-row");
     row.appendChild(el("div", "meta-label", label));
-    row.appendChild(el("div", "meta-value", value || "unknown"));
+    const valueCell = el("div", "meta-value");
+    if (value instanceof Node) {
+      valueCell.appendChild(value);
+    } else {
+      valueCell.textContent = value || "unknown";
+    }
+    row.appendChild(valueCell);
     list.appendChild(row);
   }
   section.appendChild(list);
