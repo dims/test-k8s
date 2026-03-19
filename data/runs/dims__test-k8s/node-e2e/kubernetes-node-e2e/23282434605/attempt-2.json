@@ -65,37 +65,35 @@
     "schema_version": 1,
     "started_at": "2026-03-19T10:57:20Z",
     "upstream_comparison": {
-      "inventory_parity_status": "extra-local-tests",
+      "inventory_parity_status": "match",
       "junit_files": [
-        "pr-logs/pull/135828/pull-kubernetes-node-e2e-containerd/2034590601080475648/artifacts/junit_cos01.xml",
-        "pr-logs/pull/135828/pull-kubernetes-node-e2e-containerd/2034590601080475648/artifacts/junit_ubuntu01.xml"
+        "pr-logs/pull/137028/pull-kubernetes-node-e2e-containerd/2034605826223640576/artifacts/junit_cos01.xml",
+        "pr-logs/pull/137028/pull-kubernetes-node-e2e-containerd/2034605826223640576/artifacts/junit_ubuntu01.xml"
       ],
-      "local_only_count": 1,
-      "local_only_sample": [
-        "E2eNode Suite::Security Context When creating a pod with HostUsers must create a user namespace and use host network when hostUsers is false and hostNetwork is true"
-      ],
+      "local_only_count": 0,
+      "local_only_sample": [],
       "local_test_count": 1194,
       "reference_job_name": "pull-kubernetes-node-e2e-containerd",
-      "reference_kubernetes_base_sha": "dd776ab4c5ed6b94389987f9bd3fe541e7711bd5",
-      "reference_matches_kubernetes_sha": true,
-      "reference_pr_number": 135828,
-      "reference_pr_updated_at": "2026-03-19T11:47:04Z",
-      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/135828/pull-kubernetes-node-e2e-containerd/2034590601080475648",
-      "reference_selection": "exact-kubernetes-sha",
-      "reference_started_at": "2026-03-19T11:55:30Z",
+      "reference_kubernetes_base_sha": "9d02f5f918223cf9c33d9188c3d25b93f903a18d",
+      "reference_matches_kubernetes_sha": false,
+      "reference_pr_number": 137028,
+      "reference_pr_updated_at": "2026-03-19T13:12:39Z",
+      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/137028/pull-kubernetes-node-e2e-containerd/2034605826223640576",
+      "reference_selection": "recent-success",
+      "reference_started_at": "2026-03-19T12:55:14Z",
       "reference_started_json": {
-        "pull": "135828",
-        "repo-commit": "82dfdb321b7d09dd3cf41fc32d88c52681953043",
-        "repo-version": "82dfdb321b7d09dd3cf41fc32d88c52681953043",
+        "pull": "137028",
+        "repo-commit": "2f82fa89527d043ae7e8a04facad15f3ca115eb9",
+        "repo-version": "2f82fa89527d043ae7e8a04facad15f3ca115eb9",
         "repos": {
-          "kubernetes/kubernetes": "master:dd776ab4c5ed6b94389987f9bd3fe541e7711bd5,135828:fc71ba48c68ecdfe88d92055f81f38f4069dba0d",
+          "kubernetes/kubernetes": "master:9d02f5f918223cf9c33d9188c3d25b93f903a18d,137028:5e7d37357d93433fe1f3652ce448c779a15df816",
           "kubernetes/test-infra": "master"
         },
-        "timestamp": 1773919204
+        "timestamp": 1773922835
       },
       "upstream_only_count": 0,
       "upstream_only_sample": [],
-      "upstream_test_count": 1193
+      "upstream_test_count": 1194
     },
     "upstream_testgrid_url": "https://testgrid.k8s.io/presubmits-kubernetes-blocking#pull-kubernetes-node-e2e-containerd",
     "workflow_file": ".github/workflows/node-e2e.yml",

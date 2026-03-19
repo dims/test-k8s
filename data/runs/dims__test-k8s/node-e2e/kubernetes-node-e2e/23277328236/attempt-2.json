@@ -65,35 +65,37 @@
     "schema_version": 1,
     "started_at": "2026-03-19T03:55:37Z",
     "upstream_comparison": {
-      "inventory_parity_status": "match",
+      "inventory_parity_status": "missing-local-tests",
       "junit_files": [
-        "pr-logs/pull/137861/pull-kubernetes-node-e2e-containerd/2034518403275821056/artifacts/junit_cos01.xml",
-        "pr-logs/pull/137861/pull-kubernetes-node-e2e-containerd/2034518403275821056/artifacts/junit_ubuntu01.xml"
+        "pr-logs/pull/137028/pull-kubernetes-node-e2e-containerd/2034605826223640576/artifacts/junit_cos01.xml",
+        "pr-logs/pull/137028/pull-kubernetes-node-e2e-containerd/2034605826223640576/artifacts/junit_ubuntu01.xml"
       ],
       "local_only_count": 0,
       "local_only_sample": [],
       "local_test_count": 1193,
       "reference_job_name": "pull-kubernetes-node-e2e-containerd",
-      "reference_kubernetes_base_sha": "880a6dda4cb642221ebbc9638f669aaa2adc83a4",
-      "reference_matches_kubernetes_sha": true,
-      "reference_pr_number": 137861,
-      "reference_pr_updated_at": "2026-03-19T12:10:27Z",
-      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/137861/pull-kubernetes-node-e2e-containerd/2034518403275821056",
-      "reference_selection": "exact-kubernetes-sha",
-      "reference_started_at": "2026-03-19T07:09:14Z",
+      "reference_kubernetes_base_sha": "9d02f5f918223cf9c33d9188c3d25b93f903a18d",
+      "reference_matches_kubernetes_sha": false,
+      "reference_pr_number": 137028,
+      "reference_pr_updated_at": "2026-03-19T13:12:39Z",
+      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/137028/pull-kubernetes-node-e2e-containerd/2034605826223640576",
+      "reference_selection": "recent-success",
+      "reference_started_at": "2026-03-19T12:55:14Z",
       "reference_started_json": {
-        "pull": "137861",
-        "repo-commit": "fbb012c3b9513e10b644f45397c4bf34cbc96ec5",
-        "repo-version": "fbb012c3b9513e10b644f45397c4bf34cbc96ec5",
+        "pull": "137028",
+        "repo-commit": "2f82fa89527d043ae7e8a04facad15f3ca115eb9",
+        "repo-version": "2f82fa89527d043ae7e8a04facad15f3ca115eb9",
         "repos": {
-          "kubernetes/kubernetes": "master:880a6dda4cb642221ebbc9638f669aaa2adc83a4,137861:30575cd184febf33345ddff83493c3840b161241",
+          "kubernetes/kubernetes": "master:9d02f5f918223cf9c33d9188c3d25b93f903a18d,137028:5e7d37357d93433fe1f3652ce448c779a15df816",
           "kubernetes/test-infra": "master"
         },
-        "timestamp": 1773901991
+        "timestamp": 1773922835
       },
-      "upstream_only_count": 0,
-      "upstream_only_sample": [],
-      "upstream_test_count": 1193
+      "upstream_only_count": 1,
+      "upstream_only_sample": [
+        "E2eNode Suite::Not Change Container Status [FeatureGate:ChangeContainerStatusOnKubeletRestart] [Deprecated] [Feature:OffByDefault] [sig-node] [Serial] Sidecar container restart after kubelet restart [FeatureGate:ChangeContainerStatusOnKubeletRestart] [Deprecated] [Feature:OffByDefault] should restart regular containers when sidecar with startupProbe is running after kubelet restart"
+      ],
+      "upstream_test_count": 1194
     },
     "upstream_testgrid_url": "https://testgrid.k8s.io/presubmits-kubernetes-blocking#pull-kubernetes-node-e2e-containerd",
     "workflow_file": ".github/workflows/node-e2e.yml",
