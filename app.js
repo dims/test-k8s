@@ -184,12 +184,29 @@ function buildAttemptsCell(attempts) {
   return cell;
 }
 
+function buildCompareCell(row) {
+  const cell = el("td", "compare-cell");
+  if (!row.upstream_testgrid_url) {
+    cell.appendChild(el("span", "compare-link muted", "local"));
+    return cell;
+  }
+
+  const label = "compare";
+  const compare = el("a", "compare-link", label);
+  compare.href = row.upstream_testgrid_url;
+  compare.target = "_blank";
+  compare.rel = "noreferrer";
+  compare.title = row.mirrored_prow_job || "Open upstream TestGrid lane";
+  cell.appendChild(compare);
+  return cell;
+}
+
 function renderSummaryTable(summary) {
   const section = el("section", "grid-card");
   const table = el("table");
   const thead = el("thead");
   const headerRow = el("tr");
-  ["Workflow", "Repo", "Upstream", "Parity", "Recent Attempts"].forEach((label) => headerRow.appendChild(el("th", "", label)));
+  ["Workflow", "Repo", "Compare", "Parity", "Recent Attempts"].forEach((label) => headerRow.appendChild(el("th", "", label)));
   thead.appendChild(headerRow);
   table.appendChild(thead);
 
@@ -207,18 +224,7 @@ function renderSummaryTable(summary) {
     tr.appendChild(workflowCell);
 
     tr.appendChild(el("td", "", row.repo));
-
-    const upstreamCell = el("td");
-    if (row.upstream_testgrid_url) {
-      const upstream = el("a", "", row.mirrored_prow_job || "TestGrid");
-      upstream.href = row.upstream_testgrid_url;
-      upstream.target = "_blank";
-      upstream.rel = "noreferrer";
-      upstreamCell.appendChild(upstream);
-    } else {
-      upstreamCell.textContent = "repo-local";
-    }
-    tr.appendChild(upstreamCell);
+    tr.appendChild(buildCompareCell(row));
 
     const parityCell = el("td");
     const parity = el(row.reference_run_url ? "a" : "span", parityClass(row.inventory_parity_status), formatParity(row));
