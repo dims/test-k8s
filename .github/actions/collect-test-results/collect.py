@@ -11,6 +11,14 @@ import xml.etree.ElementTree as ET
 
 EXCLUDE_PARTS = {"vendor", "third_party", "_output", "testdata"}
 KNOWN_BUILD_LOGS = ("build-log.txt", "integration.log", "e2e.log")
+IGNORED_JUNIT_BASENAMES = {"junit_runner.xml"}
+IGNORED_JUNIT_SUFFIXES = ("ginkgo/report.xml",)
+IGNORED_CASE_PREFIXES = (
+    "[ReportBeforeSuite]",
+    "[SynchronizedBeforeSuite]",
+    "[SynchronizedAfterSuite]",
+    "[ReportAfterSuite]",
+)
 
 
 def getenv(name: str, default: str = "") -> str:
@@ -40,6 +48,18 @@ def is_excluded(path: Path) -> bool:
     return any(part in EXCLUDE_PARTS for part in path.parts)
 
 
+def is_ignored_junit_file(path: Path) -> bool:
+    lowered = path.as_posix().lower()
+    if path.name.lower() in IGNORED_JUNIT_BASENAMES:
+        return True
+    return any(lowered.endswith(suffix) for suffix in IGNORED_JUNIT_SUFFIXES)
+
+
+def is_ignored_case_name(name: str) -> bool:
+    value = (name or "").strip()
+    return any(value.startswith(prefix) for prefix in IGNORED_CASE_PREFIXES)
+
+
 def read_json(path: Path):
     if not path.exists():
         return None
@@ -61,7 +81,7 @@ def discover_junit_files(search_roots):
             continue
         for pattern in ("junit*.xml", "**/junit*.xml", "**/ginkgo/*.xml"):
             for candidate in root.glob(pattern):
-                if not candidate.is_file() or is_excluded(candidate):
+                if not candidate.is_file() or is_excluded(candidate) or is_ignored_junit_file(candidate):
                     continue
                 resolved = candidate.resolve()
                 if resolved in seen:
@@ -147,8 +167,10 @@ def parse_junit_file(path: Path, artifacts_dir: Path):
         suite_duration = 0.0
 
         for case_index, testcase in enumerate(suite.iter("testcase"), start=1):
-            suite_tests += 1
             case_name = testcase.attrib.get("name") or f"case-{case_index}"
+            if is_ignored_case_name(case_name):
+                continue
+            suite_tests += 1
             class_name = testcase.attrib.get("classname") or suite_name
             duration = float(testcase.attrib.get("time", "0") or 0.0)
             suite_duration += duration

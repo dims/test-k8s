@@ -29,7 +29,7 @@
         {
           "name": "command",
           "kind": "presence_regex",
-          "local_regex": "run:\\s*\\./hack/jenkins/verify-dockerized\\.sh\\b",
+          "local_regex": "\\./hack/jenkins/verify-dockerized\\.sh\\b",
           "upstream_regex": "args:\\s*\\n\\s*-\\s*\\./hack/jenkins/verify-dockerized\\.sh\\b"
         },
         {
@@ -62,7 +62,7 @@
         {
           "name": "WHAT value",
           "kind": "capture_eq",
-          "local_regex": "run:\\s*make verify WHAT=([^\\s]+)",
+          "local_regex": "make verify WHAT=([^\\s]+)",
           "upstream_regex": "-\\s+WHAT=([^\\s]+)"
         },
         {
@@ -83,7 +83,7 @@
         {
           "name": "make test command",
           "kind": "presence_regex",
-          "local_regex": "run:\\s*make test\\b",
+          "local_regex": "make test\\b",
           "upstream_regex": "command:\\s*\\n\\s*-\\s*make\\s*\\n\\s*-\\s*test\\b"
         }
       ]
@@ -113,7 +113,7 @@
         {
           "name": "WHAT value",
           "kind": "capture_eq",
-          "local_regex": "run:\\s*make verify WHAT=([^\\s]+)",
+          "local_regex": "make verify WHAT=([^\\s]+)",
           "upstream_regex": "- name:\\s*WHAT\\s*\\n\\s*value:\\s*([^\\n]+)"
         }
       ]
@@ -128,7 +128,7 @@
         {
           "name": "WHAT value",
           "kind": "capture_eq",
-          "local_regex": "run:\\s*make verify WHAT=\"([^\"]+)\"",
+          "local_regex": "make verify WHAT=\"([^\"]+)\"",
           "upstream_regex": "- name:\\s*WHAT\\s*\\n\\s*value:\\s*\"([^\"]+)\""
         }
       ]
@@ -143,7 +143,7 @@
         {
           "name": "command",
           "kind": "presence_regex",
-          "local_regex": "run:\\s*\\./hack/jenkins/test-cmd-dockerized\\.sh\\b",
+          "local_regex": "\\./hack/jenkins/test-cmd-dockerized\\.sh\\b",
           "upstream_regex": "args:\\s*\\n\\s*-\\s*\\./hack/jenkins/test-cmd-dockerized\\.sh\\b"
         },
         {
@@ -258,34 +258,27 @@
           "upstream_regex": "decoration_config:\\s*\\n\\s*timeout:\\s*(\\d+)m"
         },
         {
-          "name": "NodeConformance focus",
-          "kind": "contains_both",
-          "needle": "NodeConformance"
+          "name": "focus expression",
+          "kind": "capture_eq",
+          "local_regex": "FOCUS='([^']+)'",
+          "upstream_regex": "--focus=\\\"([^\\\"]+)\\\""
         },
         {
-          "name": "Flaky skip",
-          "kind": "contains_both",
-          "needle": "\\[Flaky\\]"
+          "name": "skip expression",
+          "kind": "capture_eq",
+          "local_regex": "SKIP='([^']+)'",
+          "upstream_regex": "--skip=\\\"([^\\\"]+)\\\""
         },
         {
-          "name": "Slow skip",
-          "kind": "contains_both",
-          "needle": "\\[Slow\\]"
+          "name": "kubelet flags",
+          "kind": "capture_eq",
+          "local_regex": "TEST_ARGS='--kubelet-flags=\\\"([^\\\"]+)\\\"'",
+          "upstream_regex": "--node-test-args=.*--kubelet-flags=\\\"([^\\\"]+)\\\""
         },
         {
-          "name": "Serial skip",
-          "kind": "contains_both",
-          "needle": "\\[Serial\\]"
-        },
-        {
-          "name": "systemd cgroup driver",
-          "kind": "contains_both",
-          "needle": "--cgroup-driver=systemd"
-        },
-        {
-          "name": "containerd runtime cgroups",
-          "kind": "contains_both",
-          "needle": "--runtime-cgroups=/system.slice/containerd.service"
+          "name": "no local-only PodAndContainerStats override",
+          "kind": "absence_regex",
+          "local_regex": "PodAndContainerStatsFromCRI=true"
         }
       ]
     }

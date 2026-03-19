@@ -2,6 +2,7 @@
 
 import argparse
 import json
+import re
 import shutil
 import subprocess
 import tempfile
@@ -15,9 +16,18 @@ from urllib.parse import quote
 ALLOWED_EVENTS = {"push", "schedule", "workflow_dispatch"}
 SCHEMA_VERSION = 1
 RECENT_ATTEMPTS = 10
-UPSTREAM_PR_SEARCH_LIMIT = 25
+UPSTREAM_PR_SEARCH_LIMIT = 50
+UPSTREAM_REFERENCE_LIMIT_PER_JOB = 12
 UPSTREAM_TEST_SAMPLE_LIMIT = 20
 PROW_VIEW_PREFIX = "https://prow.k8s.io/view/gs/"
+IGNORED_INVENTORY_JUNIT_BASENAMES = {"junit_runner.xml"}
+IGNORED_INVENTORY_JUNIT_SUFFIXES = ("ginkgo/report.xml",)
+IGNORED_INVENTORY_CASE_PREFIXES = (
+    "[ReportBeforeSuite]",
+    "[SynchronizedBeforeSuite]",
+    "[SynchronizedAfterSuite]",
+    "[ReportAfterSuite]",
+)
 
 
 def utc_now():
@@ -34,8 +44,6 @@ def write_json(path: Path, payload):
 
 
 def slugify(value: str) -> str:
-    import re
-
     value = (value or "").strip().lower()
     value = re.sub(r"[^a-z0-9]+", "-", value)
     value = re.sub(r"-{2,}", "-", value)
@@ -78,6 +86,41 @@ def canonical_test_name(test):
     return name or classname
 
 
+def normalize_inventory_case_name(name: str):
+    value = (name or "").strip()
+    # Inventory comparison should be resilient to leading maturity/sig labels drifting.
+    value = re.sub(r"^(?:\[[^\]]+\]\s*)+", "", value)
+    # Ginkgo can also append one or more trailing metadata groups, sometimes nested.
+    while value.endswith("]"):
+        depth = 0
+        start = None
+        for index in range(len(value) - 1, -1, -1):
+            char = value[index]
+            if char == "]":
+                depth += 1
+            elif char == "[":
+                depth -= 1
+                if depth == 0:
+                    start = index
+                    break
+        if start is None or start == 0 or value[start - 1] != " ":
+            break
+        value = value[: start - 1].rstrip()
+    value = re.sub(r"\s+", " ", value)
+    return value.strip()
+
+
+def inventory_test_name(test):
+    classname = (test.get("classname") or test.get("suite") or "").strip()
+    raw_name = test.get("name") or ""
+    if any(raw_name.strip().startswith(prefix) for prefix in IGNORED_INVENTORY_CASE_PREFIXES):
+        return ""
+    name = normalize_inventory_case_name(raw_name)
+    if classname and name:
+        return f"{classname}::{name}"
+    return name or classname
+
+
 def parse_junit_test_names(xml_text: str):
     root = ET.fromstring(xml_text)
     if root.tag == "testsuite":
@@ -92,7 +135,7 @@ def parse_junit_test_names(xml_text: str):
         suite_name = suite.attrib.get("name") or ""
         for testcase in suite.iter("testcase"):
             names.add(
-                canonical_test_name(
+                inventory_test_name(
                     {
                         "classname": testcase.attrib.get("classname") or suite_name,
                         "suite": suite_name,
@@ -129,8 +172,24 @@ def list_gcs_objects(bucket: str, prefix: str):
 
 
 def is_junit_artifact_name(name: str):
+    lowered = name.lower()
     base = Path(name).name.lower()
+    if base in IGNORED_INVENTORY_JUNIT_BASENAMES:
+        return False
+    if any(lowered.endswith(suffix) for suffix in IGNORED_INVENTORY_JUNIT_SUFFIXES):
+        return False
     return base.endswith(".xml") and ("junit" in base or "ginkgo" in name.lower())
+
+
+def extract_kubernetes_base_sha(started):
+    repos = (started or {}).get("repos") or {}
+    ref = repos.get("kubernetes/kubernetes") or ""
+    if not ref:
+        return None
+    base_entry = ref.split(",", 1)[0]
+    if ":" not in base_entry:
+        return None
+    return base_entry.split(":", 1)[1] or None
 
 
 def fetch_upstream_test_inventory(reference):
@@ -170,6 +229,7 @@ def fetch_upstream_test_inventory(reference):
         "bucket": bucket,
         "run_prefix": run_prefix,
         "started": started,
+        "kubernetes_base_sha": extract_kubernetes_base_sha(started),
         "tests": tests,
         "junit_files": [item["name"] for item in junit_objects],
         "parse_errors": parse_errors,
@@ -200,32 +260,62 @@ def discover_upstream_references(mirrored_jobs):
         )
     )
 
-    references = {}
-    pending = set(mirrored_jobs)
+    references = defaultdict(list)
     for pr in payload:
         contexts = pr.get("statusCheckRollup") or []
         for context in contexts:
             if context.get("__typename") != "StatusContext":
                 continue
             name = context.get("context")
-            if name not in pending:
+            if name not in mirrored_jobs:
                 continue
             if context.get("state") != "SUCCESS":
                 continue
             target_url = context.get("targetUrl") or ""
             if not target_url.startswith(PROW_VIEW_PREFIX):
                 continue
-            references[name] = {
-                "job_name": name,
-                "target_url": target_url,
-                "pr_number": pr["number"],
-                "pr_updated_at": pr.get("updatedAt"),
-                "started_at": context.get("startedAt"),
-            }
-            pending.discard(name)
-        if not pending:
-            break
+            if len(references[name]) >= UPSTREAM_REFERENCE_LIMIT_PER_JOB:
+                continue
+            if any(existing["target_url"] == target_url for existing in references[name]):
+                continue
+            references[name].append(
+                {
+                    "job_name": name,
+                    "target_url": target_url,
+                    "pr_number": pr["number"],
+                    "pr_updated_at": pr.get("updatedAt"),
+                    "started_at": context.get("startedAt"),
+                }
+            )
     return references
+
+
+def load_reference_inventory(reference, inventory_cache):
+    cache_key = reference["target_url"]
+    if cache_key not in inventory_cache:
+        try:
+            inventory_cache[cache_key] = fetch_upstream_test_inventory(reference)
+        except Exception as exc:
+            inventory_cache[cache_key] = {"error": str(exc), "reference": reference}
+    return inventory_cache[cache_key]
+
+
+def select_upstream_inventory(reference_candidates, local_kubernetes_sha, inventory_cache):
+    fallback_inventory = None
+    for reference in reference_candidates:
+        inventory = load_reference_inventory(reference, inventory_cache)
+        if "error" in inventory:
+            if fallback_inventory is None:
+                fallback_inventory = inventory
+            continue
+        if fallback_inventory is None:
+            fallback_inventory = inventory
+        if local_kubernetes_sha and inventory.get("kubernetes_base_sha") == local_kubernetes_sha:
+            return inventory, "exact-kubernetes-sha"
+
+    if fallback_inventory:
+        return fallback_inventory, "recent-success"
+    return None, None
 
 
 def discover_local_bundles(root: Path):
@@ -409,24 +499,30 @@ def apply_upstream_comparison(records):
             continue
 
         mirrored_job = metadata.get("mirrored_prow_job")
-        reference = references.get(mirrored_job)
-        if not reference:
+        reference_candidates = references.get(mirrored_job, [])
+        if not reference_candidates:
             comparison["inventory_parity_status"] = "upstream-reference-missing"
             continue
 
-        if mirrored_job not in inventory_cache:
-            try:
-                inventory_cache[mirrored_job] = fetch_upstream_test_inventory(reference)
-            except Exception as exc:
-                inventory_cache[mirrored_job] = {"error": str(exc), "reference": reference}
-
-        inventory = inventory_cache[mirrored_job]
+        inventory, reference_selection = select_upstream_inventory(
+            reference_candidates, metadata.get("kubernetes_sha"), inventory_cache
+        )
+        reference = (inventory or {}).get("reference") or reference_candidates[0]
         comparison["reference_job_name"] = mirrored_job
         comparison["reference_run_url"] = reference.get("target_url")
         comparison["reference_pr_number"] = reference.get("pr_number")
         comparison["reference_started_at"] = reference.get("started_at")
         comparison["reference_pr_updated_at"] = reference.get("pr_updated_at")
+        comparison["reference_selection"] = reference_selection
+        comparison["reference_kubernetes_base_sha"] = (inventory or {}).get("kubernetes_base_sha")
+        comparison["reference_matches_kubernetes_sha"] = bool(
+            metadata.get("kubernetes_sha")
+            and (inventory or {}).get("kubernetes_base_sha") == metadata.get("kubernetes_sha")
+        )
 
+        if not inventory:
+            comparison["inventory_parity_status"] = "upstream-reference-missing"
+            continue
         if "error" in inventory:
             comparison["inventory_parity_status"] = "upstream-fetch-error"
             comparison["error"] = inventory["error"]
@@ -434,10 +530,10 @@ def apply_upstream_comparison(records):
         if inventory.get("missing_junit"):
             comparison["inventory_parity_status"] = "upstream-tests-missing"
             comparison["upstream_test_count"] = 0
-            comparison["local_test_count"] = len({canonical_test_name(test) for test in record["tests"] if canonical_test_name(test)})
+            comparison["local_test_count"] = len({inventory_test_name(test) for test in record["tests"] if inventory_test_name(test)})
             continue
 
-        local_tests = {canonical_test_name(test) for test in record["tests"] if canonical_test_name(test)}
+        local_tests = {inventory_test_name(test) for test in record["tests"] if inventory_test_name(test)}
         upstream_tests = inventory["tests"]
         if not local_tests:
             comparison["inventory_parity_status"] = "local-tests-missing"

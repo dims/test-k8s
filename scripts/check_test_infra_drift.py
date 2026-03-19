@@ -135,6 +135,11 @@ def run_check(local_text: str, upstream_text: str, check: Dict) -> Tuple[bool, s
             return False, f"{name}: upstream regex did not match"
         return True, f"{name}: regex matched on both sides"
 
+    if kind == "absence_regex":
+        if re.search(check["local_regex"], local_text, FLAGS):
+            return False, f"{name}: local regex unexpectedly matched"
+        return True, f"{name}: local regex absent as expected"
+
     if kind == "capture_eq":
         normalize_mode = check.get("normalize")
         try:
