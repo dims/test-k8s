@@ -65,48 +65,35 @@
     "schema_version": 1,
     "started_at": "2026-03-19T14:12:37Z",
     "upstream_comparison": {
-      "inventory_parity_status": "mismatch",
+      "inventory_parity_status": "match",
       "junit_files": [
-        "pr-logs/pull/136989/pull-kubernetes-node-e2e-containerd/2034446083328839680/artifacts/junit_cos01.xml",
-        "pr-logs/pull/136989/pull-kubernetes-node-e2e-containerd/2034446083328839680/artifacts/junit_ubuntu01.xml"
+        "pr-logs/pull/137897/pull-kubernetes-node-e2e-containerd/2034695080580747264/artifacts/junit_cos01.xml",
+        "pr-logs/pull/137897/pull-kubernetes-node-e2e-containerd/2034695080580747264/artifacts/junit_ubuntu01.xml"
       ],
-      "local_only_count": 10,
-      "local_only_sample": [
-        "E2eNode Suite::CRI streaming list operations [Feature:CriProxy] [FeatureGate:CRIListStreaming] [Alpha] [Feature:OffByDefault] should fall back to unary RPC when streaming returns Unimplemented",
-        "E2eNode Suite::CRI streaming list operations [Feature:CriProxy] [FeatureGate:CRIListStreaming] [Alpha] [Feature:OffByDefault] should handle mid-stream errors",
-        "E2eNode Suite::CRI streaming list operations [Feature:CriProxy] [FeatureGate:CRIListStreaming] [Alpha] [Feature:OffByDefault] should handle streaming timeout",
-        "E2eNode Suite::CRI streaming list operations [Feature:CriProxy] [FeatureGate:CRIListStreaming] [Alpha] [Feature:OffByDefault] should use streaming RPCs for listing pods and containers",
-        "E2eNode Suite::Kubelet Pods API [Serial] when the PodsAPI feature gate is enabled should be able to list and watch static pods",
-        "E2eNode Suite::Kubelet Pods API [Serial] when the PodsAPI feature gate is enabled should be able to list, get, and watch pods",
-        "E2eNode Suite::Kubelet Pods API [Serial] when the PodsAPI feature gate is enabled should receive INITIAL_SYNC_COMPLETE and coherent updates",
-        "E2eNode Suite::Kubelet Pods API [Serial] when the PodsAPI feature gate is enabled should receive events in the correct order: ADDED, MODIFIED, DELETED",
-        "E2eNode Suite::Not Change Container Status [FeatureGate:ChangeContainerStatusOnKubeletRestart] [Deprecated] [Feature:OffByDefault] [sig-node] [Serial] Sidecar container restart after kubelet restart [FeatureGate:ChangeContainerStatusOnKubeletRestart] [Deprecated] [Feature:OffByDefault] should restart regular containers when sidecar with startupProbe is running after kubelet restart",
-        "E2eNode Suite::Pod InPlace Resize Init Container [FeatureGate:InPlacePodVerticalScalingInitContainers] [Beta] should support resizing a non-sidecar init container"
-      ],
+      "local_only_count": 0,
+      "local_only_sample": [],
       "local_test_count": 1198,
       "reference_job_name": "pull-kubernetes-node-e2e-containerd",
-      "reference_kubernetes_base_sha": "98bb6823a890eb924b048cc9de34fdc625e33c87",
+      "reference_kubernetes_base_sha": "b910026535af2d8a64d45efefeb8d9efb75a4817",
       "reference_matches_kubernetes_sha": false,
-      "reference_pr_number": 136989,
-      "reference_pr_updated_at": "2026-03-19T19:05:03Z",
-      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/136989/pull-kubernetes-node-e2e-containerd/2034446083328839680",
+      "reference_pr_number": 137897,
+      "reference_pr_updated_at": "2026-03-19T19:14:54Z",
+      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/137897/pull-kubernetes-node-e2e-containerd/2034695080580747264",
       "reference_selection": "recent-success",
-      "reference_started_at": "2026-03-19T02:22:40Z",
+      "reference_started_at": "2026-03-19T18:50:08Z",
       "reference_started_json": {
-        "pull": "136989",
-        "repo-commit": "3e423f542f19ac1f0c5954e51b4f588d75c83ae1",
-        "repo-version": "3e423f542f19ac1f0c5954e51b4f588d75c83ae1",
+        "pull": "137897",
+        "repo-commit": "a70f86d6d59838aa9b975430229106e8ca3436f5",
+        "repo-version": "a70f86d6d59838aa9b975430229106e8ca3436f5",
         "repos": {
-          "kubernetes/kubernetes": "master:98bb6823a890eb924b048cc9de34fdc625e33c87,136989:5ef08bbb54ce237aa1f502f0fc9d6c21243407cc",
+          "kubernetes/kubernetes": "master:b910026535af2d8a64d45efefeb8d9efb75a4817,137897:0ec1c51d16ed5811dbad92892ba14bb396d29a50",
           "kubernetes/test-infra": "master"
         },
-        "timestamp": 1773884751
+        "timestamp": 1773944158
       },
-      "upstream_only_count": 1,
-      "upstream_only_sample": [
-        "E2eNode Suite::Pod InPlace Resize Container apply invalid resize patch requests [Feature:InPlacePodVerticalScaling] Burstable pod - nonrestartable initContainer"
-      ],
-      "upstream_test_count": 1189
+      "upstream_only_count": 0,
+      "upstream_only_sample": [],
+      "upstream_test_count": 1198
     },
     "upstream_testgrid_url": "https://testgrid.k8s.io/presubmits-kubernetes-blocking#pull-kubernetes-node-e2e-containerd",
     "workflow_file": ".github/workflows/node-e2e.yml",
