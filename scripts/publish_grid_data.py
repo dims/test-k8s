@@ -70,6 +70,22 @@ def load_catalog(path: Path):
     return payload, by_key
 
 
+def fetch_repo_workflows(repo: str):
+    payload = json.loads(run_cmd(["gh", "api", f"repos/{repo}/actions/workflows", "-f", "per_page=100"]))
+    return payload.get("workflows", [])
+
+
+def workflow_id_map(repo: str):
+    workflows = fetch_repo_workflows(repo)
+    mapping = {}
+    for workflow in workflows:
+        path = workflow.get("path") or ""
+        if path:
+            mapping[path] = workflow.get("id")
+            mapping[Path(path).name] = workflow.get("id")
+    return mapping
+
+
 def canonical_test_name(test):
     classname = (test.get("classname") or test.get("suite") or "").strip()
     name = (test.get("name") or "").strip()
@@ -236,8 +252,7 @@ def discover_local_bundles(root: Path):
     return bundles
 
 
-def fetch_runs_for_workflow(repo: str, workflow_file: str, branch: str, max_runs: int):
-    workflow_ref = Path(workflow_file).name
+def fetch_runs_for_workflow(repo: str, workflow_id: int, branch: str, max_runs: int):
     page = 1
     runs = []
     while len(runs) < max_runs:
@@ -245,7 +260,7 @@ def fetch_runs_for_workflow(repo: str, workflow_file: str, branch: str, max_runs
             [
                 "gh",
                 "api",
-                f"repos/{repo}/actions/workflows/{workflow_ref}/runs",
+                f"repos/{repo}/actions/workflows/{workflow_id}/runs",
                 "-f",
                 f"branch={branch}",
                 "-f",
@@ -316,8 +331,12 @@ def fetch_remote_bundles(repos, catalog_entries, branch, max_runs):
         download_root = Path(tmp)
         workflows = sorted({entry["workflow_file"] for entry in catalog_entries})
         for repo in repos:
+            workflow_ids = workflow_id_map(repo)
             for workflow_file in workflows:
-                runs = fetch_runs_for_workflow(repo, workflow_file, branch, max_runs)
+                workflow_id = workflow_ids.get(workflow_file) or workflow_ids.get(Path(workflow_file).name)
+                if not workflow_id:
+                    continue
+                runs = fetch_runs_for_workflow(repo, workflow_id, branch, max_runs)
                 for run in runs:
                     bundles.extend(download_result_artifacts(repo, run, download_root))
     return bundles
