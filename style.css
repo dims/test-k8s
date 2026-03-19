@@ -280,6 +280,121 @@ th {
   padding-left: 1.2rem;
 }
 
+.matrix-controls {
+  margin: 1rem 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.matrix-input,
+.matrix-select {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 0.55rem 0.7rem;
+  background: var(--surface);
+  color: var(--text);
+  font: inherit;
+}
+
+.matrix-input {
+  min-width: min(24rem, 100%);
+}
+
+.matrix-wrapper {
+  margin-top: 0.75rem;
+  max-height: 75vh;
+  overflow: auto;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+}
+
+.matrix-table {
+  min-width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+.matrix-table thead th {
+  position: sticky;
+  top: 0;
+  z-index: 3;
+  background: var(--surface-strong);
+}
+
+.matrix-table th.matrix-test-column,
+.matrix-table td.matrix-test-column {
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  min-width: 28rem;
+  max-width: 28rem;
+  background: var(--surface);
+  border-right: 1px solid var(--border);
+}
+
+.matrix-table thead th.matrix-test-column {
+  z-index: 4;
+  background: var(--surface-strong);
+}
+
+.matrix-run-column {
+  min-width: 8rem;
+}
+
+.matrix-attempt-header {
+  display: grid;
+  gap: 0.2rem;
+}
+
+.matrix-test-name {
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+
+.matrix-test-class {
+  margin-top: 0.2rem;
+  font-size: 0.82rem;
+}
+
+.matrix-cell {
+  text-align: center;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+.matrix-cell .matrix-status {
+  font-size: 0.83rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.matrix-cell .matrix-duration {
+  margin-top: 0.15rem;
+  font-size: 0.75rem;
+  color: var(--muted);
+}
+
+.matrix-cell.passed {
+  background: rgba(60, 141, 67, 0.12);
+}
+
+.matrix-cell.failed,
+.matrix-cell.unknown {
+  background: rgba(182, 58, 50, 0.14);
+}
+
+.matrix-cell.skipped {
+  background: rgba(107, 111, 184, 0.10);
+}
+
+.matrix-cell.cancelled,
+.matrix-cell.missing {
+  background: rgba(122, 122, 122, 0.10);
+}
+
 @media (max-width: 900px) {
   .page-header,
   .layout {
@@ -294,6 +409,24 @@ th {
   .meta-row {
     grid-template-columns: 1fr;
     gap: 0.3rem;
+  }
+
+  .matrix-input {
+    min-width: 100%;
+  }
+
+  .matrix-wrapper {
+    max-height: none;
+    overflow: visible;
+  }
+
+  .matrix-table th.matrix-test-column,
+  .matrix-table td.matrix-test-column,
+  .matrix-table thead th {
+    position: static;
+    min-width: 0;
+    max-width: none;
+    border-right: 0;
   }
 
   table,
