@@ -65,17 +65,33 @@
     "schema_version": 1,
     "started_at": "2026-03-19T12:18:11Z",
     "upstream_comparison": {
-      "inventory_parity_status": "upstream-tests-missing",
+      "inventory_parity_status": "match",
+      "junit_files": [
+        "pr-logs/pull/137911/pull-kubernetes-dependencies/2034700148096897024/artifacts/junit_verify.xml"
+      ],
+      "local_only_count": 0,
+      "local_only_sample": [],
       "local_test_count": 3,
       "reference_job_name": "pull-kubernetes-dependencies",
-      "reference_kubernetes_base_sha": null,
+      "reference_kubernetes_base_sha": "b910026535af2d8a64d45efefeb8d9efb75a4817",
       "reference_matches_kubernetes_sha": false,
-      "reference_pr_number": 132634,
-      "reference_pr_updated_at": "2026-03-19T18:55:00Z",
-      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/132634/pull-kubernetes-dependencies/1954963046199726080",
+      "reference_pr_number": 137911,
+      "reference_pr_updated_at": "2026-03-19T19:09:59Z",
+      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/137911/pull-kubernetes-dependencies/2034700148096897024",
       "reference_selection": "recent-success",
-      "reference_started_at": "2025-08-11T17:50:16Z",
-      "upstream_test_count": 0
+      "reference_started_at": "2026-03-19T18:37:00Z",
+      "reference_started_json": {
+        "pull": "137911",
+        "repo-commit": "fcf13eed9a23faff6350c82080b514a85ada8ccb",
+        "repo-version": "fcf13eed9a23faff6350c82080b514a85ada8ccb",
+        "repos": {
+          "kubernetes/kubernetes": "master:b910026535af2d8a64d45efefeb8d9efb75a4817,137911:b2c898eadfba35d3fecb66486c30aff184f182ff"
+        },
+        "timestamp": 1773945325
+      },
+      "upstream_only_count": 0,
+      "upstream_only_sample": [],
+      "upstream_test_count": 3
     },
     "upstream_testgrid_url": "https://testgrid.k8s.io/presubmits-kubernetes-blocking#pull-kubernetes-dependencies",
     "workflow_file": ".github/workflows/dependencies.yml",

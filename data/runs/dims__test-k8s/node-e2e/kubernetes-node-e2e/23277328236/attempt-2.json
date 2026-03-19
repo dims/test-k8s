@@ -65,35 +65,43 @@
     "schema_version": 1,
     "started_at": "2026-03-19T03:55:37Z",
     "upstream_comparison": {
-      "inventory_parity_status": "match",
+      "inventory_parity_status": "mismatch",
       "junit_files": [
-        "pr-logs/pull/137190/pull-kubernetes-node-e2e-containerd/2034531592487047168/artifacts/junit_cos01.xml",
-        "pr-logs/pull/137190/pull-kubernetes-node-e2e-containerd/2034531592487047168/artifacts/junit_ubuntu01.xml"
+        "pr-logs/pull/136989/pull-kubernetes-node-e2e-containerd/2034446083328839680/artifacts/junit_cos01.xml",
+        "pr-logs/pull/136989/pull-kubernetes-node-e2e-containerd/2034446083328839680/artifacts/junit_ubuntu01.xml"
       ],
-      "local_only_count": 0,
-      "local_only_sample": [],
+      "local_only_count": 5,
+      "local_only_sample": [
+        "E2eNode Suite::Kubelet Pods API [Serial] when the PodsAPI feature gate is enabled should be able to list and watch static pods",
+        "E2eNode Suite::Kubelet Pods API [Serial] when the PodsAPI feature gate is enabled should be able to list, get, and watch pods",
+        "E2eNode Suite::Kubelet Pods API [Serial] when the PodsAPI feature gate is enabled should receive INITIAL_SYNC_COMPLETE and coherent updates",
+        "E2eNode Suite::Kubelet Pods API [Serial] when the PodsAPI feature gate is enabled should receive events in the correct order: ADDED, MODIFIED, DELETED",
+        "E2eNode Suite::Pod InPlace Resize Init Container [FeatureGate:InPlacePodVerticalScalingInitContainers] [Beta] should support resizing a non-sidecar init container"
+      ],
       "local_test_count": 1193,
       "reference_job_name": "pull-kubernetes-node-e2e-containerd",
-      "reference_kubernetes_base_sha": "880a6dda4cb642221ebbc9638f669aaa2adc83a4",
-      "reference_matches_kubernetes_sha": true,
-      "reference_pr_number": 137190,
-      "reference_pr_updated_at": "2026-03-19T17:37:50Z",
-      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/137190/pull-kubernetes-node-e2e-containerd/2034531592487047168",
-      "reference_selection": "exact-kubernetes-sha",
-      "reference_started_at": "2026-03-19T08:03:28Z",
+      "reference_kubernetes_base_sha": "98bb6823a890eb924b048cc9de34fdc625e33c87",
+      "reference_matches_kubernetes_sha": false,
+      "reference_pr_number": 136989,
+      "reference_pr_updated_at": "2026-03-19T19:05:03Z",
+      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/136989/pull-kubernetes-node-e2e-containerd/2034446083328839680",
+      "reference_selection": "recent-success",
+      "reference_started_at": "2026-03-19T02:22:40Z",
       "reference_started_json": {
-        "pull": "137190",
-        "repo-commit": "78b7a778a7b0537bd598221833ccb1744df32717",
-        "repo-version": "78b7a778a7b0537bd598221833ccb1744df32717",
+        "pull": "136989",
+        "repo-commit": "3e423f542f19ac1f0c5954e51b4f588d75c83ae1",
+        "repo-version": "3e423f542f19ac1f0c5954e51b4f588d75c83ae1",
         "repos": {
-          "kubernetes/kubernetes": "master:880a6dda4cb642221ebbc9638f669aaa2adc83a4,137190:f44e1fbbb05c5c49e0b44b44e5cbe0f36a32fdb1",
+          "kubernetes/kubernetes": "master:98bb6823a890eb924b048cc9de34fdc625e33c87,136989:5ef08bbb54ce237aa1f502f0fc9d6c21243407cc",
           "kubernetes/test-infra": "master"
         },
-        "timestamp": 1773905254
+        "timestamp": 1773884751
       },
-      "upstream_only_count": 0,
-      "upstream_only_sample": [],
-      "upstream_test_count": 1193
+      "upstream_only_count": 1,
+      "upstream_only_sample": [
+        "E2eNode Suite::Pod InPlace Resize Container apply invalid resize patch requests [Feature:InPlacePodVerticalScaling] Burstable pod - nonrestartable initContainer"
+      ],
+      "upstream_test_count": 1189
     },
     "upstream_testgrid_url": "https://testgrid.k8s.io/presubmits-kubernetes-blocking#pull-kubernetes-node-e2e-containerd",
     "workflow_file": ".github/workflows/node-e2e.yml",
