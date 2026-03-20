@@ -391,8 +391,13 @@ def download_result_artifacts(repo: str, run, download_root: Path):
             )
         except RuntimeError:
             continue
-    for metadata_path in target_dir.glob("**/normalized-results/metadata.json"):
-        bundle_dir = metadata_path.parent
+    for artifact_dir in target_dir.iterdir():
+        if not artifact_dir.is_dir():
+            continue
+        nested_bundle_dir = artifact_dir / "normalized-results"
+        bundle_dir = nested_bundle_dir if (nested_bundle_dir / "metadata.json").exists() else artifact_dir
+        if not (bundle_dir / "metadata.json").exists():
+            continue
         bundles.append(
             {
                 "bundle": load_bundle(bundle_dir),
