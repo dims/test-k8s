@@ -65,37 +65,13 @@
     "schema_version": 1,
     "started_at": "2026-03-20T06:26:30Z",
     "upstream_comparison": {
-      "inventory_parity_status": "extra-local-tests",
+      "inventory_parity_status": "match",
       "junit_files": [
         "pr-logs/pull/137911/pull-kubernetes-unit/2034700153025204224/artifacts/junit_20260319-183530.xml"
       ],
-      "local_only_count": 1352,
-      "local_only_sample": [
-        "k8s.io/api/core::v1",
-        "k8s.io/api/extensions::v1beta1",
-        "k8s.io/api/networking::v1",
-        "k8s.io/apiextensions-apiserver/examples/client-go/pkg/client/applyconfiguration/cr::v1",
-        "k8s.io/apiextensions-apiserver/pkg/apis/apiextensions::install",
-        "k8s.io/apiextensions-apiserver/pkg/apis/apiextensions::v1",
-        "k8s.io/apiextensions-apiserver/pkg/apis/apiextensions::v1beta1",
-        "k8s.io/apiextensions-apiserver/pkg/apis/apiextensions::validation",
-        "k8s.io/apiextensions-apiserver/pkg/apis::apiextensions",
-        "k8s.io/apiextensions-apiserver/pkg/apiserver/schema/cel::model",
-        "k8s.io/apiextensions-apiserver/pkg/apiserver/schema::cel",
-        "k8s.io/apiextensions-apiserver/pkg/apiserver/schema::defaulting",
-        "k8s.io/apiextensions-apiserver/pkg/apiserver/schema::listtype",
-        "k8s.io/apiextensions-apiserver/pkg/apiserver/schema::objectmeta",
-        "k8s.io/apiextensions-apiserver/pkg/apiserver/schema::pruning",
-        "k8s.io/apiextensions-apiserver/pkg/apiserver::conversion",
-        "k8s.io/apiextensions-apiserver/pkg/apiserver::schema",
-        "k8s.io/apiextensions-apiserver/pkg/apiserver::validation",
-        "k8s.io/apiextensions-apiserver/pkg/controller/openapi::builder",
-        "k8s.io/apiextensions-apiserver/pkg/controller/openapi::v2"
-      ],
+      "local_only_count": 0,
+      "local_only_sample": [],
       "local_test_count": 1352,
-      "parse_errors": [
-        "pr-logs/pull/137911/pull-kubernetes-unit/2034700153025204224/artifacts/junit_20260319-183530.xml: command failed: curl -fsSL https://storage.googleapis.com/download/storage/v1/b/kubernetes-ci-logs/o/pr-logs%2Fpull%2F137911%2Fpull-kubernetes-unit%2F2034700153025204224%2Fartifacts%2Fjunit_20260319-183530.xml?generation=1773946429991403&alt=media\nstdout:\n\nstderr:\ncurl: (22) The requested URL returned error: 503\n"
-      ],
       "reference_job_name": "pull-kubernetes-unit",
       "reference_kubernetes_base_sha": "b910026535af2d8a64d45efefeb8d9efb75a4817",
       "reference_matches_kubernetes_sha": true,
@@ -115,7 +91,7 @@
       },
       "upstream_only_count": 0,
       "upstream_only_sample": [],
-      "upstream_test_count": 0
+      "upstream_test_count": 1352
     },
     "upstream_testgrid_url": "https://testgrid.k8s.io/presubmits-kubernetes-blocking#pull-kubernetes-unit",
     "workflow_file": ".github/workflows/unit.yml",
