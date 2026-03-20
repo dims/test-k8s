@@ -65,35 +65,40 @@
     "schema_version": 1,
     "started_at": "2026-03-19T12:04:51Z",
     "upstream_comparison": {
-      "inventory_parity_status": "match",
+      "inventory_parity_status": "missing-local-tests",
       "junit_files": [
-        "pr-logs/pull/137606/pull-kubernetes-node-e2e-containerd/2034599552538906624/artifacts/junit_cos01.xml",
-        "pr-logs/pull/137606/pull-kubernetes-node-e2e-containerd/2034599552538906624/artifacts/junit_ubuntu01.xml"
+        "pr-logs/pull/137756/pull-kubernetes-node-e2e-containerd/2034770831116079104/artifacts/junit_cos01.xml",
+        "pr-logs/pull/137756/pull-kubernetes-node-e2e-containerd/2034770831116079104/artifacts/junit_ubuntu01.xml"
       ],
       "local_only_count": 0,
       "local_only_sample": [],
       "local_test_count": 1194,
       "reference_job_name": "pull-kubernetes-node-e2e-containerd",
-      "reference_kubernetes_base_sha": "9d02f5f918223cf9c33d9188c3d25b93f903a18d",
-      "reference_matches_kubernetes_sha": true,
-      "reference_pr_number": 137606,
-      "reference_pr_updated_at": "2026-03-20T09:47:52Z",
-      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/137606/pull-kubernetes-node-e2e-containerd/2034599552538906624",
-      "reference_selection": "exact-kubernetes-sha",
-      "reference_started_at": "2026-03-19T12:33:17Z",
+      "reference_kubernetes_base_sha": "734aeb836d7faa6b3891ecef4c7bcafcbeae14b8",
+      "reference_matches_kubernetes_sha": false,
+      "reference_pr_number": 137756,
+      "reference_pr_updated_at": "2026-03-20T12:09:28Z",
+      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/137756/pull-kubernetes-node-e2e-containerd/2034770831116079104",
+      "reference_selection": "recent-success",
+      "reference_started_at": "2026-03-19T23:52:11Z",
       "reference_started_json": {
-        "pull": "137606",
-        "repo-commit": "ad448828f0a695451757a7bdbced28517053c7bb",
-        "repo-version": "ad448828f0a695451757a7bdbced28517053c7bb",
+        "pull": "137756",
+        "repo-commit": "d0e8ee4f6f83a533872940796c25f17a62be35e4",
+        "repo-version": "d0e8ee4f6f83a533872940796c25f17a62be35e4",
         "repos": {
-          "kubernetes/kubernetes": "master:9d02f5f918223cf9c33d9188c3d25b93f903a18d,137606:120930abf9432868000c1f2fb39d2cd4cf1511e0",
+          "kubernetes/kubernetes": "master:734aeb836d7faa6b3891ecef4c7bcafcbeae14b8,137756:a70183153f2edec3f80d02142acba030b19abd35",
           "kubernetes/test-infra": "master"
         },
-        "timestamp": 1773921415
+        "timestamp": 1773962181
       },
-      "upstream_only_count": 0,
-      "upstream_only_sample": [],
-      "upstream_test_count": 1194
+      "upstream_only_count": 4,
+      "upstream_only_sample": [
+        "E2eNode Suite::CRI streaming list operations [Feature:CriProxy] [FeatureGate:CRIListStreaming] [Alpha] [Feature:OffByDefault] should fall back to unary RPC when streaming returns Unimplemented",
+        "E2eNode Suite::CRI streaming list operations [Feature:CriProxy] [FeatureGate:CRIListStreaming] [Alpha] [Feature:OffByDefault] should handle mid-stream errors",
+        "E2eNode Suite::CRI streaming list operations [Feature:CriProxy] [FeatureGate:CRIListStreaming] [Alpha] [Feature:OffByDefault] should handle streaming timeout",
+        "E2eNode Suite::CRI streaming list operations [Feature:CriProxy] [FeatureGate:CRIListStreaming] [Alpha] [Feature:OffByDefault] should use streaming RPCs for listing pods and containers"
+      ],
+      "upstream_test_count": 1198
     },
     "upstream_testgrid_url": "https://testgrid.k8s.io/presubmits-kubernetes-blocking#pull-kubernetes-node-e2e-containerd",
     "workflow_file": ".github/workflows/node-e2e.yml",
