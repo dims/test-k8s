@@ -346,15 +346,51 @@ def fetch_recent_runs(repo: str, branch: str, limit: int):
     )
 
 
+def list_run_artifacts(repo: str, run_id: int):
+    return json.loads(run_cmd(["gh", "api", f"repos/{repo}/actions/runs/{run_id}/artifacts"])).get("artifacts", [])
+
+
+def is_result_artifact_name(name: str):
+    return (name or "").endswith("-results")
+
+
 def download_result_artifacts(repo: str, run, download_root: Path):
     run_id = run["databaseId"]
     bundles = []
     target_dir = download_root / repo_slug(repo) / str(run_id)
-    target_dir.mkdir(parents=True, exist_ok=True)
     try:
-        run_cmd(["gh", "run", "download", str(run_id), "--repo", repo, "-D", str(target_dir)])
+        artifacts = [
+            artifact
+            for artifact in list_run_artifacts(repo, run_id)
+            if is_result_artifact_name(artifact.get("name")) and not artifact.get("expired")
+        ]
     except RuntimeError:
         return bundles
+
+    if not artifacts:
+        return bundles
+
+    target_dir.mkdir(parents=True, exist_ok=True)
+    for artifact in artifacts:
+        artifact_dir = target_dir / slugify(artifact["name"])
+        artifact_dir.mkdir(parents=True, exist_ok=True)
+        try:
+            run_cmd(
+                [
+                    "gh",
+                    "run",
+                    "download",
+                    str(run_id),
+                    "--repo",
+                    repo,
+                    "-n",
+                    artifact["name"],
+                    "-D",
+                    str(artifact_dir),
+                ]
+            )
+        except RuntimeError:
+            continue
     for metadata_path in target_dir.glob("**/normalized-results/metadata.json"):
         bundle_dir = metadata_path.parent
         bundles.append(
@@ -377,6 +413,7 @@ def download_result_artifacts(repo: str, run, download_root: Path):
                 },
             }
         )
+    shutil.rmtree(target_dir, ignore_errors=True)
     return bundles
 
 
