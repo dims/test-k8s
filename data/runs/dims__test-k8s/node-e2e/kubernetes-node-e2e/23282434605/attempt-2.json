@@ -65,37 +65,40 @@
     "schema_version": 1,
     "started_at": "2026-03-19T10:57:20Z",
     "upstream_comparison": {
-      "inventory_parity_status": "extra-local-tests",
+      "inventory_parity_status": "missing-local-tests",
       "junit_files": [
-        "pr-logs/pull/137869/pull-kubernetes-node-e2e-containerd/2034519071025795072/artifacts/junit_cos01.xml",
-        "pr-logs/pull/137869/pull-kubernetes-node-e2e-containerd/2034519071025795072/artifacts/junit_ubuntu01.xml"
+        "pr-logs/pull/137938/pull-kubernetes-node-e2e-containerd/2035048183574302720/artifacts/junit_cos01.xml",
+        "pr-logs/pull/137938/pull-kubernetes-node-e2e-containerd/2035048183574302720/artifacts/junit_ubuntu01.xml"
       ],
-      "local_only_count": 1,
-      "local_only_sample": [
-        "E2eNode Suite::Not Change Container Status [FeatureGate:ChangeContainerStatusOnKubeletRestart] [Deprecated] [Feature:OffByDefault] [sig-node] [Serial] Sidecar container restart after kubelet restart [FeatureGate:ChangeContainerStatusOnKubeletRestart] [Deprecated] [Feature:OffByDefault] should restart regular containers when sidecar with startupProbe is running after kubelet restart"
-      ],
+      "local_only_count": 0,
+      "local_only_sample": [],
       "local_test_count": 1194,
       "reference_job_name": "pull-kubernetes-node-e2e-containerd",
-      "reference_kubernetes_base_sha": "880a6dda4cb642221ebbc9638f669aaa2adc83a4",
+      "reference_kubernetes_base_sha": "69d4f67bc45781c44e4bf90331647db22883202e",
       "reference_matches_kubernetes_sha": false,
-      "reference_pr_number": 137869,
-      "reference_pr_updated_at": "2026-03-20T18:24:39Z",
-      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/137869/pull-kubernetes-node-e2e-containerd/2034519071025795072",
+      "reference_pr_number": 137938,
+      "reference_pr_updated_at": "2026-03-20T18:27:49Z",
+      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/137938/pull-kubernetes-node-e2e-containerd/2035048183574302720",
       "reference_selection": "recent-success",
-      "reference_started_at": "2026-03-19T07:14:14Z",
+      "reference_started_at": "2026-03-20T18:15:43Z",
       "reference_started_json": {
-        "pull": "137869",
-        "repo-commit": "ba82bf02aa2df70ec127feb81cdaf7279cd42163",
-        "repo-version": "ba82bf02aa2df70ec127feb81cdaf7279cd42163",
+        "pull": "137938",
+        "repo-commit": "7c068cb8c702e3caa8581e6894e2c278e56973ad",
+        "repo-version": "7c068cb8c702e3caa8581e6894e2c278e56973ad",
         "repos": {
-          "kubernetes/kubernetes": "master:880a6dda4cb642221ebbc9638f669aaa2adc83a4,137869:aa9e4887fa37e5fcf2d986e74b815edf3c18566c",
+          "kubernetes/kubernetes": "master:69d4f67bc45781c44e4bf90331647db22883202e,137938:d871d0f7a9f177db9222c7ac92631249b0fcd70e",
           "kubernetes/test-infra": "master"
         },
-        "timestamp": 1773902318
+        "timestamp": 1774028313
       },
-      "upstream_only_count": 0,
-      "upstream_only_sample": [],
-      "upstream_test_count": 1193
+      "upstream_only_count": 4,
+      "upstream_only_sample": [
+        "E2eNode Suite::CRI streaming list operations [Feature:CriProxy] [FeatureGate:CRIListStreaming] [Alpha] [Feature:OffByDefault] should fall back to unary RPC when streaming returns Unimplemented",
+        "E2eNode Suite::CRI streaming list operations [Feature:CriProxy] [FeatureGate:CRIListStreaming] [Alpha] [Feature:OffByDefault] should handle mid-stream errors",
+        "E2eNode Suite::CRI streaming list operations [Feature:CriProxy] [FeatureGate:CRIListStreaming] [Alpha] [Feature:OffByDefault] should handle streaming timeout",
+        "E2eNode Suite::CRI streaming list operations [Feature:CriProxy] [FeatureGate:CRIListStreaming] [Alpha] [Feature:OffByDefault] should use streaming RPCs for listing pods and containers"
+      ],
+      "upstream_test_count": 1198
     },
     "upstream_testgrid_url": "https://testgrid.k8s.io/presubmits-kubernetes-blocking#pull-kubernetes-node-e2e-containerd",
     "workflow_file": ".github/workflows/node-e2e.yml",
