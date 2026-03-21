@@ -65,39 +65,52 @@
     "schema_version": 1,
     "started_at": "2026-03-19T10:57:14Z",
     "upstream_comparison": {
-      "inventory_parity_status": "missing-local-tests",
+      "inventory_parity_status": "mismatch",
       "junit_files": [
-        "pr-logs/pull/137190/pull-kubernetes-unit/2035199198730653696/artifacts/junit_20260321-034035.xml"
+        "pr-logs/pull/133801/pull-kubernetes-unit/2033957109699186688/artifacts/junit_20260317-172254.xml"
       ],
-      "local_only_count": 0,
-      "local_only_sample": [],
+      "local_only_count": 16,
+      "local_only_sample": [
+        "k8s.io/apimachinery/pkg::sharding",
+        "k8s.io/apiserver/pkg::sharding",
+        "k8s.io/code-generator/cmd/validation-gen/output_tests/tags::forbidden",
+        "k8s.io/code-generator/cmd/validation-gen/output_tests/tags::required",
+        "k8s.io/code-generator/cmd/validation-gen/output_tests/tags::validatetruealpha",
+        "k8s.io/code-generator/cmd/validation-gen/output_tests/tags::validatetruebeta",
+        "k8s.io/dynamic-resource-allocation/api/metadata::install",
+        "k8s.io/dynamic-resource-allocation/api/metadata::v1alpha1",
+        "k8s.io/dynamic-resource-allocation::devicemetadata",
+        "k8s.io/kubernetes/pkg/controller/scheduling::podgroupprotection",
+        "k8s.io/kubernetes/pkg/controller/util::protectionutil",
+        "k8s.io/kubernetes/pkg/kubelet/apis::pods",
+        "k8s.io/kubernetes/pkg/scheduler/framework/plugins::podgrouppodscount",
+        "k8s.io/kubernetes/pkg/scheduler/framework/plugins::topologyaware",
+        "k8s.io/kubernetes/plugin/pkg/admission/scheduling::podgroupprotection",
+        "k8s.io/kubernetes/plugin/pkg/admission::podresize"
+      ],
       "local_test_count": 1350,
       "reference_job_name": "pull-kubernetes-unit",
-      "reference_kubernetes_base_sha": "15eaed180f8f4d1a6188922a8258392896f7dc4c",
+      "reference_kubernetes_base_sha": "b159fc52f7d12d234a00e8c15575553fe12017db",
       "reference_matches_kubernetes_sha": false,
-      "reference_pr_number": 137190,
-      "reference_pr_updated_at": "2026-03-21T08:48:13Z",
-      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/137190/pull-kubernetes-unit/2035199198730653696",
+      "reference_pr_number": 133801,
+      "reference_pr_updated_at": "2026-03-21T12:29:43Z",
+      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/133801/pull-kubernetes-unit/2033957109699186688",
       "reference_selection": "recent-success",
-      "reference_started_at": "2026-03-21T03:59:12Z",
+      "reference_started_at": "2026-03-17T17:40:42Z",
       "reference_started_json": {
-        "pull": "137190",
-        "repo-commit": "6e4cc98cba97330307179cb87e7ac7ef6286d165",
-        "repo-version": "6e4cc98cba97330307179cb87e7ac7ef6286d165",
+        "pull": "133801",
+        "repo-commit": "fc77cd85ddbcd9a289feae0274e506f341883830",
+        "repo-version": "fc77cd85ddbcd9a289feae0274e506f341883830",
         "repos": {
-          "kubernetes/kubernetes": "master:15eaed180f8f4d1a6188922a8258392896f7dc4c,137190:627ac57e367931ba2ce61324ed16798c82b5c737"
+          "kubernetes/kubernetes": "master:b159fc52f7d12d234a00e8c15575553fe12017db,133801:3395e7e916ca91a0673a0aa9342e39e48ec835ad"
         },
-        "timestamp": 1774064429
+        "timestamp": 1773768168
       },
-      "upstream_only_count": 5,
+      "upstream_only_count": 1,
       "upstream_only_sample": [
-        "k8s.io/kubernetes/pkg/controller/resourcepoolstatusrequest::metrics",
-        "k8s.io/kubernetes/pkg/controller::resourcepoolstatusrequest",
-        "k8s.io/kubernetes/pkg/registry/resource::resourcepoolstatusrequest",
-        "k8s.io/kubernetes/plugin/pkg/admission::job",
-        "k8s.io/kubernetes/plugin/pkg/admission::podgroup"
+        "k8s.io/kubernetes/pkg/controller/volume::protectionutil"
       ],
-      "upstream_test_count": 1355
+      "upstream_test_count": 1335
     },
     "upstream_testgrid_url": "https://testgrid.k8s.io/presubmits-kubernetes-blocking#pull-kubernetes-unit",
     "workflow_file": ".github/workflows/unit.yml",
