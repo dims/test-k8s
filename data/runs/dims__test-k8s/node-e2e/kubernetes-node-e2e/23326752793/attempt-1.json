@@ -65,10 +65,10 @@
     "schema_version": 1,
     "started_at": "2026-03-20T02:39:42Z",
     "upstream_comparison": {
-      "inventory_parity_status": "match",
+      "inventory_parity_status": "missing-local-tests",
       "junit_files": [
-        "pr-logs/pull/137919/pull-kubernetes-node-e2e-containerd/2035103335987548160/artifacts/junit_cos01.xml",
-        "pr-logs/pull/137919/pull-kubernetes-node-e2e-containerd/2035103335987548160/artifacts/junit_ubuntu01.xml"
+        "pr-logs/pull/137938/pull-kubernetes-node-e2e-containerd/2035136541830942720/artifacts/junit_cos01.xml",
+        "pr-logs/pull/137938/pull-kubernetes-node-e2e-containerd/2035136541830942720/artifacts/junit_ubuntu01.xml"
       ],
       "local_only_count": 0,
       "local_only_sample": [],
@@ -76,24 +76,27 @@
       "reference_job_name": "pull-kubernetes-node-e2e-containerd",
       "reference_kubernetes_base_sha": "69d4f67bc45781c44e4bf90331647db22883202e",
       "reference_matches_kubernetes_sha": false,
-      "reference_pr_number": 137919,
-      "reference_pr_updated_at": "2026-03-20T22:09:20Z",
-      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/137919/pull-kubernetes-node-e2e-containerd/2035103335987548160",
+      "reference_pr_number": 137938,
+      "reference_pr_updated_at": "2026-03-21T00:05:40Z",
+      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/137938/pull-kubernetes-node-e2e-containerd/2035136541830942720",
       "reference_selection": "recent-success",
-      "reference_started_at": "2026-03-20T21:52:53Z",
+      "reference_started_at": "2026-03-21T00:05:40Z",
       "reference_started_json": {
-        "pull": "137919",
-        "repo-commit": "7fb4f2e4a3c99bc3932ac58ad81fe6ad514ea502",
-        "repo-version": "7fb4f2e4a3c99bc3932ac58ad81fe6ad514ea502",
+        "pull": "137938",
+        "repo-commit": "dcaded16e96cd0b466dfa96f401fc47281b4f95f",
+        "repo-version": "dcaded16e96cd0b466dfa96f401fc47281b4f95f",
         "repos": {
-          "kubernetes/kubernetes": "master:69d4f67bc45781c44e4bf90331647db22883202e,137919:3c13302556bf5d5beecc0e807b6d6d2fd91fa36b",
+          "kubernetes/kubernetes": "master:69d4f67bc45781c44e4bf90331647db22883202e,137938:842317c062f71ce376216b331a46d597f2c1f14c",
           "kubernetes/test-infra": "master"
         },
-        "timestamp": 1774041461
+        "timestamp": 1774049367
       },
-      "upstream_only_count": 0,
-      "upstream_only_sample": [],
-      "upstream_test_count": 1198
+      "upstream_only_count": 2,
+      "upstream_only_sample": [
+        "E2eNode Suite::Pods Fast Delete [NodeConformance] Pod Container Status should never report container start when an init container fails",
+        "E2eNode Suite::Pods Fast Delete [NodeConformance] Pod Container Status should never report success for a pending container"
+      ],
+      "upstream_test_count": 1200
     },
     "upstream_testgrid_url": "https://testgrid.k8s.io/presubmits-kubernetes-blocking#pull-kubernetes-node-e2e-containerd",
     "workflow_file": ".github/workflows/node-e2e.yml",
