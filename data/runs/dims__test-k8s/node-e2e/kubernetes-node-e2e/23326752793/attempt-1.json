@@ -65,41 +65,35 @@
     "schema_version": 1,
     "started_at": "2026-03-20T02:39:42Z",
     "upstream_comparison": {
-      "inventory_parity_status": "extra-local-tests",
+      "inventory_parity_status": "match",
       "junit_files": [
-        "pr-logs/pull/137844/pull-kubernetes-node-e2e-containerd/2034510503035801600/artifacts/junit_cos01.xml",
-        "pr-logs/pull/137844/pull-kubernetes-node-e2e-containerd/2034510503035801600/artifacts/junit_ubuntu01.xml"
+        "pr-logs/pull/136989/pull-kubernetes-node-e2e-containerd/2035807086822035456/artifacts/junit_cos01.xml",
+        "pr-logs/pull/136989/pull-kubernetes-node-e2e-containerd/2035807086822035456/artifacts/junit_ubuntu01.xml"
       ],
-      "local_only_count": 5,
-      "local_only_sample": [
-        "E2eNode Suite::CRI streaming list operations [Feature:CriProxy] [FeatureGate:CRIListStreaming] [Alpha] [Feature:OffByDefault] should fall back to unary RPC when streaming returns Unimplemented",
-        "E2eNode Suite::CRI streaming list operations [Feature:CriProxy] [FeatureGate:CRIListStreaming] [Alpha] [Feature:OffByDefault] should handle mid-stream errors",
-        "E2eNode Suite::CRI streaming list operations [Feature:CriProxy] [FeatureGate:CRIListStreaming] [Alpha] [Feature:OffByDefault] should handle streaming timeout",
-        "E2eNode Suite::CRI streaming list operations [Feature:CriProxy] [FeatureGate:CRIListStreaming] [Alpha] [Feature:OffByDefault] should use streaming RPCs for listing pods and containers",
-        "E2eNode Suite::Not Change Container Status [FeatureGate:ChangeContainerStatusOnKubeletRestart] [Deprecated] [Feature:OffByDefault] [sig-node] [Serial] Sidecar container restart after kubelet restart [FeatureGate:ChangeContainerStatusOnKubeletRestart] [Deprecated] [Feature:OffByDefault] should restart regular containers when sidecar with startupProbe is running after kubelet restart"
-      ],
+      "local_only_count": 0,
+      "local_only_sample": [],
       "local_test_count": 1198,
       "reference_job_name": "pull-kubernetes-node-e2e-containerd",
-      "reference_kubernetes_base_sha": "880a6dda4cb642221ebbc9638f669aaa2adc83a4",
+      "reference_kubernetes_base_sha": "0e71d2d28f29514e4e55e5a4f3d0e57436fe1f0b",
       "reference_matches_kubernetes_sha": false,
-      "reference_pr_number": 137844,
-      "reference_pr_updated_at": "2026-03-23T12:32:03Z",
-      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/137844/pull-kubernetes-node-e2e-containerd/2034510503035801600",
+      "reference_pr_number": 136989,
+      "reference_pr_updated_at": "2026-03-23T12:32:47Z",
+      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/136989/pull-kubernetes-node-e2e-containerd/2035807086822035456",
       "reference_selection": "recent-success",
-      "reference_started_at": "2026-03-19T06:37:45Z",
+      "reference_started_at": "2026-03-22T20:29:59Z",
       "reference_started_json": {
-        "pull": "137844",
-        "repo-commit": "3b60b465c786f0ee76d0953e2484f81ffc7b4592",
-        "repo-version": "3b60b465c786f0ee76d0953e2484f81ffc7b4592",
+        "pull": "136989",
+        "repo-commit": "69c673843c0f8fc7903ebc394ded8d2e38eb8d53",
+        "repo-version": "69c673843c0f8fc7903ebc394ded8d2e38eb8d53",
         "repos": {
-          "kubernetes/kubernetes": "master:880a6dda4cb642221ebbc9638f669aaa2adc83a4,137844:6e77b7b07f38b3b5e32c5172190f178dd01decf8",
+          "kubernetes/kubernetes": "master:0e71d2d28f29514e4e55e5a4f3d0e57436fe1f0b,136989:d80f384b702e4c6630e6f46b2926ab5e45553c97",
           "kubernetes/test-infra": "master"
         },
-        "timestamp": 1773900163
+        "timestamp": 1774209238
       },
       "upstream_only_count": 0,
       "upstream_only_sample": [],
-      "upstream_test_count": 1193
+      "upstream_test_count": 1198
     },
     "upstream_testgrid_url": "https://testgrid.k8s.io/presubmits-kubernetes-blocking#pull-kubernetes-node-e2e-containerd",
     "workflow_file": ".github/workflows/node-e2e.yml",
