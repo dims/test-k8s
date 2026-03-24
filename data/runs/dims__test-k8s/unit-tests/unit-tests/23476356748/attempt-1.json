@@ -65,64 +65,37 @@
     "schema_version": 1,
     "started_at": "2026-03-24T06:31:47Z",
     "upstream_comparison": {
-      "inventory_parity_status": "mismatch",
+      "inventory_parity_status": "missing-local-tests",
       "junit_files": [
-        "pr-logs/pull/137482/pull-kubernetes-unit/2029851561252884480/artifacts/junit_20260306-092853.xml"
+        "pr-logs/pull/137978/pull-kubernetes-unit/2036378106645712896/artifacts/junit_20260324-094304.xml"
       ],
-      "local_only_count": 46,
-      "local_only_sample": [
-        "k8s.io/apimachinery/pkg::sharding",
-        "k8s.io/apiserver/pkg/admission/plugin/manifest::metrics",
-        "k8s.io/apiserver/pkg/admission/plugin/policy/manifest::loader",
-        "k8s.io/apiserver/pkg/admission/plugin/policy/manifest::source",
-        "k8s.io/apiserver/pkg/admission/plugin/policy::config",
-        "k8s.io/apiserver/pkg/admission/plugin/webhook/manifest::loader",
-        "k8s.io/apiserver/pkg/admission/plugin/webhook/manifest::source",
-        "k8s.io/apiserver/pkg/admission/plugin::manifest",
-        "k8s.io/apiserver/pkg/server::routes",
-        "k8s.io/apiserver/pkg/util::filesystem",
-        "k8s.io/apiserver/pkg::sharding",
-        "k8s.io/code-generator/cmd/validation-gen/output_tests/tags/levels::discriminators",
-        "k8s.io/code-generator/cmd/validation-gen/output_tests/tags/minitems::slice_of_primitive",
-        "k8s.io/code-generator/cmd/validation-gen/output_tests/tags/minitems::slice_of_struct",
-        "k8s.io/code-generator/cmd/validation-gen/output_tests/tags/minitems::typedef_to_slice",
-        "k8s.io/code-generator/cmd/validation-gen/output_tests/tags::forbidden",
-        "k8s.io/code-generator/cmd/validation-gen/output_tests/tags::maximum",
-        "k8s.io/code-generator/cmd/validation-gen/output_tests/tags::minlength",
-        "k8s.io/code-generator/cmd/validation-gen/output_tests/tags::required",
-        "k8s.io/code-generator/cmd/validation-gen/output_tests/tags::validatetruealpha"
-      ],
+      "local_only_count": 0,
+      "local_only_sample": [],
       "local_test_count": 1352,
       "reference_job_name": "pull-kubernetes-unit",
-      "reference_kubernetes_base_sha": "559e7a23b03335b2b07f8f5c62f82b04a270bc87",
+      "reference_kubernetes_base_sha": "eca347edbf5883b80c43a400120a5f3b99cf9efb",
       "reference_matches_kubernetes_sha": false,
-      "reference_pr_number": 137482,
-      "reference_pr_updated_at": "2026-03-24T13:12:53Z",
-      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/137482/pull-kubernetes-unit/2029851561252884480",
+      "reference_pr_number": 137978,
+      "reference_pr_updated_at": "2026-03-24T13:30:12Z",
+      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/137978/pull-kubernetes-unit/2036378106645712896",
       "reference_selection": "recent-success",
-      "reference_started_at": "2026-03-06T09:46:37Z",
+      "reference_started_at": "2026-03-24T10:01:53Z",
       "reference_started_json": {
-        "pull": "137482",
-        "repo-commit": "ef5271742aaab056a10ce31a35a1ef92c994cd09",
-        "repo-version": "ef5271742aaab056a10ce31a35a1ef92c994cd09",
+        "pull": "137978",
+        "repo-commit": "05177ea3d05efc571fd3b934cb12379189a4f5e9",
+        "repo-version": "05177ea3d05efc571fd3b934cb12379189a4f5e9",
         "repos": {
-          "kubernetes/kubernetes": "master:559e7a23b03335b2b07f8f5c62f82b04a270bc87,137482:fca622943b8d1ded153b192ef90353b94b538cd4"
+          "kubernetes/kubernetes": "master:eca347edbf5883b80c43a400120a5f3b99cf9efb,137978:c49126e0310d50ac0f2f6a1f6a96a03e029acb02"
         },
-        "timestamp": 1772789327
+        "timestamp": 1774345378
       },
-      "upstream_only_count": 9,
+      "upstream_only_count": 3,
       "upstream_only_sample": [
-        "k8s.io/apimachinery/pkg/util/httpstream::spdy",
-        "k8s.io/apimachinery/pkg/util/httpstream::wsstream",
-        "k8s.io/apimachinery/pkg/util::httpstream",
-        "k8s.io/kubelet/pkg/cri/streaming::portforward",
-        "k8s.io/kubelet/pkg/cri/streaming::remotecommand",
-        "k8s.io/kubelet/pkg/cri::streaming",
-        "k8s.io/kubernetes/pkg/apis/scheduling::v1alpha1",
-        "k8s.io/kubernetes/pkg/controller/volume::protectionutil",
-        "k8s.io/kubernetes/pkg/scheduler/backend::workloadmanager"
+        "k8s.io/kubernetes/pkg/controller/resourcepoolstatusrequest::metrics",
+        "k8s.io/kubernetes/pkg/controller::resourcepoolstatusrequest",
+        "k8s.io/kubernetes/pkg/registry/resource::resourcepoolstatusrequest"
       ],
-      "upstream_test_count": 1315
+      "upstream_test_count": 1355
     },
     "upstream_testgrid_url": "https://testgrid.k8s.io/presubmits-kubernetes-blocking#pull-kubernetes-unit",
     "workflow_file": ".github/workflows/unit.yml",
