@@ -65,8 +65,33 @@
     "schema_version": 1,
     "started_at": "2026-03-23T00:04:09Z",
     "upstream_comparison": {
-      "error": "command failed: gh pr list --repo kubernetes/kubernetes --state all --search sort:updated-desc --limit 50 --json number,updatedAt,statusCheckRollup\nstdout:\n\nstderr:\nHTTP 502: 502 Bad Gateway (https://api.github.com/graphql)\n",
-      "inventory_parity_status": "upstream-reference-error"
+      "inventory_parity_status": "match",
+      "junit_files": [
+        "pr-logs/pull/134947/pull-kubernetes-typecheck/2037158454983921664/artifacts/junit_verify.xml"
+      ],
+      "local_only_count": 0,
+      "local_only_sample": [],
+      "local_test_count": 1,
+      "reference_job_name": "pull-kubernetes-typecheck",
+      "reference_kubernetes_base_sha": "b30567c744e19ef367da452734a0e65a94763593",
+      "reference_matches_kubernetes_sha": false,
+      "reference_pr_number": 134947,
+      "reference_pr_updated_at": "2026-03-26T14:40:49Z",
+      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/134947/pull-kubernetes-typecheck/2037158454983921664",
+      "reference_selection": "recent-success",
+      "reference_started_at": "2026-03-26T13:30:35Z",
+      "reference_started_json": {
+        "pull": "134947",
+        "repo-commit": "dc1b1f7f42cfbd44a5ab508e40b5baac0bf9d1ea",
+        "repo-version": "dc1b1f7f42cfbd44a5ab508e40b5baac0bf9d1ea",
+        "repos": {
+          "kubernetes/kubernetes": "master:b30567c744e19ef367da452734a0e65a94763593,134947:adbf3b5aa597637b6825844983e3847033a17b39"
+        },
+        "timestamp": 1774531487
+      },
+      "upstream_only_count": 0,
+      "upstream_only_sample": [],
+      "upstream_test_count": 1
     },
     "upstream_testgrid_url": "https://testgrid.k8s.io/presubmits-kubernetes-blocking#pull-kubernetes-typecheck",
     "workflow_file": ".github/workflows/typecheck.yml",

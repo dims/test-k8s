@@ -65,8 +65,39 @@
     "schema_version": 1,
     "started_at": "2026-03-24T18:27:35Z",
     "upstream_comparison": {
-      "error": "command failed: gh pr list --repo kubernetes/kubernetes --state all --search sort:updated-desc --limit 50 --json number,updatedAt,statusCheckRollup\nstdout:\n\nstderr:\nHTTP 502: 502 Bad Gateway (https://api.github.com/graphql)\n",
-      "inventory_parity_status": "upstream-reference-error"
+      "inventory_parity_status": "missing-local-tests",
+      "junit_files": [
+        "pr-logs/pull/134947/pull-kubernetes-unit/2037164911653556224/artifacts/junit_20260326-134936.xml"
+      ],
+      "local_only_count": 0,
+      "local_only_sample": [],
+      "local_test_count": 1352,
+      "reference_job_name": "pull-kubernetes-unit",
+      "reference_kubernetes_base_sha": "b30567c744e19ef367da452734a0e65a94763593",
+      "reference_matches_kubernetes_sha": false,
+      "reference_pr_number": 134947,
+      "reference_pr_updated_at": "2026-03-26T14:40:49Z",
+      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/134947/pull-kubernetes-unit/2037164911653556224",
+      "reference_selection": "recent-success",
+      "reference_started_at": "2026-03-26T14:08:26Z",
+      "reference_started_json": {
+        "pull": "134947",
+        "repo-commit": "dc1b1f7f42cfbd44a5ab508e40b5baac0bf9d1ea",
+        "repo-version": "dc1b1f7f42cfbd44a5ab508e40b5baac0bf9d1ea",
+        "repos": {
+          "kubernetes/kubernetes": "master:b30567c744e19ef367da452734a0e65a94763593,134947:adbf3b5aa597637b6825844983e3847033a17b39"
+        },
+        "timestamp": 1774532970
+      },
+      "upstream_only_count": 5,
+      "upstream_only_sample": [
+        "k8s.io/component-helpers/nodedeclaredfeatures/features::usernamespaceshostnetwork",
+        "k8s.io/kubernetes/pkg/controller/resourcepoolstatusrequest::metrics",
+        "k8s.io/kubernetes/pkg/controller::resourcepoolstatusrequest",
+        "k8s.io/kubernetes/pkg/registry/resource::resourcepoolstatusrequest",
+        "k8s.io/kubernetes/pkg/registry::resource"
+      ],
+      "upstream_test_count": 1357
     },
     "upstream_testgrid_url": "https://testgrid.k8s.io/presubmits-kubernetes-blocking#pull-kubernetes-unit",
     "workflow_file": ".github/workflows/unit.yml",
