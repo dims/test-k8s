@@ -65,47 +65,7 @@
     "schema_version": 1,
     "started_at": "2026-03-28T12:05:07Z",
     "upstream_comparison": {
-      "inventory_parity_status": "mismatch",
-      "junit_files": [
-        "pr-logs/pull/137423/pull-kubernetes-e2e-kind-alpha-beta-features/2035938064991260672/artifacts/junit_01.xml"
-      ],
-      "local_only_count": 1,
-      "local_only_sample": [
-        "Kubernetes e2e suite::Horizontal pod autoscaling (external metrics) should scale up and down based on external metric value"
-      ],
-      "local_test_count": 7561,
-      "reference_job_name": "pull-kubernetes-e2e-kind-alpha-beta-features",
-      "reference_kubernetes_base_sha": "0e71d2d28f29514e4e55e5a4f3d0e57436fe1f0b",
-      "reference_matches_kubernetes_sha": false,
-      "reference_pr_number": 137423,
-      "reference_pr_updated_at": "2026-03-29T05:16:01Z",
-      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/137423/pull-kubernetes-e2e-kind-alpha-beta-features/2035938064991260672",
-      "reference_selection": "recent-success",
-      "reference_started_at": "2026-03-23T05:03:57Z",
-      "reference_started_json": {
-        "pull": "137423",
-        "repo-commit": "22e17806eadcfecda9a183a139bd331f06433c41",
-        "repo-version": "22e17806eadcfecda9a183a139bd331f06433c41",
-        "repos": {
-          "kubernetes/kubernetes": "master:0e71d2d28f29514e4e55e5a4f3d0e57436fe1f0b,137423:2dfecb3887a4a467f82c84c3c8a77f2e059156fe"
-        },
-        "timestamp": 1774240465
-      },
-      "upstream_only_count": 11,
-      "upstream_only_sample": [
-        "Kubernetes e2e suite::CRUD Tests resource.k8s.io/v1alpha3 ResourcePoolStatusRequest",
-        "Kubernetes e2e suite::Horizontal pod autoscaling (external metrics) [Serial] should scale up and down based on external metric value",
-        "Kubernetes e2e suite::control plane [FeatureGate:DRAResourcePoolStatus] [Alpha] [Feature:OffByDefault] should clear NodeName when pool has slices on different nodes",
-        "Kubernetes e2e suite::control plane [FeatureGate:DRAResourcePoolStatus] [Alpha] [Feature:OffByDefault] should filter by pool name",
-        "Kubernetes e2e suite::control plane [FeatureGate:DRAResourcePoolStatus] [Alpha] [Feature:OffByDefault] should not reprocess after status is set",
-        "Kubernetes e2e suite::control plane [FeatureGate:DRAResourcePoolStatus] [Alpha] [Feature:OffByDefault] should populate status for all matching pools",
-        "Kubernetes e2e suite::control plane [FeatureGate:DRAResourcePoolStatus] [Alpha] [Feature:OffByDefault] should reflect allocated devices after pod is scheduled",
-        "Kubernetes e2e suite::control plane [FeatureGate:DRAResourcePoolStatus] [Alpha] [Feature:OffByDefault] should report pool status with correct device counts",
-        "Kubernetes e2e suite::control plane [FeatureGate:DRAResourcePoolStatus] [Alpha] [Feature:OffByDefault] should return empty pools for unknown driver",
-        "Kubernetes e2e suite::control plane [FeatureGate:DRAResourcePoolStatus] [Alpha] [Feature:OffByDefault] should set NodeName when all slices share the same node",
-        "Kubernetes e2e suite::control plane [FeatureGate:DRAResourcePoolStatus] [Alpha] [Feature:OffByDefault] should truncate results when limit is reached"
-      ],
-      "upstream_test_count": 7571
+      "inventory_parity_status": "upstream-reference-missing"
     },
     "upstream_testgrid_url": "https://testgrid.k8s.io/presubmits-kubernetes-nonblocking#pull-kubernetes-e2e-kind-alpha-beta-features",
     "workflow_file": ".github/workflows/e2e-kind-alpha-beta-features.yml",
