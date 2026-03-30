@@ -67,13 +67,11 @@
     "upstream_comparison": {
       "inventory_parity_status": "mismatch",
       "junit_files": [
-        "pr-logs/pull/137919/pull-kubernetes-node-e2e-containerd/2038346800892481536/artifacts/junit_cos01.xml",
-        "pr-logs/pull/137919/pull-kubernetes-node-e2e-containerd/2038346800892481536/artifacts/junit_ubuntu01.xml"
+        "pr-logs/pull/138049/pull-kubernetes-node-e2e-containerd/2037666978402930688/artifacts/junit_cos01.xml",
+        "pr-logs/pull/138049/pull-kubernetes-node-e2e-containerd/2037666978402930688/artifacts/junit_ubuntu01.xml"
       ],
-      "local_only_count": 129,
+      "local_only_count": 127,
       "local_only_sample": [
-        "E2eNode Suite::Device Manager [Serial] [Feature:DeviceManager] With sample device plugin [Serial] [Disruptive] should deploy pod consuming devices first but fail with admission error after kubelet restart in case device plugin hasn't re-registered",
-        "E2eNode Suite::Device Plugin [Serial] [Feature:DevicePlugin] DevicePlugin [Serial] [Disruptive] Does not keep device plugin assignments across node reboots if fails admission (no pod restart, no device plugin re-registration)",
         "E2eNode Suite::PLR Pod InPlace Resize [FeatureGate:InPlacePodLevelResourcesVerticalScaling] [Alpha] [Feature:OffByDefault] PLR guaranteed qos - 1 container with resize policy cpu & mem restart + resize initContainers resizing cpu",
         "E2eNode Suite::PLR Pod InPlace Resize [FeatureGate:InPlacePodLevelResourcesVerticalScaling] [Alpha] [Feature:OffByDefault] PLR guaranteed qos - 1 container with resize policy cpu & mem restart + resize initContainers resizing cpu & mem in opposite directions",
         "E2eNode Suite::PLR Pod InPlace Resize [FeatureGate:InPlacePodLevelResourcesVerticalScaling] [Alpha] [Feature:OffByDefault] PLR guaranteed qos - 1 container with resize policy cpu & mem restart + resize initContainers resizing cpu & mem in the same direction",
@@ -91,32 +89,31 @@
         "E2eNode Suite::PLR Pod InPlace Resize [FeatureGate:InPlacePodLevelResourcesVerticalScaling] [Alpha] [Feature:OffByDefault] PLR guaranteed qos - 1 container with resize policy cpu & mem restart resizing only pod-level cpu",
         "E2eNode Suite::PLR Pod InPlace Resize [FeatureGate:InPlacePodLevelResourcesVerticalScaling] [Alpha] [Feature:OffByDefault] PLR guaranteed qos - 1 container with resize policy cpu & mem restart resizing only pod-level mem",
         "E2eNode Suite::PLR Pod InPlace Resize [FeatureGate:InPlacePodLevelResourcesVerticalScaling] [Alpha] [Feature:OffByDefault] PLR guaranteed qos - 1 container with resize policy cpu & mem restart resizing pod-level cpu",
-        "E2eNode Suite::PLR Pod InPlace Resize [FeatureGate:InPlacePodLevelResourcesVerticalScaling] [Alpha] [Feature:OffByDefault] PLR guaranteed qos - 1 container with resize policy cpu & mem restart resizing pod-level cpu & mem in opposite directions"
+        "E2eNode Suite::PLR Pod InPlace Resize [FeatureGate:InPlacePodLevelResourcesVerticalScaling] [Alpha] [Feature:OffByDefault] PLR guaranteed qos - 1 container with resize policy cpu & mem restart resizing pod-level cpu & mem in opposite directions",
+        "E2eNode Suite::PLR Pod InPlace Resize [FeatureGate:InPlacePodLevelResourcesVerticalScaling] [Alpha] [Feature:OffByDefault] PLR guaranteed qos - 1 container with resize policy cpu & mem restart resizing pod-level cpu & mem in the same direction",
+        "E2eNode Suite::PLR Pod InPlace Resize [FeatureGate:InPlacePodLevelResourcesVerticalScaling] [Alpha] [Feature:OffByDefault] PLR guaranteed qos - 1 container with resize policy cpu & mem restart resizing pod-level mem"
       ],
       "local_test_count": 1198,
       "reference_job_name": "pull-kubernetes-node-e2e-containerd",
-      "reference_kubernetes_base_sha": "c6a95ffd4c787426e9242b208a38c8ded77e5212",
+      "reference_kubernetes_base_sha": "16c5a6be07bb2eab06b6e7732eb1cb759a7fe61c",
       "reference_matches_kubernetes_sha": false,
-      "reference_pr_number": 137919,
-      "reference_pr_updated_at": "2026-03-29T20:37:38Z",
-      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/137919/pull-kubernetes-node-e2e-containerd/2038346800892481536",
+      "reference_pr_number": 138049,
+      "reference_pr_updated_at": "2026-03-30T00:08:28Z",
+      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/138049/pull-kubernetes-node-e2e-containerd/2037666978402930688",
       "reference_selection": "recent-success",
-      "reference_started_at": "2026-03-29T20:41:38Z",
+      "reference_started_at": "2026-03-27T23:40:46Z",
       "reference_started_json": {
-        "pull": "137919",
-        "repo-commit": "8f3a78a9eabacb17945a8e135aa8626228b22acb",
-        "repo-version": "8f3a78a9eabacb17945a8e135aa8626228b22acb",
+        "pull": "138049",
+        "repo-commit": "66a7013832be227732ea1fe7986c90f3e4363e0f",
+        "repo-version": "66a7013832be227732ea1fe7986c90f3e4363e0f",
         "repos": {
-          "kubernetes/kubernetes": "master:c6a95ffd4c787426e9242b208a38c8ded77e5212,137919:4bd2f1955328b055f969276538f03a7606050556",
+          "kubernetes/kubernetes": "master:16c5a6be07bb2eab06b6e7732eb1cb759a7fe61c,138049:3e7c6e3c83165a9732f320037cc6a0378a1cb8ac",
           "kubernetes/test-infra": "master"
         },
-        "timestamp": 1774814752
+        "timestamp": 1774652699
       },
-      "upstream_only_count": 129,
+      "upstream_only_count": 127,
       "upstream_only_sample": [
-        "E2eNode Suite::Device Manager [Serial] [Feature:DeviceManager] With sample device plugin [Serial] [Disruptive] should defer container start after kubelet restart in case device plugin hasn't re-registered",
-        "E2eNode Suite::Device Plugin CRI Snapshot Failure [Serial] [Feature:DevicePlugin] [Feature:CriProxy] DevicePlugin [Serial] [Disruptive] Keeps device plugin assignments across kubelet restart when CRI snapshot returns an error",
-        "E2eNode Suite::Device Plugin [Serial] [Feature:DevicePlugin] DevicePlugin [Serial] [Disruptive] Defers container start after node reboot when device plugin has not re-registered",
         "E2eNode Suite::PLR Pod InPlace Resize [FeatureGate:InPlacePodLevelResourcesVerticalScaling] [Beta] PLR guaranteed qos - 1 container with resize policy cpu & mem restart + resize initContainers resizing cpu",
         "E2eNode Suite::PLR Pod InPlace Resize [FeatureGate:InPlacePodLevelResourcesVerticalScaling] [Beta] PLR guaranteed qos - 1 container with resize policy cpu & mem restart + resize initContainers resizing cpu & mem in opposite directions",
         "E2eNode Suite::PLR Pod InPlace Resize [FeatureGate:InPlacePodLevelResourcesVerticalScaling] [Beta] PLR guaranteed qos - 1 container with resize policy cpu & mem restart + resize initContainers resizing cpu & mem in the same direction",
@@ -133,7 +130,10 @@
         "E2eNode Suite::PLR Pod InPlace Resize [FeatureGate:InPlacePodLevelResourcesVerticalScaling] [Beta] PLR guaranteed qos - 1 container with resize policy cpu & mem restart resizing mem",
         "E2eNode Suite::PLR Pod InPlace Resize [FeatureGate:InPlacePodLevelResourcesVerticalScaling] [Beta] PLR guaranteed qos - 1 container with resize policy cpu & mem restart resizing only pod-level cpu",
         "E2eNode Suite::PLR Pod InPlace Resize [FeatureGate:InPlacePodLevelResourcesVerticalScaling] [Beta] PLR guaranteed qos - 1 container with resize policy cpu & mem restart resizing only pod-level mem",
-        "E2eNode Suite::PLR Pod InPlace Resize [FeatureGate:InPlacePodLevelResourcesVerticalScaling] [Beta] PLR guaranteed qos - 1 container with resize policy cpu & mem restart resizing pod-level cpu"
+        "E2eNode Suite::PLR Pod InPlace Resize [FeatureGate:InPlacePodLevelResourcesVerticalScaling] [Beta] PLR guaranteed qos - 1 container with resize policy cpu & mem restart resizing pod-level cpu",
+        "E2eNode Suite::PLR Pod InPlace Resize [FeatureGate:InPlacePodLevelResourcesVerticalScaling] [Beta] PLR guaranteed qos - 1 container with resize policy cpu & mem restart resizing pod-level cpu & mem in opposite directions",
+        "E2eNode Suite::PLR Pod InPlace Resize [FeatureGate:InPlacePodLevelResourcesVerticalScaling] [Beta] PLR guaranteed qos - 1 container with resize policy cpu & mem restart resizing pod-level cpu & mem in the same direction",
+        "E2eNode Suite::PLR Pod InPlace Resize [FeatureGate:InPlacePodLevelResourcesVerticalScaling] [Beta] PLR guaranteed qos - 1 container with resize policy cpu & mem restart resizing pod-level mem"
       ],
       "upstream_test_count": 1198
     },
