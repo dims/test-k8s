@@ -67,10 +67,10 @@
     "upstream_comparison": {
       "inventory_parity_status": "mismatch",
       "junit_files": [
-        "pr-logs/pull/137477/pull-kubernetes-node-e2e-containerd/2029766468316434432/artifacts/junit_cos01.xml",
-        "pr-logs/pull/137477/pull-kubernetes-node-e2e-containerd/2029766468316434432/artifacts/junit_ubuntu01.xml"
+        "pr-logs/pull/137095/pull-kubernetes-node-e2e-containerd/2027144447069786112/artifacts/junit_cos01.xml",
+        "pr-logs/pull/137095/pull-kubernetes-node-e2e-containerd/2027144447069786112/artifacts/junit_ubuntu01.xml"
       ],
-      "local_only_count": 259,
+      "local_only_count": 273,
       "local_only_sample": [
         "E2eNode Suite::CPU Manager Pod Level Resources [Serial] [Feature:CPUManager] [Feature:PodLevelResources] [Feature:PodLevelResourceManagers] [FeatureGate:PodLevelResources] [Beta] [FeatureGate:PodLevelResourceManagers] [Alpha] [Feature:OffByDefault] when the topology manager scope is 'container' should allocate exclusive CPUs to a guaranteed pod with pod-level resources and guaranteed container, PodLevelResourceManagers enabled",
         "E2eNode Suite::CPU Manager Pod Level Resources [Serial] [Feature:CPUManager] [Feature:PodLevelResources] [Feature:PodLevelResourceManagers] [FeatureGate:PodLevelResources] [Beta] [FeatureGate:PodLevelResourceManagers] [Alpha] [Feature:OffByDefault] when the topology manager scope is 'container' should allocate exclusive CPUs to a guaranteed pod with pod-level resources and mix of guaranteed and non-guaranteed containers, PodLevelResourceManagers enabled",
@@ -95,27 +95,29 @@
       ],
       "local_test_count": 1198,
       "reference_job_name": "pull-kubernetes-node-e2e-containerd",
-      "reference_kubernetes_base_sha": "6140403c774044f5d08a2a6b6d5dcb6cfd50d9a4",
+      "reference_kubernetes_base_sha": "44b486f43c9792e812f849d9509449ac69edf55c",
       "reference_matches_kubernetes_sha": false,
-      "reference_pr_number": 137477,
-      "reference_pr_updated_at": "2026-04-02T03:11:30Z",
-      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/137477/pull-kubernetes-node-e2e-containerd/2029766468316434432",
+      "reference_pr_number": 137095,
+      "reference_pr_updated_at": "2026-04-02T04:19:24Z",
+      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/137095/pull-kubernetes-node-e2e-containerd/2027144447069786112",
       "reference_selection": "recent-success",
-      "reference_started_at": "2026-03-06T04:25:21Z",
+      "reference_started_at": "2026-02-26T22:45:21Z",
       "reference_started_json": {
-        "pull": "137477",
-        "repo-commit": "2dfaf97f30d230e05b3a224b8a83c510480c190a",
-        "repo-version": "2dfaf97f30d230e05b3a224b8a83c510480c190a",
+        "pull": "137095",
+        "repo-commit": "455d85992e5d63b7c466ae15dbee57e750cb47d9",
+        "repo-version": "455d85992e5d63b7c466ae15dbee57e750cb47d9",
         "repos": {
-          "kubernetes/kubernetes": "master:6140403c774044f5d08a2a6b6d5dcb6cfd50d9a4,137477:4871e3564c8f83097da1895461e3be6a419c08b0",
+          "kubernetes/kubernetes": "master:44b486f43c9792e812f849d9509449ac69edf55c,137095:e7e901f8e6c582438fb8261a3afc33042810be0a",
           "kubernetes/test-infra": "master"
         },
-        "timestamp": 1772769104
+        "timestamp": 1772143904
       },
-      "upstream_only_count": 142,
+      "upstream_only_count": 155,
       "upstream_only_sample": [
         "E2eNode Suite::CPU Manager Incompatibility Pod Level Resources [Serial] [Feature:CPUManager] [Feature:PodLevelResources] [FeatureGate:PodLevelResources] [Beta] when running guaranteed pod level resources tests should let the container access all the online CPUs when using a reserved CPUs set",
         "E2eNode Suite::CPU Manager Incompatibility Pod Level Resources [Serial] [Feature:CPUManager] [Feature:PodLevelResources] [FeatureGate:PodLevelResources] [Beta] when running guaranteed pod level resources tests should let the container access all the online CPUs without a reserved CPUs set",
+        "E2eNode Suite::Device Plugin Failures Pod Status [FeatureGate:ResourceHealthStatus] [Alpha] [Feature:OffByDefault] will report a Device Status for the failed pod in the pod status",
+        "E2eNode Suite::Device Plugin Failures Pod Status [FeatureGate:ResourceHealthStatus] [Alpha] [Feature:OffByDefault] will report a Healthy and then Unhealthy single device in the pod status",
         "E2eNode Suite::EmptyDir volumes when FSGroup is specified [LinuxOnly] files with FSGroup ownership should support (root,0644,tmpfs)",
         "E2eNode Suite::EmptyDir volumes when FSGroup is specified [LinuxOnly] new files should be created with FSGroup ownership when container is non-root",
         "E2eNode Suite::EmptyDir volumes when FSGroup is specified [LinuxOnly] new files should be created with FSGroup ownership when container is root",
@@ -131,11 +133,9 @@
         "E2eNode Suite::Ensure Credential Pulled Images pulling images with credentials [FeatureGate:KubeletEnsureSecretPulledImages] [Beta] [Serial] Never pod with the same credentials in a different secret can access previously pulled image",
         "E2eNode Suite::Ensure Credential Pulled Images pulling images with credentials [FeatureGate:KubeletEnsureSecretPulledImages] [Beta] [Serial] Never pod without PullSecret cannot access previously pulled private image",
         "E2eNode Suite::FileKeyRef [FeatureGate:EnvFiles] [Beta] should allow ephemeralContainer to consume fileKeyRef",
-        "E2eNode Suite::FileKeyRef [FeatureGate:EnvFiles] [Beta] should allow initContainer to consume fileKeyRef",
-        "E2eNode Suite::FileKeyRef [FeatureGate:EnvFiles] [Beta] should be consumable by multiple containers",
-        "E2eNode Suite::FileKeyRef [FeatureGate:EnvFiles] [Beta] should be consumable in postStart lifecycle hooks"
+        "E2eNode Suite::FileKeyRef [FeatureGate:EnvFiles] [Beta] should allow initContainer to consume fileKeyRef"
       ],
-      "upstream_test_count": 1081
+      "upstream_test_count": 1080
     },
     "upstream_testgrid_url": "https://testgrid.k8s.io/presubmits-kubernetes-blocking#pull-kubernetes-node-e2e-containerd",
     "workflow_file": ".github/workflows/node-e2e.yml",
