@@ -65,17 +65,37 @@
     "schema_version": 1,
     "started_at": "2026-04-03T00:10:45Z",
     "upstream_comparison": {
-      "inventory_parity_status": "upstream-tests-missing",
+      "inventory_parity_status": "mismatch",
+      "junit_files": [
+        "pr-logs/pull/137032/pull-kubernetes-e2e-kind-alpha-beta-features/2034397713465872384/artifacts/junit_01.xml"
+      ],
+      "local_only_count": 1,
+      "local_only_sample": [
+        "Kubernetes e2e suite::Pod InPlace Resize Init Container [FeatureGate:InPlacePodVerticalScalingInitContainers] [Beta] should support resizing a non-sidecar init container"
+      ],
       "local_test_count": 7561,
       "reference_job_name": "pull-kubernetes-e2e-kind-alpha-beta-features",
-      "reference_kubernetes_base_sha": null,
+      "reference_kubernetes_base_sha": "7a3a6cf4be719a2eaed14e48a701cbdd2f0e8400",
       "reference_matches_kubernetes_sha": false,
-      "reference_pr_number": 135339,
-      "reference_pr_updated_at": "2026-04-03T03:53:18Z",
-      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/135339/pull-kubernetes-e2e-kind-alpha-beta-features/1996400112636530688",
+      "reference_pr_number": 137032,
+      "reference_pr_updated_at": "2026-04-03T16:47:46Z",
+      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/137032/pull-kubernetes-e2e-kind-alpha-beta-features/2034397713465872384",
       "reference_selection": "recent-success",
-      "reference_started_at": "2025-12-04T02:40:25Z",
-      "upstream_test_count": 0
+      "reference_started_at": "2026-03-18T23:04:37Z",
+      "reference_started_json": {
+        "pull": "137032",
+        "repo-commit": "47357570b60b149f404867aaa22c25237b0141ed",
+        "repo-version": "47357570b60b149f404867aaa22c25237b0141ed",
+        "repos": {
+          "kubernetes/kubernetes": "master:7a3a6cf4be719a2eaed14e48a701cbdd2f0e8400,137032:83a30f8bac0d3d227a0d71962713d8994202b25c"
+        },
+        "timestamp": 1773873312
+      },
+      "upstream_only_count": 1,
+      "upstream_only_sample": [
+        "Kubernetes e2e suite::Pod InPlace Resize Container apply invalid resize patch requests [Feature:InPlacePodVerticalScaling] Burstable pod - nonrestartable initContainer"
+      ],
+      "upstream_test_count": 7561
     },
     "upstream_testgrid_url": "https://testgrid.k8s.io/presubmits-kubernetes-nonblocking#pull-kubernetes-e2e-kind-alpha-beta-features",
     "workflow_file": ".github/workflows/e2e-kind-alpha-beta-features.yml",
