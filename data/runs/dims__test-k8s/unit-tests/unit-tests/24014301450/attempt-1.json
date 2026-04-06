@@ -65,50 +65,39 @@
     "schema_version": 1,
     "started_at": "2026-04-06T00:48:59Z",
     "upstream_comparison": {
-      "inventory_parity_status": "mismatch",
+      "inventory_parity_status": "missing-local-tests",
       "junit_files": [
-        "pr-logs/pull/137845/pull-kubernetes-unit/2034213773903925248/artifacts/junit_20260318-102303.xml"
+        "pr-logs/pull/134329/pull-kubernetes-unit/2041109755677642752/artifacts/junit_20260406-110514.xml"
       ],
-      "local_only_count": 14,
-      "local_only_sample": [
-        "k8s.io/code-generator/cmd/validation-gen/output_tests/tags::forbidden",
-        "k8s.io/code-generator/cmd/validation-gen/output_tests/tags::required",
-        "k8s.io/code-generator/cmd/validation-gen/output_tests/tags::validatetruealpha",
-        "k8s.io/code-generator/cmd/validation-gen/output_tests/tags::validatetruebeta",
-        "k8s.io/dynamic-resource-allocation/api/metadata::install",
-        "k8s.io/dynamic-resource-allocation/api/metadata::v1alpha1",
-        "k8s.io/dynamic-resource-allocation::devicemetadata",
-        "k8s.io/kubernetes/pkg/controller/scheduling::podgroupprotection",
-        "k8s.io/kubernetes/pkg/controller/util::protectionutil",
-        "k8s.io/kubernetes/pkg/kubelet/apis::pods",
-        "k8s.io/kubernetes/pkg/scheduler/framework/plugins::podgrouppodscount",
-        "k8s.io/kubernetes/plugin/pkg/admission/scheduling::podgroupprotection",
-        "k8s.io/kubernetes/plugin/pkg/admission::job",
-        "k8s.io/kubernetes/plugin/pkg/admission::podgroup"
-      ],
+      "local_only_count": 0,
+      "local_only_sample": [],
       "local_test_count": 1352,
       "reference_job_name": "pull-kubernetes-unit",
-      "reference_kubernetes_base_sha": "4e859569e5b60b874c0fe3fc5721a3749a0ee02a",
+      "reference_kubernetes_base_sha": "d3b9c54bd952117924fb0790f6989c0d30715b19",
       "reference_matches_kubernetes_sha": false,
-      "reference_pr_number": 137845,
-      "reference_pr_updated_at": "2026-04-06T10:30:21Z",
-      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/137845/pull-kubernetes-unit/2034213773903925248",
+      "reference_pr_number": 134329,
+      "reference_pr_updated_at": "2026-04-06T11:58:03Z",
+      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/134329/pull-kubernetes-unit/2041109755677642752",
       "reference_selection": "recent-success",
-      "reference_started_at": "2026-03-18T10:41:31Z",
+      "reference_started_at": "2026-04-06T11:24:01Z",
       "reference_started_json": {
-        "pull": "137845",
-        "repo-commit": "0374a163c4e2794b2e3ac122c1a2f20ea5aab15a",
-        "repo-version": "0374a163c4e2794b2e3ac122c1a2f20ea5aab15a",
+        "pull": "134329",
+        "repo-commit": "648bf46b6a3c014a82dd05ba98e807a49e6922a2",
+        "repo-version": "648bf46b6a3c014a82dd05ba98e807a49e6922a2",
         "repos": {
-          "kubernetes/kubernetes": "master:4e859569e5b60b874c0fe3fc5721a3749a0ee02a,137845:69e44cbee11206f3e5ec61c08620a610c08ffffa"
+          "kubernetes/kubernetes": "master:d3b9c54bd952117924fb0790f6989c0d30715b19,134329:a8699f27fe083d91abc061795dec962d22ec85e8"
         },
-        "timestamp": 1773829363
+        "timestamp": 1775473494
       },
-      "upstream_only_count": 1,
+      "upstream_only_count": 5,
       "upstream_only_sample": [
-        "k8s.io/kubernetes/pkg/controller/volume::protectionutil"
+        "k8s.io/component-helpers/nodedeclaredfeatures/features::usernamespaceshostnetwork",
+        "k8s.io/kubernetes/pkg/controller/resourcepoolstatusrequest::metrics",
+        "k8s.io/kubernetes/pkg/controller::resourcepoolstatusrequest",
+        "k8s.io/kubernetes/pkg/registry/resource::resourcepoolstatusrequest",
+        "k8s.io/kubernetes/pkg/registry::resource"
       ],
-      "upstream_test_count": 1339
+      "upstream_test_count": 1357
     },
     "upstream_testgrid_url": "https://testgrid.k8s.io/presubmits-kubernetes-blocking#pull-kubernetes-unit",
     "workflow_file": ".github/workflows/unit.yml",
