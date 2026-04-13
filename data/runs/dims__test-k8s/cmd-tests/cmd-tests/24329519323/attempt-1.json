@@ -68,35 +68,42 @@
     "schema_version": 1,
     "started_at": "2026-04-13T06:43:11Z",
     "upstream_comparison": {
-      "inventory_parity_status": "extra-local-tests",
+      "inventory_parity_status": "mismatch",
       "junit_files": [
-        "pr-logs/pull/137377/pull-kubernetes-cmd/2028898691447787520/artifacts/junit_20260303-182448.xml",
-        "pr-logs/pull/137377/pull-kubernetes-cmd/2028898691447787520/artifacts/junit_test-cmd.xml"
+        "pr-logs/pull/138350/pull-kubernetes-cmd/2043707132305477632/artifacts/junit_20260413-151110.xml",
+        "pr-logs/pull/138350/pull-kubernetes-cmd/2043707132305477632/artifacts/junit_test-cmd.xml"
       ],
-      "local_only_count": 1,
+      "local_only_count": 4,
       "local_only_sample": [
+        "test-cmd::run_kubectl_debug_legacy_node_tests",
+        "test-cmd::run_kubectl_debug_legacy_tests",
+        "test-cmd::run_kubectl_debug_tests",
         "test-cmd::run_kubectl_scale_tests"
       ],
       "local_test_count": 93,
       "reference_job_name": "pull-kubernetes-cmd",
-      "reference_kubernetes_base_sha": "92491f09eec01bace5440ca3e2201dfc5f11a090",
+      "reference_kubernetes_base_sha": "875a0ab0f01aa0d4f14653960b39bce14f209d80",
       "reference_matches_kubernetes_sha": false,
-      "reference_pr_number": 137377,
-      "reference_pr_updated_at": "2026-04-13T18:56:21Z",
-      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/137377/pull-kubernetes-cmd/2028898691447787520",
+      "reference_pr_number": 138350,
+      "reference_pr_updated_at": "2026-04-13T18:56:50Z",
+      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/138350/pull-kubernetes-cmd/2043707132305477632",
       "reference_selection": "recent-success",
-      "reference_started_at": "2026-03-03T18:37:59Z",
+      "reference_started_at": "2026-04-13T15:25:18Z",
       "reference_started_json": {
-        "pull": "137377",
-        "repo-commit": "056c8eec8337b783d78a9d1bf257538bb5a58d2c",
-        "repo-version": "056c8eec8337b783d78a9d1bf257538bb5a58d2c",
+        "pull": "138350",
+        "repo-commit": "3981e7d973d2d4e31f907ecd252fede3f47ff406",
+        "repo-version": "3981e7d973d2d4e31f907ecd252fede3f47ff406",
         "repos": {
-          "kubernetes/kubernetes": "master:92491f09eec01bace5440ca3e2201dfc5f11a090,137377:e9e2bc964a998be831fe3b5cb9e23984f7c5034b"
+          "kubernetes/kubernetes": "release-1.33:875a0ab0f01aa0d4f14653960b39bce14f209d80,138350:412848339224a98ef4f1bb89a79c874463908a4f"
         },
-        "timestamp": 1772562202
+        "timestamp": 1776092832
       },
-      "upstream_only_count": 0,
-      "upstream_only_sample": [],
+      "upstream_only_count": 3,
+      "upstream_only_sample": [
+        "test-cmd::run_kubectl_debug_general_node_tests",
+        "test-cmd::run_kubectl_debug_general_tests",
+        "test-cmd::run_kubectl_debug_pod_tests"
+      ],
       "upstream_test_count": 92
     },
     "upstream_testgrid_url": "https://testgrid.k8s.io/presubmits-kubernetes-blocking#pull-kubernetes-cmd",
