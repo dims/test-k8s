@@ -66,17 +66,35 @@
     "schema_version": 1,
     "started_at": "2026-04-11T18:16:37Z",
     "upstream_comparison": {
-      "inventory_parity_status": "upstream-tests-missing",
+      "inventory_parity_status": "missing-local-tests",
+      "junit_files": [
+        "pr-logs/pull/138383/pull-kubernetes-integration/2044143361106907136/artifacts/junit_20260414-195927.xml"
+      ],
+      "local_only_count": 0,
+      "local_only_sample": [],
       "local_test_count": 121,
       "reference_job_name": "pull-kubernetes-integration",
-      "reference_kubernetes_base_sha": null,
+      "reference_kubernetes_base_sha": "eb51fbf7c6de0e361504729feabdadd178cd2b7b",
       "reference_matches_kubernetes_sha": false,
-      "reference_pr_number": 135799,
-      "reference_pr_updated_at": "2026-04-14T19:24:53Z",
-      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/135799/pull-kubernetes-integration/2001396122660114432",
+      "reference_pr_number": 138383,
+      "reference_pr_updated_at": "2026-04-14T20:31:08Z",
+      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/138383/pull-kubernetes-integration/2044143361106907136",
       "reference_selection": "recent-success",
-      "reference_started_at": "2025-12-17T21:44:55Z",
-      "upstream_test_count": 0
+      "reference_started_at": "2026-04-14T20:31:06Z",
+      "reference_started_json": {
+        "pull": "138383",
+        "repo-commit": "26217c765773ccdbdc82c323c6dffccaa799b5df",
+        "repo-version": "26217c765773ccdbdc82c323c6dffccaa799b5df",
+        "repos": {
+          "kubernetes/kubernetes": "master:eb51fbf7c6de0e361504729feabdadd178cd2b7b,138383:36179b6b0678e7833347debfde895ebdc7ad5dd7"
+        },
+        "timestamp": 1776196759
+      },
+      "upstream_only_count": 1,
+      "upstream_only_sample": [
+        "k8s.io/kubernetes/test/integration::dra"
+      ],
+      "upstream_test_count": 122
     },
     "upstream_testgrid_url": "https://testgrid.k8s.io/presubmits-kubernetes-blocking#pull-kubernetes-integration",
     "workflow_file": ".github/workflows/integration.yml",
