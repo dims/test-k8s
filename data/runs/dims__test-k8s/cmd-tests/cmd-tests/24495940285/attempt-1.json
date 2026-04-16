@@ -6,7 +6,7 @@
     ],
     "ginkgo_json_found": false,
     "junit_files": [
-      "junit_20260411-062549.xml",
+      "junit_20260416-064145.xml",
       "junit_test-cmd.xml"
     ],
     "junit_found": true
@@ -17,7 +17,7 @@
       "build-log.txt"
     ],
     "junit_files": [
-      "junit_20260411-062549.xml",
+      "junit_20260416-064145.xml",
       "junit_test-cmd.xml"
     ],
     "runner_metadata_files": [
@@ -28,13 +28,13 @@
     "artifacts": {
       "build_log": "build-log.txt",
       "junit_files": [
-        "junit_20260411-062549.xml",
+        "junit_20260416-064145.xml",
         "junit_test-cmd.xml"
       ]
     },
-    "collected_at": "2026-04-11T06:35:54Z",
+    "collected_at": "2026-04-16T06:51:59Z",
     "comparison_required": true,
-    "completed_at": "2026-04-11T06:36:00Z",
+    "completed_at": "2026-04-16T06:52:07Z",
     "containerd_ref": "main",
     "containerd_repo": "containerd/containerd",
     "containerd_sha": "574a80c45f530d0ada7799c9373940b2e2ecee07",
@@ -46,11 +46,11 @@
       "synthetic_cases": false
     },
     "display_order": 160,
-    "duration_seconds": 822,
+    "duration_seconds": 879,
     "event": "schedule",
     "github_ref": "main",
     "github_sha": "d6a7a178aeedd7b9b6cee5528b79806aec37da47",
-    "html_url": "https://github.com/dims/test-k8s/actions/runs/24276558285",
+    "html_url": "https://github.com/dims/test-k8s/actions/runs/24495940285",
     "job_id": "cmd",
     "job_name": "Cmd Tests",
     "job_slug": "cmd-tests",
@@ -62,23 +62,42 @@
     "repo_slug": "dims__test-k8s",
     "result": "success",
     "run_attempt": 1,
-    "run_id": 24276558285,
-    "runner_label": "GitHub Actions 1000014453",
-    "runner_name": "GitHub Actions 1000014453",
+    "run_id": 24495940285,
+    "runner_label": "GitHub Actions 1000016106",
+    "runner_name": "GitHub Actions 1000016106",
     "schema_version": 1,
-    "started_at": "2026-04-11T06:22:18Z",
+    "started_at": "2026-04-16T06:37:28Z",
     "upstream_comparison": {
-      "inventory_parity_status": "upstream-tests-missing",
+      "inventory_parity_status": "extra-local-tests",
+      "junit_files": [
+        "pr-logs/pull/136220/pull-kubernetes-cmd/2021567857225109504/artifacts/junit_20260211-125508.xml",
+        "pr-logs/pull/136220/pull-kubernetes-cmd/2021567857225109504/artifacts/junit_test-cmd.xml"
+      ],
+      "local_only_count": 1,
+      "local_only_sample": [
+        "test-cmd::run_kubectl_scale_tests"
+      ],
       "local_test_count": 93,
       "reference_job_name": "pull-kubernetes-cmd",
-      "reference_kubernetes_base_sha": null,
+      "reference_kubernetes_base_sha": "45b924818c9f02725e7cbc466521e4e347c1a984",
       "reference_matches_kubernetes_sha": false,
-      "reference_pr_number": 136065,
-      "reference_pr_updated_at": "2026-04-16T06:48:53Z",
-      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/136065/pull-kubernetes-cmd/2010786453637828608",
+      "reference_pr_number": 136220,
+      "reference_pr_updated_at": "2026-04-16T06:59:29Z",
+      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/136220/pull-kubernetes-cmd/2021567857225109504",
       "reference_selection": "recent-success",
-      "reference_started_at": "2026-01-12T19:07:11Z",
-      "upstream_test_count": 0
+      "reference_started_at": "2026-02-11T13:08:40Z",
+      "reference_started_json": {
+        "pull": "136220",
+        "repo-commit": "bcb4cf5300eb8daa3fd82dfb9b74fc8bf83854e6",
+        "repo-version": "bcb4cf5300eb8daa3fd82dfb9b74fc8bf83854e6",
+        "repos": {
+          "kubernetes/kubernetes": "master:45b924818c9f02725e7cbc466521e4e347c1a984,136220:bbfa0eac01c64413901e1e99f4eeca969a15f46b"
+        },
+        "timestamp": 1770814407
+      },
+      "upstream_only_count": 0,
+      "upstream_only_sample": [],
+      "upstream_test_count": 92
     },
     "upstream_testgrid_url": "https://testgrid.k8s.io/presubmits-kubernetes-blocking#pull-kubernetes-cmd",
     "workflow_file": ".github/workflows/cmd-tests.yml",
@@ -88,9 +107,9 @@
   "suites": [
     {
       "cancelled": 0,
-      "duration_seconds": 7.943,
+      "duration_seconds": 7.856,
       "failed": 0,
-      "file_source": "junit_20260411-062549.xml",
+      "file_source": "junit_20260416-064145.xml",
       "passed": 1,
       "skipped": 0,
       "source": "junit",
@@ -101,7 +120,7 @@
     },
     {
       "cancelled": 0,
-      "duration_seconds": 434.0416761,
+      "duration_seconds": 439.36362900000006,
       "failed": 0,
       "file_source": "junit_test-cmd.xml",
       "passed": 92,
@@ -115,7 +134,7 @@
   ],
   "summary": {
     "cancelled": 0,
-    "duration_seconds": 441.985,
+    "duration_seconds": 447.22,
     "failed": 0,
     "passed": 93,
     "skipped": 0,
@@ -125,9 +144,9 @@
   "tests": [
     {
       "classname": "k8s.io/kubernetes/cmd/kubeadm/test",
-      "duration_seconds": 7.943,
+      "duration_seconds": 7.856,
       "failure_text": "",
-      "file_source": "junit_20260411-062549.xml",
+      "file_source": "junit_20260416-064145.xml",
       "name": "cmd",
       "name_slug": "cmd",
       "owner_hint": "k8s-io",
@@ -138,7 +157,7 @@
     },
     {
       "classname": "test-cmd",
-      "duration_seconds": 0.60535,
+      "duration_seconds": 0.673938,
       "failure_text": "",
       "file_source": "junit_test-cmd.xml",
       "name": "run_kubectl_version_tests",
@@ -151,7 +170,7 @@
     },
     {
       "classname": "test-cmd",
-      "duration_seconds": 0.108762,
+      "duration_seconds": 0.119991,
       "failure_text": "",
       "file_source": "junit_test-cmd.xml",
       "name": "run_kubectl_results_tests",
@@ -164,7 +183,7 @@
     },
     {
       "classname": "test-cmd",
-      "duration_seconds": 0.261383,
+      "duration_seconds": 0.279009,
       "failure_text": "",
       "file_source": "junit_test-cmd.xml",
       "name": "run_kubectl_config_set_tests",
@@ -177,7 +196,7 @@
     },
     {
       "classname": "test-cmd",
-      "duration_seconds": 0.296734,
+      "duration_seconds": 0.311013,
       "failure_text": "",
       "file_source": "junit_test-cmd.xml",
       "name": "run_kubectl_config_set_cluster_tests",
@@ -190,7 +209,7 @@
     },
     {
       "classname": "test-cmd",
-      "duration_seconds": 0.403297,
+      "duration_seconds": 0.433003,
       "failure_text": "",
       "file_source": "junit_test-cmd.xml",
       "name": "run_kubectl_config_set_credentials_tests",
@@ -203,7 +222,7 @@
     },
     {
       "classname": "test-cmd",
-      "duration_seconds": 1.6969,
+      "duration_seconds": 1.7217,
       "failure_text": "",
       "file_source": "junit_test-cmd.xml",
       "name": "run_kubectl_local_proxy_tests",
@@ -216,7 +235,7 @@
     },
     {
       "classname": "test-cmd",
-      "duration_seconds": 0.137401,
+      "duration_seconds": 0.147302,
       "failure_text": "",
       "file_source": "junit_test-cmd.xml",
       "name": "run_RESTMapper_evaluation_tests",
@@ -229,7 +248,7 @@
     },
     {
       "classname": "test-cmd",
-      "duration_seconds": 4.26983,
+      "duration_seconds": 4.51772,
       "failure_text": "",
       "file_source": "junit_test-cmd.xml",
       "name": "run_clusterroles_tests",
@@ -242,7 +261,7 @@
     },
     {
       "classname": "test-cmd",
-      "duration_seconds": 1.69679,
+      "duration_seconds": 1.79558,
       "failure_text": "",
       "file_source": "junit_test-cmd.xml",
       "name": "run_role_tests",
@@ -255,7 +274,7 @@
     },
     {
       "classname": "test-cmd",
-      "duration_seconds": 2.80716,
+      "duration_seconds": 2.8721,
       "failure_text": "",
       "file_source": "junit_test-cmd.xml",
       "name": "run_assert_short_name_tests",
@@ -268,7 +287,7 @@
     },
     {
       "classname": "test-cmd",
-      "duration_seconds": 2.73144,
+      "duration_seconds": 2.79948,
       "failure_text": "",
       "file_source": "junit_test-cmd.xml",
       "name": "run_assert_singular_name_tests",
@@ -281,7 +300,7 @@
     },
     {
       "classname": "test-cmd",
-      "duration_seconds": 2.8905,
+      "duration_seconds": 2.952,
       "failure_text": "",
       "file_source": "junit_test-cmd.xml",
       "name": "run_ambiguous_shortname_tests",
@@ -294,7 +313,7 @@
     },
     {
       "classname": "test-cmd",
-      "duration_seconds": 1.52634,
+      "duration_seconds": 1.5551,
       "failure_text": "",
       "file_source": "junit_test-cmd.xml",
       "name": "run_explain_crd_with_additional_properties_tests",
@@ -307,7 +326,7 @@
     },
     {
       "classname": "test-cmd",
-      "duration_seconds": 0.0479343,
+      "duration_seconds": 0.0522113,
       "failure_text": "",
       "file_source": "junit_test-cmd.xml",
       "name": "run_assert_categories_tests",
@@ -320,7 +339,7 @@
     },
     {
       "classname": "test-cmd",
-      "duration_seconds": 19.4052,
+      "duration_seconds": 20.3584,
       "failure_text": "",
       "file_source": "junit_test-cmd.xml",
       "name": "run_pod_tests",
@@ -333,7 +352,7 @@
     },
     {
       "classname": "test-cmd",
-      "duration_seconds": 1.95965,
+      "duration_seconds": 2.09701,
       "failure_text": "",
       "file_source": "junit_test-cmd.xml",
       "name": "run_save_config_tests",
@@ -346,7 +365,7 @@
     },
     {
       "classname": "test-cmd",
-      "duration_seconds": 0.197725,
+      "duration_seconds": 0.210561,
       "failure_text": "",
       "file_source": "junit_test-cmd.xml",
       "name": "run_kubectl_create_error_tests",
@@ -359,7 +378,7 @@
     },
     {
       "classname": "test-cmd",
-      "duration_seconds": 41.4511,
+      "duration_seconds": 42.0514,
       "failure_text": "",
       "file_source": "junit_test-cmd.xml",
       "name": "run_kubectl_apply_tests",
@@ -372,7 +391,7 @@
     },
     {
       "classname": "test-cmd",
-      "duration_seconds": 3.77391,
+      "duration_seconds": 4.01356,
       "failure_text": "",
       "file_source": "junit_test-cmd.xml",
       "name": "run_kubectl_server_side_apply_tests",
@@ -385,7 +404,7 @@
     },
     {
       "classname": "test-cmd",
-      "duration_seconds": 0.543775,
+      "duration_seconds": 0.565278,
       "failure_text": "",
       "file_source": "junit_test-cmd.xml",
       "name": "run_kubectl_run_tests",
@@ -398,7 +417,7 @@
     },
     {
       "classname": "test-cmd",
-      "duration_seconds": 0.360078,
+      "duration_seconds": 0.375672,
       "failure_text": "",
       "file_source": "junit_test-cmd.xml",
       "name": "run_kubectl_create_filter_tests",
@@ -411,7 +430,7 @@
     },
     {
       "classname": "test-cmd",
-      "duration_seconds": 14.1324,
+      "duration_seconds": 14.2784,
       "failure_text": "",
       "file_source": "junit_test-cmd.xml",
       "name": "run_kubectl_apply_deployments_tests",
@@ -424,7 +443,7 @@
     },
     {
       "classname": "test-cmd",
-      "duration_seconds": 17.432,
+      "duration_seconds": 17.6494,
       "failure_text": "",
       "file_source": "junit_test-cmd.xml",
       "name": "run_kubectl_diff_tests",
@@ -437,7 +456,7 @@
     },
     {
       "classname": "test-cmd",
-      "duration_seconds": 0.151377,
+      "duration_seconds": 0.160452,
       "failure_text": "",
       "file_source": "junit_test-cmd.xml",
       "name": "run_kubectl_diff_same_names",
@@ -450,7 +469,7 @@
     },
     {
       "classname": "test-cmd",
-      "duration_seconds": 12.91,
+      "duration_seconds": 13.1278,
       "failure_text": "",
       "file_source": "junit_test-cmd.xml",
       "name": "run_kubectl_get_tests",
@@ -463,7 +482,7 @@
     },
     {
       "classname": "test-cmd",
-      "duration_seconds": 1.04337,
+      "duration_seconds": 1.12032,
       "failure_text": "",
       "file_source": "junit_test-cmd.xml",
       "name": "run_kubectl_help_tests",
@@ -476,7 +495,7 @@
     },
     {
       "classname": "test-cmd",
-      "duration_seconds": 9.43827,
+      "duration_seconds": 9.56006,
       "failure_text": "",
       "file_source": "junit_test-cmd.xml",
       "name": "run_kubectl_events_tests",
@@ -489,7 +508,7 @@
     },
     {
       "classname": "test-cmd",
-      "duration_seconds": 0.372291,
+      "duration_seconds": 0.407053,
       "failure_text": "",
       "file_source": "junit_test-cmd.xml",
       "name": "run_kubectl_exec_pod_tests",
@@ -502,7 +521,7 @@
     },
     {
       "classname": "test-cmd",
-      "duration_seconds": 0.669882,
+      "duration_seconds": 0.732628,
       "failure_text": "",
       "file_source": "junit_test-cmd.xml",
       "name": "run_kubectl_exec_resource_name_tests",
@@ -515,7 +534,7 @@
     },
     {
       "classname": "test-cmd",
-      "duration_seconds": 0.414113,
+      "duration_seconds": 0.428606,
       "failure_text": "",
       "file_source": "junit_test-cmd.xml",
       "name": "run_create_secret_tests",
@@ -528,7 +547,7 @@
     },
     {
       "classname": "test-cmd",
-      "duration_seconds": 0.487199,
+      "duration_seconds": 0.528605,
       "failure_text": "",
       "file_source": "junit_test-cmd.xml",
       "name": "run_kubectl_create_kustomization_directory_tests",
@@ -541,7 +560,7 @@
     },
     {
       "classname": "test-cmd",
-      "duration_seconds": 0.70399,
+      "duration_seconds": 0.747538,
       "failure_text": "",
       "file_source": "junit_test-cmd.xml",
       "name": "run_kubectl_create_validate_tests",
@@ -554,7 +573,7 @@
     },
     {
       "classname": "test-cmd",
-      "duration_seconds": 0.448819,
+      "duration_seconds": 0.486784,
       "failure_text": "",
       "file_source": "junit_test-cmd.xml",
       "name": "run_convert_tests",
@@ -567,7 +586,7 @@
     },
     {
       "classname": "test-cmd",
-      "duration_seconds": 0.727627,
+      "duration_seconds": 0.771557,
       "failure_text": "",
       "file_source": "junit_test-cmd.xml",
       "name": "run_kubectl_delete_allnamespaces_tests",
@@ -580,7 +599,7 @@
     },
     {
       "classname": "test-cmd",
-      "duration_seconds": 1.32823,
+      "duration_seconds": 1.46776,
       "failure_text": "",
       "file_source": "junit_test-cmd.xml",
       "name": "run_kubectl_delete_interactive_tests",
@@ -593,7 +612,7 @@
     },
     {
       "classname": "test-cmd",
-      "duration_seconds": 1.52453,
+      "duration_seconds": 1.56828,
       "failure_text": "",
       "file_source": "junit_test-cmd.xml",
       "name": "run_kubectl_request_timeout_tests",
@@ -606,7 +625,7 @@
     },
     {
       "classname": "test-cmd",
-      "duration_seconds": 36.4712,
+      "duration_seconds": 32.3156,
       "failure_text": "",
       "file_source": "junit_test-cmd.xml",
       "name": "run_crd_tests",
@@ -619,7 +638,7 @@
     },
     {
       "classname": "test-cmd",
-      "duration_seconds": 9.06759,
+      "duration_seconds": 9.4121,
       "failure_text": "",
       "file_source": "junit_test-cmd.xml",
       "name": "run_recursive_resources_tests",
@@ -632,7 +651,7 @@
     },
     {
       "classname": "test-cmd",
-      "duration_seconds": 21.7176,
+      "duration_seconds": 22.1077,
       "failure_text": "",
       "file_source": "junit_test-cmd.xml",
       "name": "run_namespace_tests",
@@ -645,7 +664,7 @@
     },
     {
       "classname": "test-cmd",
-      "duration_seconds": 7.10955,
+      "duration_seconds": 7.26879,
       "failure_text": "",
       "file_source": "junit_test-cmd.xml",
       "name": "run_secrets_test",
@@ -658,7 +677,7 @@
     },
     {
       "classname": "test-cmd",
-      "duration_seconds": 6.17444,
+      "duration_seconds": 6.25504,
       "failure_text": "",
       "file_source": "junit_test-cmd.xml",
       "name": "run_configmap_tests",
@@ -671,7 +690,7 @@
     },
     {
       "classname": "test-cmd",
-      "duration_seconds": 0.414387,
+      "duration_seconds": 0.458447,
       "failure_text": "",
       "file_source": "junit_test-cmd.xml",
       "name": "run_client_config_tests",
@@ -684,7 +703,7 @@
     },
     {
       "classname": "test-cmd",
-      "duration_seconds": 5.73697,
+      "duration_seconds": 5.78249,
       "failure_text": "",
       "file_source": "junit_test-cmd.xml",
       "name": "run_service_accounts_tests",
@@ -697,7 +716,7 @@
     },
     {
       "classname": "test-cmd",
-      "duration_seconds": 6.42045,
+      "duration_seconds": 6.57826,
       "failure_text": "",
       "file_source": "junit_test-cmd.xml",
       "name": "run_job_tests",
@@ -710,7 +729,7 @@
     },
     {
       "classname": "test-cmd",
-      "duration_seconds": 0.57685,
+      "duration_seconds": 0.623993,
       "failure_text": "",
       "file_source": "junit_test-cmd.xml",
       "name": "run_create_job_tests",
@@ -723,7 +742,7 @@
     },
     {
       "classname": "test-cmd",
-      "duration_seconds": 0.581214,
+      "duration_seconds": 0.626598,
       "failure_text": "",
       "file_source": "junit_test-cmd.xml",
       "name": "run_pod_templates_tests",
@@ -736,7 +755,7 @@
     },
     {
       "classname": "test-cmd",
-      "duration_seconds": 3.69619,
+      "duration_seconds": 4.01494,
       "failure_text": "",
       "file_source": "junit_test-cmd.xml",
       "name": "run_service_tests",
@@ -749,7 +768,7 @@
     },
     {
       "classname": "test-cmd",
-      "duration_seconds": 0.985857,
+      "duration_seconds": 1.06645,
       "failure_text": "",
       "file_source": "junit_test-cmd.xml",
       "name": "run_daemonset_tests",
@@ -762,7 +781,7 @@
     },
     {
       "classname": "test-cmd",
-      "duration_seconds": 1.71503,
+      "duration_seconds": 1.83474,
       "failure_text": "",
       "file_source": "junit_test-cmd.xml",
       "name": "run_daemonset_history_tests",
@@ -775,7 +794,7 @@
     },
     {
       "classname": "test-cmd",
-      "duration_seconds": 6.74225,
+      "duration_seconds": 7.22873,
       "failure_text": "",
       "file_source": "junit_test-cmd.xml",
       "name": "run_rc_tests",
@@ -788,7 +807,7 @@
     },
     {
       "classname": "test-cmd",
-      "duration_seconds": 10.7087,
+      "duration_seconds": 11.3841,
       "failure_text": "",
       "file_source": "junit_test-cmd.xml",
       "name": "run_deployment_tests",
@@ -801,7 +820,7 @@
     },
     {
       "classname": "test-cmd",
-      "duration_seconds": 5.10771,
+      "duration_seconds": 5.33012,
       "failure_text": "",
       "file_source": "junit_test-cmd.xml",
       "name": "run_rs_tests",
@@ -814,7 +833,7 @@
     },
     {
       "classname": "test-cmd",
-      "duration_seconds": 0.773971,
+      "duration_seconds": 0.8155,
       "failure_text": "",
       "file_source": "junit_test-cmd.xml",
       "name": "run_stateful_set_tests",
@@ -827,7 +846,7 @@
     },
     {
       "classname": "test-cmd",
-      "duration_seconds": 1.76491,
+      "duration_seconds": 1.89924,
       "failure_text": "",
       "file_source": "junit_test-cmd.xml",
       "name": "run_statefulset_history_tests",
@@ -840,7 +859,7 @@
     },
     {
       "classname": "test-cmd",
-      "duration_seconds": 0.5,
+      "duration_seconds": 0.494171,
       "failure_text": "",
       "file_source": "junit_test-cmd.xml",
       "name": "run_lists_tests",
@@ -853,7 +872,7 @@
     },
     {
       "classname": "test-cmd",
-      "duration_seconds": 6.57483,
+      "duration_seconds": 6.86484,
       "failure_text": "",
       "file_source": "junit_test-cmd.xml",
       "name": "run_multi_resources_tests",
@@ -866,7 +885,7 @@
     },
     {
       "classname": "test-cmd",
-      "duration_seconds": 1.43363,
+      "duration_seconds": 1.46837,
       "failure_text": "",
       "file_source": "junit_test-cmd.xml",
       "name": "run_persistent_volumes_tests",
@@ -879,7 +898,7 @@
     },
     {
       "classname": "test-cmd",
-      "duration_seconds": 1.10479,
+      "duration_seconds": 1.14574,
       "failure_text": "",
       "file_source": "junit_test-cmd.xml",
       "name": "run_persistent_volume_claims_tests",
@@ -892,7 +911,7 @@
     },
     {
       "classname": "test-cmd",
-      "duration_seconds": 0.40641,
+      "duration_seconds": 0.421595,
       "failure_text": "",
       "file_source": "junit_test-cmd.xml",
       "name": "run_storage_class_tests",
@@ -905,7 +924,7 @@
     },
     {
       "classname": "test-cmd",
-      "duration_seconds": 0.972526,
+      "duration_seconds": 1.02473,
       "failure_text": "",
       "file_source": "junit_test-cmd.xml",
       "name": "run_nodes_tests",
@@ -918,7 +937,7 @@
     },
     {
       "classname": "test-cmd",
-      "duration_seconds": 1.85299,
+      "duration_seconds": 1.9193,
       "failure_text": "",
       "file_source": "junit_test-cmd.xml",
       "name": "run_exec_credentials_tests",
@@ -931,7 +950,7 @@
     },
     {
       "classname": "test-cmd",
-      "duration_seconds": 1.88194,
+      "duration_seconds": 1.90664,
       "failure_text": "",
       "file_source": "junit_test-cmd.xml",
       "name": "run_exec_credentials_interactive_tests",
@@ -944,7 +963,7 @@
     },
     {
       "classname": "test-cmd",
-      "duration_seconds": 0.048933,
+      "duration_seconds": 0.0527263,
       "failure_text": "",
       "file_source": "junit_test-cmd.xml",
       "name": "run_kubectl_auth_whoami_tests",
@@ -957,7 +976,7 @@
     },
     {
       "classname": "test-cmd",
-      "duration_seconds": 0.064151,
+      "duration_seconds": 0.0702071,
       "failure_text": "",
       "file_source": "junit_test-cmd.xml",
       "name": "run_authorization_tests",
@@ -970,7 +989,7 @@
     },
     {
       "classname": "test-cmd",
-      "duration_seconds": 0.0939319,
+      "duration_seconds": 0.100363,
       "failure_text": "",
       "file_source": "junit_test-cmd.xml",
       "name": "run_retrieve_multiple_tests",
@@ -983,7 +1002,7 @@
     },
     {
       "classname": "test-cmd",
-      "duration_seconds": 0.417001,
+      "duration_seconds": 0.458253,
       "failure_text": "",
       "file_source": "junit_test-cmd.xml",
       "name": "run_resource_aliasing_tests",
@@ -996,7 +1015,7 @@
     },
     {
       "classname": "test-cmd",
-      "duration_seconds": 0.242881,
+      "duration_seconds": 0.255185,
       "failure_text": "",
       "file_source": "junit_test-cmd.xml",
       "name": "run_kubectl_explain_tests",
@@ -1009,7 +1028,7 @@
     },
     {
       "classname": "test-cmd",
-      "duration_seconds": 4.72376,
+      "duration_seconds": 4.74513,
       "failure_text": "",
       "file_source": "junit_test-cmd.xml",
       "name": "run_crd_deletion_recreation_tests",
@@ -1022,7 +1041,7 @@
     },
     {
       "classname": "test-cmd",
-      "duration_seconds": 0.0421989,
+      "duration_seconds": 0.0491853,
       "failure_text": "",
       "file_source": "junit_test-cmd.xml",
       "name": "run_swagger_tests",
@@ -1035,7 +1054,7 @@
     },
     {
       "classname": "test-cmd",
-      "duration_seconds": 1.60243,
+      "duration_seconds": 1.62986,
       "failure_text": "",
       "file_source": "junit_test-cmd.xml",
       "name": "run_kubectl_sort_by_tests",
@@ -1048,7 +1067,7 @@
     },
     {
       "classname": "test-cmd",
-      "duration_seconds": 11.0096,
+      "duration_seconds": 11.1014,
       "failure_text": "",
       "file_source": "junit_test-cmd.xml",
       "name": "run_kubectl_all_namespace_tests",
@@ -1061,7 +1080,7 @@
     },
     {
       "classname": "test-cmd",
-      "duration_seconds": 0.360718,
+      "duration_seconds": 0.363113,
       "failure_text": "",
       "file_source": "junit_test-cmd.xml",
       "name": "run_deprecated_api_tests",
@@ -1074,7 +1093,7 @@
     },
     {
       "classname": "test-cmd",
-      "duration_seconds": 2.78043,
+      "duration_seconds": 2.9195,
       "failure_text": "",
       "file_source": "junit_test-cmd.xml",
       "name": "run_template_output_tests",
@@ -1087,7 +1106,7 @@
     },
     {
       "classname": "test-cmd",
-      "duration_seconds": 1.39408,
+      "duration_seconds": 1.45984,
       "failure_text": "",
       "file_source": "junit_test-cmd.xml",
       "name": "run_certificates_tests",
@@ -1100,7 +1119,7 @@
     },
     {
       "classname": "test-cmd",
-      "duration_seconds": 35.085,
+      "duration_seconds": 35.2328,
       "failure_text": "",
       "file_source": "junit_test-cmd.xml",
       "name": "run_cluster_management_tests",
@@ -1113,7 +1132,7 @@
     },
     {
       "classname": "test-cmd",
-      "duration_seconds": 0.308819,
+      "duration_seconds": 0.323131,
       "failure_text": "",
       "file_source": "junit_test-cmd.xml",
       "name": "run_plugins_tests",
@@ -1126,7 +1145,7 @@
     },
     {
       "classname": "test-cmd",
-      "duration_seconds": 0.956827,
+      "duration_seconds": 0.997365,
       "failure_text": "",
       "file_source": "junit_test-cmd.xml",
       "name": "run_impersonation_tests",
@@ -1139,7 +1158,7 @@
     },
     {
       "classname": "test-cmd",
-      "duration_seconds": 52.1088,
+      "duration_seconds": 52.1739,
       "failure_text": "",
       "file_source": "junit_test-cmd.xml",
       "name": "run_wait_tests",
@@ -1152,7 +1171,7 @@
     },
     {
       "classname": "test-cmd",
-      "duration_seconds": 2.98804,
+      "duration_seconds": 3.11057,
       "failure_text": "",
       "file_source": "junit_test-cmd.xml",
       "name": "run_kubectl_debug_tests",
@@ -1165,7 +1184,7 @@
     },
     {
       "classname": "test-cmd",
-      "duration_seconds": 1.36189,
+      "duration_seconds": 1.43262,
       "failure_text": "",
       "file_source": "junit_test-cmd.xml",
       "name": "run_kubectl_debug_legacy_tests",
@@ -1178,7 +1197,7 @@
     },
     {
       "classname": "test-cmd",
-      "duration_seconds": 0.959038,
+      "duration_seconds": 0.98622,
       "failure_text": "",
       "file_source": "junit_test-cmd.xml",
       "name": "run_kubectl_debug_baseline_tests",
@@ -1191,7 +1210,7 @@
     },
     {
       "classname": "test-cmd",
-      "duration_seconds": 7.19332,
+      "duration_seconds": 7.30919,
       "failure_text": "",
       "file_source": "junit_test-cmd.xml",
       "name": "run_kubectl_debug_restricted_tests",
@@ -1204,7 +1223,7 @@
     },
     {
       "classname": "test-cmd",
-      "duration_seconds": 0.804926,
+      "duration_seconds": 0.834958,
       "failure_text": "",
       "file_source": "junit_test-cmd.xml",
       "name": "run_kubectl_debug_netadmin_tests",
@@ -1217,7 +1236,7 @@
     },
     {
       "classname": "test-cmd",
-      "duration_seconds": 1.64766,
+      "duration_seconds": 1.71293,
       "failure_text": "",
       "file_source": "junit_test-cmd.xml",
       "name": "run_kubectl_debug_custom_profile_tests",
@@ -1230,7 +1249,7 @@
     },
     {
       "classname": "test-cmd",
-      "duration_seconds": 0.530251,
+      "duration_seconds": 0.559517,
       "failure_text": "",
       "file_source": "junit_test-cmd.xml",
       "name": "run_kubectl_debug_warning_tests",
@@ -1243,7 +1262,7 @@
     },
     {
       "classname": "test-cmd",
-      "duration_seconds": 0.656747,
+      "duration_seconds": 0.680929,
       "failure_text": "",
       "file_source": "junit_test-cmd.xml",
       "name": "run_kubectl_debug_node_tests",
@@ -1256,7 +1275,7 @@
     },
     {
       "classname": "test-cmd",
-      "duration_seconds": 0.693469,
+      "duration_seconds": 0.72891,
       "failure_text": "",
       "file_source": "junit_test-cmd.xml",
       "name": "run_kubectl_debug_legacy_node_tests",
@@ -1269,7 +1288,7 @@
     },
     {
       "classname": "test-cmd",
-      "duration_seconds": 0.65608,
+      "duration_seconds": 0.636872,
       "failure_text": "",
       "file_source": "junit_test-cmd.xml",
       "name": "run_kubectl_debug_baseline_node_tests",
@@ -1282,7 +1301,7 @@
     },
     {
       "classname": "test-cmd",
-      "duration_seconds": 6.73459,
+      "duration_seconds": 6.87047,
       "failure_text": "",
       "file_source": "junit_test-cmd.xml",
       "name": "run_kubectl_debug_restricted_node_tests",
@@ -1295,7 +1314,7 @@
     },
     {
       "classname": "test-cmd",
-      "duration_seconds": 0.55976,
+      "duration_seconds": 0.591869,
       "failure_text": "",
       "file_source": "junit_test-cmd.xml",
       "name": "run_kubectl_debug_netadmin_node_tests",
@@ -1308,7 +1327,7 @@
     },
     {
       "classname": "test-cmd",
-      "duration_seconds": 7.60456,
+      "duration_seconds": 7.76323,
       "failure_text": "",
       "file_source": "junit_test-cmd.xml",
       "name": "run_kuberc_tests",
@@ -1321,7 +1340,7 @@
     },
     {
       "classname": "test-cmd",
-      "duration_seconds": 0.964442,
+      "duration_seconds": 1.02789,
       "failure_text": "",
       "file_source": "junit_test-cmd.xml",
       "name": "run_kubectl_scale_tests",
