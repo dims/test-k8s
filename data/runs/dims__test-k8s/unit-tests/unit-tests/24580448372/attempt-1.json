@@ -65,17 +65,39 @@
     "schema_version": 1,
     "started_at": "2026-04-17T18:25:00Z",
     "upstream_comparison": {
-      "inventory_parity_status": "upstream-tests-missing",
+      "inventory_parity_status": "missing-local-tests",
+      "junit_files": [
+        "pr-logs/pull/138289/pull-kubernetes-unit/2045527260751990784/artifacts/junit_20260418-153833.xml"
+      ],
+      "local_only_count": 0,
+      "local_only_sample": [],
       "local_test_count": 1352,
       "reference_job_name": "pull-kubernetes-unit",
-      "reference_kubernetes_base_sha": null,
+      "reference_kubernetes_base_sha": "03779bbd00da25c7fcd03711ddfe466a3322e1d7",
       "reference_matches_kubernetes_sha": false,
-      "reference_pr_number": 134246,
-      "reference_pr_updated_at": "2026-04-18T16:21:00Z",
-      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/134246/pull-kubernetes-unit/1971216524832149504",
+      "reference_pr_number": 138289,
+      "reference_pr_updated_at": "2026-04-18T17:39:12Z",
+      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/138289/pull-kubernetes-unit/2045527260751990784",
       "reference_selection": "recent-success",
-      "reference_started_at": "2025-09-25T14:32:54Z",
-      "upstream_test_count": 0
+      "reference_started_at": "2026-04-18T15:57:55Z",
+      "reference_started_json": {
+        "pull": "138289",
+        "repo-commit": "d8fc633eb00a2d1f5abe5baee68ec4be5b2a6a3a",
+        "repo-version": "d8fc633eb00a2d1f5abe5baee68ec4be5b2a6a3a",
+        "repos": {
+          "kubernetes/kubernetes": "master:03779bbd00da25c7fcd03711ddfe466a3322e1d7,138289:f72bed9eb987fca2286b50d333cdacfa46e10b32"
+        },
+        "timestamp": 1776526706
+      },
+      "upstream_only_count": 5,
+      "upstream_only_sample": [
+        "k8s.io/component-helpers/nodedeclaredfeatures/features::usernamespaceshostnetwork",
+        "k8s.io/kubernetes/pkg/controller/resourcepoolstatusrequest::metrics",
+        "k8s.io/kubernetes/pkg/controller::resourcepoolstatusrequest",
+        "k8s.io/kubernetes/pkg/registry/resource::resourcepoolstatusrequest",
+        "k8s.io/kubernetes/pkg/registry::resource"
+      ],
+      "upstream_test_count": 1357
     },
     "upstream_testgrid_url": "https://testgrid.k8s.io/presubmits-kubernetes-blocking#pull-kubernetes-unit",
     "workflow_file": ".github/workflows/unit.yml",
