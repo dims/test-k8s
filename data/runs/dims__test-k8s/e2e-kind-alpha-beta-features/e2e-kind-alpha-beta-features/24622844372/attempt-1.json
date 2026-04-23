@@ -65,47 +65,17 @@
     "schema_version": 1,
     "started_at": "2026-04-19T06:30:04Z",
     "upstream_comparison": {
-      "inventory_parity_status": "mismatch",
-      "junit_files": [
-        "pr-logs/pull/136725/pull-kubernetes-e2e-kind-alpha-beta-features/2034349251743453184/artifacts/junit_01.xml"
-      ],
-      "local_only_count": 7,
-      "local_only_sample": [
-        "Kubernetes e2e suite::CSI Volumes [Driver: csi-hostpath] [Testpattern: SnapshotMetadata] snapshotmetadata [Feature:snapshotmetadata] should verify GetAllocatedMetadata",
-        "Kubernetes e2e suite::CSI Volumes [Driver: csi-hostpath] [Testpattern: SnapshotMetadata] snapshotmetadata [Feature:snapshotmetadata] should verify GetMetadataDelta",
-        "Kubernetes e2e suite::CSI Volumes [Driver: pd.csi.storage.gke.io] [Serial] [Testpattern: SnapshotMetadata] snapshotmetadata [Feature:snapshotmetadata] should verify GetAllocatedMetadata",
-        "Kubernetes e2e suite::CSI Volumes [Driver: pd.csi.storage.gke.io] [Serial] [Testpattern: SnapshotMetadata] snapshotmetadata [Feature:snapshotmetadata] should verify GetMetadataDelta",
-        "Kubernetes e2e suite::Horizontal pod autoscaling (scale to zero) should scale down to zero and back up based on external metric value",
-        "Kubernetes e2e suite::Job should create Workload and PodGroup for gang-eligible Job",
-        "Kubernetes e2e suite::Pod InPlace Resize Init Container [FeatureGate:InPlacePodVerticalScalingInitContainers] [Beta] should support resizing a non-sidecar init container"
-      ],
+      "inventory_parity_status": "upstream-tests-missing",
       "local_test_count": 7561,
       "reference_job_name": "pull-kubernetes-e2e-kind-alpha-beta-features",
-      "reference_kubernetes_base_sha": "757cdd011533566b4947c0c49e764f35bad3dc12",
+      "reference_kubernetes_base_sha": null,
       "reference_matches_kubernetes_sha": false,
-      "reference_pr_number": 136725,
-      "reference_pr_updated_at": "2026-04-23T18:43:17Z",
-      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/136725/pull-kubernetes-e2e-kind-alpha-beta-features/2034349251743453184",
+      "reference_pr_number": 136138,
+      "reference_pr_updated_at": "2026-04-23T21:51:37Z",
+      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/136138/pull-kubernetes-e2e-kind-alpha-beta-features/2009663770749571072",
       "reference_selection": "recent-success",
-      "reference_started_at": "2026-03-18T19:51:27Z",
-      "reference_started_json": {
-        "pull": "136725",
-        "repo-commit": "442434c047b1aa266df69771da242cbb693b3baa",
-        "repo-version": "442434c047b1aa266df69771da242cbb693b3baa",
-        "repos": {
-          "kubernetes/kubernetes": "master:757cdd011533566b4947c0c49e764f35bad3dc12,136725:3cd22dcb4f4fc22cb514eb7761988a9ba471f3aa"
-        },
-        "timestamp": 1773861662
-      },
-      "upstream_only_count": 5,
-      "upstream_only_sample": [
-        "Kubernetes e2e suite::CSI Volumes [Driver: csi-hostpath] [Testpattern: SnapshotMetadata] snapshotmetadata [Feature:SnapshotMetadata] should verify GetAllocatedMetadata",
-        "Kubernetes e2e suite::CSI Volumes [Driver: csi-hostpath] [Testpattern: SnapshotMetadata] snapshotmetadata [Feature:SnapshotMetadata] should verify GetMetadataDelta",
-        "Kubernetes e2e suite::CSI Volumes [Driver: pd.csi.storage.gke.io] [Serial] [Testpattern: SnapshotMetadata] snapshotmetadata [Feature:SnapshotMetadata] should verify GetAllocatedMetadata",
-        "Kubernetes e2e suite::CSI Volumes [Driver: pd.csi.storage.gke.io] [Serial] [Testpattern: SnapshotMetadata] snapshotmetadata [Feature:SnapshotMetadata] should verify GetMetadataDelta",
-        "Kubernetes e2e suite::Pod InPlace Resize Container apply invalid resize patch requests [Feature:InPlacePodVerticalScaling] Burstable pod - nonrestartable initContainer"
-      ],
-      "upstream_test_count": 7559
+      "reference_started_at": "2026-01-09T17:01:39Z",
+      "upstream_test_count": 0
     },
     "upstream_testgrid_url": "https://testgrid.k8s.io/presubmits-kubernetes-nonblocking#pull-kubernetes-e2e-kind-alpha-beta-features",
     "workflow_file": ".github/workflows/e2e-kind-alpha-beta-features.yml",
