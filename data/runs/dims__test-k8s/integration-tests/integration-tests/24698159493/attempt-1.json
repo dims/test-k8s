@@ -68,42 +68,37 @@
     "upstream_comparison": {
       "inventory_parity_status": "mismatch",
       "junit_files": [
-        "pr-logs/pull/137743/pull-kubernetes-integration/2032855037654339584/artifacts/junit_20260314-162758.xml"
+        "pr-logs/pull/137964/pull-kubernetes-integration/2047389367223193600/artifacts/junit_20260423-185758.xml"
       ],
-      "local_only_count": 8,
+      "local_only_count": 2,
       "local_only_sample": [
-        "k8s.io/kubernetes/test/integration/dra::all",
-        "k8s.io/kubernetes/test/integration/dra::api",
-        "k8s.io/kubernetes/test/integration/dra::default",
-        "k8s.io/kubernetes/test/integration/dra::ga",
-        "k8s.io/kubernetes/test/integration/scheduler/podgroup::admission",
-        "k8s.io/kubernetes/test/integration/scheduler/podgroup::topology_aware_scheduling",
-        "k8s.io/kubernetes/test/integration/scheduler_perf::nodedeclaredfeatures",
-        "k8s.io/kubernetes/test/integration::controllermanager"
+        "k8s.io/kubernetes/test/integration/scheduler/queueing::former",
+        "k8s.io/kubernetes/test/integration/scheduler/queueing::queueinghint"
       ],
       "local_test_count": 121,
       "reference_job_name": "pull-kubernetes-integration",
-      "reference_kubernetes_base_sha": "9ad8603033779d67df4d915890bf27d730cf6a47",
+      "reference_kubernetes_base_sha": "c7b1f9598c1177d140658bfec4c9d0996f647bd5",
       "reference_matches_kubernetes_sha": false,
-      "reference_pr_number": 137743,
-      "reference_pr_updated_at": "2026-04-23T19:14:23Z",
-      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/137743/pull-kubernetes-integration/2032855037654339584",
+      "reference_pr_number": 137964,
+      "reference_pr_updated_at": "2026-04-23T19:29:44Z",
+      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/137964/pull-kubernetes-integration/2047389367223193600",
       "reference_selection": "recent-success",
-      "reference_started_at": "2026-03-14T16:58:10Z",
+      "reference_started_at": "2026-04-23T19:29:42Z",
       "reference_started_json": {
-        "pull": "137743",
-        "repo-commit": "03a868740ab1065a85df7d27b6a149a0c71df656",
-        "repo-version": "03a868740ab1065a85df7d27b6a149a0c71df656",
+        "pull": "137964",
+        "repo-commit": "e28b8bd26dd63bad6874e3599cabca6b12f2368c",
+        "repo-version": "e28b8bd26dd63bad6874e3599cabca6b12f2368c",
         "repos": {
-          "kubernetes/kubernetes": "master:9ad8603033779d67df4d915890bf27d730cf6a47,137743:d6f0df693e8e94e14cbfe974fcb8075d380588d1"
+          "kubernetes/kubernetes": "master:c7b1f9598c1177d140658bfec4c9d0996f647bd5,137964:fff4c40f6cbfcffef95bea66f62e811258878aa2"
         },
-        "timestamp": 1773505644
+        "timestamp": 1776970669
       },
-      "upstream_only_count": 1,
+      "upstream_only_count": 2,
       "upstream_only_sample": [
+        "k8s.io/kubernetes/test/integration/apiserver::apidefinitions",
         "k8s.io/kubernetes/test/integration::dra"
       ],
-      "upstream_test_count": 114
+      "upstream_test_count": 121
     },
     "upstream_testgrid_url": "https://testgrid.k8s.io/presubmits-kubernetes-blocking#pull-kubernetes-integration",
     "workflow_file": ".github/workflows/integration.yml",
