@@ -67,37 +67,73 @@
     "upstream_comparison": {
       "inventory_parity_status": "mismatch",
       "junit_files": [
-        "pr-logs/pull/136725/pull-kubernetes-conformance-kind-ga-only-parallel/2034385010382868480/artifacts/junit_01.xml"
+        "pr-logs/pull/134454/pull-kubernetes-conformance-kind-ga-only-parallel/2047578722600488960/artifacts/junit_01.xml"
       ],
-      "local_only_count": 3,
+      "local_only_count": 129,
       "local_only_sample": [
-        "Kubernetes e2e suite::Horizontal pod autoscaling (scale to zero) should scale down to zero and back up based on external metric value",
-        "Kubernetes e2e suite::Job should create Workload and PodGroup for gang-eligible Job",
-        "Kubernetes e2e suite::Pod InPlace Resize Init Container [FeatureGate:InPlacePodVerticalScalingInitContainers] [Beta] should support resizing a non-sidecar init container"
+        "Kubernetes e2e suite::Horizontal pod autoscaling (external metrics) should scale up and down based on external metric value",
+        "Kubernetes e2e suite::PLR Pod InPlace Resize [FeatureGate:InPlacePodLevelResourcesVerticalScaling] [Alpha] [Feature:OffByDefault] PLR guaranteed qos - 1 container with resize policy cpu & mem restart + resize initContainers resizing cpu",
+        "Kubernetes e2e suite::PLR Pod InPlace Resize [FeatureGate:InPlacePodLevelResourcesVerticalScaling] [Alpha] [Feature:OffByDefault] PLR guaranteed qos - 1 container with resize policy cpu & mem restart + resize initContainers resizing cpu & mem in opposite directions",
+        "Kubernetes e2e suite::PLR Pod InPlace Resize [FeatureGate:InPlacePodLevelResourcesVerticalScaling] [Alpha] [Feature:OffByDefault] PLR guaranteed qos - 1 container with resize policy cpu & mem restart + resize initContainers resizing cpu & mem in the same direction",
+        "Kubernetes e2e suite::PLR Pod InPlace Resize [FeatureGate:InPlacePodLevelResourcesVerticalScaling] [Alpha] [Feature:OffByDefault] PLR guaranteed qos - 1 container with resize policy cpu & mem restart + resize initContainers resizing mem",
+        "Kubernetes e2e suite::PLR Pod InPlace Resize [FeatureGate:InPlacePodLevelResourcesVerticalScaling] [Alpha] [Feature:OffByDefault] PLR guaranteed qos - 1 container with resize policy cpu & mem restart + resize initContainers resizing only pod-level cpu",
+        "Kubernetes e2e suite::PLR Pod InPlace Resize [FeatureGate:InPlacePodLevelResourcesVerticalScaling] [Alpha] [Feature:OffByDefault] PLR guaranteed qos - 1 container with resize policy cpu & mem restart + resize initContainers resizing only pod-level mem",
+        "Kubernetes e2e suite::PLR Pod InPlace Resize [FeatureGate:InPlacePodLevelResourcesVerticalScaling] [Alpha] [Feature:OffByDefault] PLR guaranteed qos - 1 container with resize policy cpu & mem restart + resize initContainers resizing pod-level cpu",
+        "Kubernetes e2e suite::PLR Pod InPlace Resize [FeatureGate:InPlacePodLevelResourcesVerticalScaling] [Alpha] [Feature:OffByDefault] PLR guaranteed qos - 1 container with resize policy cpu & mem restart + resize initContainers resizing pod-level cpu & mem in opposite directions",
+        "Kubernetes e2e suite::PLR Pod InPlace Resize [FeatureGate:InPlacePodLevelResourcesVerticalScaling] [Alpha] [Feature:OffByDefault] PLR guaranteed qos - 1 container with resize policy cpu & mem restart + resize initContainers resizing pod-level cpu & mem in the same direction",
+        "Kubernetes e2e suite::PLR Pod InPlace Resize [FeatureGate:InPlacePodLevelResourcesVerticalScaling] [Alpha] [Feature:OffByDefault] PLR guaranteed qos - 1 container with resize policy cpu & mem restart + resize initContainers resizing pod-level mem",
+        "Kubernetes e2e suite::PLR Pod InPlace Resize [FeatureGate:InPlacePodLevelResourcesVerticalScaling] [Alpha] [Feature:OffByDefault] PLR guaranteed qos - 1 container with resize policy cpu & mem restart resizing cpu",
+        "Kubernetes e2e suite::PLR Pod InPlace Resize [FeatureGate:InPlacePodLevelResourcesVerticalScaling] [Alpha] [Feature:OffByDefault] PLR guaranteed qos - 1 container with resize policy cpu & mem restart resizing cpu & mem in opposite directions",
+        "Kubernetes e2e suite::PLR Pod InPlace Resize [FeatureGate:InPlacePodLevelResourcesVerticalScaling] [Alpha] [Feature:OffByDefault] PLR guaranteed qos - 1 container with resize policy cpu & mem restart resizing cpu & mem in the same direction",
+        "Kubernetes e2e suite::PLR Pod InPlace Resize [FeatureGate:InPlacePodLevelResourcesVerticalScaling] [Alpha] [Feature:OffByDefault] PLR guaranteed qos - 1 container with resize policy cpu & mem restart resizing mem",
+        "Kubernetes e2e suite::PLR Pod InPlace Resize [FeatureGate:InPlacePodLevelResourcesVerticalScaling] [Alpha] [Feature:OffByDefault] PLR guaranteed qos - 1 container with resize policy cpu & mem restart resizing only pod-level cpu",
+        "Kubernetes e2e suite::PLR Pod InPlace Resize [FeatureGate:InPlacePodLevelResourcesVerticalScaling] [Alpha] [Feature:OffByDefault] PLR guaranteed qos - 1 container with resize policy cpu & mem restart resizing only pod-level mem",
+        "Kubernetes e2e suite::PLR Pod InPlace Resize [FeatureGate:InPlacePodLevelResourcesVerticalScaling] [Alpha] [Feature:OffByDefault] PLR guaranteed qos - 1 container with resize policy cpu & mem restart resizing pod-level cpu",
+        "Kubernetes e2e suite::PLR Pod InPlace Resize [FeatureGate:InPlacePodLevelResourcesVerticalScaling] [Alpha] [Feature:OffByDefault] PLR guaranteed qos - 1 container with resize policy cpu & mem restart resizing pod-level cpu & mem in opposite directions",
+        "Kubernetes e2e suite::PLR Pod InPlace Resize [FeatureGate:InPlacePodLevelResourcesVerticalScaling] [Alpha] [Feature:OffByDefault] PLR guaranteed qos - 1 container with resize policy cpu & mem restart resizing pod-level cpu & mem in the same direction"
       ],
       "local_test_count": 7561,
       "reference_job_name": "pull-kubernetes-conformance-kind-ga-only-parallel",
-      "reference_kubernetes_base_sha": "1a3fd463674e1142579040605c291c291d8f8a5d",
+      "reference_kubernetes_base_sha": "1f22abeebcb4e1ecae2f3dbcf3f0cd747ecfb3d6",
       "reference_matches_kubernetes_sha": false,
-      "reference_pr_number": 136725,
-      "reference_pr_updated_at": "2026-04-24T07:34:44Z",
-      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/136725/pull-kubernetes-conformance-kind-ga-only-parallel/2034385010382868480",
+      "reference_pr_number": 134454,
+      "reference_pr_updated_at": "2026-04-24T07:53:21Z",
+      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/134454/pull-kubernetes-conformance-kind-ga-only-parallel/2047578722600488960",
       "reference_selection": "recent-success",
-      "reference_started_at": "2026-03-18T22:02:18Z",
+      "reference_started_at": "2026-04-24T07:50:19Z",
       "reference_started_json": {
-        "pull": "136725",
-        "repo-commit": "42474c485928d381492b0ba1b7904141aa762879",
-        "repo-version": "42474c485928d381492b0ba1b7904141aa762879",
+        "pull": "134454",
+        "repo-commit": "c5f63b265279b9da8a5e71d12ec2420631c272ec",
+        "repo-version": "c5f63b265279b9da8a5e71d12ec2420631c272ec",
         "repos": {
-          "kubernetes/kubernetes": "master:1a3fd463674e1142579040605c291c291d8f8a5d,136725:3cd22dcb4f4fc22cb514eb7761988a9ba471f3aa"
+          "kubernetes/kubernetes": "master:1f22abeebcb4e1ecae2f3dbcf3f0cd747ecfb3d6,134454:7da15ed9179dfd3a960619f1afe885ef894740b0"
         },
-        "timestamp": 1773870192
+        "timestamp": 1777015938
       },
-      "upstream_only_count": 1,
+      "upstream_only_count": 148,
       "upstream_only_sample": [
-        "Kubernetes e2e suite::Pod InPlace Resize Container apply invalid resize patch requests [Feature:InPlacePodVerticalScaling] Burstable pod - nonrestartable initContainer"
+        "Kubernetes e2e suite::CRUD Tests resource.k8s.io/v1alpha3 ResourcePoolStatusRequest",
+        "Kubernetes e2e suite::DNS should provide DNS for a service with multiple EndpointSlices and no Endpoints",
+        "Kubernetes e2e suite::Horizontal pod autoscaling (external metrics) [Serial] should scale up and down based on external metric value",
+        "Kubernetes e2e suite::PLR Pod InPlace Resize [FeatureGate:InPlacePodLevelResourcesVerticalScaling] [Beta] PLR guaranteed qos - 1 container with resize policy cpu & mem restart + resize initContainers resizing cpu",
+        "Kubernetes e2e suite::PLR Pod InPlace Resize [FeatureGate:InPlacePodLevelResourcesVerticalScaling] [Beta] PLR guaranteed qos - 1 container with resize policy cpu & mem restart + resize initContainers resizing cpu & mem in opposite directions",
+        "Kubernetes e2e suite::PLR Pod InPlace Resize [FeatureGate:InPlacePodLevelResourcesVerticalScaling] [Beta] PLR guaranteed qos - 1 container with resize policy cpu & mem restart + resize initContainers resizing cpu & mem in the same direction",
+        "Kubernetes e2e suite::PLR Pod InPlace Resize [FeatureGate:InPlacePodLevelResourcesVerticalScaling] [Beta] PLR guaranteed qos - 1 container with resize policy cpu & mem restart + resize initContainers resizing mem",
+        "Kubernetes e2e suite::PLR Pod InPlace Resize [FeatureGate:InPlacePodLevelResourcesVerticalScaling] [Beta] PLR guaranteed qos - 1 container with resize policy cpu & mem restart + resize initContainers resizing only pod-level cpu",
+        "Kubernetes e2e suite::PLR Pod InPlace Resize [FeatureGate:InPlacePodLevelResourcesVerticalScaling] [Beta] PLR guaranteed qos - 1 container with resize policy cpu & mem restart + resize initContainers resizing only pod-level mem",
+        "Kubernetes e2e suite::PLR Pod InPlace Resize [FeatureGate:InPlacePodLevelResourcesVerticalScaling] [Beta] PLR guaranteed qos - 1 container with resize policy cpu & mem restart + resize initContainers resizing pod-level cpu",
+        "Kubernetes e2e suite::PLR Pod InPlace Resize [FeatureGate:InPlacePodLevelResourcesVerticalScaling] [Beta] PLR guaranteed qos - 1 container with resize policy cpu & mem restart + resize initContainers resizing pod-level cpu & mem in opposite directions",
+        "Kubernetes e2e suite::PLR Pod InPlace Resize [FeatureGate:InPlacePodLevelResourcesVerticalScaling] [Beta] PLR guaranteed qos - 1 container with resize policy cpu & mem restart + resize initContainers resizing pod-level cpu & mem in the same direction",
+        "Kubernetes e2e suite::PLR Pod InPlace Resize [FeatureGate:InPlacePodLevelResourcesVerticalScaling] [Beta] PLR guaranteed qos - 1 container with resize policy cpu & mem restart + resize initContainers resizing pod-level mem",
+        "Kubernetes e2e suite::PLR Pod InPlace Resize [FeatureGate:InPlacePodLevelResourcesVerticalScaling] [Beta] PLR guaranteed qos - 1 container with resize policy cpu & mem restart resizing cpu",
+        "Kubernetes e2e suite::PLR Pod InPlace Resize [FeatureGate:InPlacePodLevelResourcesVerticalScaling] [Beta] PLR guaranteed qos - 1 container with resize policy cpu & mem restart resizing cpu & mem in opposite directions",
+        "Kubernetes e2e suite::PLR Pod InPlace Resize [FeatureGate:InPlacePodLevelResourcesVerticalScaling] [Beta] PLR guaranteed qos - 1 container with resize policy cpu & mem restart resizing cpu & mem in the same direction",
+        "Kubernetes e2e suite::PLR Pod InPlace Resize [FeatureGate:InPlacePodLevelResourcesVerticalScaling] [Beta] PLR guaranteed qos - 1 container with resize policy cpu & mem restart resizing mem",
+        "Kubernetes e2e suite::PLR Pod InPlace Resize [FeatureGate:InPlacePodLevelResourcesVerticalScaling] [Beta] PLR guaranteed qos - 1 container with resize policy cpu & mem restart resizing only pod-level cpu",
+        "Kubernetes e2e suite::PLR Pod InPlace Resize [FeatureGate:InPlacePodLevelResourcesVerticalScaling] [Beta] PLR guaranteed qos - 1 container with resize policy cpu & mem restart resizing only pod-level mem",
+        "Kubernetes e2e suite::PLR Pod InPlace Resize [FeatureGate:InPlacePodLevelResourcesVerticalScaling] [Beta] PLR guaranteed qos - 1 container with resize policy cpu & mem restart resizing pod-level cpu"
       ],
-      "upstream_test_count": 7559
+      "upstream_test_count": 7580
     },
     "upstream_testgrid_url": "https://testgrid.k8s.io/presubmits-kubernetes-blocking#pull-kubernetes-conformance-kind-ga-only-parallel",
     "workflow_file": ".github/workflows/conformance-kind.yml",
