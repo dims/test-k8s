@@ -67,8 +67,8 @@
     "upstream_comparison": {
       "inventory_parity_status": "mismatch",
       "junit_files": [
-        "pr-logs/pull/138566/pull-kubernetes-node-e2e-containerd/2047646586112053248/artifacts/junit_cos01.xml",
-        "pr-logs/pull/138566/pull-kubernetes-node-e2e-containerd/2047646586112053248/artifacts/junit_ubuntu01.xml"
+        "pr-logs/pull/138504/pull-kubernetes-node-e2e-containerd/2046568926275440640/artifacts/junit_cos01.xml",
+        "pr-logs/pull/138504/pull-kubernetes-node-e2e-containerd/2046568926275440640/artifacts/junit_ubuntu01.xml"
       ],
       "local_only_count": 127,
       "local_only_sample": [
@@ -95,31 +95,25 @@
       ],
       "local_test_count": 1198,
       "reference_job_name": "pull-kubernetes-node-e2e-containerd",
-      "reference_kubernetes_base_sha": "d8d43a90343eafa7598da658febc8d312fc2a880",
+      "reference_kubernetes_base_sha": "b31119d205a839aab40b2d819a58d4fabacd9b47",
       "reference_matches_kubernetes_sha": false,
-      "reference_pr_number": 138566,
-      "reference_pr_updated_at": "2026-04-24T14:42:30Z",
-      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/138566/pull-kubernetes-node-e2e-containerd/2047646586112053248",
+      "reference_pr_number": 138504,
+      "reference_pr_updated_at": "2026-04-24T16:30:15Z",
+      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/138504/pull-kubernetes-node-e2e-containerd/2046568926275440640",
       "reference_selection": "recent-success",
-      "reference_started_at": "2026-04-24T12:35:03Z",
+      "reference_started_at": "2026-04-21T13:12:25Z",
       "reference_started_json": {
-        "pull": "138566",
-        "repo-commit": "b821b757b69a8673a5d21cab45c01f82c1e27628",
-        "repo-version": "b821b757b69a8673a5d21cab45c01f82c1e27628",
+        "pull": "138504",
+        "repo-commit": "f41b09f26a7a9000833f88ae76118a1512f3ef0e",
+        "repo-version": "f41b09f26a7a9000833f88ae76118a1512f3ef0e",
         "repos": {
-          "kubernetes/kubernetes": "master:d8d43a90343eafa7598da658febc8d312fc2a880,138566:4b6f73c825fefef279c7897821712087382401e2",
+          "kubernetes/kubernetes": "master:b31119d205a839aab40b2d819a58d4fabacd9b47,138504:ad0e5f96448af4450efdfb3cce22a8b6d1c949a4",
           "kubernetes/test-infra": "master"
         },
-        "timestamp": 1777031994
+        "timestamp": 1776775063
       },
-      "upstream_only_count": 133,
+      "upstream_only_count": 127,
       "upstream_only_sample": [
-        "E2eNode Suite::Not Change Container Status [FeatureGate:ChangeContainerStatusOnKubeletRestart] [Deprecated] [Feature:OffByDefault] when a Pod transitions from Ready to NotReady before kubelet restart should not affect NotReady pod status when pod has multiple containers with readinessProbes",
-        "E2eNode Suite::Not Change Container Status [FeatureGate:ChangeContainerStatusOnKubeletRestart] [Deprecated] [Feature:OffByDefault] when a Pod transitions from Ready to NotReady before kubelet restart should not affect NotReady pod status when pod has multiple containers with startup and readiness probes",
-        "E2eNode Suite::Not Change Container Status [FeatureGate:ChangeContainerStatusOnKubeletRestart] [Deprecated] [Feature:OffByDefault] when a Pod transitions from Ready to NotReady before kubelet restart should not affect NotReady pod status when pod has readinessProbe",
-        "E2eNode Suite::Not Change Container Status [FeatureGate:ChangeContainerStatusOnKubeletRestart] [Deprecated] [Feature:OffByDefault] when a Pod transitions from Ready to NotReady before kubelet restart should not affect NotReady pod status when pod has startupProbe and readinessProbe",
-        "E2eNode Suite::Not Change Container Status [FeatureGate:ChangeContainerStatusOnKubeletRestart] [Deprecated] [Feature:OffByDefault] when a Pod with a restartable init container transitions from Ready to NotReady before kubelet restart should not affect NotReady pod status when restartable init container has readinessProbe",
-        "E2eNode Suite::Not Change Container Status [FeatureGate:ChangeContainerStatusOnKubeletRestart] [Deprecated] [Feature:OffByDefault] when a Pod with a restartable init container transitions from Ready to NotReady before kubelet restart should not affect NotReady pod status when restartable init container has startupProbe and readinessProbe",
         "E2eNode Suite::PLR Pod InPlace Resize [FeatureGate:InPlacePodLevelResourcesVerticalScaling] [Beta] PLR guaranteed qos - 1 container with resize policy cpu & mem restart + resize initContainers resizing cpu",
         "E2eNode Suite::PLR Pod InPlace Resize [FeatureGate:InPlacePodLevelResourcesVerticalScaling] [Beta] PLR guaranteed qos - 1 container with resize policy cpu & mem restart + resize initContainers resizing cpu & mem in opposite directions",
         "E2eNode Suite::PLR Pod InPlace Resize [FeatureGate:InPlacePodLevelResourcesVerticalScaling] [Beta] PLR guaranteed qos - 1 container with resize policy cpu & mem restart + resize initContainers resizing cpu & mem in the same direction",
@@ -133,9 +127,15 @@
         "E2eNode Suite::PLR Pod InPlace Resize [FeatureGate:InPlacePodLevelResourcesVerticalScaling] [Beta] PLR guaranteed qos - 1 container with resize policy cpu & mem restart resizing cpu",
         "E2eNode Suite::PLR Pod InPlace Resize [FeatureGate:InPlacePodLevelResourcesVerticalScaling] [Beta] PLR guaranteed qos - 1 container with resize policy cpu & mem restart resizing cpu & mem in opposite directions",
         "E2eNode Suite::PLR Pod InPlace Resize [FeatureGate:InPlacePodLevelResourcesVerticalScaling] [Beta] PLR guaranteed qos - 1 container with resize policy cpu & mem restart resizing cpu & mem in the same direction",
-        "E2eNode Suite::PLR Pod InPlace Resize [FeatureGate:InPlacePodLevelResourcesVerticalScaling] [Beta] PLR guaranteed qos - 1 container with resize policy cpu & mem restart resizing mem"
+        "E2eNode Suite::PLR Pod InPlace Resize [FeatureGate:InPlacePodLevelResourcesVerticalScaling] [Beta] PLR guaranteed qos - 1 container with resize policy cpu & mem restart resizing mem",
+        "E2eNode Suite::PLR Pod InPlace Resize [FeatureGate:InPlacePodLevelResourcesVerticalScaling] [Beta] PLR guaranteed qos - 1 container with resize policy cpu & mem restart resizing only pod-level cpu",
+        "E2eNode Suite::PLR Pod InPlace Resize [FeatureGate:InPlacePodLevelResourcesVerticalScaling] [Beta] PLR guaranteed qos - 1 container with resize policy cpu & mem restart resizing only pod-level mem",
+        "E2eNode Suite::PLR Pod InPlace Resize [FeatureGate:InPlacePodLevelResourcesVerticalScaling] [Beta] PLR guaranteed qos - 1 container with resize policy cpu & mem restart resizing pod-level cpu",
+        "E2eNode Suite::PLR Pod InPlace Resize [FeatureGate:InPlacePodLevelResourcesVerticalScaling] [Beta] PLR guaranteed qos - 1 container with resize policy cpu & mem restart resizing pod-level cpu & mem in opposite directions",
+        "E2eNode Suite::PLR Pod InPlace Resize [FeatureGate:InPlacePodLevelResourcesVerticalScaling] [Beta] PLR guaranteed qos - 1 container with resize policy cpu & mem restart resizing pod-level cpu & mem in the same direction",
+        "E2eNode Suite::PLR Pod InPlace Resize [FeatureGate:InPlacePodLevelResourcesVerticalScaling] [Beta] PLR guaranteed qos - 1 container with resize policy cpu & mem restart resizing pod-level mem"
       ],
-      "upstream_test_count": 1204
+      "upstream_test_count": 1198
     },
     "upstream_testgrid_url": "https://testgrid.k8s.io/presubmits-kubernetes-blocking#pull-kubernetes-node-e2e-containerd",
     "workflow_file": ".github/workflows/node-e2e.yml",
