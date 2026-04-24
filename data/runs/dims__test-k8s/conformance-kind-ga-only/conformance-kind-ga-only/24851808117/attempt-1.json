@@ -65,17 +65,39 @@
     "schema_version": 1,
     "started_at": "2026-04-23T18:25:30Z",
     "upstream_comparison": {
-      "inventory_parity_status": "upstream-tests-missing",
+      "inventory_parity_status": "mismatch",
+      "junit_files": [
+        "pr-logs/pull/136725/pull-kubernetes-conformance-kind-ga-only-parallel/2034385010382868480/artifacts/junit_01.xml"
+      ],
+      "local_only_count": 3,
+      "local_only_sample": [
+        "Kubernetes e2e suite::Horizontal pod autoscaling (scale to zero) should scale down to zero and back up based on external metric value",
+        "Kubernetes e2e suite::Job should create Workload and PodGroup for gang-eligible Job",
+        "Kubernetes e2e suite::Pod InPlace Resize Init Container [FeatureGate:InPlacePodVerticalScalingInitContainers] [Beta] should support resizing a non-sidecar init container"
+      ],
       "local_test_count": 7561,
       "reference_job_name": "pull-kubernetes-conformance-kind-ga-only-parallel",
-      "reference_kubernetes_base_sha": null,
+      "reference_kubernetes_base_sha": "1a3fd463674e1142579040605c291c291d8f8a5d",
       "reference_matches_kubernetes_sha": false,
-      "reference_pr_number": 130557,
-      "reference_pr_updated_at": "2026-04-24T07:04:52Z",
-      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/130557/pull-kubernetes-conformance-kind-ga-only-parallel/1902829848728965120",
+      "reference_pr_number": 136725,
+      "reference_pr_updated_at": "2026-04-24T07:34:44Z",
+      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/136725/pull-kubernetes-conformance-kind-ga-only-parallel/2034385010382868480",
       "reference_selection": "recent-success",
-      "reference_started_at": "2025-03-20T21:36:57Z",
-      "upstream_test_count": 0
+      "reference_started_at": "2026-03-18T22:02:18Z",
+      "reference_started_json": {
+        "pull": "136725",
+        "repo-commit": "42474c485928d381492b0ba1b7904141aa762879",
+        "repo-version": "42474c485928d381492b0ba1b7904141aa762879",
+        "repos": {
+          "kubernetes/kubernetes": "master:1a3fd463674e1142579040605c291c291d8f8a5d,136725:3cd22dcb4f4fc22cb514eb7761988a9ba471f3aa"
+        },
+        "timestamp": 1773870192
+      },
+      "upstream_only_count": 1,
+      "upstream_only_sample": [
+        "Kubernetes e2e suite::Pod InPlace Resize Container apply invalid resize patch requests [Feature:InPlacePodVerticalScaling] Burstable pod - nonrestartable initContainer"
+      ],
+      "upstream_test_count": 7559
     },
     "upstream_testgrid_url": "https://testgrid.k8s.io/presubmits-kubernetes-blocking#pull-kubernetes-conformance-kind-ga-only-parallel",
     "workflow_file": ".github/workflows/conformance-kind.yml",
