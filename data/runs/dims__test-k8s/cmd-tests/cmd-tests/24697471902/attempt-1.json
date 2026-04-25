@@ -68,38 +68,17 @@
     "schema_version": 1,
     "started_at": "2026-04-21T00:27:06Z",
     "upstream_comparison": {
-      "inventory_parity_status": "mismatch",
-      "junit_files": [
-        "pr-logs/pull/138289/pull-kubernetes-cmd/2047992000480808960/artifacts/junit_20260425-105508.xml",
-        "pr-logs/pull/138289/pull-kubernetes-cmd/2047992000480808960/artifacts/junit_test-cmd.xml"
-      ],
-      "local_only_count": 1,
-      "local_only_sample": [
-        "k8s.io/kubernetes/cmd/kubeadm/test::cmd"
-      ],
+      "inventory_parity_status": "upstream-tests-missing",
       "local_test_count": 93,
       "reference_job_name": "pull-kubernetes-cmd",
-      "reference_kubernetes_base_sha": "ff06de939d1102aae6cec9e573c192fbb23dcb1d",
+      "reference_kubernetes_base_sha": null,
       "reference_matches_kubernetes_sha": false,
-      "reference_pr_number": 138289,
-      "reference_pr_updated_at": "2026-04-25T15:59:47Z",
-      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/138289/pull-kubernetes-cmd/2047992000480808960",
+      "reference_pr_number": 135413,
+      "reference_pr_updated_at": "2026-04-25T17:58:45Z",
+      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/135413/pull-kubernetes-cmd/1993710537787052032",
       "reference_selection": "recent-success",
-      "reference_started_at": "2026-04-25T11:09:06Z",
-      "reference_started_json": {
-        "pull": "138289",
-        "repo-commit": "1eb3db97b33a12301f89af261f2f9227058da1ce",
-        "repo-version": "1eb3db97b33a12301f89af261f2f9227058da1ce",
-        "repos": {
-          "kubernetes/kubernetes": "master:ff06de939d1102aae6cec9e573c192fbb23dcb1d,138289:7ccf879f5c8a799ade50b8f6cf7cb65f1f3139a5"
-        },
-        "timestamp": 1777114407
-      },
-      "upstream_only_count": 1,
-      "upstream_only_sample": [
-        "[sig-cluster-lifecycle] k8s.io/kubernetes/cmd/kubeadm/test::cmd"
-      ],
-      "upstream_test_count": 93
+      "reference_started_at": "2025-11-26T16:13:18Z",
+      "upstream_test_count": 0
     },
     "upstream_testgrid_url": "https://testgrid.k8s.io/presubmits-kubernetes-blocking#pull-kubernetes-cmd",
     "workflow_file": ".github/workflows/cmd-tests.yml",
