@@ -6,6 +6,7 @@ import re
 import shutil
 import subprocess
 import tempfile
+import time
 import xml.etree.ElementTree as ET
 from collections import defaultdict
 from datetime import datetime, timezone
@@ -55,10 +56,18 @@ def repo_slug(value: str) -> str:
 
 
 def run_cmd(args, cwd=None):
-    proc = subprocess.run(args, cwd=cwd, capture_output=True, text=True)
-    if proc.returncode != 0:
-        raise RuntimeError(f"command failed: {' '.join(args)}\nstdout:\n{proc.stdout}\nstderr:\n{proc.stderr}")
-    return proc.stdout
+    for attempt in range(4):
+        proc = subprocess.run(args, cwd=cwd, capture_output=True, text=True)
+        if proc.returncode == 0:
+            return proc.stdout
+        stderr = proc.stderr or ""
+        if "rate limit exceeded" in stderr.lower() and attempt < 3:
+            wait = 60 * (2 ** attempt)
+            print(f"Rate limited; retrying in {wait}s (attempt {attempt + 1}/3): {' '.join(args[:4])}")
+            time.sleep(wait)
+            continue
+        raise RuntimeError(f"command failed: {' '.join(args)}\nstdout:\n{proc.stdout}\nstderr:\n{stderr}")
+    raise RuntimeError("unreachable")
 
 
 def read_url_text(url: str):
@@ -326,24 +335,17 @@ def discover_local_bundles(root: Path):
     return bundles
 
 
-def fetch_recent_runs(repo: str, branch: str, limit: int):
-    return json.loads(
-        run_cmd(
-            [
-                "gh",
-                "run",
-                "list",
-                "--repo",
-                repo,
-                "--branch",
-                branch,
-                "--limit",
-                str(limit),
-                "--json",
-                "databaseId,workflowName,headSha,status,conclusion,event,createdAt,updatedAt,startedAt,url,headBranch,displayTitle",
-            ]
-        )
-    )
+def fetch_recent_runs(repo: str, branch: str, limit: int, workflow: str | None = None):
+    cmd = [
+        "gh", "run", "list",
+        "--repo", repo,
+        "--branch", branch,
+        "--limit", str(limit),
+        "--json", "databaseId,workflowName,headSha,status,conclusion,event,createdAt,updatedAt,startedAt,url,headBranch,displayTitle",
+    ]
+    if workflow:
+        cmd += ["--workflow", workflow]
+    return json.loads(run_cmd(cmd))
 
 
 def list_run_artifacts(repo: str, run_id: int):
@@ -423,25 +425,28 @@ def download_result_artifacts(repo: str, run, download_root: Path):
 
 
 def fetch_remote_bundles(repos, catalog_entries, branch, max_runs):
+    # Fetch per workflow file rather than one large combined list.  A single
+    # gh run list with a high --limit paginates heavily and mixes in
+    # high-frequency non-catalog runs (Publish Grid Data, pages deploy) that
+    # inflate the required limit by 5x or more.  Querying each workflow
+    # separately keeps every request to a single API page and uses ~13 small
+    # requests instead of one 8-page paginated call.
     bundles = []
     with tempfile.TemporaryDirectory(prefix="publish-grid-data-") as tmp:
         download_root = Path(tmp)
-        workflow_names = sorted({entry["workflow_name"] for entry in catalog_entries})
-        run_limit = max(100, max_runs * max(1, len(workflow_names)) * 3)
+        workflow_files = sorted({entry["workflow_file"] for entry in catalog_entries})
         for repo in repos:
-            per_workflow_counts = defaultdict(int)
-            for run in fetch_recent_runs(repo, branch, run_limit):
-                workflow_name = run.get("workflowName")
-                if workflow_name not in workflow_names:
-                    continue
-                if run.get("event") not in ALLOWED_EVENTS:
-                    continue
-                if run.get("status") != "completed":
-                    continue
-                if per_workflow_counts[workflow_name] >= max_runs:
-                    continue
-                per_workflow_counts[workflow_name] += 1
-                bundles.extend(download_result_artifacts(repo, run, download_root))
+            for workflow_file in workflow_files:
+                count = 0
+                for run in fetch_recent_runs(repo, branch, max_runs, workflow=workflow_file):
+                    if run.get("event") not in ALLOWED_EVENTS:
+                        continue
+                    if run.get("status") != "completed":
+                        continue
+                    if count >= max_runs:
+                        break
+                    count += 1
+                    bundles.extend(download_result_artifacts(repo, run, download_root))
     return bundles
 
 
