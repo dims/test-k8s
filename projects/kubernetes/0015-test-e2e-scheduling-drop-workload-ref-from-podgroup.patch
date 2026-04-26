@@ -1,0 +1,38 @@
+From 6a31f94036d0894877f4cb30413525e5eab6a314 Mon Sep 17 00:00:00 2001
+From: Davanum Srinivas <davanum@gmail.com>
+Date: Fri, 20 Mar 2026 00:25:00 -0400
+Subject: [PATCH] test/e2e/scheduling: drop workload ref from PodGroup CRUD
+ test
+
+PodGroup API availability is failing in the alpha/beta kind lane after
+the PodGroupWorkloadExists admission plugin started rejecting PodGroups
+that reference a missing Workload object.
+
+Remove the workload reference from the CRUD test fixture. The reference
+is not needed to exercise PodGroup API CRUD coverage.
+
+This matches upstream issue 137915 and PR 137916.
+---
+ test/e2e/scheduling/workload.go | 6 ------
+ 1 file changed, 6 deletions(-)
+
+diff --git a/test/e2e/scheduling/workload.go b/test/e2e/scheduling/workload.go
+index dd66131f37cc6..a9e0553d5381e 100644
+--- a/test/e2e/scheduling/workload.go
++++ b/test/e2e/scheduling/workload.go
+@@ -83,12 +83,6 @@ var _ = SIGDescribe("Workload", framework.WithFeatureGate(features.GenericWorklo
+ 					Namespaced: new(true),
+ 					InitialSpec: &schedulingv1alpha2.PodGroup{
+ 						Spec: schedulingv1alpha2.PodGroupSpec{
+-							PodGroupTemplateRef: &schedulingv1alpha2.PodGroupTemplateReference{
+-								Workload: &schedulingv1alpha2.WorkloadPodGroupTemplateReference{
+-									PodGroupTemplateName: "pg1",
+-									WorkloadName:         "w1",
+-								},
+-							},
+ 							SchedulingPolicy: schedulingv1alpha2.PodGroupSchedulingPolicy{
+ 								Gang: &schedulingv1alpha2.GangSchedulingPolicy{
+ 									MinCount: 5,
+-- 
+2.50.1 (Apple Git-155)
+
