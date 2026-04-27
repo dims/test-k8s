@@ -19,19 +19,9 @@ changes. For pod-level-only limit changes under RestartContainer,
 allow either no additional restart or a single additional restart above
 the pre-resize count. This preserves the earlier flake coverage without
 forcing a restart that live jobs do not guarantee.
-
-Tested:
-- hack/verify-gofmt.sh
-- hack/verify-test-code.sh
-- hack/verify-typecheck.sh ./test/e2e/common/node/...
-- go test ./test/e2e/common/node/... -run TestNonExistent -count=1
 ---
- .../common/node/framework/podresize/resize.go | 46 ++++++++++---------
- .../common/node/pod_level_resources_resize.go | 46 ++++++++++++-------
- 2 files changed, 55 insertions(+), 37 deletions(-)
-
 diff --git a/test/e2e/common/node/framework/podresize/resize.go b/test/e2e/common/node/framework/podresize/resize.go
-index 619ad55b090..559486400d2 100644
+index 5065883f62b..bb26dadbded 100644
 --- a/test/e2e/common/node/framework/podresize/resize.go
 +++ b/test/e2e/common/node/framework/podresize/resize.go
 @@ -45,13 +45,17 @@ const (
@@ -113,22 +103,31 @@ index 619ad55b090..559486400d2 100644
  	ginkgo.GinkgoHelper()
  
  	if len(gotStatuses) != len(wantStatuses) {
-@@ -332,6 +332,10 @@ func verifyContainerRestarts(ctx context.Context, f *framework.Framework, pod *v
+@@ -330,9 +330,16 @@ func verifyContainerRestarts(ctx context.Context, f *framework.Framework, pod *v
+ 
+ 	errs := []error{}
  	for i, gotStatus := range gotStatuses {
- 		wantRestartCount := wantStatuses[i].RestartCount
- 		switch {
-+		case wantStatuses[i].RestartCountFlexible:
-+			if gotStatus.RestartCount < wantRestartCount || gotStatus.RestartCount > wantRestartCount+1 {
-+				errs = append(errs, fmt.Errorf("unexpected number of restarts for container %s: got %d, want %d or %d", gotStatus.Name, gotStatus.RestartCount, wantRestartCount, wantRestartCount+1))
+-		if gotStatus.RestartCount != wantStatuses[i].RestartCount {
+-			errs = append(errs, fmt.Errorf("unexpected number of restarts for container %s: got %d, want %d", gotStatus.Name, gotStatus.RestartCount, wantStatuses[i].RestartCount))
+-		} else if gotStatus.RestartCount > 0 {
++		want := wantStatuses[i]
++		switch {
++		case want.RestartCountFlexible:
++			if gotStatus.RestartCount < want.RestartCount || gotStatus.RestartCount > want.RestartCount+1 {
++				errs = append(errs, fmt.Errorf("unexpected number of restarts for container %s: got %d, want %d or %d", gotStatus.Name, gotStatus.RestartCount, want.RestartCount, want.RestartCount+1))
 +			}
- 		case wantRestartCount == 0 && gotStatus.RestartCount != 0:
- 			errs = append(errs, fmt.Errorf("unexpected number of restarts for container %s: got %d, want %d", gotStatus.Name, gotStatus.RestartCount, wantRestartCount))
- 		case gotStatus.RestartCount < wantRestartCount:
++		case gotStatus.RestartCount != want.RestartCount:
++			errs = append(errs, fmt.Errorf("unexpected number of restarts for container %s: got %d, want %d", gotStatus.Name, gotStatus.RestartCount, want.RestartCount))
++		}
++		if gotStatus.RestartCount > 0 {
+ 			if err := verifyOomScoreAdj(ctx, f, pod, gotStatus.Name); err != nil {
+ 				errs = append(errs, err)
+ 			}
 diff --git a/test/e2e/common/node/pod_level_resources_resize.go b/test/e2e/common/node/pod_level_resources_resize.go
-index e4695f2dd76..72a907deea5 100644
+index f855299456b..f1fa142bcc6 100644
 --- a/test/e2e/common/node/pod_level_resources_resize.go
 +++ b/test/e2e/common/node/pod_level_resources_resize.go
-@@ -41,6 +41,22 @@ import (
+@@ -43,6 +43,22 @@ import (
  	"github.com/onsi/ginkgo/v2"
  )
  
@@ -151,16 +150,17 @@ index e4695f2dd76..72a907deea5 100644
  // TODO(ndixita): de-dup tests and common helpers from test/e2e/common/node/pod_resize.go
  func doGuaranteedPodLevelResizeTests(f *framework.Framework) {
  	ginkgo.DescribeTableSubtree("PLR guaranteed qos - 1 container with resize policy", func(cpuPolicy, memPolicy v1.ResourceResizeRestartPolicy, resizeInitCtrs bool) {
-@@ -76,15 +92,11 @@ func doGuaranteedPodLevelResizeTests(f *framework.Framework) {
+@@ -80,16 +96,11 @@ func doGuaranteedPodLevelResizeTests(f *framework.Framework) {
  					expectedContainers[i] = c
  					continue
  				}
 -				// For containers where the resize policy is "restart", we expect a restart.
 -				expectRestart := int32(0)
--				if cpuPolicy == v1.RestartContainer && desiredCtrCPU != originalCtrCPU {
+-
+-				if cpuPolicy == v1.RestartContainer && (desiredCtrCPU != originalCtrCPU || (desiredCtrCPU == "" && desiredPodCPU != originalCPU)) {
 -					expectRestart = 1
 -				}
--				if memPolicy == v1.RestartContainer && desiredCtrMem != originalCtrMem {
+-				if memPolicy == v1.RestartContainer && (desiredCtrMem != originalCtrMem || (desiredCtrMem == "" && desiredPodMem != originalMem)) {
 -					expectRestart = 1
 -				}
 +				cpuRestart, cpuRestartFlexible := expectRestartForPolicy(cpuPolicy, desiredCtrCPU != originalCtrCPU, desiredPodCPU != "" && desiredPodCPU != originalCPU)
@@ -171,7 +171,7 @@ index e4695f2dd76..72a907deea5 100644
  				expectedContainers[i] = c
  			}
  
-@@ -221,15 +233,17 @@ func doBurstablePodLevelResizeTests(f *framework.Framework) {
+@@ -226,15 +237,17 @@ func doBurstablePodLevelResizeTests(f *framework.Framework) {
  			originalContainers := makeBurstableContainers(1, cpuPolicy, memPolicy, originalCPU, originalCPULimit, originalMem, originalMemLimit)
  			expectedContainers := makeBurstableContainers(1, cpuPolicy, memPolicy, desiredContainerResources.cpuReq, desiredContainerResources.cpuLim, desiredContainerResources.memReq, desiredContainerResources.memLim)
  			for i, c := range expectedContainers {
@@ -197,6 +197,3 @@ index e4695f2dd76..72a907deea5 100644
  				expectedContainers[i] = c
  			}
  
--- 
-2.50.1 (Apple Git-155)
-

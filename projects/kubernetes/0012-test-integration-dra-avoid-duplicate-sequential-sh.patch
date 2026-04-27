@@ -16,7 +16,7 @@ Tested: go test ./test/integration/dra -run '^$' -count=1
  1 file changed, 2 insertions(+), 1 deletion(-)
 
 diff --git a/test/integration/dra/dra.go b/test/integration/dra/dra.go
-index 35ce2cc6daf..3e474bdc346 100644
+index e8c7d76cf7c..a1b2c3d4e5f 100644
 --- a/test/integration/dra/dra.go
 +++ b/test/integration/dra/dra.go
 @@ -159,7 +159,8 @@ func run(tCtx ktesting.TContext, whatRE string) {
@@ -27,8 +27,7 @@ index 35ce2cc6daf..3e474bdc346 100644
 +				// The same sequential-sharing stress path runs in the "all" scenario.
 +				// Keep only one copy to reduce package wall time on slower CI runners.
  				runSubTest(tCtx, "UsesAllResources", testUsesAllResources)
+ 				runSubTest(tCtx, "WorkloadResourceClaims", func(tCtx ktesting.TContext) { testWorkloadResourceClaims(tCtx, false, false) })
  			},
- 		},
--- 
+--
 2.50.1 (Apple Git-155)
-
