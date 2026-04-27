@@ -53,7 +53,37 @@
     "schema_version": 1,
     "started_at": "2026-04-27T00:26:18Z",
     "upstream_comparison": {
-      "inventory_parity_status": "upstream-reference-missing"
+      "inventory_parity_status": "mismatch",
+      "junit_files": [
+        "pr-logs/pull/138615/pull-kubernetes-linter-hints/2048736836183920640/artifacts/junit_verify.xml"
+      ],
+      "local_only_count": 1,
+      "local_only_sample": [
+        "Linter Hints::verify WHAT=golangci-lint-pr-hints"
+      ],
+      "local_test_count": 1,
+      "reference_job_name": "pull-kubernetes-linter-hints",
+      "reference_kubernetes_base_sha": "75d51c440770f96b9725efea4145ba50fc6aef4b",
+      "reference_matches_kubernetes_sha": false,
+      "reference_pr_number": 138615,
+      "reference_pr_updated_at": "2026-04-27T12:20:40Z",
+      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/138615/pull-kubernetes-linter-hints/2048736836183920640",
+      "reference_selection": "recent-success",
+      "reference_started_at": "2026-04-27T12:35:12Z",
+      "reference_started_json": {
+        "pull": "138615",
+        "repo-commit": "59bd1e3414961570ddb92c4ba48537dab012ae08",
+        "repo-version": "59bd1e3414961570ddb92c4ba48537dab012ae08",
+        "repos": {
+          "kubernetes/kubernetes": "master:75d51c440770f96b9725efea4145ba50fc6aef4b,138615:6afd0dd101224ddf29797449882038d061378c73"
+        },
+        "timestamp": 1777291995
+      },
+      "upstream_only_count": 1,
+      "upstream_only_sample": [
+        "verify::golangci-lint-pr-hints"
+      ],
+      "upstream_test_count": 1
     },
     "upstream_testgrid_url": "https://testgrid.k8s.io/presubmits-kubernetes-blocking#pull-kubernetes-linter-hints",
     "workflow_file": ".github/workflows/linter-hints.yml",
