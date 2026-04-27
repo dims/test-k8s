@@ -1,0 +1,39 @@
+From 31c71ff658b5c1b5441ae751012c7f1ad4123870 Mon Sep 17 00:00:00 2001
+From: test-k8s patch applier <test-k8s-patches@users.noreply.github.com>
+Date: Sun, 26 Apr 2026 19:04:50 -0700
+Subject: [PATCH] pkg/controller: deep copy spec in
+ FakePodControl.CreatePodsWithGenerateName
+
+The function modifies spec.GenerateName on the caller's pointer before
+appending to f.Templates. When the informer mutation detector is enabled
+(which is the default in unit tests with -race), it periodically calls
+reflect.DeepEqual on the same cached ReplicaSet template spec while
+manageReplicas is concurrently calling CreatePodsWithGenerateName. This
+produces a data race that fails TestExpectationsOnRecreate under -race.
+
+Make a deep copy of spec before setting GenerateName so the original
+cached object is never modified. The appended template entry is already
+a value copy of *spec (or now *specCopy), so behavior is unchanged.
+---
+ pkg/controller/controller_utils.go | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
+
+diff --git a/pkg/controller/controller_utils.go b/pkg/controller/controller_utils.go
+index dd5268ae5a9..68c7b6f2f29 100644
+--- a/pkg/controller/controller_utils.go
++++ b/pkg/controller/controller_utils.go
+@@ -670,8 +670,9 @@ func (f *FakePodControl) CreatePodsWithGenerateName(ctx context.Context, namespa
+ 	if f.CreateLimit != 0 && f.CreateCallCount > f.CreateLimit {
+ 		return fmt.Errorf("not creating pod, limit %d already reached (create call %d)", f.CreateLimit, f.CreateCallCount)
+ 	}
+-	spec.GenerateName = generateNamePrefix
+-	f.Templates = append(f.Templates, *spec)
++	specCopy := spec.DeepCopy()
++	specCopy.GenerateName = generateNamePrefix
++	f.Templates = append(f.Templates, *specCopy)
+ 	f.ControllerRefs = append(f.ControllerRefs, *controllerRef)
+ 	if f.Err != nil {
+ 		return f.Err
+-- 
+2.50.1
+
