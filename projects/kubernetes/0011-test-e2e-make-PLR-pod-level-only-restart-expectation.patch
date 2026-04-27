@@ -1,4 +1,4 @@
-From c7635563f07885a2177d90fe8f93bf75a4e26b47 Mon Sep 17 00:00:00 2001
+From 29dd9f75f3686467fc37848a874473161b1e094b Mon Sep 17 00:00:00 2001
 From: Davanum Srinivas <davanum@gmail.com>
 Date: Sun, 15 Mar 2026 15:59:43 -0400
 Subject: [PATCH] test/e2e: make PLR pod-level-only restart expectations
@@ -20,8 +20,12 @@ allow either no additional restart or a single additional restart above
 the pre-resize count. This preserves the earlier flake coverage without
 forcing a restart that live jobs do not guarantee.
 ---
+ .../common/node/framework/podresize/resize.go | 60 ++++++++++---------
+ .../common/node/pod_level_resources_resize.go | 47 +++++++++------
+ 2 files changed, 62 insertions(+), 45 deletions(-)
+
 diff --git a/test/e2e/common/node/framework/podresize/resize.go b/test/e2e/common/node/framework/podresize/resize.go
-index 5065883f62b..bb26dadbded 100644
+index 2b53f644e3c..98f25c21be5 100644
 --- a/test/e2e/common/node/framework/podresize/resize.go
 +++ b/test/e2e/common/node/framework/podresize/resize.go
 @@ -45,13 +45,17 @@ const (
@@ -103,26 +107,36 @@ index 5065883f62b..bb26dadbded 100644
  	ginkgo.GinkgoHelper()
  
  	if len(gotStatuses) != len(wantStatuses) {
-@@ -330,9 +330,16 @@ func verifyContainerRestarts(ctx context.Context, f *framework.Framework, pod *v
+@@ -330,18 +330,22 @@ func verifyContainerRestarts(ctx context.Context, f *framework.Framework, pod *v
  
  	errs := []error{}
  	for i, gotStatus := range gotStatuses {
--		if gotStatus.RestartCount != wantStatuses[i].RestartCount {
--			errs = append(errs, fmt.Errorf("unexpected number of restarts for container %s: got %d, want %d", gotStatus.Name, gotStatus.RestartCount, wantStatuses[i].RestartCount))
--		} else if gotStatus.RestartCount > 0 {
+-		wantRestartCount := wantStatuses[i].RestartCount
 +		want := wantStatuses[i]
-+		switch {
+ 		switch {
+-		case wantRestartCount == 0 && gotStatus.RestartCount != 0:
+-			errs = append(errs, fmt.Errorf("unexpected number of restarts for container %s: got %d, want %d", gotStatus.Name, gotStatus.RestartCount, wantRestartCount))
+-		case gotStatus.RestartCount < wantRestartCount:
+-			errs = append(errs, fmt.Errorf("unexpected number of restarts for container %s: got %d, want at least %d", gotStatus.Name, gotStatus.RestartCount, wantRestartCount))
+-		case gotStatus.RestartCount > wantRestartCount:
 +		case want.RestartCountFlexible:
 +			if gotStatus.RestartCount < want.RestartCount || gotStatus.RestartCount > want.RestartCount+1 {
 +				errs = append(errs, fmt.Errorf("unexpected number of restarts for container %s: got %d, want %d or %d", gotStatus.Name, gotStatus.RestartCount, want.RestartCount, want.RestartCount+1))
 +			}
-+		case gotStatus.RestartCount != want.RestartCount:
++		case want.RestartCount == 0 && gotStatus.RestartCount != 0:
 +			errs = append(errs, fmt.Errorf("unexpected number of restarts for container %s: got %d, want %d", gotStatus.Name, gotStatus.RestartCount, want.RestartCount))
-+		}
-+		if gotStatus.RestartCount > 0 {
++		case gotStatus.RestartCount < want.RestartCount:
++			errs = append(errs, fmt.Errorf("unexpected number of restarts for container %s: got %d, want at least %d", gotStatus.Name, gotStatus.RestartCount, want.RestartCount))
++		case gotStatus.RestartCount > want.RestartCount:
+ 			// Restart-required resize tests can observe duplicate restarts even after
+ 			// the resized pod's resources and cgroups have converged. Treat the
+ 			// configured restart count as a lower bound once the pod is otherwise
+ 			// healthy, but preserve the exact-zero invariant for no-restart cases.
+-			framework.Logf("Ignoring extra restarts after pod resize convergence for container %s: got %d, want at least %d", gotStatus.Name, gotStatus.RestartCount, wantRestartCount)
++			framework.Logf("Ignoring extra restarts after pod resize convergence for container %s: got %d, want at least %d", gotStatus.Name, gotStatus.RestartCount, want.RestartCount)
+ 		}
+ 		if gotStatus.RestartCount > 0 {
  			if err := verifyOomScoreAdj(ctx, f, pod, gotStatus.Name); err != nil {
- 				errs = append(errs, err)
- 			}
 diff --git a/test/e2e/common/node/pod_level_resources_resize.go b/test/e2e/common/node/pod_level_resources_resize.go
 index f855299456b..f1fa142bcc6 100644
 --- a/test/e2e/common/node/pod_level_resources_resize.go
@@ -197,3 +211,6 @@ index f855299456b..f1fa142bcc6 100644
  				expectedContainers[i] = c
  			}
  
+-- 
+2.50.1
+
