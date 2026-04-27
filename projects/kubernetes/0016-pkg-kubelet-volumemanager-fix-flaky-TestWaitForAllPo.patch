@@ -1,0 +1,50 @@
+From 863187f46d8130f581b5cd50ca36c3146b1cbc14 Mon Sep 17 00:00:00 2001
+From: Davanum Srinivas <davanum@gmail.com>
+Date: Mon, 27 Apr 2026 08:12:09 -0700
+Subject: [PATCH] pkg/kubelet/volumemanager: fix flaky
+ TestWaitForAllPodsUnmount on slow CI runners
+
+Each subtest uses ktesting.Init(t) which draws down the shared
+-timeout=180s package budget.  On slow CI runners the earlier
+subtests (numPods 1, 1, 10) can consume enough of that budget
+that the 20-pod subtest has under two minutes left for
+WaitForAttachAndMount, causing a spurious context-deadline
+failure before we even reach the WaitForAllPodsUnmount assertion.
+
+Fix: use a dedicated 3-minute context for the attach-and-mount
+setup goroutines. defer attachCancel() ensures cleanup when the
+subtest ends, so no goroutines leak across subtests.
+
+Upstream flake: https://github.com/kubernetes/kubernetes/issues/136255
+---
+ pkg/kubelet/volumemanager/volume_manager_test.go | 12 +++++++++++-
+ 1 file changed, 11 insertions(+), 1 deletion(-)
+
+diff --git a/pkg/kubelet/volumemanager/volume_manager_test.go b/pkg/kubelet/volumemanager/volume_manager_test.go
+index b0345ed1d66..f3ffb8f77d1 100644
+--- a/pkg/kubelet/volumemanager/volume_manager_test.go
++++ b/pkg/kubelet/volumemanager/volume_manager_test.go
+@@ -739,9 +739,19 @@ func TestWaitForAllPodsUnmount(t *testing.T) {
+ 				}
+ 				resultChan := make(chan attachResult, test.numPods)
+ 
++				// Use a fresh context for the attach-and-mount setup goroutines.
++				// Each subtest calls ktesting.Init(t) which is bounded by the
++				// remaining package timeout (-timeout=180s). On slow CI runners
++				// the earlier subtests can consume enough of that budget to leave
++				// less than 2 minutes for the 20-pod subtest, causing
++				// WaitForAttachAndMount to time out before we even reach the
++				// WaitForAllPodsUnmount assertion we want to test.
++				attachCtx, attachCancel := context.WithTimeout(context.Background(), 3*time.Minute)
++				defer attachCancel()
++
+ 				for _, pod := range pods {
+ 					go func() {
+-						err := manager.WaitForAttachAndMount(ctx, pod)
++						err := manager.WaitForAttachAndMount(attachCtx, pod)
+ 						resultChan <- attachResult{
+ 							podName: pod.Name,
+ 							err:     err,
+-- 
+2.50.1
+
