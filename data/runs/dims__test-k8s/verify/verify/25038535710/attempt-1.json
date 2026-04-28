@@ -29,12 +29,12 @@
         "junit_verify.xml"
       ]
     },
-    "collected_at": "2026-04-27T00:39:32Z",
+    "collected_at": "2026-04-28T07:48:53Z",
     "comparison_required": true,
-    "completed_at": "2026-04-27T00:39:39Z",
+    "completed_at": "2026-04-28T07:49:00Z",
     "containerd_ref": "main",
     "containerd_repo": "containerd/containerd",
-    "containerd_sha": "574a80c45f530d0ada7799c9373940b2e2ecee07",
+    "containerd_sha": "135a6715fe3d70fab90e505b884e9049a66131c2",
     "data_quality": {
       "fallback_synthetic_cases": true,
       "inventory_state": "present",
@@ -43,42 +43,42 @@
       "synthetic_cases": false
     },
     "display_order": 120,
-    "duration_seconds": 2999,
-    "event": "push",
+    "duration_seconds": 3180,
+    "event": "schedule",
     "github_ref": "main",
-    "github_sha": "a03e622c408fd17dacb4272adaa4f5450a28b8aa",
-    "html_url": "https://github.com/dims/test-k8s/actions/runs/24970159189",
+    "github_sha": "5d2c2e5ab18f5708da39790bca11d753714c378a",
+    "html_url": "https://github.com/dims/test-k8s/actions/runs/25038535710",
     "job_id": "verify",
     "job_name": "Verify",
     "job_slug": "verify",
     "kubernetes_ref": "master",
     "kubernetes_repo": "kubernetes/kubernetes",
-    "kubernetes_sha": "b910026535af2d8a64d45efefeb8d9efb75a4817",
+    "kubernetes_sha": "a894d690aba7c9ccb0c8e522d97ac3333b57198f",
     "mirrored_prow_job": "pull-kubernetes-verify",
     "repo": "dims/test-k8s",
     "repo_slug": "dims__test-k8s",
     "result": "success",
     "run_attempt": 1,
-    "run_id": 24970159189,
-    "runner_label": "GitHub Actions 1000019489",
-    "runner_name": "GitHub Actions 1000019489",
+    "run_id": 25038535710,
+    "runner_label": "GitHub Actions 1000020218",
+    "runner_name": "GitHub Actions 1000020218",
     "schema_version": 1,
-    "started_at": "2026-04-26T23:49:40Z",
+    "started_at": "2026-04-28T06:56:00Z",
     "upstream_comparison": {
-      "inventory_parity_status": "missing-local-tests",
+      "inventory_parity_status": "match",
       "junit_files": [
         "pr-logs/pull/138576/pull-kubernetes-verify/2049027026223894528/artifacts/junit_verify.xml"
       ],
       "local_only_count": 0,
       "local_only_sample": [],
-      "local_test_count": 42,
+      "local_test_count": 43,
       "reference_job_name": "pull-kubernetes-verify",
       "reference_kubernetes_base_sha": "a894d690aba7c9ccb0c8e522d97ac3333b57198f",
-      "reference_matches_kubernetes_sha": false,
+      "reference_matches_kubernetes_sha": true,
       "reference_pr_number": 138576,
       "reference_pr_updated_at": "2026-04-28T07:50:11Z",
       "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/138576/pull-kubernetes-verify/2049027026223894528",
-      "reference_selection": "recent-success",
+      "reference_selection": "exact-kubernetes-sha",
       "reference_started_at": "2026-04-28T07:50:08Z",
       "reference_started_json": {
         "pull": "138576",
@@ -89,10 +89,8 @@
         },
         "timestamp": 1777361134
       },
-      "upstream_only_count": 1,
-      "upstream_only_sample": [
-        "verify::metrics-naming"
-      ],
+      "upstream_only_count": 0,
+      "upstream_only_sample": [],
       "upstream_test_count": 43
     },
     "upstream_testgrid_url": "https://testgrid.k8s.io/presubmits-kubernetes-blocking#pull-kubernetes-verify",
@@ -103,31 +101,31 @@
   "suites": [
     {
       "cancelled": 0,
-      "duration_seconds": 2820.7575061000016,
+      "duration_seconds": 2980.659452000001,
       "failed": 0,
       "file_source": "junit_verify.xml",
-      "passed": 48,
+      "passed": 49,
       "skipped": 0,
       "source": "junit",
       "suite": "verify",
       "suite_slug": "verify",
-      "tests": 48,
+      "tests": 49,
       "unknown": 0
     }
   ],
   "summary": {
     "cancelled": 0,
-    "duration_seconds": 2820.758,
+    "duration_seconds": 2980.659,
     "failed": 0,
-    "passed": 48,
+    "passed": 49,
     "skipped": 0,
-    "tests": 48,
+    "tests": 49,
     "unknown": 0
   },
   "tests": [
     {
       "classname": "verify",
-      "duration_seconds": 0.631249,
+      "duration_seconds": 0.573167,
       "failure_text": "",
       "file_source": "junit_verify.xml",
       "name": "api-groups",
@@ -140,7 +138,7 @@
     },
     {
       "classname": "verify",
-      "duration_seconds": 2.16333,
+      "duration_seconds": 2.0485,
       "failure_text": "",
       "file_source": "junit_verify.xml",
       "name": "boilerplate",
@@ -153,7 +151,7 @@
     },
     {
       "classname": "verify",
-      "duration_seconds": 62.4497,
+      "duration_seconds": 65.7285,
       "failure_text": "",
       "file_source": "junit_verify.xml",
       "name": "cli-conventions",
@@ -166,7 +164,7 @@
     },
     {
       "classname": "verify",
-      "duration_seconds": 253.104,
+      "duration_seconds": 254.995,
       "failure_text": "",
       "file_source": "junit_verify.xml",
       "name": "codegen",
@@ -179,7 +177,7 @@
     },
     {
       "classname": "verify",
-      "duration_seconds": 0.258945,
+      "duration_seconds": 0.252824,
       "failure_text": "",
       "file_source": "junit_verify.xml",
       "name": "conformance-requirements",
@@ -192,7 +190,7 @@
     },
     {
       "classname": "verify",
-      "duration_seconds": 210.081,
+      "duration_seconds": 220.976,
       "failure_text": "",
       "file_source": "junit_verify.xml",
       "name": "conformance-yaml",
@@ -205,7 +203,7 @@
     },
     {
       "classname": "verify",
-      "duration_seconds": 290.525,
+      "duration_seconds": 309.232,
       "failure_text": "",
       "file_source": "junit_verify.xml",
       "name": "deadcode-elimination",
@@ -218,7 +216,7 @@
     },
     {
       "classname": "verify",
-      "duration_seconds": 1.21636,
+      "duration_seconds": 1.36983,
       "failure_text": "",
       "file_source": "junit_verify.xml",
       "name": "description",
@@ -231,7 +229,7 @@
     },
     {
       "classname": "verify",
-      "duration_seconds": 131.192,
+      "duration_seconds": 143.971,
       "failure_text": "",
       "file_source": "junit_verify.xml",
       "name": "e2e-images",
@@ -244,7 +242,7 @@
     },
     {
       "classname": "verify",
-      "duration_seconds": 13.3022,
+      "duration_seconds": 13.4415,
       "failure_text": "",
       "file_source": "junit_verify.xml",
       "name": "e2e-test-ownership",
@@ -257,7 +255,7 @@
     },
     {
       "classname": "verify",
-      "duration_seconds": 5.11871,
+      "duration_seconds": 5.392,
       "failure_text": "",
       "file_source": "junit_verify.xml",
       "name": "featuregates",
@@ -270,7 +268,7 @@
     },
     {
       "classname": "verify",
-      "duration_seconds": 0.951206,
+      "duration_seconds": 0.920385,
       "failure_text": "",
       "file_source": "junit_verify.xml",
       "name": "fieldname-docs",
@@ -283,7 +281,7 @@
     },
     {
       "classname": "verify",
-      "duration_seconds": 3.95281,
+      "duration_seconds": 5.32118,
       "failure_text": "",
       "file_source": "junit_verify.xml",
       "name": "file-sizes",
@@ -296,7 +294,7 @@
     },
     {
       "classname": "verify",
-      "duration_seconds": 204.438,
+      "duration_seconds": 212.457,
       "failure_text": "",
       "file_source": "junit_verify.xml",
       "name": "generated-docs",
@@ -309,7 +307,7 @@
     },
     {
       "classname": "verify",
-      "duration_seconds": 62.2962,
+      "duration_seconds": 67.328,
       "failure_text": "",
       "file_source": "junit_verify.xml",
       "name": "generated-stable-metrics",
@@ -322,7 +320,7 @@
     },
     {
       "classname": "verify",
-      "duration_seconds": 6.94196,
+      "duration_seconds": 7.43726,
       "failure_text": "",
       "file_source": "junit_verify.xml",
       "name": "gofmt",
@@ -335,7 +333,7 @@
     },
     {
       "classname": "verify",
-      "duration_seconds": 3.71706,
+      "duration_seconds": 4.10075,
       "failure_text": "",
       "file_source": "junit_verify.xml",
       "name": "golangci-lint-config",
@@ -348,7 +346,7 @@
     },
     {
       "classname": "verify",
-      "duration_seconds": 835.498,
+      "duration_seconds": 873.175,
       "failure_text": "",
       "file_source": "junit_verify.xml",
       "name": "golangci-lint",
@@ -361,7 +359,7 @@
     },
     {
       "classname": "verify",
-      "duration_seconds": 14.4164,
+      "duration_seconds": 13.3942,
       "failure_text": "",
       "file_source": "junit_verify.xml",
       "name": "govulncheck",
@@ -374,7 +372,7 @@
     },
     {
       "classname": "verify",
-      "duration_seconds": 0.698714,
+      "duration_seconds": 0.756939,
       "failure_text": "",
       "file_source": "junit_verify.xml",
       "name": "import-aliases",
@@ -387,7 +385,7 @@
     },
     {
       "classname": "verify",
-      "duration_seconds": 206.545,
+      "duration_seconds": 222.222,
       "failure_text": "",
       "file_source": "junit_verify.xml",
       "name": "import-boss",
@@ -400,7 +398,7 @@
     },
     {
       "classname": "verify",
-      "duration_seconds": 12.3782,
+      "duration_seconds": 12.8116,
       "failure_text": "",
       "file_source": "junit_verify.xml",
       "name": "imports",
@@ -413,7 +411,7 @@
     },
     {
       "classname": "verify",
-      "duration_seconds": 11.5444,
+      "duration_seconds": 8.46974,
       "failure_text": "",
       "file_source": "junit_verify.xml",
       "name": "internal-modules",
@@ -426,7 +424,20 @@
     },
     {
       "classname": "verify",
-      "duration_seconds": 99.7704,
+      "duration_seconds": 43.194,
+      "failure_text": "",
+      "file_source": "junit_verify.xml",
+      "name": "metrics-naming",
+      "name_slug": "metrics-naming",
+      "owner_hint": "verify",
+      "source": "junit",
+      "status": "passed",
+      "suite": "verify",
+      "suite_slug": "verify"
+    },
+    {
+      "classname": "verify",
+      "duration_seconds": 103.797,
       "failure_text": "",
       "file_source": "junit_verify.xml",
       "name": "mocks",
@@ -439,7 +450,7 @@
     },
     {
       "classname": "verify",
-      "duration_seconds": 0.526585,
+      "duration_seconds": 0.473305,
       "failure_text": "",
       "file_source": "junit_verify.xml",
       "name": "netparse-cve",
@@ -452,7 +463,7 @@
     },
     {
       "classname": "verify",
-      "duration_seconds": 6.30015,
+      "duration_seconds": 4.52243,
       "failure_text": "",
       "file_source": "junit_verify.xml",
       "name": "no-vendor-cycles",
@@ -465,7 +476,7 @@
     },
     {
       "classname": "verify",
-      "duration_seconds": 0.994475,
+      "duration_seconds": 0.915787,
       "failure_text": "",
       "file_source": "junit_verify.xml",
       "name": "non-mutating-validation",
@@ -478,7 +489,7 @@
     },
     {
       "classname": "verify",
-      "duration_seconds": 23.4317,
+      "duration_seconds": 23.1702,
       "failure_text": "",
       "file_source": "junit_verify.xml",
       "name": "openapi-spec",
@@ -491,7 +502,7 @@
     },
     {
       "classname": "verify",
-      "duration_seconds": 4.8706,
+      "duration_seconds": 4.63749,
       "failure_text": "",
       "file_source": "junit_verify.xml",
       "name": "owners-fmt",
@@ -504,7 +515,7 @@
     },
     {
       "classname": "verify",
-      "duration_seconds": 1.19204,
+      "duration_seconds": 1.29024,
       "failure_text": "",
       "file_source": "junit_verify.xml",
       "name": "pkg-names",
@@ -517,7 +528,7 @@
     },
     {
       "classname": "verify",
-      "duration_seconds": 0.0454428,
+      "duration_seconds": 0.0452304,
       "failure_text": "",
       "file_source": "junit_verify.xml",
       "name": "prerelease-lifecycle-tags",
@@ -530,7 +541,7 @@
     },
     {
       "classname": "verify",
-      "duration_seconds": 0.255344,
+      "duration_seconds": 0.217729,
       "failure_text": "",
       "file_source": "junit_verify.xml",
       "name": "prometheus-imports",
@@ -543,7 +554,7 @@
     },
     {
       "classname": "verify",
-      "duration_seconds": 2.66048,
+      "duration_seconds": 2.41879,
       "failure_text": "",
       "file_source": "junit_verify.xml",
       "name": "publishing-bot",
@@ -556,7 +567,7 @@
     },
     {
       "classname": "verify",
-      "duration_seconds": 0.4234,
+      "duration_seconds": 0.367665,
       "failure_text": "",
       "file_source": "junit_verify.xml",
       "name": "readonly-packages",
@@ -569,7 +580,7 @@
     },
     {
       "classname": "verify",
-      "duration_seconds": 191.661,
+      "duration_seconds": 196.144,
       "failure_text": "",
       "file_source": "junit_verify.xml",
       "name": "shellcheck",
@@ -582,7 +593,7 @@
     },
     {
       "classname": "verify",
-      "duration_seconds": 7.70425,
+      "duration_seconds": 8.14067,
       "failure_text": "",
       "file_source": "junit_verify.xml",
       "name": "spelling",
@@ -595,7 +606,7 @@
     },
     {
       "classname": "verify",
-      "duration_seconds": 0.391852,
+      "duration_seconds": 0.354487,
       "failure_text": "",
       "file_source": "junit_verify.xml",
       "name": "staging-meta-files",
@@ -608,7 +619,7 @@
     },
     {
       "classname": "verify",
-      "duration_seconds": 1.96016,
+      "duration_seconds": 1.84382,
       "failure_text": "",
       "file_source": "junit_verify.xml",
       "name": "test-code",
@@ -621,7 +632,7 @@
     },
     {
       "classname": "verify",
-      "duration_seconds": 0.0571153,
+      "duration_seconds": 0.0554054,
       "failure_text": "",
       "file_source": "junit_verify.xml",
       "name": "test-featuregates",
@@ -634,7 +645,7 @@
     },
     {
       "classname": "verify",
-      "duration_seconds": 0.017278,
+      "duration_seconds": 0.0158982,
       "failure_text": "",
       "file_source": "junit_verify.xml",
       "name": "test-images",
@@ -647,7 +658,7 @@
     },
     {
       "classname": "verify",
-      "duration_seconds": 19.1347,
+      "duration_seconds": 18.2871,
       "failure_text": "",
       "file_source": "junit_verify.xml",
       "name": "testing-import",
@@ -660,7 +671,7 @@
     },
     {
       "classname": "verify",
-      "duration_seconds": 2.61328,
+      "duration_seconds": 2.56008,
       "failure_text": "",
       "file_source": "junit_verify.xml",
       "name": "flags-underscore",
@@ -673,7 +684,7 @@
     },
     {
       "classname": "verify",
-      "duration_seconds": 16.2127,
+      "duration_seconds": 17.1867,
       "failure_text": "",
       "file_source": "junit_verify.xml",
       "name": "codegen",
@@ -686,7 +697,7 @@
     },
     {
       "classname": "verify",
-      "duration_seconds": 59.7297,
+      "duration_seconds": 60.4281,
       "failure_text": "",
       "file_source": "junit_verify.xml",
       "name": "codegen",
@@ -699,7 +710,7 @@
     },
     {
       "classname": "verify",
-      "duration_seconds": 15.2838,
+      "duration_seconds": 13.8816,
       "failure_text": "",
       "file_source": "junit_verify.xml",
       "name": "codegen",
@@ -712,7 +723,7 @@
     },
     {
       "classname": "verify",
-      "duration_seconds": 7.69831,
+      "duration_seconds": 7.13185,
       "failure_text": "",
       "file_source": "junit_verify.xml",
       "name": "codegen",
@@ -725,7 +736,7 @@
     },
     {
       "classname": "verify",
-      "duration_seconds": 13.0221,
+      "duration_seconds": 12.4152,
       "failure_text": "",
       "file_source": "junit_verify.xml",
       "name": "codegen",
@@ -738,7 +749,7 @@
     },
     {
       "classname": "verify",
-      "duration_seconds": 11.3802,
+      "duration_seconds": 10.7903,
       "failure_text": "",
       "file_source": "junit_verify.xml",
       "name": "codegen",
