@@ -65,36 +65,59 @@
     "schema_version": 1,
     "started_at": "2026-04-27T18:36:47Z",
     "upstream_comparison": {
-      "inventory_parity_status": "extra-local-tests",
+      "inventory_parity_status": "mismatch",
       "junit_files": [
-        "pr-logs/pull/137767/pull-kubernetes-unit/2048463739732103168/artifacts/junit_20260426-180719.xml"
+        "pr-logs/pull/138620/pull-kubernetes-unit/2049008282969837568/artifacts/junit_20260428-061056.xml"
       ],
-      "local_only_count": 2,
+      "local_only_count": 8,
       "local_only_sample": [
+        "[sig-api-machinery] k8s.io/code-generator/cmd/validation-gen/output_tests/tags::options",
+        "[sig-testing] k8s.io/kubernetes/test/e2e/framework::testfiles",
+        "[sig-testing] k8s.io/kubernetes/test/e2e::invariants",
         "[sig-testing] k8s.io/kubernetes/test/utils/client-go::ktesting",
-        "[sig-testing] k8s.io/kubernetes/test/utils/ktesting::format"
+        "[sig-testing] k8s.io/kubernetes/test/utils/ktesting/internal::synctestinit",
+        "[sig-testing] k8s.io/kubernetes/test/utils/ktesting::format",
+        "[sig-testing] k8s.io/kubernetes/test/utils::image",
+        "[sig-testing] k8s.io/kubernetes/test/utils::ktesting"
       ],
       "local_test_count": 1363,
       "reference_job_name": "pull-kubernetes-unit",
-      "reference_kubernetes_base_sha": "e9b95827ebf963f7bab0a1a8ddd90e408858c892",
+      "reference_kubernetes_base_sha": "a894d690aba7c9ccb0c8e522d97ac3333b57198f",
       "reference_matches_kubernetes_sha": false,
-      "reference_pr_number": 137767,
-      "reference_pr_updated_at": "2026-04-28T06:21:55Z",
-      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/137767/pull-kubernetes-unit/2048463739732103168",
+      "reference_pr_number": 138620,
+      "reference_pr_updated_at": "2026-04-28T06:44:59Z",
+      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/138620/pull-kubernetes-unit/2049008282969837568",
       "reference_selection": "recent-success",
-      "reference_started_at": "2026-04-26T18:26:58Z",
+      "reference_started_at": "2026-04-28T06:30:19Z",
       "reference_started_json": {
-        "pull": "137767",
-        "repo-commit": "19ed501e47ee6502c786f041154e89a6ccf29c37",
-        "repo-version": "19ed501e47ee6502c786f041154e89a6ccf29c37",
+        "pull": "138620",
+        "repo-commit": "7f60c5db5397a6ad2c7f345c98ef97bb7d0c7619",
+        "repo-version": "7f60c5db5397a6ad2c7f345c98ef97bb7d0c7619",
         "repos": {
-          "kubernetes/kubernetes": "master:e9b95827ebf963f7bab0a1a8ddd90e408858c892,137767:953bbf0b57b15cc7f504274f8e5e35d05b928839"
+          "kubernetes/kubernetes": "master:a894d690aba7c9ccb0c8e522d97ac3333b57198f,138620:e482039186fc3a9711b934187be2a42570d7ce60"
         },
-        "timestamp": 1777226818
+        "timestamp": 1777356649
       },
-      "upstream_only_count": 0,
-      "upstream_only_sample": [],
-      "upstream_test_count": 1361
+      "upstream_only_count": 16,
+      "upstream_only_sample": [
+        "[sig-api-machinery] k8s.io/code-generator/cmd/validation-gen/output_tests/tags/options::discriminators",
+        "[sig-api-machinery] k8s.io/code-generator/cmd/validation-gen/output_tests/tags/options::lists",
+        "[sig-api-machinery] k8s.io/code-generator/cmd/validation-gen/output_tests/tags/options::maps",
+        "[sig-api-machinery] k8s.io/code-generator/cmd/validation-gen/output_tests/tags/options::simple",
+        "[sig-api-machinery] k8s.io/code-generator/cmd/validation-gen/output_tests/tags/options::subfields",
+        "[sig-api-machinery] k8s.io/code-generator/cmd/validation-gen/output_tests/tags/options::unions",
+        "[sig-api-machinery] k8s.io/code-generator/cmd/validation-gen/output_tests/tags/options::update",
+        "[sig-api-machinery] k8s.io/code-generator/cmd/validation-gen/output_tests/tags/subfield::list",
+        "[sig-api-machinery] k8s.io/code-generator/cmd/validation-gen/output_tests/tags/subfield::unions",
+        "[sig-testing] k8s.io/kubernetes/test/e2e/invariants::metrics",
+        "k8s.io/kubernetes/testutils/client-go::ktesting",
+        "k8s.io/kubernetes/testutils/ktesting/internal::synctestinit",
+        "k8s.io/kubernetes/testutils/ktesting::format",
+        "k8s.io/kubernetes/testutils::image",
+        "k8s.io/kubernetes/testutils::ktesting",
+        "k8s.io/kubernetes/testutils::testfiles"
+      ],
+      "upstream_test_count": 1371
     },
     "upstream_testgrid_url": "https://testgrid.k8s.io/presubmits-kubernetes-blocking#pull-kubernetes-unit",
     "workflow_file": ".github/workflows/unit.yml",
