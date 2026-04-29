@@ -7,6 +7,18 @@ are applied by the `setup-kubernetes` action via `git am --3way`.
 Patches are numbered sequentially; gaps mean a patch was retired after the fix
 merged upstream and was dropped here.
 
+## Required fields for each patch entry
+
+Every new patch entry must include:
+
+- **Failing tests** — exact test function name(s) and package path
+- **Observed in** — which CI job (`Integration Tests`, `Unit Tests`, etc.) AND which remote (`NVIDIA-dev/test-k8s`, `dims/test-k8s`, or both), including the commit SHA where it was first seen
+- **Symptom** — what the log shows (error message, duration, stack fragment)
+- **Fix** — what changed and why
+- **Upstream status** — open issue / PR link if one exists, or "local workaround"
+
+If a patch is updated (e.g. a threshold is raised), add a **Change history** table recording: when, what triggered the change, which remote showed the failure, the triggering commit SHA, and what changed.
+
 ---
 
 ## Patch catalogue
@@ -14,19 +26,24 @@ merged upstream and was dropped here.
 ### 0001 — test/integration: give apiserver startup more room in CI
 
 **File:** `0001-test-integration-give-apiserver-startup-more-room-in.patch`  
-**Observed in:** Integration Tests — both `NVIDIA-dev/test-k8s` and `dims/test-k8s`  
-**Failing tests:** `Test4xxStatusCodeInvalidPatch`, `TestClientCAUpdate` (and others in `test/integration/apiserver/`)  
-**Symptom:** Tests time out at ~31-35 s while the embedded kube-apiserver is still running the `rbac/bootstrap-roles` post-start hook. The framework hits its hard startup deadline before the server is healthy.  
-**Fix:** Raise the apiserver startup health-check budget from 10 s (upstream) to 120 s. On 32-vCPU runners many packages start simultaneously, each launching its own kube-apiserver against a shared etcd; RBAC bootstrap contention can push startup to ~56 s, exceeding the prior 60 s ceiling.  
-**Upstream status:** Local workaround; not upstreamed (timeout is environment-specific).  
-**History:** Originally raised to 60 s; increased to 120 s after cpu32 runs showed startup taking ~56 s under heavy parallelism.
+**Failing tests:** `Test4xxStatusCodeInvalidPatch`, `TestClientCAUpdate`, `TestInsecurePodLogs`, `TestSubjectAccessReview`, `TestAdmission`, `TestOneNodeDaemonLaunchesPod`, and others in `test/integration/apiserver/`, `test/integration/auth/`, `test/integration/daemonset/`, `test/integration/admission/`  
+**Symptom:** Tests fail with `timed out waiting for the condition` in `test_server.go` after exactly the startup budget elapses. The kube-apiserver starts successfully but the `rbac/bootstrap-roles` post-start hook is still running when the health-check poll times out. Each test package starts its own apiserver against a shared etcd; under heavy parallelism, RBAC bootstrap can take 50–56 s.  
+**Fix:** Raise the health-check poll budget in `StartTestServer` from 10 s (upstream default) to 120 s.  
+**Upstream status:** Local workaround; not upstreamed (timeout is environment-specific).
+
+**Change history:**
+
+| When | Trigger | Remote | Commit | Change |
+|------|---------|--------|--------|--------|
+| Mar 2026 | Failures at ~31-35 s on cpu16 runners | `NVIDIA-dev` + `dims` | `243b075e` wave | 10 s → 60 s |
+| Apr 2026 | Failures at ~61 s on cpu32 runners (commits `a369ed79`, `91f0a706`) after runner upgrade; `dims` was green | `NVIDIA-dev` only | `9a0bb3d4` | 60 s → 120 s |
 
 ---
 
 ### 0005 — test/e2e: relax PLR convergence checks after resize
 
 **File:** `0005-test-e2e-wait-for-pod-resize-conditions-to-settle.patch`  
-**Observed in:** E2E (kind, alpha-beta-features) — `dims/test-k8s` and `NVIDIA-dev/test-k8s`  
+**Observed in:** E2E (kind, alpha-beta-features) — `dims/test-k8s` (4-vCPU ubuntu-24.04) and `NVIDIA-dev/test-k8s` (cpu16 era, pre-`d85809` runner upgrade)  
 **Failing tests:** Pod-level-resources (PLR) in-place resize suite (`test/e2e/common/node/pod_resize.go`)  
 **Symptom:** `ExpectPodResized` required `PodResizeInProgress` / `PodResizePending` to already be gone and restart counts to be exact. In practice, both signals lag or overshoot after resource convergence — a failing run had `restartCount 2` where the test expected `1`.  
 **Fix:** Treat resize conditions as best-effort diagnostics and treat expected restarts as a lower bound (preserving the exact-zero invariant for no-restart cases).  
@@ -37,7 +54,7 @@ merged upstream and was dropped here.
 ### 0011 — test/e2e: make PLR pod-level-only restart expectations optional
 
 **File:** `0011-test-e2e-make-PLR-pod-level-only-restart-expectation.patch`  
-**Observed in:** E2E (kind, alpha-beta-features) — both remotes  
+**Observed in:** E2E (kind, alpha-beta-features) — `dims/test-k8s` and `NVIDIA-dev/test-k8s` (cpu16 era, pre-`d85809` runner upgrade)  
 **Failing tests:** PLR pod-level-only resize scenarios in `test/e2e/common/node/pod_level_resources_resize.go`  
 **Symptom:** After patch 0005, the inverse failure appeared: pod-level-only limit changes converged with `restartCount 0` on both remotes, while the test still required `restartCount 1`. The kubelet's restart behaviour for pod-level-only limit changes is not stable across CI environments.  
 **Fix:** Added `RestartCountFlexible` field to `ResizableContainerInfo`; pod-level-only limit changes under `RestartContainer` policy now accept either 0 or 1 extra restart. Container-specific resource changes still require exactly 1 restart.  
@@ -48,7 +65,7 @@ merged upstream and was dropped here.
 ### 0012 — test/integration/dra: avoid duplicate sequential sharing stress
 
 **File:** `0012-test-integration-dra-avoid-duplicate-sequential-sh.patch`  
-**Observed in:** Integration Tests — both remotes (wall-time concern)  
+**Observed in:** Integration Tests — `dims/test-k8s` and `NVIDIA-dev/test-k8s` (cpu16 era, pre-`d85809`); wall-time concern, not a hard failure  
 **Failing tests:** None (no failure; this reduces test wall time)  
 **Symptom:** `TestDRA` was running `ShareResourceClaimSequentially` in both the `GA` and `all` configurations. The duplicate added significant package wall time on slower CI runners without testing any additional behaviour.  
 **Fix:** Remove the `ShareResourceClaimSequentially` call from the `GA` configuration; keep it only in `all`.  
@@ -59,7 +76,7 @@ merged upstream and was dropped here.
 ### 0014 — test/integration/apiserver: poll schema activation in CRD validator test
 
 **File:** `0014-test-integration-apiserver-poll-schema-activation-i.patch`  
-**Observed in:** Integration Tests — both remotes  
+**Observed in:** Integration Tests — `dims/test-k8s` and `NVIDIA-dev/test-k8s` (cpu16 era, pre-`d85809`)  
 **Failing tests:** `TestCustomResourceValidatorsWithSchemaConversion` in `test/integration/apiserver/`  
 **Symptom:** After updating a CRD schema, the test immediately updated an existing CR expecting the new CEL validation error. Schema propagation is asynchronous, so the update raced the new schema and produced no error, causing the test to fail intermittently.  
 **Fix:** Poll the CR update until the expected validation error appears, making the test wait for schema activation.  
@@ -70,7 +87,7 @@ merged upstream and was dropped here.
 ### 0015 — pkg/controller: deep copy spec in FakePodControl.CreatePodsWithGenerateName
 
 **File:** `0015-pkg-controller-deep-copy-spec-in-FakePodControl-Cre.patch`  
-**Observed in:** Unit Tests (with `-race`) — both remotes  
+**Observed in:** Unit Tests (with `-race`) — `dims/test-k8s` and `NVIDIA-dev/test-k8s` (cpu16 era, pre-`d85809`)  
 **Failing tests:** `TestExpectationsOnRecreate` in `pkg/controller/replicaset/`  
 **Symptom:** `FakePodControl.CreatePodsWithGenerateName` modified `spec.GenerateName` on the caller's pointer before appending to `f.Templates`. When the informer mutation detector ran `reflect.DeepEqual` on the same cached `ReplicaSet` template spec concurrently, the data race was detected under `-race`.  
 **Fix:** Deep-copy `spec` before setting `GenerateName` so the original cached object is never mutated.  
@@ -81,7 +98,7 @@ merged upstream and was dropped here.
 ### 0016 — pkg/kubelet/volumemanager: fix flaky TestWaitForAllPodsUnmount on slow CI runners
 
 **File:** `0016-pkg-kubelet-volumemanager-fix-flaky-TestWaitForAllPo.patch`  
-**Observed in:** Unit Tests — both remotes  
+**Observed in:** Unit Tests — `dims/test-k8s` and `NVIDIA-dev/test-k8s` (cpu16 era, pre-`d85809`)  
 **Failing tests:** `TestWaitForAllPodsUnmount` (20-pod subtest) in `pkg/kubelet/volumemanager/`  
 **Symptom:** Each subtest called `ktesting.Init(t)` which draws down the shared `-timeout=180s` package budget. On slow runners, earlier subtests (1-pod, 10-pod) consumed enough of the budget that the 20-pod subtest had under two minutes left for `WaitForAttachAndMount`, causing a spurious context-deadline failure before the actual assertion.  
 **Fix:** Use a dedicated 3-minute context for the attach-and-mount setup goroutines with `defer attachCancel()` for cleanup.  
@@ -92,7 +109,7 @@ merged upstream and was dropped here.
 ### 0017 — test/integration/scheduler/podgroup: fix flaky TestPostFilterInvocationCount
 
 **File:** `0017-test-integration-scheduler-podgroup-fix-flaky-TestP.patch`  
-**Observed in:** Integration Tests — both remotes  
+**Observed in:** Integration Tests — `dims/test-k8s` and `NVIDIA-dev/test-k8s` (cpu16 era, pre-`d85809`)  
 **Failing tests:** `TestPostFilterInvocationCount` in `test/integration/scheduler/podgroup/`  
 **Symptom:** The test polled for `mockPlugin.count == 3` (exactly). With zero backoff configured, the scheduler retried unscheduled pods immediately. On slow runners, the count had already advanced past 3 before the first 100 ms poll fired, so the `== 3` condition never matched and the test timed out.  
 **Fix:** Change the poll condition to `>= 3` so it succeeds as soon as at least one call per pod-group pod has been observed.  
@@ -103,7 +120,7 @@ merged upstream and was dropped here.
 ### 0018 — test/integration/garbagecollector: fix flaky TestCascadingDeleteOnCRDConversionFailure
 
 **File:** `0018-test-integration-garbagecollector-fix-flaky-TestCas.patch`  
-**Observed in:** Integration Tests — `dims/test-k8s` (4-vCPU ubuntu-24.04 runner)  
+**Observed in:** Integration Tests — `dims/test-k8s` (4-vCPU ubuntu-24.04 runner); first seen on commit `d85809d6` (runner upgrade wave)  
 **Failing tests:** `TestCascadingDeleteOnCRDConversionFailure` in `test/integration/garbagecollector/`  
 **Symptom:** The server-side watch cache for a bad CRD oscillates between failing and briefly recovering. If the metadata informer's initial LIST coincides with a recovery window, `HasSynced()` becomes permanently `true` (one-way latch in client-go). The final `IsSynced()` assertion then fails the test even though the primary behaviour (cascading delete despite bad webhook) worked correctly.  
 **Fix:** (1) Replace fixed sleep with a poll to give slow runners enough time to observe the unsynced state. (2) Demote the final `IsSynced()` check from `t.Fatal` to `t.Log` since it is inherently non-deterministic.  
@@ -114,7 +131,7 @@ merged upstream and was dropped here.
 ### 0019 — test/e2e_node: raise container_threads_max bound for large-memory nodes
 
 **File:** `0019-test-e2e_node-raise-container_threads_max-bound-for-.patch`  
-**Observed in:** Node E2E — `NVIDIA-dev/test-k8s` (self-hosted runner: `linux-amd64-cpu32` = m7i.8xlarge, 32 vCPU / 128 GB RAM)  
+**Observed in:** Node E2E — `NVIDIA-dev/test-k8s` only; runner `linux-amd64-cpu32` (m7i.8xlarge, 32 vCPU / 128 GB RAM); first seen on commit `d85809d6` (first cpu32 run after runner upgrade)  
 **Failing tests:** `ContainerMetrics should report container metrics` in `test/e2e_node/container_metrics_test.go`  
 **Symptom:** The `container_threads_max` cAdvisor metric reports the kernel thread limit (`/proc/sys/kernel/threads-max`), which the kernel derives from available RAM when no cgroup `pids.max` limit is set. On the 128 GiB runner this limit is ~152,051, exceeding the old upper bound of 100,000.  
 **Fix:** Raise the upper bound from 100,000 to 1,000,000 (covers nodes up to ~1 TiB RAM). Follows the precedent of upstream commit `a75cd2e0f47`.  
@@ -125,7 +142,7 @@ merged upstream and was dropped here.
 ### 0020 — test/integration/apiserver: raise per-resource admission throughput limit
 
 **File:** `0020-test-integration-apiserver-raise-per-resource-admis.patch`  
-**Observed in:** Integration Tests — `NVIDIA-dev/test-k8s` (cpu32 runner, after runner upgrade from cpu16 to cpu32)  
+**Observed in:** Integration Tests — `NVIDIA-dev/test-k8s` only; runner `linux-amd64-cpu32` (m7i.8xlarge); consistently failed on commits `d85809d6` and `00ad7fa32` (first two cpu32 runs); `dims` was not affected (4-vCPU ubuntu-24.04 runs fewer packages in parallel)  
 **Failing tests:** `TestWebhookAdmissionWithWatchCache` and `TestPolicyAdmissionV1beta1` in `test/integration/apiserver/admissionwebhook/` and `test/integration/apiserver/cel/`  
 **Symptom:** Both tests assert that admission webhook operations average < 150 ms per resource. The 150 ms ceiling was set in 2019 (commit `e9bb667bf77`) for dedicated GCP Prow VMs. On the 32-vCPU m7i.8xlarge runner more packages run in parallel, increasing shared-resource (etcd, kube-apiserver) contention. Individual delete operations take 1–7 s each (especially `configmaps`, `endpoints`, `events`), pushing the average to 164–170 ms. The tests ran with `--runtime-config=api/all=true` (~590 resource+verb combinations), amplifying the effect.  
 **Fix:** Raise the ceiling from 150 ms to 500 ms in both files. This still catches catastrophic rate-limiting (the original concern — from `e9bb667bf77`) while tolerating normal load variation across CI environments.  
@@ -136,7 +153,7 @@ merged upstream and was dropped here.
 ### 0021 — pkg/kubelet/cm/dra: raise gRPC client timeout in should-timeout tests
 
 **File:** `0021-pkg-kubelet-cm-dra-raise-gRPC-client-timeout-in-sho.patch`  
-**Observed in:** Unit Tests — `NVIDIA-dev/test-k8s` (cpu32 runner, intermittent)  
+**Observed in:** Unit Tests — `NVIDIA-dev/test-k8s` only; runner `linux-amd64-cpu32` (m7i.8xlarge); seen intermittently on commit `00ad7fa32` (passed on `d85809d6`, failed on second run); `dims` was not affected  
 **Failing tests:** `TestUnprepareResources/should_timeout` (and the equivalent in `TestPrepareResources`) in `pkg/kubelet/cm/dra/manager_test.go`  
 **Symptom:** The "should timeout" test case configures a 20 ms gRPC client deadline (server sleeps 40 ms). The test asserts `unprepareResourceCalls == 1`, meaning the server must have received the RPC before the deadline fires. On a heavily loaded 32-core machine, gRPC connection setup or goroutine scheduling can itself exceed 20 ms, so the `DeadlineExceeded` fires before the server handler even starts — leaving the call counter at 0. The 20 ms value was introduced in commit `10b6319e64b` ("fix slow dra unit test") to speed up the test; it proved too tight on cpu32.  
 **Fix:** Raise the client timeout from 20 ms to 200 ms (server sleep correspondingly stays 2× = 400 ms). The timeout path is still exercised; the deadline simply allows enough scheduling headroom.  
