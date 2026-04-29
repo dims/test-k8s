@@ -158,3 +158,14 @@ If a patch is updated (e.g. a threshold is raised), add a **Change history** tab
 **Symptom:** The "should timeout" test case configures a 20 ms gRPC client deadline (server sleeps 40 ms). The test asserts `unprepareResourceCalls == 1`, meaning the server must have received the RPC before the deadline fires. On a heavily loaded 32-core machine, gRPC connection setup or goroutine scheduling can itself exceed 20 ms, so the `DeadlineExceeded` fires before the server handler even starts — leaving the call counter at 0. The 20 ms value was introduced in commit `10b6319e64b` ("fix slow dra unit test") to speed up the test; it proved too tight on cpu32.  
 **Fix:** Raise the client timeout from 20 ms to 200 ms (server sleep correspondingly stays 2× = 400 ms). The timeout path is still exercised; the deadline simply allows enough scheduling headroom.  
 **Upstream status:** Local workaround. The value is environment-specific; a more robust fix would ensure the gRPC connection is pre-warmed before starting the timeout measurement.
+
+---
+
+### 0022 — cmd/kube-apiserver/app/testing: raise healthz poll budget to 120 s
+
+**File:** `0022-cmd-kube-apiserver-app-testing-raise-healthz-poll-b.patch`  
+**Observed in:** Integration Tests — `dims/test-k8s` (ubuntu-24.04) on commit `9a0bb3d4`; also expected to affect `NVIDIA-dev/test-k8s` cpu32 runs  
+**Failing tests:** `TestStructuredAuthenticationConfig/valid_config_no_conditions` in `test/integration/apiserver/anonymous/`; also packages `test/integration/apiserver/oidc`, `test/integration/certificates`, `test/integration/controlplane/transformation`, `test/integration/clustertrustbundles`  
+**Symptom:** `kubeapiservertesting.StartTestServerOrDie` uses a 60-second health-check poll (`wait.Poll(100ms, time.Minute, ...)`). On loaded CI runners where many packages start in parallel, RBAC bootstrap contention pushes apiserver startup past 60 s. The poll times out with `"failed to wait for /healthz to return ok: timed out waiting for the condition"`, failing tests at exactly ~61–62 s.  
+**Fix:** Raise the health-check budget in `cmd/kube-apiserver/app/testing/testserver.go` from `time.Minute` (60 s) to `120*time.Second`. This mirrors the identical fix applied to `test/integration/framework/test_server.go` in patch 0001.  
+**Upstream status:** Local workaround; the timeout is environment-specific.

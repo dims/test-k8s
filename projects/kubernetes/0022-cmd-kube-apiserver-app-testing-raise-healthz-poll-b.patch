@@ -1,0 +1,38 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Davanum Srinivas <davanum@gmail.com>
+Date: Wed, 29 Apr 2026 17:30:00 -0700
+Subject: [PATCH] cmd/kube-apiserver/app/testing: raise healthz poll budget to
+ 120 s
+
+The kube-apiserver app/testing StartTestServer was using time.Minute (60 s)
+as the healthz poll budget.  On 32-vCPU CI runners that start many packages
+in parallel, RBAC bootstrap contention can push apiserver startup past 60 s,
+causing kubeapiservertesting.StartTestServerOrDie to fail with
+"failed to wait for /healthz to return ok: timed out waiting for the
+condition" in tests like TestStructuredAuthenticationConfig,
+TestCustomResourceValidation, and others in apiserver/anonymous,
+apiserver/oidc, certificates, controlplane/transformation, and
+clustertrustbundles packages.
+
+Raise the budget to 120 s to match the same fix already applied to
+test/integration/framework/test_server.go (patch 0001).
+---
+ cmd/kube-apiserver/app/testing/testserver.go | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/cmd/kube-apiserver/app/testing/testserver.go b/cmd/kube-apiserver/app/testing/testserver.go
+index 7027f792f63..199e1d8e917 100644
+--- a/cmd/kube-apiserver/app/testing/testserver.go
++++ b/cmd/kube-apiserver/app/testing/testserver.go
+@@ -470,7 +470,7 @@ func StartTestServer(t ktesting.TB, instanceOptions *TestServerInstanceOptions,
+ 		t.Logf("Waiting for /healthz to be ok...")
+
+ 		// wait until healthz endpoint returns ok
+-		err = wait.Poll(100*time.Millisecond, time.Minute, func() (bool, error) {
++		err = wait.Poll(100*time.Millisecond, 120*time.Second, func() (bool, error) {
+ 			select {
+ 			case err := <-errCh:
+ 				return false, err
+--
+2.50.1
+
