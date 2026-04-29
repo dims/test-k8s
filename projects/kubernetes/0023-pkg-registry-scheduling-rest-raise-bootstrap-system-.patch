@@ -1,0 +1,39 @@
+From 35fe37c2d68d69df32f08e720b9321d285f99c7e Mon Sep 17 00:00:00 2001
+From: Davanum Srinivas <davanum@gmail.com>
+Date: Wed, 29 Apr 2026 14:45:10 -0700
+Subject: [PATCH] pkg/registry/scheduling/rest: raise
+ bootstrap-system-priority-classes poll budget to 120s
+
+On 32-vCPU CI runners, many integration test packages start their own
+apiserver in parallel, causing heavy etcd and storage version registration
+contention. The scheduling/bootstrap-system-priority-classes PostStartHook
+uses wait.Poll(1s, 30s) to retry PriorityClass creation while storage
+version registration is pending. Under contention, storage registration
+takes more than 30 s, the hook times out, the apiserver fatally exits, and
+tests like TestAPIServerTransportMetrics fail with:
+
+  PostStartHook scheduling/bootstrap-system-priority-classes failed:
+  unable to add default system priority classes: timed out waiting
+
+Raise the poll budget from 30s to 120s to match the approach used for the
+health-check probes in patches 0001 and 0022.
+---
+ pkg/registry/scheduling/rest/storage_scheduling.go | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/pkg/registry/scheduling/rest/storage_scheduling.go b/pkg/registry/scheduling/rest/storage_scheduling.go
+index 3e303bbaaea..9e1f8977026 100644
+--- a/pkg/registry/scheduling/rest/storage_scheduling.go
++++ b/pkg/registry/scheduling/rest/storage_scheduling.go
+@@ -121,7 +121,7 @@ func AddSystemPriorityClasses() genericapiserver.PostStartHookFunc {
+ 	return func(hookContext genericapiserver.PostStartHookContext) error {
+ 		// Adding system priority classes is important. If they fail to add, many critical system
+ 		// components may fail and cluster may break.
+-		err := wait.Poll(1*time.Second, 30*time.Second, func() (done bool, err error) {
++		err := wait.Poll(1*time.Second, 120*time.Second, func() (done bool, err error) {
+ 			schedClientSet, err := schedulingclient.NewForConfig(hookContext.LoopbackClientConfig)
+ 			if err != nil {
+ 				utilruntime.HandleError(fmt.Errorf("unable to initialize client: %v", err))
+--
+2.50.1
+

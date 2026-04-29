@@ -169,3 +169,14 @@ If a patch is updated (e.g. a threshold is raised), add a **Change history** tab
 **Symptom:** `kubeapiservertesting.StartTestServerOrDie` uses a 60-second health-check poll (`wait.Poll(100ms, time.Minute, ...)`). On loaded CI runners where many packages start in parallel, RBAC bootstrap contention pushes apiserver startup past 60 s. The poll times out with `"failed to wait for /healthz to return ok: timed out waiting for the condition"`, failing tests at exactly ~61–62 s.  
 **Fix:** Raise the health-check budget in `cmd/kube-apiserver/app/testing/testserver.go` from `time.Minute` (60 s) to `120*time.Second`. This mirrors the identical fix applied to `test/integration/framework/test_server.go` in patch 0001.  
 **Upstream status:** Local workaround; the timeout is environment-specific.
+
+---
+
+### 0023 — pkg/registry/scheduling/rest: raise bootstrap-system-priority-classes poll budget to 120 s
+
+**File:** `0023-pkg-registry-scheduling-rest-raise-bootstrap-system-.patch`  
+**Observed in:** Integration Tests — `NVIDIA-dev/test-k8s` only; runner `linux-amd64-cpu32` (m7i.8xlarge); seen on commits `1bb6995f` and `64d4a0c2` (two consecutive runs)  
+**Failing tests:** `TestAPIServerTransportMetrics` in `test/integration/client/metrics/`  
+**Symptom:** The `scheduling/bootstrap-system-priority-classes` PostStartHook in `pkg/registry/scheduling/rest/storage_scheduling.go` uses `wait.Poll(1s, 30s)` to retry `PriorityClass` creation while storage version registration completes. On 32-vCPU runners where many integration test packages start their own apiserver simultaneously, etcd and storage version registration contention causes repeated `ServiceUnavailable` errors. After 30 s the poll times out, the hook returns an error, the apiserver fatally exits with `"PostStartHook scheduling/bootstrap-system-priority-classes failed: unable to add default system priority classes: timed out waiting for the condition"`, and the test binary exits before reporting results.  
+**Fix:** Raise the poll budget from `30*time.Second` to `120*time.Second`. Consistent with the same approach applied to health-check probes in patches 0001 and 0022.  
+**Upstream status:** Local workaround; the threshold is environment-specific.
