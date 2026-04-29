@@ -1,0 +1,48 @@
+From 348bbe7c0195ea7e86d7750514f62dc7705d72cf Mon Sep 17 00:00:00 2001
+From: Davanum Srinivas <davanum@gmail.com>
+Date: Wed, 29 Apr 2026 11:44:13 -0700
+Subject: [PATCH] pkg/kubelet/cm/dra: raise gRPC client timeout in
+ should-timeout tests
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+TestPrepareResources/should_timeout and TestUnprepareResources/should_timeout
+use a 20 ms client timeout (server sleep = 40 ms).  On a heavily loaded
+32-vCPU machine the gRPC connection setup or goroutine scheduling alone can
+exceed 20 ms, so the DeadlineExceeded fires before the server handler even
+starts — leaving unprepareResourceCalls at 0 instead of 1 and causing a
+spurious test failure.
+
+Raise the client timeout to 200 ms (server sleep = 400 ms).  The test still
+exercises the timeout path; it just gives the OS enough time to schedule the
+server goroutine before the deadline fires.
+---
+ pkg/kubelet/cm/dra/manager_test.go | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/pkg/kubelet/cm/dra/manager_test.go b/pkg/kubelet/cm/dra/manager_test.go
+index 4863f5ae548..3b7cce51996 100644
+--- a/pkg/kubelet/cm/dra/manager_test.go
++++ b/pkg/kubelet/cm/dra/manager_test.go
+@@ -1193,7 +1193,7 @@ dra_operations_duration_seconds_count{is_error="false",operation_name="PrepareRe
+ 
+ 			var pluginClientTimeout *time.Duration
+ 			if test.wantTimeout {
+-				timeout := time.Millisecond * 20
++				timeout := time.Millisecond * 200
+ 				pluginClientTimeout = &timeout
+ 			}
+ 
+@@ -1501,7 +1501,7 @@ dra_operations_duration_seconds_count{is_error="false",operation_name="Unprepare
+ 
+ 			var pluginClientTimeout *time.Duration
+ 			if test.wantTimeout {
+-				timeout := time.Millisecond * 20
++				timeout := time.Millisecond * 200
+ 				pluginClientTimeout = &timeout
+ 			}
+ 
+-- 
+2.50.1
+
