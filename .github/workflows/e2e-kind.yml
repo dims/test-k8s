@@ -26,7 +26,7 @@ permissions:
 
 jobs:
   e2e-kind:
-    runs-on: ${{ github.repository == 'dims/test-k8s' && 'ubuntu-24.04' || 'linux-amd64-cpu16' }}
+    runs-on: ${{ github.repository == 'dims/test-k8s' && 'ubuntu-24.04' || 'linux-amd64-cpu32' }}
     timeout-minutes: 75
     env:
       ARTIFACTS: ${{ github.workspace }}/_artifacts

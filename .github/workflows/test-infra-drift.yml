@@ -40,7 +40,7 @@ permissions:
 
 jobs:
   drift:
-    runs-on: ${{ github.repository == 'dims/test-k8s' && 'ubuntu-24.04' || 'linux-amd64-cpu8' }}
+    runs-on: ${{ github.repository == 'dims/test-k8s' && 'ubuntu-24.04' || 'linux-amd64-cpu32' }}
     timeout-minutes: 20
     env:
       ARTIFACTS: ${{ github.workspace }}/_artifacts
