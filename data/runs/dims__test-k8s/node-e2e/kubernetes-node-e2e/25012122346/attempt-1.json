@@ -65,10 +65,10 @@
     "schema_version": 1,
     "started_at": "2026-04-27T18:21:01Z",
     "upstream_comparison": {
-      "inventory_parity_status": "match",
+      "inventory_parity_status": "missing-local-tests",
       "junit_files": [
-        "pr-logs/pull/138645/pull-kubernetes-node-e2e-containerd/2049161047662661632/artifacts/junit_cos01.xml",
-        "pr-logs/pull/138645/pull-kubernetes-node-e2e-containerd/2049161047662661632/artifacts/junit_ubuntu01.xml"
+        "pr-logs/pull/129719/pull-kubernetes-node-e2e-containerd/2049104140528783360/artifacts/junit_cos01.xml",
+        "pr-logs/pull/129719/pull-kubernetes-node-e2e-containerd/2049104140528783360/artifacts/junit_ubuntu01.xml"
       ],
       "local_only_count": 0,
       "local_only_sample": [],
@@ -76,24 +76,45 @@
       "reference_job_name": "pull-kubernetes-node-e2e-containerd",
       "reference_kubernetes_base_sha": "9df1be6658366af8427ad1f8632f56ce70e47c08",
       "reference_matches_kubernetes_sha": false,
-      "reference_pr_number": 138645,
-      "reference_pr_updated_at": "2026-04-29T01:53:41Z",
-      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/138645/pull-kubernetes-node-e2e-containerd/2049161047662661632",
+      "reference_pr_number": 129719,
+      "reference_pr_updated_at": "2026-04-29T03:01:31Z",
+      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/129719/pull-kubernetes-node-e2e-containerd/2049104140528783360",
       "reference_selection": "recent-success",
-      "reference_started_at": "2026-04-28T16:53:37Z",
+      "reference_started_at": "2026-04-28T13:08:58Z",
       "reference_started_json": {
-        "pull": "138645",
-        "repo-commit": "f7af114aa53284623ad7392c735197faef5e28d5",
-        "repo-version": "f7af114aa53284623ad7392c735197faef5e28d5",
+        "pull": "129719",
+        "repo-commit": "48548edab27730ac207dbc4495a1af8824779d01",
+        "repo-version": "48548edab27730ac207dbc4495a1af8824779d01",
         "repos": {
-          "kubernetes/kubernetes": "master:9df1be6658366af8427ad1f8632f56ce70e47c08,138645:fae73cfbfdf132aaaee4abd7705d600e35b79e98",
+          "kubernetes/kubernetes": "master:9df1be6658366af8427ad1f8632f56ce70e47c08,129719:0968fcf1deb046d7b247c13b656481e4a94531ee",
           "kubernetes/test-infra": "master"
         },
-        "timestamp": 1777393167
+        "timestamp": 1777379502
       },
-      "upstream_only_count": 0,
-      "upstream_only_sample": [],
-      "upstream_test_count": 1203
+      "upstream_only_count": 36,
+      "upstream_only_sample": [
+        "E2eNode Suite::CPU Manager with InPlacePodVerticalScalingExclusiveCPUs disabled [Feature:CPUManager] [Feature:InPlacePodVerticalScaling] [Feature:InPlacePodVerticalScalingExclusiveCPUs] [FeatureGate:InPlacePodVerticalScaling] [FeatureGate:InPlacePodVerticalScalingExclusiveCPUs] when resizing a Guaranteed QoS single container pod with integer CPU requests neither should increase the CPU request/limit nor decrease the memory request/limit, within available capacity",
+        "E2eNode Suite::CPU Manager with InPlacePodVerticalScalingExclusiveCPUs disabled [Feature:CPUManager] [Feature:InPlacePodVerticalScaling] [Feature:InPlacePodVerticalScalingExclusiveCPUs] [FeatureGate:InPlacePodVerticalScaling] [FeatureGate:InPlacePodVerticalScalingExclusiveCPUs] when resizing a Guaranteed QoS single container pod with integer CPU requests neither should increase the CPU request/limit nor increase the memory request/limit, within available capacity",
+        "E2eNode Suite::CPU Manager with InPlacePodVerticalScalingExclusiveCPUs disabled [Feature:CPUManager] [Feature:InPlacePodVerticalScaling] [Feature:InPlacePodVerticalScalingExclusiveCPUs] [FeatureGate:InPlacePodVerticalScaling] [FeatureGate:InPlacePodVerticalScalingExclusiveCPUs] when resizing a Guaranteed QoS single container pod with integer CPU requests should not decrease the allocated exclusively CPUs below promised cpuset",
+        "E2eNode Suite::CPU Manager with InPlacePodVerticalScalingExclusiveCPUs disabled [Feature:CPUManager] [Feature:InPlacePodVerticalScaling] [Feature:InPlacePodVerticalScalingExclusiveCPUs] [FeatureGate:InPlacePodVerticalScaling] [FeatureGate:InPlacePodVerticalScalingExclusiveCPUs] when resizing a Guaranteed QoS single container pod with integer CPU requests should not increase the exclusively CPUs, within available capacity",
+        "E2eNode Suite::CPU Manager with InPlacePodVerticalScalingExclusiveCPUs enabled [Feature:CPUManager] [Feature:InPlacePodVerticalScaling] [Feature:InPlacePodVerticalScalingExclusiveCPUs] [FeatureGate:InPlacePodVerticalScaling] [FeatureGate:InPlacePodVerticalScalingExclusiveCPUs] when resizing a Burstable single container Pod should decrease the CPU limit only",
+        "E2eNode Suite::CPU Manager with InPlacePodVerticalScalingExclusiveCPUs enabled [Feature:CPUManager] [Feature:InPlacePodVerticalScaling] [Feature:InPlacePodVerticalScalingExclusiveCPUs] [FeatureGate:InPlacePodVerticalScaling] [FeatureGate:InPlacePodVerticalScalingExclusiveCPUs] when resizing a Burstable single container Pod should decrease the CPU request and increase the CPU limit",
+        "E2eNode Suite::CPU Manager with InPlacePodVerticalScalingExclusiveCPUs enabled [Feature:CPUManager] [Feature:InPlacePodVerticalScaling] [Feature:InPlacePodVerticalScalingExclusiveCPUs] [FeatureGate:InPlacePodVerticalScaling] [FeatureGate:InPlacePodVerticalScalingExclusiveCPUs] when resizing a Burstable single container Pod should decrease the CPU request and increase the memory limit",
+        "E2eNode Suite::CPU Manager with InPlacePodVerticalScalingExclusiveCPUs enabled [Feature:CPUManager] [Feature:InPlacePodVerticalScaling] [Feature:InPlacePodVerticalScalingExclusiveCPUs] [FeatureGate:InPlacePodVerticalScaling] [FeatureGate:InPlacePodVerticalScalingExclusiveCPUs] when resizing a Burstable single container Pod should decrease the CPU request only",
+        "E2eNode Suite::CPU Manager with InPlacePodVerticalScalingExclusiveCPUs enabled [Feature:CPUManager] [Feature:InPlacePodVerticalScaling] [Feature:InPlacePodVerticalScalingExclusiveCPUs] [FeatureGate:InPlacePodVerticalScaling] [FeatureGate:InPlacePodVerticalScalingExclusiveCPUs] when resizing a Burstable single container Pod should decrease the CPU request/limit",
+        "E2eNode Suite::CPU Manager with InPlacePodVerticalScalingExclusiveCPUs enabled [Feature:CPUManager] [Feature:InPlacePodVerticalScaling] [Feature:InPlacePodVerticalScalingExclusiveCPUs] [FeatureGate:InPlacePodVerticalScaling] [FeatureGate:InPlacePodVerticalScalingExclusiveCPUs] when resizing a Burstable single container Pod should decrease the CPU request/limit and the memory request/limit, within available capacity",
+        "E2eNode Suite::CPU Manager with InPlacePodVerticalScalingExclusiveCPUs enabled [Feature:CPUManager] [Feature:InPlacePodVerticalScaling] [Feature:InPlacePodVerticalScalingExclusiveCPUs] [FeatureGate:InPlacePodVerticalScaling] [FeatureGate:InPlacePodVerticalScalingExclusiveCPUs] when resizing a Burstable single container Pod should decrease the memory limit only",
+        "E2eNode Suite::CPU Manager with InPlacePodVerticalScalingExclusiveCPUs enabled [Feature:CPUManager] [Feature:InPlacePodVerticalScaling] [Feature:InPlacePodVerticalScalingExclusiveCPUs] [FeatureGate:InPlacePodVerticalScaling] [FeatureGate:InPlacePodVerticalScalingExclusiveCPUs] when resizing a Burstable single container Pod should decrease the memory request",
+        "E2eNode Suite::CPU Manager with InPlacePodVerticalScalingExclusiveCPUs enabled [Feature:CPUManager] [Feature:InPlacePodVerticalScaling] [Feature:InPlacePodVerticalScalingExclusiveCPUs] [FeatureGate:InPlacePodVerticalScaling] [FeatureGate:InPlacePodVerticalScalingExclusiveCPUs] when resizing a Burstable single container Pod should decrease the memory request and increase the CPU limit",
+        "E2eNode Suite::CPU Manager with InPlacePodVerticalScalingExclusiveCPUs enabled [Feature:CPUManager] [Feature:InPlacePodVerticalScaling] [Feature:InPlacePodVerticalScalingExclusiveCPUs] [FeatureGate:InPlacePodVerticalScaling] [FeatureGate:InPlacePodVerticalScalingExclusiveCPUs] when resizing a Burstable single container Pod should decrease the memory request and increase the memory limit",
+        "E2eNode Suite::CPU Manager with InPlacePodVerticalScalingExclusiveCPUs enabled [Feature:CPUManager] [Feature:InPlacePodVerticalScaling] [Feature:InPlacePodVerticalScalingExclusiveCPUs] [FeatureGate:InPlacePodVerticalScaling] [FeatureGate:InPlacePodVerticalScalingExclusiveCPUs] when resizing a Burstable single container Pod should decrease the memory request only",
+        "E2eNode Suite::CPU Manager with InPlacePodVerticalScalingExclusiveCPUs enabled [Feature:CPUManager] [Feature:InPlacePodVerticalScaling] [Feature:InPlacePodVerticalScalingExclusiveCPUs] [FeatureGate:InPlacePodVerticalScaling] [FeatureGate:InPlacePodVerticalScalingExclusiveCPUs] when resizing a Burstable single container Pod should decrease the memory request/limit",
+        "E2eNode Suite::CPU Manager with InPlacePodVerticalScalingExclusiveCPUs enabled [Feature:CPUManager] [Feature:InPlacePodVerticalScaling] [Feature:InPlacePodVerticalScalingExclusiveCPUs] [FeatureGate:InPlacePodVerticalScaling] [FeatureGate:InPlacePodVerticalScalingExclusiveCPUs] when resizing a Burstable single container Pod should increase the CPU limit only",
+        "E2eNode Suite::CPU Manager with InPlacePodVerticalScalingExclusiveCPUs enabled [Feature:CPUManager] [Feature:InPlacePodVerticalScaling] [Feature:InPlacePodVerticalScalingExclusiveCPUs] [FeatureGate:InPlacePodVerticalScaling] [FeatureGate:InPlacePodVerticalScalingExclusiveCPUs] when resizing a Burstable single container Pod should increase the CPU request and decrease the memory limit",
+        "E2eNode Suite::CPU Manager with InPlacePodVerticalScalingExclusiveCPUs enabled [Feature:CPUManager] [Feature:InPlacePodVerticalScaling] [Feature:InPlacePodVerticalScalingExclusiveCPUs] [FeatureGate:InPlacePodVerticalScaling] [FeatureGate:InPlacePodVerticalScalingExclusiveCPUs] when resizing a Burstable single container Pod should increase the CPU request and the decrease CPU limit",
+        "E2eNode Suite::CPU Manager with InPlacePodVerticalScalingExclusiveCPUs enabled [Feature:CPUManager] [Feature:InPlacePodVerticalScaling] [Feature:InPlacePodVerticalScalingExclusiveCPUs] [FeatureGate:InPlacePodVerticalScaling] [FeatureGate:InPlacePodVerticalScalingExclusiveCPUs] when resizing a Burstable single container Pod should increase the CPU request only"
+      ],
+      "upstream_test_count": 1239
     },
     "upstream_testgrid_url": "https://testgrid.k8s.io/presubmits-kubernetes-blocking#pull-kubernetes-node-e2e-containerd",
     "workflow_file": ".github/workflows/node-e2e.yml",
