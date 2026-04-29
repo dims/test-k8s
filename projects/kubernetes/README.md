@@ -17,8 +17,9 @@ merged upstream and was dropped here.
 **Observed in:** Integration Tests — both `NVIDIA-dev/test-k8s` and `dims/test-k8s`  
 **Failing tests:** `Test4xxStatusCodeInvalidPatch`, `TestClientCAUpdate` (and others in `test/integration/apiserver/`)  
 **Symptom:** Tests time out at ~31-35 s while the embedded kube-apiserver is still running the `rbac/bootstrap-roles` post-start hook. The framework hits its hard startup deadline before the server is healthy.  
-**Fix:** Raise the apiserver startup timeout from 30 s to 60 s in `StartTestServer`.  
-**Upstream status:** Local workaround; not upstreamed (timeout is environment-specific).
+**Fix:** Raise the apiserver startup health-check budget from 10 s (upstream) to 120 s. On 32-vCPU runners many packages start simultaneously, each launching its own kube-apiserver against a shared etcd; RBAC bootstrap contention can push startup to ~56 s, exceeding the prior 60 s ceiling.  
+**Upstream status:** Local workaround; not upstreamed (timeout is environment-specific).  
+**History:** Originally raised to 60 s; increased to 120 s after cpu32 runs showed startup taking ~56 s under heavy parallelism.
 
 ---
 

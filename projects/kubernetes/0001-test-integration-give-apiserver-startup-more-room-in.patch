@@ -1,7 +1,7 @@
-From c9f46bc5a88e49f2ab98fda00f5ca512085e4ec3 Mon Sep 17 00:00:00 2001
+From 34bd227dc89998a74ecd8a5bf4df013ee5951122 Mon Sep 17 00:00:00 2001
 From: Davanum Srinivas <davanum@gmail.com>
-Date: Sat, 14 Mar 2026 10:16:28 -0400
-Subject: [PATCH 1/5] test/integration: give apiserver startup more room in CI
+Date: Wed, 29 Apr 2026 13:17:36 -0700
+Subject: [PATCH] test/integration: give apiserver startup more room in CI
 
 Integration flakes on slower runners fail before the local test server
 ever becomes healthy. The embedded etcd/apiserver pair is still starting,
@@ -9,30 +9,29 @@ the health probe keeps seeing connection refused, and the framework hits
 the hard startup timeout in StartTestServer while RBAC bootstrap is still
 retrying.
 
-A 30s budget was still not enough on the self-hosted runner path: the
-failing jobs timed out at roughly 31-35 seconds in Test4xxStatusCodeInvalidPatch
-and TestClientCAUpdate with PostStartHook "rbac/bootstrap-roles" still
-waiting on the apiserver. Raise the startup budget to 60s so slow or
-contended environments do not fail before bootstrap finishes.
+On 32-vCPU runners many test packages start simultaneously, each
+launching its own kube-apiserver. Shared-etcd contention during the
+RBAC bootstrap (rbac/bootstrap-roles post-start hook) can push startup
+past 60 s. Raise the health-check budget to 120 s.
 ---
  test/integration/framework/test_server.go | 4 +++-
  1 file changed, 3 insertions(+), 1 deletion(-)
 
 diff --git a/test/integration/framework/test_server.go b/test/integration/framework/test_server.go
-index 8ce601f9ac1..8e18f43ee40 100644
+index eff7502d422..7cf3c850a51 100644
 --- a/test/integration/framework/test_server.go
 +++ b/test/integration/framework/test_server.go
-@@ -237,7 +237,9 @@ func StartTestServer(ctx context.Context, t testing.TB, setup TestServerSetup) (
+@@ -222,7 +222,9 @@ func StartTestServer(ctx context.Context, t testing.TB, setup TestServerSetup) (
  	kubeAPIServerClientConfig.ServerName = ""
  
  	// wait for health
 -	err = wait.PollImmediate(100*time.Millisecond, 10*time.Second, func() (done bool, err error) {
 +	// Allow slower environments more time to finish etcd/apiserver startup
 +	// before the integration framework gives up on the test server.
-+	err = wait.PollImmediate(100*time.Millisecond, 60*time.Second, func() (done bool, err error) {
++	err = wait.PollImmediate(100*time.Millisecond, 120*time.Second, func() (done bool, err error) {
  		select {
  		case err := <-errCh:
  			return false, err
 -- 
-2.50.1 (Apple Git-155)
+2.50.1
 
