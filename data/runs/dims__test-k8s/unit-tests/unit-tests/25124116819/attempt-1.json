@@ -65,17 +65,33 @@
     "schema_version": 1,
     "started_at": "2026-04-29T17:34:20Z",
     "upstream_comparison": {
-      "inventory_parity_status": "upstream-tests-missing",
+      "inventory_parity_status": "match",
+      "junit_files": [
+        "pr-logs/pull/137982/pull-kubernetes-unit/2049552217223991296/artifacts/junit_20260429-181557.xml"
+      ],
+      "local_only_count": 0,
+      "local_only_sample": [],
       "local_test_count": 1371,
       "reference_job_name": "pull-kubernetes-unit",
-      "reference_kubernetes_base_sha": null,
-      "reference_matches_kubernetes_sha": false,
-      "reference_pr_number": 136159,
-      "reference_pr_updated_at": "2026-04-30T05:10:00Z",
-      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/136159/pull-kubernetes-unit/2010386605302353920",
-      "reference_selection": "recent-success",
-      "reference_started_at": "2026-01-11T16:40:30Z",
-      "upstream_test_count": 0
+      "reference_kubernetes_base_sha": "4f969cc1223a7e1e0e0e5f4508bd5b64db956d02",
+      "reference_matches_kubernetes_sha": true,
+      "reference_pr_number": 137982,
+      "reference_pr_updated_at": "2026-04-30T05:48:06Z",
+      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/137982/pull-kubernetes-unit/2049552217223991296",
+      "reference_selection": "exact-kubernetes-sha",
+      "reference_started_at": "2026-04-29T18:35:17Z",
+      "reference_started_json": {
+        "pull": "137982",
+        "repo-commit": "c59ef10d355def4c73380a69de8152ee469cea92",
+        "repo-version": "c59ef10d355def4c73380a69de8152ee469cea92",
+        "repos": {
+          "kubernetes/kubernetes": "master:4f969cc1223a7e1e0e0e5f4508bd5b64db956d02,137982:877b6483803200d52a54dc2db53370788352367c"
+        },
+        "timestamp": 1777486537
+      },
+      "upstream_only_count": 0,
+      "upstream_only_sample": [],
+      "upstream_test_count": 1371
     },
     "upstream_testgrid_url": "https://testgrid.k8s.io/presubmits-kubernetes-blocking#pull-kubernetes-unit",
     "workflow_file": ".github/workflows/unit.yml",
