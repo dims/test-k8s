@@ -1,0 +1,27 @@
+From c1689141db20012c5dada20282718ff2e203d397 Mon Sep 17 00:00:00 2001
+From: Davanum Srinivas <davanum@gmail.com>
+Date: Wed, 29 Apr 2026 23:11:31 -0700
+Subject: [PATCH] test: retry on transient apiserver errors in
+ TestApplyCRDuringCRDFinalization
+
+Signed-off-by: Davanum Srinivas <davanum@gmail.com>
+---
+ .../test/integration/finalization_test.go                       | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/staging/src/k8s.io/apiextensions-apiserver/test/integration/finalization_test.go b/staging/src/k8s.io/apiextensions-apiserver/test/integration/finalization_test.go
+index a440b33284f..2b3d3ecf021 100644
+--- a/staging/src/k8s.io/apiextensions-apiserver/test/integration/finalization_test.go
++++ b/staging/src/k8s.io/apiextensions-apiserver/test/integration/finalization_test.go
+@@ -193,7 +193,7 @@ func TestApplyCRDuringCRDFinalization(t *testing.T) {
+ 	err = wait.PollUntilContextTimeout(t.Context(), 100*time.Millisecond, wait.ForeverTestTimeout, true, func(ctx context.Context) (bool, error) {
+ 		crd, err := apiExtensionClient.ApiextensionsV1().CustomResourceDefinitions().Get(ctx, noxuDefinition.Name, metav1.GetOptions{})
+ 		if err != nil {
+-			return false, err
++			return false, nil // retry on transient apiserver errors under load
+ 		}
+ 		return apiextensionshelpers.IsCRDConditionTrue(crd, apiextensionsv1.Terminating), nil
+ 	})
+-- 
+2.50.1
+

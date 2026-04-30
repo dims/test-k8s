@@ -191,3 +191,14 @@ If a patch is updated (e.g. a threshold is raised), add a **Change history** tab
 **Symptom:** After shutting down the KCM, the test polls for 10 s (with `return false, err` on any GET error) to confirm the leader-election lease holder is cleared. On a 32-vCPU runner under heavy parallel load the apiserver hits handler timeouts; the GET for the lease returns `context deadline exceeded` after the 10 s budget is fully consumed, and the poll propagates that error immediately instead of retrying, producing: `expected lease holder to be cleared after shutdown, but got "<nil>": Get "...": context deadline exceeded`.  
 **Fix:** Raise the poll budget from `10*time.Second` to `30*time.Second` and change `return false, err` to `return false, nil` so transient apiserver-overload errors are retried.  
 **Upstream status:** Local workaround; test added in March 2026 (commit `db60e61ac`) with no upstream fix yet.
+
+---
+
+### 0025 — test/integration/apiextensions: retry transient apiserver errors in TestApplyCRDuringCRDFinalization
+
+**File:** `0025-test-integration-apiextensions-retry-transient-err.patch`  
+**Observed in:** Integration Tests — `dims/test-k8s`; runner `ubuntu-24.04` (4-vCPU GitHub-hosted); first seen on commit `ac0ac2f70f5a` (run 25148174740)  
+**Failing tests:** `TestApplyCRDuringCRDFinalization` in `staging/src/k8s.io/apiextensions-apiserver/test/integration/`  
+**Symptom:** Apiserver returned `http: Handler timeout` for a PUT to CRD status under etcd contention. The `PollUntilContextTimeout` loop at line 193 used `return false, err`, propagating the transient GET error immediately and failing the test within ~3.84 s with: `timed out waiting for CRD Terminating condition to be set`.  
+**Fix:** Change `return false, err` to `return false, nil` so transient apiserver-overload errors are retried rather than propagated. The poll already uses `wait.ForeverTestTimeout` as its deadline so retrying is safe.  
+**Upstream status:** Related to GitHub issue [#137603](https://github.com/kubernetes/kubernetes/issues/137603). Upstream PR #135567 (merged 2026-01-14) added the wait loop but left `return false, err` in place. Local workaround until the upstream fix lands.
