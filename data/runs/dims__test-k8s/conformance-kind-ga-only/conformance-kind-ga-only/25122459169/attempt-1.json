@@ -65,33 +65,35 @@
     "schema_version": 1,
     "started_at": "2026-04-29T16:58:36Z",
     "upstream_comparison": {
-      "inventory_parity_status": "match",
+      "inventory_parity_status": "missing-local-tests",
       "junit_files": [
-        "pr-logs/pull/138694/pull-kubernetes-conformance-kind-ga-only-parallel/2049604445288796160/artifacts/junit_01.xml"
+        "pr-logs/pull/138443/pull-kubernetes-conformance-kind-ga-only-parallel/2049812674400751616/artifacts/junit_01.xml"
       ],
       "local_only_count": 0,
       "local_only_sample": [],
       "local_test_count": 7580,
       "reference_job_name": "pull-kubernetes-conformance-kind-ga-only-parallel",
-      "reference_kubernetes_base_sha": "33d5aafbf44131d711cf79aa725d19c7a13e10ac",
+      "reference_kubernetes_base_sha": "8c8e15db875b3da22ab8d077bf840ad589e6bcc4",
       "reference_matches_kubernetes_sha": false,
-      "reference_pr_number": 138694,
-      "reference_pr_updated_at": "2026-04-30T10:45:12Z",
-      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/138694/pull-kubernetes-conformance-kind-ga-only-parallel/2049604445288796160",
+      "reference_pr_number": 138443,
+      "reference_pr_updated_at": "2026-04-30T12:21:28Z",
+      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/138443/pull-kubernetes-conformance-kind-ga-only-parallel/2049812674400751616",
       "reference_selection": "recent-success",
-      "reference_started_at": "2026-04-29T21:57:46Z",
+      "reference_started_at": "2026-04-30T11:45:47Z",
       "reference_started_json": {
-        "pull": "138694",
-        "repo-commit": "e302c07138b7272f56cce664422270cfae8b638f",
-        "repo-version": "e302c07138b7272f56cce664422270cfae8b638f",
+        "pull": "138443",
+        "repo-commit": "e8ce1eaeeabbe297cb7d5e32c33921a76cf0e3bd",
+        "repo-version": "e8ce1eaeeabbe297cb7d5e32c33921a76cf0e3bd",
         "repos": {
-          "kubernetes/kubernetes": "master:33d5aafbf44131d711cf79aa725d19c7a13e10ac,138694:4f5680c09978fdad025a5bd1711bcf02c999660d"
+          "kubernetes/kubernetes": "master:8c8e15db875b3da22ab8d077bf840ad589e6bcc4,138443:1c0f595c8022b4d2381f4783a20e44bd9d12ba27"
         },
-        "timestamp": 1777498785
+        "timestamp": 1777548431
       },
-      "upstream_only_count": 0,
-      "upstream_only_sample": [],
-      "upstream_test_count": 7580
+      "upstream_only_count": 1,
+      "upstream_only_sample": [
+        "Kubernetes e2e suite::CRUD Tests resource.k8s.io/v1beta2 DeviceTaintRule"
+      ],
+      "upstream_test_count": 7581
     },
     "upstream_testgrid_url": "https://testgrid.k8s.io/presubmits-kubernetes-blocking#pull-kubernetes-conformance-kind-ga-only-parallel",
     "workflow_file": ".github/workflows/conformance-kind.yml",
