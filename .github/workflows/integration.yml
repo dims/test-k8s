@@ -59,6 +59,7 @@ jobs:
         shell: bash
         env:
           KUBE_JUNIT_REPORT_DIR: ${{ env.ARTIFACTS }}
+          KUBE_TIMEOUT: ${{ github.repository == 'dims/test-k8s' && '-timeout=900s' || '-timeout=600s' }}
         run: |
           set -o pipefail
 
