@@ -66,35 +66,75 @@
     "schema_version": 1,
     "started_at": "2026-04-30T04:56:40Z",
     "upstream_comparison": {
-      "inventory_parity_status": "extra-local-tests",
+      "inventory_parity_status": "mismatch",
       "junit_files": [
-        "pr-logs/pull/138705/pull-kubernetes-integration/2049929109722632192/artifacts/junit_20260430-191027.xml"
+        "pr-logs/pull/137604/pull-kubernetes-integration/2031303487618289664/artifacts/junit_20260310-093823.xml"
       ],
-      "local_only_count": 1,
+      "local_only_count": 119,
       "local_only_sample": [
-        "[sig-api-machinery] k8s.io/kubernetes/test/integration/apiserver/cel/authorizerselector::selectordisabled"
+        "[sig-api-machinery] k8s.io/apiextensions-apiserver/test/integration::conversion",
+        "[sig-api-machinery] k8s.io/apiextensions-apiserver/test::integration",
+        "[sig-api-machinery] k8s.io/kubernetes/test/integration/apimachinery::apply",
+        "[sig-api-machinery] k8s.io/kubernetes/test/integration/apiserver/cel/authorizerselector::selectordisabled",
+        "[sig-api-machinery] k8s.io/kubernetes/test/integration/apiserver/cel/authorizerselector::selectorenabled",
+        "[sig-api-machinery] k8s.io/kubernetes/test/integration/apiserver::admissionwebhook",
+        "[sig-api-machinery] k8s.io/kubernetes/test/integration/apiserver::anonymous",
+        "[sig-api-machinery] k8s.io/kubernetes/test/integration/apiserver::apidefinitions",
+        "[sig-api-machinery] k8s.io/kubernetes/test/integration/apiserver::apply",
+        "[sig-api-machinery] k8s.io/kubernetes/test/integration/apiserver::cel",
+        "[sig-api-machinery] k8s.io/kubernetes/test/integration/apiserver::certreload",
+        "[sig-api-machinery] k8s.io/kubernetes/test/integration/apiserver::coordinatedleaderelection",
+        "[sig-api-machinery] k8s.io/kubernetes/test/integration/apiserver::discovery",
+        "[sig-api-machinery] k8s.io/kubernetes/test/integration/apiserver::egressselector",
+        "[sig-api-machinery] k8s.io/kubernetes/test/integration/apiserver::flowcontrol",
+        "[sig-api-machinery] k8s.io/kubernetes/test/integration/apiserver::httpproxy",
+        "[sig-api-machinery] k8s.io/kubernetes/test/integration/apiserver::oidc",
+        "[sig-api-machinery] k8s.io/kubernetes/test/integration/apiserver::openapi",
+        "[sig-api-machinery] k8s.io/kubernetes/test/integration/apiserver::peerproxy",
+        "[sig-api-machinery] k8s.io/kubernetes/test/integration/apiserver::podlogs"
       ],
       "local_test_count": 119,
       "reference_job_name": "pull-kubernetes-integration",
-      "reference_kubernetes_base_sha": "a2fe9b5cb4947a5b58a070ab1a89aebbbee65a89",
+      "reference_kubernetes_base_sha": "a142b22c38efe76423f3123ea2f46dbca943fdc3",
       "reference_matches_kubernetes_sha": false,
-      "reference_pr_number": 138705,
-      "reference_pr_updated_at": "2026-04-30T19:42:13Z",
-      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/138705/pull-kubernetes-integration/2049929109722632192",
+      "reference_pr_number": 137604,
+      "reference_pr_updated_at": "2026-04-30T20:35:10Z",
+      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/137604/pull-kubernetes-integration/2031303487618289664",
       "reference_selection": "recent-success",
-      "reference_started_at": "2026-04-30T19:42:12Z",
+      "reference_started_at": "2026-03-10T10:07:11Z",
       "reference_started_json": {
-        "pull": "138705",
-        "repo-commit": "2f4fa460fdf1af929c86d51f53d01f03b49308c3",
-        "repo-version": "2f4fa460fdf1af929c86d51f53d01f03b49308c3",
+        "pull": "137604",
+        "repo-commit": "874a37f6d2289ab770faa05303438d65dc858b51",
+        "repo-version": "874a37f6d2289ab770faa05303438d65dc858b51",
         "repos": {
-          "kubernetes/kubernetes": "master:a2fe9b5cb4947a5b58a070ab1a89aebbbee65a89,138705:6482b4c7f048e89355dff3f0869bf10fd0668765"
+          "kubernetes/kubernetes": "master:a142b22c38efe76423f3123ea2f46dbca943fdc3,137604:47ee83a65c81fec8aa94b41b3eb0515df8c5e227"
         },
-        "timestamp": 1777576194
+        "timestamp": 1773135493
       },
-      "upstream_only_count": 0,
-      "upstream_only_sample": [],
-      "upstream_test_count": 118
+      "upstream_only_count": 113,
+      "upstream_only_sample": [
+        "k8s.io/apiextensions-apiserver/test/integration::conversion",
+        "k8s.io/apiextensions-apiserver/test::integration",
+        "k8s.io/kubernetes/test/integration/apimachinery::apply",
+        "k8s.io/kubernetes/test/integration/apiserver/cel/authorizerselector::selectordisabled",
+        "k8s.io/kubernetes/test/integration/apiserver/cel/authorizerselector::selectorenabled",
+        "k8s.io/kubernetes/test/integration/apiserver::admissionwebhook",
+        "k8s.io/kubernetes/test/integration/apiserver::anonymous",
+        "k8s.io/kubernetes/test/integration/apiserver::apply",
+        "k8s.io/kubernetes/test/integration/apiserver::cel",
+        "k8s.io/kubernetes/test/integration/apiserver::certreload",
+        "k8s.io/kubernetes/test/integration/apiserver::coordinatedleaderelection",
+        "k8s.io/kubernetes/test/integration/apiserver::discovery",
+        "k8s.io/kubernetes/test/integration/apiserver::flowcontrol",
+        "k8s.io/kubernetes/test/integration/apiserver::httpproxy",
+        "k8s.io/kubernetes/test/integration/apiserver::oidc",
+        "k8s.io/kubernetes/test/integration/apiserver::openapi",
+        "k8s.io/kubernetes/test/integration/apiserver::peerproxy",
+        "k8s.io/kubernetes/test/integration/apiserver::podlogs",
+        "k8s.io/kubernetes/test/integration/apiserver::portforward",
+        "k8s.io/kubernetes/test/integration/apiserver::tracing"
+      ],
+      "upstream_test_count": 113
     },
     "upstream_testgrid_url": "https://testgrid.k8s.io/presubmits-kubernetes-blocking#pull-kubernetes-integration",
     "workflow_file": ".github/workflows/integration.yml",
