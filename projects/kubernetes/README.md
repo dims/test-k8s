@@ -202,3 +202,14 @@ If a patch is updated (e.g. a threshold is raised), add a **Change history** tab
 **Symptom:** Apiserver returned `http: Handler timeout` for a PUT to CRD status under etcd contention. The `PollUntilContextTimeout` loop at line 193 used `return false, err`, propagating the transient GET error immediately and failing the test within ~3.84 s with: `timed out waiting for CRD Terminating condition to be set`.  
 **Fix:** Change `return false, err` to `return false, nil` so transient apiserver-overload errors are retried rather than propagated. The poll already uses `wait.ForeverTestTimeout` as its deadline so retrying is safe.  
 **Upstream status:** Related to GitHub issue [#137603](https://github.com/kubernetes/kubernetes/issues/137603). Upstream PR #135567 (merged 2026-01-14) added the wait loop but left `return false, err` in place. Local workaround until the upstream fix lands.
+
+---
+
+### 0026 — test/integration/daemonset: raise poll budgets to 120 s and retry transient errors
+
+**File:** `0026-test-integration-daemonset-raise-poll-budgets-to-12.patch`  
+**Observed in:** Integration Tests — `NVIDIA-dev/test-k8s` only; runner `linux-amd64-cpu32`; first seen on commit `303b83323f11` (run 25150377062); kubernetes SHA `4de87946765`  
+**Failing tests:** `TestOneNodeDaemonLaunchesPod/OnDelete` in `test/integration/daemonset/`  
+**Symptom:** `validateDaemonSetStatus` polls `ds.Status.NumberReady` with a 60-second budget. On the loaded 32-vCPU runner, the daemonset controller's status-update loop was slow enough to exhaust the budget, producing: `daemonset_test.go:488: timed out waiting for the condition`. The subtest took 135.99 s total (including setup + `validateDaemonSetPodsAndMarkReady`), leaving the status poll no head room.  
+**Fix:** Raise all four poll helper functions (`validateDaemonSetPodsAndMarkReady`, `validateDaemonSetPodsActive`, `validateDaemonSetStatus`, `validateUpdatedNumberScheduled`) from `60*time.Second` to `120*time.Second`. Also change `return false, err` to `return false, nil` in `validateDaemonSetPodsAndMarkReady` (UpdateStatus) and `validateDaemonSetStatus` / `validateUpdatedNumberScheduled` (Get) to retry transient apiserver errors rather than propagating them.  
+**Upstream status:** No open upstream issue found. Local workaround.

@@ -1,0 +1,71 @@
+From a4215f8d9e5a01c3c3b3f06f6d7656c36ebb1f90 Mon Sep 17 00:00:00 2001
+From: Davanum Srinivas <davanum@gmail.com>
+Date: Wed, 29 Apr 2026 23:39:26 -0700
+Subject: [PATCH] test: raise daemonset poll budgets to 120s and retry
+ transient errors
+
+Signed-off-by: Davanum Srinivas <davanum@gmail.com>
+---
+ test/integration/daemonset/daemonset_test.go | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
+
+diff --git a/test/integration/daemonset/daemonset_test.go b/test/integration/daemonset/daemonset_test.go
+index 8ba8b0aa58e..5f2551d6405 100644
+--- a/test/integration/daemonset/daemonset_test.go
++++ b/test/integration/daemonset/daemonset_test.go
+@@ -279,7 +279,7 @@ func validateDaemonSetPodsAndMarkReady(
+ 	numberPods int,
+ 	t *testing.T,
+ ) {
+-	if err := wait.Poll(time.Second, 60*time.Second, func() (bool, error) {
++	if err := wait.Poll(time.Second, 120*time.Second, func() (bool, error) {
+ 		objects := podInformer.GetIndexer().List()
+ 		nonTerminatedPods := 0
+ 
+@@ -310,7 +310,7 @@ func validateDaemonSetPodsAndMarkReady(
+ 				}
+ 				_, err := podClient.UpdateStatus(context.TODO(), podCopy, metav1.UpdateOptions{})
+ 				if err != nil {
+-					return false, err
++					return false, nil // retry on transient apiserver errors under load
+ 				}
+ 			}
+ 		}
+@@ -327,7 +327,7 @@ func validateDaemonSetPodsActive(
+ 	numberPods int,
+ 	t *testing.T,
+ ) {
+-	if err := wait.Poll(time.Second, 60*time.Second, func() (bool, error) {
++	if err := wait.Poll(time.Second, 120*time.Second, func() (bool, error) {
+ 		objects := podInformer.GetIndexer().List()
+ 		if len(objects) < numberPods {
+ 			return false, nil
+@@ -478,10 +478,10 @@ func validateDaemonSetStatus(
+ 	dsName string,
+ 	expectedNumberReady int32,
+ 	t *testing.T) {
+-	if err := wait.Poll(time.Second, 60*time.Second, func() (bool, error) {
++	if err := wait.Poll(time.Second, 120*time.Second, func() (bool, error) {
+ 		ds, err := dsClient.Get(context.TODO(), dsName, metav1.GetOptions{})
+ 		if err != nil {
+-			return false, err
++			return false, nil // retry on transient apiserver errors under load
+ 		}
+ 		return ds.Status.NumberReady == expectedNumberReady, nil
+ 	}); err != nil {
+@@ -495,10 +495,10 @@ func validateUpdatedNumberScheduled(
+ 	dsName string,
+ 	expectedUpdatedNumberScheduled int32,
+ 	t *testing.T) {
+-	if err := wait.PollUntilContextTimeout(ctx, time.Second, 60*time.Second, true, func(ctx context.Context) (bool, error) {
++	if err := wait.PollUntilContextTimeout(ctx, time.Second, 120*time.Second, true, func(ctx context.Context) (bool, error) {
+ 		ds, err := dsClient.Get(context.TODO(), dsName, metav1.GetOptions{})
+ 		if err != nil {
+-			return false, err
++			return false, nil // retry on transient apiserver errors under load
+ 		}
+ 		return ds.Status.UpdatedNumberScheduled == expectedUpdatedNumberScheduled, nil
+ 	}); err != nil {
+-- 
+2.50.1
+
