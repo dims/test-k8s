@@ -213,3 +213,21 @@ If a patch is updated (e.g. a threshold is raised), add a **Change history** tab
 **Symptom:** `validateDaemonSetStatus` polls `ds.Status.NumberReady` with a 60-second budget. On the loaded 32-vCPU runner, the daemonset controller's status-update loop was slow enough to exhaust the budget, producing: `daemonset_test.go:488: timed out waiting for the condition`. The subtest took 135.99 s total (including setup + `validateDaemonSetPodsAndMarkReady`), leaving the status poll no head room.  
 **Fix:** Raise all four poll helper functions (`validateDaemonSetPodsAndMarkReady`, `validateDaemonSetPodsActive`, `validateDaemonSetStatus`, `validateUpdatedNumberScheduled`) from `60*time.Second` to `120*time.Second`. Also change `return false, err` to `return false, nil` in `validateDaemonSetPodsAndMarkReady` (UpdateStatus) and `validateDaemonSetStatus` / `validateUpdatedNumberScheduled` (Get) to retry transient apiserver errors rather than propagating them.  
 **Upstream status:** No open upstream issue found. Local workaround.
+
+**Change history:**
+
+| When | Trigger | Remote | Commit | Change |
+|------|---------|--------|--------|--------|
+| Apr 2026 | First failure, OnDelete 135.99s | `NVIDIA-dev` | `303b83323f11` | 60 s → 120 s (patch 0026) |
+| Apr 2026 | Second failure, OnDelete 197.20s; daemonset controller version conflict due to `StaleControllerConsistencyDaemonSet` Beta gate; informer didn't catch up in 120 s | `NVIDIA-dev` | `a601d275ed95` | 120 s → 180 s for `validateDaemonSetStatus` + `validateUpdatedNumberScheduled` (patch 0027) |
+
+---
+
+### 0027 — test/integration/daemonset: raise status poll budgets to 180 s (StaleControllerConsistency catch-up)
+
+**File:** `0027-test-integration-daemonset-raise-status-poll-to-180.patch`  
+**Observed in:** Integration Tests — `NVIDIA-dev/test-k8s` only; runner `linux-amd64-cpu32`; seen on commit `a601d275ed95` (run 25151286336); kubernetes SHA `4de87946765`  
+**Failing tests:** `TestOneNodeDaemonLaunchesPod/OnDelete` in `test/integration/daemonset/`  
+**Symptom:** Even with 120 s budget (patch 0026), the test still failed after 197.20 s. The daemon controller logged: `one-node-daemonset-test/foo failed with : read version: 12673 is not as new as written version: 12789 for group resource daemonsets.apps`. The `StaleControllerConsistencyDaemonSet` Beta feature gate (enabled by default in 1.36) causes the controller to block all status updates until its daemonset informer catches up to the written resource version (12789). On the heavily loaded 32-vCPU runner sharing etcd with many parallel test apiservers, the informer watch delivery was delayed beyond 120 s.  
+**Fix:** Raise `validateDaemonSetStatus` and `validateUpdatedNumberScheduled` from `120*time.Second` to `180*time.Second`. The 120 s in `validateDaemonSetPodsAndMarkReady` (polling the local informer cache) is unchanged.  
+**Upstream status:** No open upstream issue. The `StaleControllerConsistencyDaemonSet` feature was introduced in 1.36 Beta. Local workaround.
