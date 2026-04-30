@@ -1,0 +1,41 @@
+From 6dac0d82a5d2760667e8d5db5f42f558d0359ead Mon Sep 17 00:00:00 2001
+From: Davanum Srinivas <davanum@gmail.com>
+Date: Wed, 29 Apr 2026 20:10:11 -0700
+Subject: [PATCH] test/integration/controllermanager: raise
+ leader-election-release poll budget to 30s
+
+On 32-vCPU CI runners many integration test packages start their own
+apiserver in parallel, causing heavy etcd and storage contention.
+TestLeaderElectionReleaseOnCancel polls for 10 s (return false, err on
+any GET failure) to confirm the lease holder is cleared after KCM
+shutdown. Under load the apiserver hits handler timeouts; the GET
+returns context-deadline-exceeded after the 10 s budget is exhausted,
+and the poll propagates that error immediately instead of retrying.
+
+Raise the poll budget from 10 s to 30 s and change the GET-error path
+from 'return false, err' to 'return false, nil' so transient apiserver
+errors under load are retried rather than immediately failing the test.
+---
+ .../controllermanager/leader_election_release_test.go         | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/test/integration/controllermanager/leader_election_release_test.go b/test/integration/controllermanager/leader_election_release_test.go
+index c5958422944..bdfbfcf063a 100644
+--- a/test/integration/controllermanager/leader_election_release_test.go
++++ b/test/integration/controllermanager/leader_election_release_test.go
+@@ -92,10 +92,10 @@ func TestLeaderElectionReleaseOnCancel(t *testing.T) {
+ 	kcm.TearDownFn()
+ 
+ 	// Poll until the lease holder is cleared.
+-	err = wait.PollUntilContextTimeout(context.Background(), 100*time.Millisecond, 10*time.Second, true, func(ctx context.Context) (bool, error) {
++	err = wait.PollUntilContextTimeout(context.Background(), 100*time.Millisecond, 30*time.Second, true, func(ctx context.Context) (bool, error) {
+ 		lease, err = client.CoordinationV1().Leases("kube-system").Get(ctx, "kube-controller-manager", metav1.GetOptions{})
+ 		if err != nil {
+-			return false, err
++			return false, nil // retry on transient apiserver errors under load
+ 		}
+ 		return lease.Spec.HolderIdentity == nil || *lease.Spec.HolderIdentity == "", nil
+ 	})
+-- 
+2.50.1
+

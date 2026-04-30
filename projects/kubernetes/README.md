@@ -180,3 +180,14 @@ If a patch is updated (e.g. a threshold is raised), add a **Change history** tab
 **Symptom:** The `scheduling/bootstrap-system-priority-classes` PostStartHook in `pkg/registry/scheduling/rest/storage_scheduling.go` uses `wait.Poll(1s, 30s)` to retry `PriorityClass` creation while storage version registration completes. On 32-vCPU runners where many integration test packages start their own apiserver simultaneously, etcd and storage version registration contention causes repeated `ServiceUnavailable` errors. After 30 s the poll times out, the hook returns an error, the apiserver fatally exits with `"PostStartHook scheduling/bootstrap-system-priority-classes failed: unable to add default system priority classes: timed out waiting for the condition"`, and the test binary exits before reporting results.  
 **Fix:** Raise the poll budget from `30*time.Second` to `120*time.Second`. Consistent with the same approach applied to health-check probes in patches 0001 and 0022.  
 **Upstream status:** Local workaround; the threshold is environment-specific.
+
+---
+
+### 0024 — test/integration/controllermanager: raise leader-election-release poll budget to 30 s
+
+**File:** `0024-test-integration-controllermanager-raise-leader-ele.patch`  
+**Observed in:** Integration Tests — `NVIDIA-dev/test-k8s` only; runner `linux-amd64-cpu32`; seen on commit `455baecae9d1` (run 25141185206 at 00:34 UTC)  
+**Failing tests:** `TestLeaderElectionReleaseOnCancel` in `test/integration/controllermanager/`  
+**Symptom:** After shutting down the KCM, the test polls for 10 s (with `return false, err` on any GET error) to confirm the leader-election lease holder is cleared. On a 32-vCPU runner under heavy parallel load the apiserver hits handler timeouts; the GET for the lease returns `context deadline exceeded` after the 10 s budget is fully consumed, and the poll propagates that error immediately instead of retrying, producing: `expected lease holder to be cleared after shutdown, but got "<nil>": Get "...": context deadline exceeded`.  
+**Fix:** Raise the poll budget from `10*time.Second` to `30*time.Second` and change `return false, err` to `return false, nil` so transient apiserver-overload errors are retried.  
+**Upstream status:** Local workaround; test added in March 2026 (commit `db60e61ac`) with no upstream fix yet.
