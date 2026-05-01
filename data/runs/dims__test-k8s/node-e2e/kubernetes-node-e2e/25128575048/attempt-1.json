@@ -65,35 +65,37 @@
     "schema_version": 1,
     "started_at": "2026-04-29T19:09:58Z",
     "upstream_comparison": {
-      "inventory_parity_status": "match",
+      "inventory_parity_status": "extra-local-tests",
       "junit_files": [
-        "pr-logs/pull/138703/pull-kubernetes-node-e2e-containerd/2049977443996930048/artifacts/junit_cos01.xml",
-        "pr-logs/pull/138703/pull-kubernetes-node-e2e-containerd/2049977443996930048/artifacts/junit_ubuntu01.xml"
+        "pr-logs/pull/138453/pull-kubernetes-node-e2e-containerd/2047840306073702400/artifacts/junit_cos01.xml",
+        "pr-logs/pull/138453/pull-kubernetes-node-e2e-containerd/2047840306073702400/artifacts/junit_ubuntu01.xml"
       ],
-      "local_only_count": 0,
-      "local_only_sample": [],
+      "local_only_count": 1,
+      "local_only_sample": [
+        "E2eNode Suite::GracefulNodeShutdown [Feature:GracefulNodeShutdown] [Feature:GracefulNodeShutdownBasedOnPodPriority] when gracefully shutting down with an extended shutdown window should continue renewing the node lease during graceful shutdown"
+      ],
       "local_test_count": 1203,
       "reference_job_name": "pull-kubernetes-node-e2e-containerd",
-      "reference_kubernetes_base_sha": "487cdf46c8d783a4a6e81feaa185fd64e08b5100",
+      "reference_kubernetes_base_sha": "968fa42d0eaf8eec6def2f667bd3b35b3c0c73c2",
       "reference_matches_kubernetes_sha": false,
-      "reference_pr_number": 138703,
-      "reference_pr_updated_at": "2026-05-01T18:19:34Z",
-      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/138703/pull-kubernetes-node-e2e-containerd/2049977443996930048",
+      "reference_pr_number": 138453,
+      "reference_pr_updated_at": "2026-05-01T18:37:40Z",
+      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/138453/pull-kubernetes-node-e2e-containerd/2047840306073702400",
       "reference_selection": "recent-success",
-      "reference_started_at": "2026-04-30T22:57:07Z",
+      "reference_started_at": "2026-04-25T01:25:04Z",
       "reference_started_json": {
-        "pull": "138703",
-        "repo-commit": "421a087f48c222c555d2945b88b01cb3b7119024",
-        "repo-version": "421a087f48c222c555d2945b88b01cb3b7119024",
+        "pull": "138453",
+        "repo-commit": "e4ee1003b4fa5fefe1fba23e869ef211f306fb63",
+        "repo-version": "e4ee1003b4fa5fefe1fba23e869ef211f306fb63",
         "repos": {
-          "kubernetes/kubernetes": "master:487cdf46c8d783a4a6e81feaa185fd64e08b5100,138703:368753ea109711366558188962088205082ddb56",
+          "kubernetes/kubernetes": "master:968fa42d0eaf8eec6def2f667bd3b35b3c0c73c2,138453:a1d0cf28fc882be05cdd330b8775ee95cfdf51c7",
           "kubernetes/test-infra": "master"
         },
-        "timestamp": 1777587715
+        "timestamp": 1777078180
       },
       "upstream_only_count": 0,
       "upstream_only_sample": [],
-      "upstream_test_count": 1203
+      "upstream_test_count": 1202
     },
     "upstream_testgrid_url": "https://testgrid.k8s.io/presubmits-kubernetes-blocking#pull-kubernetes-node-e2e-containerd",
     "workflow_file": ".github/workflows/node-e2e.yml",
