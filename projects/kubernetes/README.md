@@ -231,3 +231,14 @@ If a patch is updated (e.g. a threshold is raised), add a **Change history** tab
 **Symptom:** Even with 120 s budget (patch 0026), the test still failed after 197.20 s. The daemon controller logged: `one-node-daemonset-test/foo failed with : read version: 12673 is not as new as written version: 12789 for group resource daemonsets.apps`. The `StaleControllerConsistencyDaemonSet` Beta feature gate (enabled by default in 1.36) causes the controller to block all status updates until its daemonset informer catches up to the written resource version (12789). On the heavily loaded 32-vCPU runner sharing etcd with many parallel test apiservers, the informer watch delivery was delayed beyond 120 s.  
 **Fix:** Raise `validateDaemonSetStatus` and `validateUpdatedNumberScheduled` from `120*time.Second` to `180*time.Second`. The 120 s in `validateDaemonSetPodsAndMarkReady` (polling the local informer cache) is unchanged.  
 **Upstream status:** No open upstream issue. The `StaleControllerConsistencyDaemonSet` feature was introduced in 1.36 Beta. Local workaround.
+
+---
+
+### 0028 — test/integration/job: raise job status poll budget to 60 s for slow runners
+
+**File:** `0028-test-integration-job-raise-job-status-poll-budget-t.patch`  
+**Observed in:** Integration Tests — `dims/test-k8s` only; GitHub-hosted `ubuntu-24.04` (4 vCPU); commit `c92b59d939c4` (run 25197118552); NVIDIA-dev passed the same wave cleanly  
+**Failing tests:** `TestBackoffLimitPerIndex_DelayedPodDeletion` in `test/integration/job/`  
+**Symptom:** `validateJobsPodsStatusOnly` polls `wait.ForeverTestTimeout` (30 s) for job status to show `{Active: 1, Failed: 1}`. On the 4-vCPU runner under load with many parallel test packages, the job controller did not process the pod failure and create a replacement pod within 30 s. Error: `job_test.go:1006: Waiting for Job Status: context deadline exceeded` / `Found 0 active Pods, want 1`.  
+**Fix:** Double the budget in `validateJobsPodsStatusOnly` from `wait.ForeverTestTimeout` to `2*wait.ForeverTestTimeout` (60 s). Passing cases resolve in well under 5 s; the extra headroom only matters under scheduler/controller starvation on constrained runners.  
+**Upstream status:** No open upstream issue. Local workaround.

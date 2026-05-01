@@ -1,0 +1,31 @@
+From 29ddc1a93e47cb294f8761326dcebea1ae460b8f Mon Sep 17 00:00:00 2001
+From: Davanum Srinivas <davanum@gmail.com>
+Date: Thu, 30 Apr 2026 20:18:41 -0700
+Subject: [PATCH] test/integration/job: raise job status poll budget to 60s for
+ slow runners
+
+validateJobsPodsStatusOnly used wait.ForeverTestTimeout (30s) which is
+insufficient on 4-vCPU GitHub-hosted runners under load: the job
+controller may not process pod failure/replacement within that window.
+Double the budget to 2*wait.ForeverTestTimeout (60s) so tests remain
+stable on constrained runners.
+---
+ test/integration/job/job_test.go | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/test/integration/job/job_test.go b/test/integration/job/job_test.go
+index 038f1a106e4..dd60ce5d0cb 100644
+--- a/test/integration/job/job_test.go
++++ b/test/integration/job/job_test.go
+@@ -4736,7 +4736,7 @@ type podsByStatus struct {
+ 
+ func validateJobsPodsStatusOnly(ctx context.Context, t testing.TB, clientSet clientset.Interface, jobObj *batchv1.Job, desired podsByStatus) {
+ 	t.Helper()
+-	validateJobsPodsStatusOnlyWithTimeout(ctx, t, clientSet, jobObj, desired, wait.ForeverTestTimeout)
++	validateJobsPodsStatusOnlyWithTimeout(ctx, t, clientSet, jobObj, desired, 2*wait.ForeverTestTimeout)
+ }
+ 
+ func validateJobsPodsStatusOnlyWithTimeout(ctx context.Context, t testing.TB, clientSet clientset.Interface, jobObj *batchv1.Job, desired podsByStatus, timeout time.Duration) {
+-- 
+2.50.1
+
