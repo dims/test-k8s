@@ -67,33 +67,35 @@
     "upstream_comparison": {
       "inventory_parity_status": "missing-local-tests",
       "junit_files": [
-        "pr-logs/pull/138657/pull-kubernetes-e2e-kind/2050249050170593280/artifacts/junit_01.xml"
+        "pr-logs/pull/138630/pull-kubernetes-e2e-kind/2050310886005936128/artifacts/junit_01.xml"
       ],
       "local_only_count": 0,
       "local_only_sample": [],
       "local_test_count": 7580,
       "reference_job_name": "pull-kubernetes-e2e-kind",
-      "reference_kubernetes_base_sha": "fa0f6ab037f4cda01c65f8ab5076bf9b1361f218",
+      "reference_kubernetes_base_sha": "33576824d74d7b7290b04d13315c6aca3375fec4",
       "reference_matches_kubernetes_sha": false,
-      "reference_pr_number": 138657,
-      "reference_pr_updated_at": "2026-05-01T20:41:44Z",
-      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/138657/pull-kubernetes-e2e-kind/2050249050170593280",
+      "reference_pr_number": 138630,
+      "reference_pr_updated_at": "2026-05-01T21:08:29Z",
+      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/138630/pull-kubernetes-e2e-kind/2050310886005936128",
       "reference_selection": "recent-success",
-      "reference_started_at": "2026-05-01T16:51:02Z",
+      "reference_started_at": "2026-05-01T20:58:30Z",
       "reference_started_json": {
-        "pull": "138657",
-        "repo-commit": "700e9e3c74c142697e711afe95b3b6d586300e14",
-        "repo-version": "700e9e3c74c142697e711afe95b3b6d586300e14",
+        "pull": "138630",
+        "repo-commit": "95678f3096c436b92a8069455727d25830975429",
+        "repo-version": "95678f3096c436b92a8069455727d25830975429",
         "repos": {
-          "kubernetes/kubernetes": "master:fa0f6ab037f4cda01c65f8ab5076bf9b1361f218,138657:7f3c838bcce0bed9eb2c5d0ef8b5cc9961725c3e"
+          "kubernetes/kubernetes": "master:33576824d74d7b7290b04d13315c6aca3375fec4,138630:377d1197787f4c4fb8eaf31bfd716cf1f90b1762"
         },
-        "timestamp": 1777652469
+        "timestamp": 1777667241
       },
-      "upstream_only_count": 1,
+      "upstream_only_count": 3,
       "upstream_only_sample": [
-        "Kubernetes e2e suite::CRUD Tests resource.k8s.io/v1beta2 DeviceTaintRule"
+        "Kubernetes e2e suite::CRUD Tests resource.k8s.io/v1beta2 DeviceTaintRule",
+        "Kubernetes e2e suite::Netpol NetworkPolicy between server and client should block north-south traffic to pods isolated by a 'default-deny-ingress' policy via LoadBalancer",
+        "Kubernetes e2e suite::Netpol NetworkPolicy between server and client should block north-south traffic to pods isolated by a 'default-deny-ingress' policy via NodePort"
       ],
-      "upstream_test_count": 7581
+      "upstream_test_count": 7583
     },
     "upstream_testgrid_url": "https://testgrid.k8s.io/presubmits-kubernetes-blocking#pull-kubernetes-e2e-kind",
     "workflow_file": ".github/workflows/e2e-kind.yml",
