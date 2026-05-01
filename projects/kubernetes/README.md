@@ -253,3 +253,14 @@ If a patch is updated (e.g. a threshold is raised), add a **Change history** tab
 **Symptom:** After restarting the scheduler (second `initSched()` call), the new scheduler instance begins its first scheduling cycle before its internal cache has synced the existing nodes from the API server. `evaluateNominatedNode` calls `sched.nodeInfoSnapshot.Get("node-preferred")` and gets `"nodeinfo not found"`, causing pods to be scheduled to the wrong nodes. Error: `nominated_node_name_test.go:893: pod-a scheduled on node-other, wanted node-preferred`.  
 **Fix:** Add `testutils.WaitForNodesInCache(ctx, testCtx.Scheduler, 2)` after `initSched()` returns and before `Scheduler.Run()` starts. This polls until the scheduler cache reports at least 2 nodes, ensuring the snapshot is populated before the first scheduling cycle fires.  
 **Upstream status:** Test added upstream in PR #138443 (merged Apr 30 2026). Race is inherent in the test design; fix is the correct guard rather than a one-off timeout. Will propose upstream.
+
+---
+
+### 0030 — plugin/pkg/admission/podgroup: use direct client for Workload lookup
+
+**File:** `0030-plugin-pkg-admission-podgroup-use-direct-client-for.patch`
+**Observed in:** Integration Tests — `NVIDIA-dev/test-k8s` only; self-hosted `linux-amd64-cpu32` (32 vCPU); first seen in run 25227024633; dims/test-k8s run 25227315480 passed cleanly  
+**Failing tests:** `TestPodGroupAdmission/PodGroup_referencing_terminating_Workload_is_rejected` in `test/integration/scheduler/podgroup/admission/`  
+**Symptom:** After deleting a Workload (which sets `DeletionTimestamp` but leaves the object due to a finalizer), the admission plugin's informer-backed lister may still return the old object without `DeletionTimestamp`. On the 32-vCPU runner the PodGroup creation test completes so quickly that the lister is stale; the admission plugin passes the PodGroup creation when it should reject. The test expects a Forbidden error but gets success.  
+**Fix:** Replace the lister-based Workload lookup in `Validate()` with a direct API call (`p.client.SchedulingV1alpha2().Workloads(...).Get()`), ensuring fresh state. The informer is retained for the `WaitForReady` check. Also update the unit test to populate the fake client (not just the informer store) to match the new code path.  
+**Upstream status:** Production bug in `plugin/pkg/admission/podgroup` (KEP-5832, PR #137464). The lister is unsuitable for this check because DeletionTimestamp changes need strong consistency. Will propose upstream fix.
