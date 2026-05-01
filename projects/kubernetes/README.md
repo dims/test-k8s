@@ -242,3 +242,14 @@ If a patch is updated (e.g. a threshold is raised), add a **Change history** tab
 **Symptom:** `validateJobsPodsStatusOnly` polls `wait.ForeverTestTimeout` (30 s) for job status to show `{Active: 1, Failed: 1}`. On the 4-vCPU runner under load with many parallel test packages, the job controller did not process the pod failure and create a replacement pod within 30 s. Error: `job_test.go:1006: Waiting for Job Status: context deadline exceeded` / `Found 0 active Pods, want 1`.  
 **Fix:** Double the budget in `validateJobsPodsStatusOnly` from `wait.ForeverTestTimeout` to `2*wait.ForeverTestTimeout` (60 s). Passing cases resolve in well under 5 s; the extra headroom only matters under scheduler/controller starvation on constrained runners.  
 **Upstream status:** No open upstream issue. Local workaround.
+
+---
+
+### 0029 — test/integration/scheduler: wait for nodes in cache before scheduler restart
+
+**File:** `0029-test-integration-scheduler-wait-for-nodes-in-cache-.patch`
+**Observed in:** Integration Tests — `NVIDIA-dev/test-k8s` only; self-hosted `linux-amd64-cpu32` (32 vCPU); first seen in run 25205734755; dims/test-k8s run 25205941993 passed cleanly  
+**Failing tests:** `TestSchedulerRestartWithNominatedNode` in `test/integration/scheduler/nominated_node_name/`  
+**Symptom:** After restarting the scheduler (second `initSched()` call), the new scheduler instance begins its first scheduling cycle before its internal cache has synced the existing nodes from the API server. `evaluateNominatedNode` calls `sched.nodeInfoSnapshot.Get("node-preferred")` and gets `"nodeinfo not found"`, causing pods to be scheduled to the wrong nodes. Error: `nominated_node_name_test.go:893: pod-a scheduled on node-other, wanted node-preferred`.  
+**Fix:** Add `testutils.WaitForNodesInCache(ctx, testCtx.Scheduler, 2)` after `initSched()` returns and before `Scheduler.Run()` starts. This polls until the scheduler cache reports at least 2 nodes, ensuring the snapshot is populated before the first scheduling cycle fires.  
+**Upstream status:** Test added upstream in PR #138443 (merged Apr 30 2026). Race is inherent in the test design; fix is the correct guard rather than a one-off timeout. Will propose upstream.

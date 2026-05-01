@@ -1,0 +1,37 @@
+From be74be11a1a6f0548763714f860ed6e41893e468 Mon Sep 17 00:00:00 2001
+From: Davanum Srinivas <davanum@gmail.com>
+Date: Fri, 1 May 2026 04:23:04 -0700
+Subject: [PATCH] test/integration/scheduler: wait for nodes in cache before
+ scheduler restart
+
+TestSchedulerRestartWithNominatedNode can race on fast multi-core runners:
+the new scheduler instance starts its first scheduling cycle before its
+internal cache has synced the existing nodes, causing evaluateNominatedNode
+to return "nodeinfo not found" and schedule pods to wrong nodes.
+
+Fix by calling WaitForNodesInCache after initSched() and before Run().
+---
+ .../nominated_node_name/nominated_node_name_test.go        | 7 +++++++
+ 1 file changed, 7 insertions(+)
+
+diff --git a/test/integration/scheduler/nominated_node_name/nominated_node_name_test.go b/test/integration/scheduler/nominated_node_name/nominated_node_name_test.go
+index 58eb66b1185..0824cfce5f5 100644
+--- a/test/integration/scheduler/nominated_node_name/nominated_node_name_test.go
++++ b/test/integration/scheduler/nominated_node_name/nominated_node_name_test.go
+@@ -874,6 +874,13 @@ func TestSchedulerRestartWithNominatedNode(t *testing.T) {
+ 	testCtx, teardown := initSched()
+ 	defer teardown()
+ 
++	// Wait for both nodes to be reflected in the new scheduler's cache before
++	// starting scheduling, to avoid a race where evaluateNominatedNode fails
++	// with "nodeinfo not found" on the first scheduling cycle.
++	if err := testutils.WaitForNodesInCache(ctx, testCtx.Scheduler, 2); err != nil {
++		t.Fatalf("Failed waiting for nodes in scheduler cache: %v", err)
++	}
++
+ 	// Start scheduler again
+ 	go testCtx.Scheduler.Run(testCtx.SchedulerCtx)
+ 
+-- 
+2.50.1
+
