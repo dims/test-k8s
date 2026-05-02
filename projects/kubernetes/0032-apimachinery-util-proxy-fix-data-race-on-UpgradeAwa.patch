@@ -1,0 +1,54 @@
+From 0916fcf41430df87636087d56fb7e8607479e2d8 Mon Sep 17 00:00:00 2001
+From: Davanum Srinivas <davanum@gmail.com>
+Date: Sat, 2 May 2026 12:34:25 -0400
+Subject: [PATCH] apimachinery/util/proxy: fix data race on
+ UpgradeAwareHandler.Transport
+
+Two concurrent HTTP requests served by the same UpgradeAwareHandler
+instance race on the Transport field: one goroutine writes
+h.Transport = h.defaultProxyTransport(...) while another reads
+h.Transport for proxy.Transport assignment.
+
+Fix: capture h.Transport into a local variable at the start of
+ServeHTTP and operate on it locally. This eliminates the write to
+the shared field while preserving identical runtime behaviour --
+defaultProxyTransport is cheap to call and WrapTransport semantics
+are unchanged (we wrap the original field value, not a previously-
+wrapped result).
+
+Detected by TestProxyUpgradeErrorResponseTerminates/code=400 under
+-race on 32-vCPU runners (NVIDIA-dev run 25254307641).
+
+Signed-off-by: Davanum Srinivas <davanum@gmail.com>
+---
+ .../src/k8s.io/apimachinery/pkg/util/proxy/upgradeaware.go | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
+
+diff --git a/staging/src/k8s.io/apimachinery/pkg/util/proxy/upgradeaware.go b/staging/src/k8s.io/apimachinery/pkg/util/proxy/upgradeaware.go
+index 56f62148347..aa0f0ccbc41 100644
+--- a/staging/src/k8s.io/apimachinery/pkg/util/proxy/upgradeaware.go
++++ b/staging/src/k8s.io/apimachinery/pkg/util/proxy/upgradeaware.go
+@@ -233,8 +233,9 @@ func (h *UpgradeAwareHandler) ServeHTTP(w http.ResponseWriter, req *http.Request
+ 		return
+ 	}
+ 
+-	if h.Transport == nil || h.WrapTransport {
+-		h.Transport = h.defaultProxyTransport(req.URL, h.Transport)
++	transport := h.Transport
++	if transport == nil || h.WrapTransport {
++		transport = h.defaultProxyTransport(req.URL, transport)
+ 	}
+ 
+ 	// WithContext creates a shallow clone of the request with the same context.
+@@ -256,7 +257,7 @@ func (h *UpgradeAwareHandler) ServeHTTP(w http.ResponseWriter, req *http.Request
+ 	}
+ 
+ 	proxy := httputil.NewSingleHostReverseProxy(reverseProxyLocation)
+-	proxy.Transport = h.Transport
++	proxy.Transport = transport
+ 	proxy.FlushInterval = h.FlushInterval
+ 	proxy.ErrorLog = log.New(noSuppressPanicError{}, "", log.LstdFlags)
+ 	if h.RejectForwardingRedirects {
+-- 
+2.50.1
+

@@ -276,3 +276,14 @@ If a patch is updated (e.g. a threshold is raised), add a **Change history** tab
 **Symptom:** After `kubectl rollout restart statefulset nginx`, the test immediately calls `kube::test::get_object_assert` (point-in-time check) on `.status.observedGeneration` expecting 3. On the slow 4-vCPU runner the StatefulSet controller had not yet processed the new generation, returning 2. Error: `apps.sh:624: FAIL! Get statefulset nginx {{.status.observedGeneration}} Expected: 3, Got: 2`.  
 **Fix:** Change `get_object_assert` to `wait_object_assert` on `apps.sh:624`. This matches lines 611 and 616 which already use `wait_object_assert` for the same field in the same function; the inconsistency was present since the original 2019 commit (145935d8157).  
 **Upstream status:** No open upstream issue. Local workaround; will propose upstream.
+
+---
+
+### 0032 — apimachinery/util/proxy: fix data race on UpgradeAwareHandler.Transport
+
+**File:** `0032-apimachinery-util-proxy-fix-data-race-on-UpgradeAwa.patch`
+**Observed in:** Unit Tests — `NVIDIA-dev/test-k8s` only; self-hosted `linux-amd64-cpu32` (32 vCPU); first seen in run 25254307641 (2026-05-02 14:37 UTC); dims run 25254315398 passed cleanly  
+**Failing tests:** `TestProxyUpgradeErrorResponseTerminates/code=400` in `staging/src/k8s.io/apimachinery/pkg/util/proxy/`  
+**Symptom:** Two concurrent HTTP connections served by the same `*UpgradeAwareHandler` instance race on the `Transport` field. Goroutine A writes `h.Transport = h.defaultProxyTransport(...)` (line 237) while Goroutine B reads `h.Transport` for `proxy.Transport =` (line 259). The race detector reports write/read conflict at the same address. A second racy edge: the `corsRemovingTransport.RoundTripper` field written during struct initialisation in goroutine A is read by goroutine B before the pointer store to `h.Transport` is visible.  
+**Fix:** Capture `h.Transport` into a local variable `transport` at the top of the `ServeHTTP` hot-path, compute the wrapped value into `transport`, and assign `proxy.Transport = transport`. This eliminates all mutations of the shared `h.Transport` field during request handling while preserving identical semantics: `defaultProxyTransport` is pure and cheap; `WrapTransport` wraps the original field value (not a previously-wrapped result) on every request, which is correct.  
+**Upstream status:** Race present since 2017 (commit edc12aafe2f). No upstream issue or fix found. Will propose upstream.
