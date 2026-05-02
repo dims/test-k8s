@@ -251,9 +251,9 @@ If a patch is updated (e.g. a threshold is raised), add a **Change history** tab
 **File:** `0029-test-integration-scheduler-wait-for-nodes-in-cache-.patch`
 **Observed in:** Integration Tests — `NVIDIA-dev/test-k8s` only; self-hosted `linux-amd64-cpu32` (32 vCPU); first seen in run 25205734755; dims/test-k8s run 25205941993 passed cleanly  
 **Failing tests:** `TestSchedulerRestartWithNominatedNode` in `test/integration/scheduler/nominated_node_name/`  
-**Symptom:** After restarting the scheduler (second `initSched()` call), the new scheduler instance begins its first scheduling cycle before its internal cache has synced the existing nodes from the API server. `evaluateNominatedNode` calls `sched.nodeInfoSnapshot.Get("node-preferred")` and gets `"nodeinfo not found"`, causing pods to be scheduled to the wrong nodes. Error: `nominated_node_name_test.go:893: pod-a scheduled on node-other, wanted node-preferred`.  
-**Fix:** Add `testutils.WaitForNodesInCache(ctx, testCtx.Scheduler, 2)` after `initSched()` returns and before `Scheduler.Run()` starts. This polls until the scheduler cache reports at least 2 nodes, ensuring the snapshot is populated before the first scheduling cycle fires.  
-**Upstream status:** Test added upstream in PR #138443 (merged Apr 30 2026). Race is inherent in the test design; fix is the correct guard rather than a one-off timeout. Will propose upstream.
+**Symptom:** Two distinct races, both from the scheduler starting before its node cache is warm: (1) After restarting the scheduler (second `initSched()` call), `evaluateNominatedNode` gets `"nodeinfo not found"` and assigns pods to wrong nodes (first seen in run 25205734755). (2) Before the first scheduler start, node scoring runs with stale cache; `node-other` (PreferNoSchedule taint) outscores `node-preferred` causing pod-a's bind to land on the wrong node and NominatedNodeName to be wrong (first seen in run 25257575513).  
+**Fix:** Add `testutils.WaitForNodesInCache(ctx, testCtx.Scheduler, 2)` before BOTH the first and second `Scheduler.Run()` call. Updated patch guards both start sites.  
+**Upstream status:** Test added upstream in PR #138443 (merged Apr 30 2026). Race is inherent in the test design; fix is the correct guard. Will propose upstream.
 
 ---
 

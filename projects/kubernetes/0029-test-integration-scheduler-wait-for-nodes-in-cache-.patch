@@ -1,24 +1,40 @@
-From be74be11a1a6f0548763714f860ed6e41893e468 Mon Sep 17 00:00:00 2001
+From 74a44ca850d28ea266fccccfa0615f7fc3a446ac Mon Sep 17 00:00:00 2001
 From: Davanum Srinivas <davanum@gmail.com>
-Date: Fri, 1 May 2026 04:23:04 -0700
-Subject: [PATCH] test/integration/scheduler: wait for nodes in cache before
- scheduler restart
+Date: Sat, 2 May 2026 15:10:45 -0400
+Subject: [PATCH] test/integration/scheduler: guard both scheduler starts in
+ TestSchedulerRestartWithNominatedNode
 
-TestSchedulerRestartWithNominatedNode can race on fast multi-core runners:
-the new scheduler instance starts its first scheduling cycle before its
-internal cache has synced the existing nodes, causing evaluateNominatedNode
-to return "nodeinfo not found" and schedule pods to wrong nodes.
+The first scheduler can also race on fast multi-core runners: node scoring
+runs before both nodes appear in the cache, causing pod-a to be scheduled
+to node-other (tainted PreferNoSchedule) instead of node-preferred.
 
-Fix by calling WaitForNodesInCache after initSched() and before Run().
+Add WaitForNodesInCache before both the first and second scheduler starts.
+Previously only the second start was guarded (NVIDIA-dev run 25205734755).
+New failure observed in NVIDIA-dev run 25257575513.
+
+Signed-off-by: Davanum Srinivas <davanum@gmail.com>
 ---
- .../nominated_node_name/nominated_node_name_test.go        | 7 +++++++
- 1 file changed, 7 insertions(+)
+ .../nominated_node_name/nominated_node_name_test.go | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
 diff --git a/test/integration/scheduler/nominated_node_name/nominated_node_name_test.go b/test/integration/scheduler/nominated_node_name/nominated_node_name_test.go
-index 58eb66b1185..0824cfce5f5 100644
+index 58eb66b1185..67f34bffb30 100644
 --- a/test/integration/scheduler/nominated_node_name/nominated_node_name_test.go
 +++ b/test/integration/scheduler/nominated_node_name/nominated_node_name_test.go
-@@ -874,6 +874,13 @@ func TestSchedulerRestartWithNominatedNode(t *testing.T) {
+@@ -847,6 +847,12 @@ func TestSchedulerRestartWithNominatedNode(t *testing.T) {
+ 	}
+ 	mockQueueSort.order[podA.Name] = 1
+ 
++	// Wait for both nodes to be in the scheduler cache before the first scheduling
++	// cycle fires to avoid a race where node scoring is stale.
++	if err := testutils.WaitForNodesInCache(ctx, testCtx.Scheduler, 2); err != nil {
++		t.Fatalf("Failed waiting for nodes in scheduler cache: %v", err)
++	}
++
+ 	// Start scheduler
+ 	go testCtx.Scheduler.Run(testCtx.SchedulerCtx)
+ 
+@@ -874,6 +880,13 @@ func TestSchedulerRestartWithNominatedNode(t *testing.T) {
  	testCtx, teardown := initSched()
  	defer teardown()
  
