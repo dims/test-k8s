@@ -220,16 +220,17 @@ If a patch is updated (e.g. a threshold is raised), add a **Change history** tab
 |------|---------|--------|--------|--------|
 | Apr 2026 | First failure, OnDelete 135.99s | `NVIDIA-dev` | `303b83323f11` | 60 s → 120 s (patch 0026) |
 | Apr 2026 | Second failure, OnDelete 197.20s; daemonset controller version conflict due to `StaleControllerConsistencyDaemonSet` Beta gate; informer didn't catch up in 120 s | `NVIDIA-dev` | `a601d275ed95` | 120 s → 180 s for `validateDaemonSetStatus` + `validateUpdatedNumberScheduled` (patch 0027) |
+| May 2026 | Third failure, OnDelete 254.74s; cascading consistency retry chain: each write produces a new resource version the informer hasn't synced yet; exponential backoff (5s,10s,20s...72s gaps) pushed total past 180s | `NVIDIA-dev` | run 25251729171 | 180 s → 300 s for `validateDaemonSetStatus` + `validateUpdatedNumberScheduled` (patch 0027 updated) |
 
 ---
 
-### 0027 — test/integration/daemonset: raise status poll budgets to 180 s (StaleControllerConsistency catch-up)
+### 0027 — test/integration/daemonset: raise status poll budgets to 300 s (StaleControllerConsistency catch-up)
 
 **File:** `0027-test-integration-daemonset-raise-status-poll-to-180.patch`  
-**Observed in:** Integration Tests — `NVIDIA-dev/test-k8s` only; runner `linux-amd64-cpu32`; seen on commit `a601d275ed95` (run 25151286336); kubernetes SHA `4de87946765`  
+**Observed in:** Integration Tests — `NVIDIA-dev/test-k8s` only; runner `linux-amd64-cpu32`; seen on commit `a601d275ed95` (run 25151286336) and again in run 25251729171; kubernetes SHA `4de87946765`  
 **Failing tests:** `TestOneNodeDaemonLaunchesPod/OnDelete` in `test/integration/daemonset/`  
-**Symptom:** Even with 120 s budget (patch 0026), the test still failed after 197.20 s. The daemon controller logged: `one-node-daemonset-test/foo failed with : read version: 12673 is not as new as written version: 12789 for group resource daemonsets.apps`. The `StaleControllerConsistencyDaemonSet` Beta feature gate (enabled by default in 1.36) causes the controller to block all status updates until its daemonset informer catches up to the written resource version (12789). On the heavily loaded 32-vCPU runner sharing etcd with many parallel test apiservers, the informer watch delivery was delayed beyond 120 s.  
-**Fix:** Raise `validateDaemonSetStatus` and `validateUpdatedNumberScheduled` from `120*time.Second` to `180*time.Second`. The 120 s in `validateDaemonSetPodsAndMarkReady` (polling the local informer cache) is unchanged.  
+**Symptom:** Even with 180 s budget, the test still failed after 254.74 s total (OnDelete subtest). The DaemonSet controller creates a cascading consistency retry chain: after the first `StaleControllerConsistencyDaemonSet` check fails (read 12249 < wrote 12349), it requeues with exponential backoff. When the informer catches up, the controller writes again (12500) but immediately fails again. Each retry cycle: 5s → 10s → 20s → 40s → 72s+ gap, totalling over 4 minutes before the controller made a net-forward status update. Error: `daemonset_test.go:488: timed out waiting for the condition`.  
+**Fix:** Raise `validateDaemonSetStatus` and `validateUpdatedNumberScheduled` from `120*time.Second` to `300*time.Second`. The 120 s in `validateDaemonSetPodsAndMarkReady` (polling the local informer cache) is unchanged.  
 **Upstream status:** No open upstream issue. The `StaleControllerConsistencyDaemonSet` feature was introduced in 1.36 Beta. Local workaround.
 
 ---
