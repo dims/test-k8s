@@ -1,4 +1,4 @@
-From 33d1a2f5bccb4a0d7701328dba6fdd6500235a8b Mon Sep 17 00:00:00 2001
+From a7453b8b3e999cf6771f540cd7dcc31c07a57a77 Mon Sep 17 00:00:00 2001
 From: Davanum Srinivas <davanum@gmail.com>
 Date: Sat, 2 May 2026 15:53:35 -0400
 Subject: [PATCH] controller/daemon: requeue with fixed delay on
@@ -19,14 +19,14 @@ Fixes test timeouts in TestOneNodeDaemonLaunchesPod on loaded runners
 
 Signed-off-by: Davanum Srinivas <davanum@gmail.com>
 ---
- pkg/controller/daemon/daemon_controller.go | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ pkg/controller/daemon/daemon_controller.go | 27 ++++++++++++++++++++++
+ 1 file changed, 27 insertions(+)
 
 diff --git a/pkg/controller/daemon/daemon_controller.go b/pkg/controller/daemon/daemon_controller.go
-index ba92e8abbd8..5e3db4be5fd 100644
+index ba92e8abbd8..33dd6b264ab 100644
 --- a/pkg/controller/daemon/daemon_controller.go
 +++ b/pkg/controller/daemon/daemon_controller.go
-@@ -70,6 +70,13 @@ const (
+@@ -70,6 +70,19 @@ const (
  
  	// BackoffGCInterval is the time that has to pass before next iteration of backoff GC is run
  	BackoffGCInterval = 1 * time.Minute
@@ -37,10 +37,31 @@ index ba92e8abbd8..5e3db4be5fd 100644
 +	// backoff) prevents stalls on loaded runners where informer lag would
 +	// otherwise accumulate hundreds of seconds of backoff.
 +	consistencyRecheckPeriod = 100 * time.Millisecond
++
++	// notReadyRecheckPeriod is the re-enqueue delay used when scheduled pods
++	// are not yet all ready. On heavily loaded runners, pod-status watch
++	// events can be delayed for minutes; polling at this cadence ensures
++	// NumberReady is updated promptly without relying solely on event delivery.
++	notReadyRecheckPeriod = 5 * time.Second
  )
  
  // Reasons for DaemonSet events
-@@ -1295,6 +1302,12 @@ func (dsc *DaemonSetsController) syncDaemonSet(ctx context.Context, key string)
+@@ -1264,6 +1277,14 @@ func (dsc *DaemonSetsController) updateDaemonSetStatus(ctx context.Context, ds *
+ 	if ds.Spec.MinReadySeconds > 0 && numberReady != numberAvailable {
+ 		dsc.enqueueDaemonSetAfter(ds, time.Duration(ds.Spec.MinReadySeconds)*time.Second)
+ 	}
++
++	// On loaded runners, pod-ready watch events can be delayed long enough to
++	// stall NumberReady updates. Re-enqueue with a short fixed period so the
++	// controller actively polls until all scheduled pods are ready, rather than
++	// waiting solely on event delivery.
++	if currentNumberScheduled > 0 && numberReady < currentNumberScheduled {
++		dsc.enqueueDaemonSetAfter(ds, notReadyRecheckPeriod)
++	}
+ 	return nil
+ }
+ 
+@@ -1295,6 +1316,12 @@ func (dsc *DaemonSetsController) syncDaemonSet(ctx context.Context, key string)
  				consistencyErr.GroupResource.Group,
  				consistencyErr.GroupResource.Resource,
  			).Inc()
