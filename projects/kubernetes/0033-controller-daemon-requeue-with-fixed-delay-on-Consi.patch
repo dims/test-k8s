@@ -1,0 +1,58 @@
+From 33d1a2f5bccb4a0d7701328dba6fdd6500235a8b Mon Sep 17 00:00:00 2001
+From: Davanum Srinivas <davanum@gmail.com>
+Date: Sat, 2 May 2026 15:53:35 -0400
+Subject: [PATCH] controller/daemon: requeue with fixed delay on
+ ConsistencyError
+
+When StaleControllerConsistencyDaemonSet is enabled and EnsureReady
+returns a ConsistencyError, syncDaemonSet was returning the error to
+the workqueue, which applies exponential backoff (5ms*2^N, max 1000s).
+After ~16 consecutive informer-lag misses, the DaemonSet item stalls
+for 327s before the next retry.
+
+A ConsistencyError is a transient "not yet observed" condition, not a
+real failure. Requeue with a short fixed delay (100ms) and return nil
+so the workqueue failure counter is not incremented.
+
+Fixes test timeouts in TestOneNodeDaemonLaunchesPod on loaded runners
+(NVIDIA-dev run 25258625294).
+
+Signed-off-by: Davanum Srinivas <davanum@gmail.com>
+---
+ pkg/controller/daemon/daemon_controller.go | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
+
+diff --git a/pkg/controller/daemon/daemon_controller.go b/pkg/controller/daemon/daemon_controller.go
+index ba92e8abbd8..5e3db4be5fd 100644
+--- a/pkg/controller/daemon/daemon_controller.go
++++ b/pkg/controller/daemon/daemon_controller.go
+@@ -70,6 +70,13 @@ const (
+ 
+ 	// BackoffGCInterval is the time that has to pass before next iteration of backoff GC is run
+ 	BackoffGCInterval = 1 * time.Minute
++
++	// consistencyRecheckPeriod is the fixed delay before re-processing a
++	// DaemonSet whose pod writes have not yet been observed by the informer.
++	// Using a fixed short delay (rather than the workqueue's exponential
++	// backoff) prevents stalls on loaded runners where informer lag would
++	// otherwise accumulate hundreds of seconds of backoff.
++	consistencyRecheckPeriod = 100 * time.Millisecond
+ )
+ 
+ // Reasons for DaemonSet events
+@@ -1295,6 +1302,12 @@ func (dsc *DaemonSetsController) syncDaemonSet(ctx context.Context, key string)
+ 				consistencyErr.GroupResource.Group,
+ 				consistencyErr.GroupResource.Resource,
+ 			).Inc()
++			// Requeue with a fixed short delay rather than returning the error,
++			// which would trigger exponential backoff and stall progress for
++			// hundreds of seconds on loaded runners. A ConsistencyError is a
++			// transient "not yet" condition, not a real failure.
++			dsc.queue.AddAfter(key, consistencyRecheckPeriod)
++			return nil
+ 		}
+ 		return err
+ 	}
+-- 
+2.50.1
+
