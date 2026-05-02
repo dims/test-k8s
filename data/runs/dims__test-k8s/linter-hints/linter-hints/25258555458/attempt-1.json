@@ -1,76 +1,66 @@
 {
   "discovery": {
-    "build_log_found": true,
-    "build_logs": [
-      "build-log.txt"
-    ],
+    "build_log_found": false,
+    "build_logs": [],
     "ginkgo_json_found": false,
-    "junit_files": [
-      "junit_verify.xml"
-    ],
-    "junit_found": true
+    "junit_files": [],
+    "junit_found": false
   },
   "files": {
     "artifacts_dir": "/home/runner/work/test-k8s/test-k8s/_artifacts",
-    "build_logs": [
-      "build-log.txt"
-    ],
-    "junit_files": [
-      "junit_verify.xml"
-    ],
-    "runner_metadata_files": [
-      "tested-revisions.json"
-    ]
+    "build_logs": [],
+    "junit_files": [],
+    "runner_metadata_files": []
   },
   "metadata": {
     "artifacts": {
-      "build_log": "build-log.txt",
-      "junit_files": [
-        "junit_verify.xml"
-      ]
+      "build_log": null,
+      "junit_files": []
     },
-    "collected_at": "2026-04-30T03:14:11Z",
+    "collected_at": "2026-05-02T18:16:21Z",
     "comparison_required": true,
-    "completed_at": "2026-04-30T03:14:17Z",
-    "containerd_ref": "main",
-    "containerd_repo": "containerd/containerd",
-    "containerd_sha": "ee17fa123684303d6f6e083c318146d0425961d7",
+    "completed_at": "2026-05-02T18:16:26Z",
+    "containerd_ref": null,
+    "containerd_repo": null,
+    "containerd_sha": null,
     "data_quality": {
       "fallback_synthetic_cases": true,
       "inventory_state": "present",
-      "junit_found": true,
-      "result_source": "junit",
+      "junit_found": false,
+      "result_source": "synthetic-fallback",
       "synthetic_cases": false
     },
     "display_order": 130,
-    "duration_seconds": 141,
-    "event": "push",
+    "duration_seconds": 105,
+    "event": "schedule",
     "github_ref": "main",
-    "github_sha": "705601617651c729aeb323ffebc1e5345938f158",
-    "html_url": "https://github.com/dims/test-k8s/actions/runs/25145375754",
+    "github_sha": "506e620d709035972d4b68d8f59a2a5dc3881d94",
+    "html_url": "https://github.com/dims/test-k8s/actions/runs/25258555458",
     "job_id": "linter-hints",
     "job_name": "Linter Hints",
     "job_slug": "linter-hints",
-    "kubernetes_ref": "master",
-    "kubernetes_repo": "kubernetes/kubernetes",
-    "kubernetes_sha": "90608d95012a53ab5c359cf8fe37f06601e2aaf7",
+    "kubernetes_ref": null,
+    "kubernetes_repo": null,
+    "kubernetes_sha": null,
     "mirrored_prow_job": "pull-kubernetes-linter-hints",
     "repo": "dims/test-k8s",
     "repo_slug": "dims__test-k8s",
     "result": "success",
     "run_attempt": 1,
-    "run_id": 25145375754,
-    "runner_label": "GitHub Actions 1000021104",
-    "runner_name": "GitHub Actions 1000021104",
+    "run_id": 25258555458,
+    "runner_label": "GitHub Actions 1000022164",
+    "runner_name": "GitHub Actions 1000022164",
     "schema_version": 1,
-    "started_at": "2026-04-30T03:11:56Z",
+    "started_at": "2026-05-02T18:14:41Z",
     "upstream_comparison": {
-      "inventory_parity_status": "match",
+      "inventory_parity_status": "mismatch",
       "junit_files": [
         "pr-logs/pull/138612/pull-kubernetes-linter-hints/2050634082496286720/artifacts/junit_verify.xml"
       ],
-      "local_only_count": 0,
-      "local_only_sample": [],
+      "local_only_count": 1,
+      "local_only_sample": [
+        "Linter Hints::verify WHAT=golangci-lint-pr-hints"
+      ],
       "local_test_count": 1,
       "reference_job_name": "pull-kubernetes-linter-hints",
       "reference_kubernetes_base_sha": "0775c6d795f92b6d91b84940346c479ac3e53f6f",
@@ -89,8 +79,10 @@
         },
         "timestamp": 1777744338
       },
-      "upstream_only_count": 0,
-      "upstream_only_sample": [],
+      "upstream_only_count": 1,
+      "upstream_only_sample": [
+        "verify::golangci-lint-pr-hints"
+      ],
       "upstream_test_count": 1
     },
     "upstream_testgrid_url": "https://testgrid.k8s.io/presubmits-kubernetes-blocking#pull-kubernetes-linter-hints",
@@ -101,40 +93,38 @@
   "suites": [
     {
       "cancelled": 0,
-      "duration_seconds": 0.00996971,
+      "duration_seconds": 0.0,
       "failed": 0,
-      "file_source": "junit_verify.xml",
-      "passed": 1,
-      "skipped": 0,
-      "source": "junit",
-      "suite": "verify",
-      "suite_slug": "verify",
+      "passed": 0,
+      "skipped": 1,
+      "source": "synthetic",
+      "suite": "Linter Hints",
+      "suite_slug": "linter-hints",
       "tests": 1,
       "unknown": 0
     }
   ],
   "summary": {
     "cancelled": 0,
-    "duration_seconds": 0.01,
+    "duration_seconds": 0.0,
     "failed": 0,
-    "passed": 1,
-    "skipped": 0,
+    "passed": 0,
+    "skipped": 1,
     "tests": 1,
     "unknown": 0
   },
   "tests": [
     {
-      "classname": "verify",
-      "duration_seconds": 0.00996971,
+      "classname": "Linter Hints",
+      "duration_seconds": 0.0,
       "failure_text": "",
-      "file_source": "junit_verify.xml",
-      "name": "golangci-lint-pr-hints",
-      "name_slug": "golangci-lint-pr-hints",
-      "owner_hint": "verify",
-      "source": "junit",
-      "status": "passed",
-      "suite": "verify",
-      "suite_slug": "verify"
+      "name": "verify WHAT=golangci-lint-pr-hints",
+      "name_slug": "verify-what-golangci-lint-pr-hints",
+      "owner_hint": "synthetic",
+      "source": "synthetic",
+      "status": "skipped",
+      "suite": "Linter Hints",
+      "suite_slug": "linter-hints"
     }
   ]
 }
