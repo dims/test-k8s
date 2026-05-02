@@ -67,9 +67,9 @@
     "upstream_comparison": {
       "inventory_parity_status": "mismatch",
       "junit_files": [
-        "pr-logs/pull/137463/pull-kubernetes-e2e-kind/2029693772060692480/artifacts/junit_01.xml"
+        "pr-logs/pull/132167/pull-kubernetes-e2e-kind/2024812022994046976/artifacts/junit_01.xml"
       ],
-      "local_only_count": 2839,
+      "local_only_count": 2859,
       "local_only_sample": [
         "Kubernetes e2e suite::API Streaming (aka. WatchList) [FeatureGate:WatchList] reflector doesn't support receiving resources as Tables",
         "Kubernetes e2e suite::API Streaming (aka. WatchList) [FeatureGate:WatchList] reflector using standard List doesn't support receiving resources as Tables",
@@ -94,26 +94,25 @@
       ],
       "local_test_count": 7581,
       "reference_job_name": "pull-kubernetes-e2e-kind",
-      "reference_kubernetes_base_sha": "b50a6aa7cf61fc14a3558259b25ab4f805b6bedf",
+      "reference_kubernetes_base_sha": "9c607c36573d90140b878bb63789c7ed965ca585",
       "reference_matches_kubernetes_sha": false,
-      "reference_pr_number": 137463,
-      "reference_pr_updated_at": "2026-05-02T06:46:48Z",
-      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/137463/pull-kubernetes-e2e-kind/2029693772060692480",
+      "reference_pr_number": 132167,
+      "reference_pr_updated_at": "2026-05-02T07:10:46Z",
+      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/132167/pull-kubernetes-e2e-kind/2024812022994046976",
       "reference_selection": "recent-success",
-      "reference_started_at": "2026-03-05T23:27:28Z",
+      "reference_started_at": "2026-02-20T12:10:20Z",
       "reference_started_json": {
-        "pull": "137463",
-        "repo-commit": "e86c8d5d423de948d8f48034e7c8ad79888d28ed",
-        "repo-version": "e86c8d5d423de948d8f48034e7c8ad79888d28ed",
+        "pull": "132167",
+        "repo-commit": "c5ee7a996741fb79417c90f03379a7fc2270e536",
+        "repo-version": "c5ee7a996741fb79417c90f03379a7fc2270e536",
         "repos": {
-          "kubernetes/kubernetes": "master:b50a6aa7cf61fc14a3558259b25ab4f805b6bedf,137463:248610965c32f280499372be99a79d5e509208f5"
+          "kubernetes/kubernetes": "master:9c607c36573d90140b878bb63789c7ed965ca585,132167:1f9842c9937fc08a482f130059bd6fec5c6e1705"
         },
-        "timestamp": 1772751707
+        "timestamp": 1771587921
       },
-      "upstream_only_count": 2711,
+      "upstream_only_count": 2710,
       "upstream_only_sample": [
         "Kubernetes e2e suite::API Streaming (aka. WatchList) [FeatureGate:WatchList] [Beta] reflector doesn't support receiving resources as Tables",
-        "Kubernetes e2e suite::API Streaming (aka. WatchList) [FeatureGate:WatchList] [Beta] reflector using standard List doesn't support receiving resources as Tables",
         "Kubernetes e2e suite::API Streaming (aka. WatchList) [FeatureGate:WatchList] [Beta] server supports sending resources in Table format",
         "Kubernetes e2e suite::API Streaming (aka. WatchList) [FeatureGate:WatchList] [Beta] should NOT be requested by client-go's List method when WatchListClient is enabled",
         "Kubernetes e2e suite::API Streaming (aka. WatchList) [FeatureGate:WatchList] [Beta] should NOT be requested by dynamic client's List method when WatchListClient is enabled",
@@ -131,9 +130,10 @@
         "Kubernetes e2e suite::CSI Mock selinux on mount metrics and SELinuxWarningController SELinuxMount metrics [LinuxOnly] [Feature:SELinux] [Serial] error is bumped on two Pods with a different context on RWO volume and SELinuxMount enabled",
         "Kubernetes e2e suite::CSI Mock selinux on mount metrics and SELinuxWarningController SELinuxMount metrics [LinuxOnly] [Feature:SELinux] [Serial] error is bumped on two Pods with a different context on RWOP volume",
         "Kubernetes e2e suite::CSI Mock selinux on mount metrics and SELinuxWarningController SELinuxMount metrics [LinuxOnly] [Feature:SELinux] [Serial] error is bumped on two Pods with a different context on RWX volume and SELinuxMount enabled",
-        "Kubernetes e2e suite::CSI Mock selinux on mount metrics and SELinuxWarningController SELinuxMount metrics [LinuxOnly] [Feature:SELinux] [Serial] error is bumped on two Pods with a different policy on RWO volume and SELinuxMount enabled (Recursive + MountOption)"
+        "Kubernetes e2e suite::CSI Mock selinux on mount metrics and SELinuxWarningController SELinuxMount metrics [LinuxOnly] [Feature:SELinux] [Serial] error is bumped on two Pods with a different policy on RWO volume and SELinuxMount enabled (Recursive + MountOption)",
+        "Kubernetes e2e suite::CSI Mock selinux on mount metrics and SELinuxWarningController SELinuxMount metrics [LinuxOnly] [Feature:SELinux] [Serial] error is bumped on two Pods with a different policy on RWO volume and SELinuxMount enabled (Recursive + nil)"
       ],
-      "upstream_test_count": 7453
+      "upstream_test_count": 7432
     },
     "upstream_testgrid_url": "https://testgrid.k8s.io/presubmits-kubernetes-blocking#pull-kubernetes-e2e-kind",
     "workflow_file": ".github/workflows/e2e-kind.yml",
