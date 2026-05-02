@@ -264,3 +264,14 @@ If a patch is updated (e.g. a threshold is raised), add a **Change history** tab
 **Symptom:** After deleting a Workload (which sets `DeletionTimestamp` but leaves the object due to a finalizer), the admission plugin's informer-backed lister may still return the old object without `DeletionTimestamp`. On the 32-vCPU runner the PodGroup creation test completes so quickly that the lister is stale; the admission plugin passes the PodGroup creation when it should reject. The test expects a Forbidden error but gets success.  
 **Fix:** Replace the lister-based Workload lookup in `Validate()` with a direct API call (`p.client.SchedulingV1alpha2().Workloads(...).Get()`), ensuring fresh state. The informer is retained for the `WaitForReady` check. Also update the unit test to populate the fake client (not just the informer store) to match the new code path.  
 **Upstream status:** Production bug in `plugin/pkg/admission/podgroup` (KEP-5832, PR #137464). The lister is unsuitable for this check because DeletionTimestamp changes need strong consistency. Will propose upstream fix.
+
+---
+
+### 0031 — test/cmd/apps: wait for statefulset observedGeneration after rollout restart
+
+**File:** `0031-test-wait-statefulset-observedGeneration-after-rollout-restart.patch`
+**Observed in:** Cmd Tests — `dims/test-k8s` only; GitHub-hosted `ubuntu-24.04` (4 vCPU); first seen in run 25251718712 (2026-05-02 12:17 UTC); NVIDIA-dev run 25251723817 and all 4 prior dims runs passed cleanly  
+**Failing tests:** `run_stateful_set_tests` in `test/cmd/apps.sh` (called via `hack/make-rules/test-cmd.sh`)  
+**Symptom:** After `kubectl rollout restart statefulset nginx`, the test immediately calls `kube::test::get_object_assert` (point-in-time check) on `.status.observedGeneration` expecting 3. On the slow 4-vCPU runner the StatefulSet controller had not yet processed the new generation, returning 2. Error: `apps.sh:624: FAIL! Get statefulset nginx {{.status.observedGeneration}} Expected: 3, Got: 2`.  
+**Fix:** Change `get_object_assert` to `wait_object_assert` on `apps.sh:624`. This matches lines 611 and 616 which already use `wait_object_assert` for the same field in the same function; the inconsistency was present since the original 2019 commit (145935d8157).  
+**Upstream status:** No open upstream issue. Local workaround; will propose upstream.

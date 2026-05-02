@@ -1,0 +1,32 @@
+From cf1b9e149809b76c79d07ee22b58b0aecd638643 Mon Sep 17 00:00:00 2001
+From: Davanum Srinivas <davanum@gmail.com>
+Date: Sat, 2 May 2026 10:24:04 -0400
+Subject: [PATCH] test: wait for statefulset observedGeneration after rollout
+ restart
+
+The assertion at apps.sh:624 used get_object_assert (immediate check)
+instead of wait_object_assert (polling) for .status.observedGeneration
+after kubectl rollout restart. On slow runners the StatefulSet controller
+may not have processed the new generation yet. Lines 611 and 616 already
+use wait_object_assert for the same field; align line 624 with that
+pattern to avoid a timing flake.
+---
+ test/cmd/apps.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/test/cmd/apps.sh b/test/cmd/apps.sh
+index 5098c019084..479022a52b3 100755
+--- a/test/cmd/apps.sh
++++ b/test/cmd/apps.sh
+@@ -621,7 +621,7 @@ run_stateful_set_tests() {
+ 
+   # Rollout restart should change generation
+   kubectl rollout restart statefulset nginx "${kube_flags[@]}"
+-  kube::test::get_object_assert 'statefulset nginx' "{{$statefulset_observed_generation}}" '3'
++  kube::test::wait_object_assert 'statefulset nginx' "{{$statefulset_observed_generation}}" '3'
+ 
+   ### Clean up
+   kubectl delete -f hack/testdata/rollingupdate-statefulset.yaml "${kube_flags[@]:?}"
+-- 
+2.50.1
+
