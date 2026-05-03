@@ -1,0 +1,90 @@
+From e91e77160490f4f8b6d4efd47e4f4f981ed76cec Mon Sep 17 00:00:00 2001
+From: Davanum Srinivas <davanum@gmail.com>
+Date: Sun, 3 May 2026 12:00:29 -0400
+Subject: [PATCH] client-go/leaderelection: retry release on resourceVersion
+ conflict
+
+When the leader context is cancelled, the renew goroutine may complete
+one last update of the lease between the release()'s Get() and Update()
+calls, causing a 409 Conflict error. Add a retry loop (up to 5 attempts)
+that re-fetches the current resourceVersion on conflict and retries the
+update, ensuring the lease holder is reliably cleared on shutdown.
+---
+ .../tools/leaderelection/leaderelection.go    | 56 +++++++++++--------
+ 1 file changed, 33 insertions(+), 23 deletions(-)
+
+diff --git a/staging/src/k8s.io/client-go/tools/leaderelection/leaderelection.go b/staging/src/k8s.io/client-go/tools/leaderelection/leaderelection.go
+index 00798d82ac4..1f300245f79 100644
+--- a/staging/src/k8s.io/client-go/tools/leaderelection/leaderelection.go
++++ b/staging/src/k8s.io/client-go/tools/leaderelection/leaderelection.go
+@@ -316,34 +316,44 @@ func (le *LeaderElector) release(logger klog.Logger) bool {
+ 	ctx := context.Background()
+ 	timeoutCtx, timeoutCancel := context.WithTimeout(ctx, le.config.RenewDeadline)
+ 	defer timeoutCancel()
+-	// update the resourceVersion of lease
+-	oldLeaderElectionRecord, _, err := le.config.Lock.Get(timeoutCtx)
+-	if err != nil {
+-		if !errors.IsNotFound(err) {
+-			logger.Error(err, "error retrieving resource lock", "lock", le.config.Lock.Describe())
++
++	// Retry on conflict: the renew goroutine may update the lease one last time
++	// between our Get and Update, causing a resourceVersion conflict. Retry with
++	// a fresh Get to pick up the latest resourceVersion.
++	for i := 0; i < 5; i++ {
++		oldLeaderElectionRecord, _, err := le.config.Lock.Get(timeoutCtx)
++		if err != nil {
++			if !errors.IsNotFound(err) {
++				logger.Error(err, "error retrieving resource lock", "lock", le.config.Lock.Describe())
++				return false
++			}
++			logger.Info("lease lock not found", "lock", le.config.Lock.Describe())
+ 			return false
+ 		}
+-		logger.Info("lease lock not found", "lock", le.config.Lock.Describe())
+-		return false
+-	}
+ 
+-	if !le.IsLeader() {
++		if !le.IsLeader() {
++			return true
++		}
++		now := metav1.NewTime(le.clock.Now())
++		leaderElectionRecord := rl.LeaderElectionRecord{
++			LeaderTransitions:    oldLeaderElectionRecord.LeaderTransitions,
++			LeaseDurationSeconds: 1,
++			RenewTime:            now,
++			AcquireTime:          now,
++		}
++		if err := le.config.Lock.Update(timeoutCtx, leaderElectionRecord); err != nil {
++			if errors.IsConflict(err) {
++				continue
++			}
++			logger.Error(err, "Failed to release lease", "lock", le.config.Lock.Describe())
++			return false
++		}
++
++		le.setObservedRecord(&leaderElectionRecord)
+ 		return true
+ 	}
+-	now := metav1.NewTime(le.clock.Now())
+-	leaderElectionRecord := rl.LeaderElectionRecord{
+-		LeaderTransitions:    oldLeaderElectionRecord.LeaderTransitions,
+-		LeaseDurationSeconds: 1,
+-		RenewTime:            now,
+-		AcquireTime:          now,
+-	}
+-	if err := le.config.Lock.Update(timeoutCtx, leaderElectionRecord); err != nil {
+-		logger.Error(err, "Failed to release lease", "lock", le.config.Lock.Describe())
+-		return false
+-	}
+-
+-	le.setObservedRecord(&leaderElectionRecord)
+-	return true
++	logger.Error(nil, "Failed to release lease after retries due to conflicts", "lock", le.config.Lock.Describe())
++	return false
+ }
+ 
+ // tryCoordinatedRenew checks if it acquired a lease and tries to renew the
+-- 
+2.50.1
+

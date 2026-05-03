@@ -312,6 +312,18 @@ If a patch is updated (e.g. a threshold is raised), add a **Change history** tab
 |------|---------|--------|------------|--------|
 | 2026-05-03 | `TestInsufficientCapacityNode` broken by initial `allScheduled` approach (run 25279812848) | NVIDIA-dev | 78bf60c93d | Replaced `allScheduled` with `pendingScheduling` counter that excludes `PodScheduled=False` pods |
 
+### 0036 — client-go/leaderelection: retry release on resourceVersion conflict
+
+**File:** `0036-client-go-leaderelection-retry-release-on-resourceVe.patch`  
+**Observed in:** Integration Tests — `NVIDIA-dev/test-k8s`; self-hosted `linux-amd64-cpu32`; first seen in run 25282151363 (2026-05-03, commit 6e6f2e1585); dims passed same commit  
+**Failing tests:** `TestLeaderElectionReleaseOnCancel` in `test/integration/controllermanager/`  
+**Symptom:** Test times out after 10 s waiting for the lease holder to be cleared after KCM shutdown. Log shows `"Failed to release lease" err="Operation cannot be fulfilled on leases.coordination.k8s.io \"kube-controller-manager\": the object has been modified"` at `leaderelection.go:341`.  
+**Root cause:** `release()` in `client-go/tools/leaderelection/leaderelection.go` does a single `Get()` + `Update()` with no retry. When the lease is acquired and the context is immediately cancelled (within 2 ms in the test), a concurrent update (e.g. the KCM's renew goroutine completing one final renewal between the `Get` and `Update` calls) changes the resourceVersion, causing a 409 Conflict. The previous upstream fix (`271233a62ae`, 2025-07-10) added a `Get()` before `Update()` to avoid stale resourceVersions, but did not add retry on conflict, leaving the race window intact.  
+**Fix:** Wrap the Get+Update in a retry loop (up to 5 attempts) that re-fetches the current resourceVersion on `errors.IsConflict()` and retries the update, ensuring the lease holder is reliably cleared on shutdown.  
+**Upstream status:** No upstream issue found. Will propose upstream.
+
+---
+
 ### 0035 — test/integration/conversion: drain watch goroutines before stopping webhook
 
 **File:** `0035-test-integration-conversion-drain-watch-goroutines-b.patch`  
