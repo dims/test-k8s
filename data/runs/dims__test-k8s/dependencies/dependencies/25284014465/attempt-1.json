@@ -1,76 +1,68 @@
 {
   "discovery": {
-    "build_log_found": true,
-    "build_logs": [
-      "build-log.txt"
-    ],
+    "build_log_found": false,
+    "build_logs": [],
     "ginkgo_json_found": false,
-    "junit_files": [
-      "junit_verify.xml"
-    ],
-    "junit_found": true
+    "junit_files": [],
+    "junit_found": false
   },
   "files": {
     "artifacts_dir": "/home/runner/work/test-k8s/test-k8s/_artifacts",
-    "build_logs": [
-      "build-log.txt"
-    ],
-    "junit_files": [
-      "junit_verify.xml"
-    ],
-    "runner_metadata_files": [
-      "tested-revisions.json"
-    ]
+    "build_logs": [],
+    "junit_files": [],
+    "runner_metadata_files": []
   },
   "metadata": {
     "artifacts": {
-      "build_log": "build-log.txt",
-      "junit_files": [
-        "junit_verify.xml"
-      ]
+      "build_log": null,
+      "junit_files": []
     },
-    "collected_at": "2026-05-01T11:27:39Z",
+    "collected_at": "2026-05-03T16:05:59Z",
     "comparison_required": true,
-    "completed_at": "2026-05-01T11:27:46Z",
-    "containerd_ref": "main",
-    "containerd_repo": "containerd/containerd",
-    "containerd_sha": "2976f38ccbfcda5ef1364d63d60b0a304e4bf94a",
+    "completed_at": "2026-05-03T16:06:05Z",
+    "containerd_ref": null,
+    "containerd_repo": null,
+    "containerd_sha": null,
     "data_quality": {
       "fallback_synthetic_cases": true,
       "inventory_state": "present",
-      "junit_found": true,
-      "result_source": "junit",
+      "junit_found": false,
+      "result_source": "synthetic-fallback",
       "synthetic_cases": false
     },
     "display_order": 150,
-    "duration_seconds": 219,
+    "duration_seconds": 77,
     "event": "push",
     "github_ref": "main",
-    "github_sha": "a38e3a78f2daa065d4ac85afd775e6ef020fbb4a",
-    "html_url": "https://github.com/dims/test-k8s/actions/runs/25212591152",
+    "github_sha": "6c92c9ce04df06e5293ec1cfe8f2bdfd04fd41f2",
+    "html_url": "https://github.com/dims/test-k8s/actions/runs/25284014465",
     "job_id": "dependencies",
     "job_name": "Dependencies",
     "job_slug": "dependencies",
-    "kubernetes_ref": "master",
-    "kubernetes_repo": "kubernetes/kubernetes",
-    "kubernetes_sha": "fa0f6ab037f4cda01c65f8ab5076bf9b1361f218",
+    "kubernetes_ref": null,
+    "kubernetes_repo": null,
+    "kubernetes_sha": null,
     "mirrored_prow_job": "pull-kubernetes-dependencies",
     "repo": "dims/test-k8s",
     "repo_slug": "dims__test-k8s",
-    "result": "success",
+    "result": "failure",
     "run_attempt": 1,
-    "run_id": 25212591152,
-    "runner_label": "GitHub Actions 1000021632",
-    "runner_name": "GitHub Actions 1000021632",
+    "run_id": 25284014465,
+    "runner_label": "GitHub Actions 1000022659",
+    "runner_name": "GitHub Actions 1000022659",
     "schema_version": 1,
-    "started_at": "2026-05-01T11:24:07Z",
+    "started_at": "2026-05-03T16:04:48Z",
     "upstream_comparison": {
-      "inventory_parity_status": "match",
+      "inventory_parity_status": "mismatch",
       "junit_files": [
         "pr-logs/pull/129719/pull-kubernetes-dependencies/2050925690475253760/artifacts/junit_verify.xml"
       ],
-      "local_only_count": 0,
-      "local_only_sample": [],
+      "local_only_count": 3,
+      "local_only_sample": [
+        "Dependencies::external-dependencies-version",
+        "Dependencies::vendor",
+        "Dependencies::vendor-licenses"
+      ],
       "local_test_count": 3,
       "reference_job_name": "pull-kubernetes-dependencies",
       "reference_kubernetes_base_sha": "10104afcde5b82815ba2a34e2c12f7c20a4d52c2",
@@ -89,8 +81,12 @@
         },
         "timestamp": 1777813797
       },
-      "upstream_only_count": 0,
-      "upstream_only_sample": [],
+      "upstream_only_count": 3,
+      "upstream_only_sample": [
+        "verify::external-dependencies-version",
+        "verify::vendor",
+        "verify::vendor-licenses"
+      ],
       "upstream_test_count": 3
     },
     "upstream_testgrid_url": "https://testgrid.k8s.io/presubmits-kubernetes-blocking#pull-kubernetes-dependencies",
@@ -101,66 +97,62 @@
   "suites": [
     {
       "cancelled": 0,
-      "duration_seconds": 66.6948,
+      "duration_seconds": 0.0,
       "failed": 0,
-      "file_source": "junit_verify.xml",
-      "passed": 3,
-      "skipped": 0,
-      "source": "junit",
-      "suite": "verify",
-      "suite_slug": "verify",
+      "passed": 0,
+      "skipped": 3,
+      "source": "synthetic",
+      "suite": "Dependencies",
+      "suite_slug": "dependencies",
       "tests": 3,
       "unknown": 0
     }
   ],
   "summary": {
     "cancelled": 0,
-    "duration_seconds": 66.695,
+    "duration_seconds": 0.0,
     "failed": 0,
-    "passed": 3,
-    "skipped": 0,
+    "passed": 0,
+    "skipped": 3,
     "tests": 3,
     "unknown": 0
   },
   "tests": [
     {
-      "classname": "verify",
-      "duration_seconds": 12.0768,
+      "classname": "Dependencies",
+      "duration_seconds": 0.0,
       "failure_text": "",
-      "file_source": "junit_verify.xml",
       "name": "external-dependencies-version",
       "name_slug": "external-dependencies-version",
-      "owner_hint": "verify",
-      "source": "junit",
-      "status": "passed",
-      "suite": "verify",
-      "suite_slug": "verify"
+      "owner_hint": "synthetic",
+      "source": "synthetic",
+      "status": "skipped",
+      "suite": "Dependencies",
+      "suite_slug": "dependencies"
     },
     {
-      "classname": "verify",
-      "duration_seconds": 11.144,
+      "classname": "Dependencies",
+      "duration_seconds": 0.0,
       "failure_text": "",
-      "file_source": "junit_verify.xml",
-      "name": "vendor-licenses",
-      "name_slug": "vendor-licenses",
-      "owner_hint": "verify",
-      "source": "junit",
-      "status": "passed",
-      "suite": "verify",
-      "suite_slug": "verify"
-    },
-    {
-      "classname": "verify",
-      "duration_seconds": 43.474,
-      "failure_text": "",
-      "file_source": "junit_verify.xml",
       "name": "vendor",
       "name_slug": "vendor",
-      "owner_hint": "verify",
-      "source": "junit",
-      "status": "passed",
-      "suite": "verify",
-      "suite_slug": "verify"
+      "owner_hint": "synthetic",
+      "source": "synthetic",
+      "status": "skipped",
+      "suite": "Dependencies",
+      "suite_slug": "dependencies"
+    },
+    {
+      "classname": "Dependencies",
+      "duration_seconds": 0.0,
+      "failure_text": "",
+      "name": "vendor-licenses",
+      "name_slug": "vendor-licenses",
+      "owner_hint": "synthetic",
+      "source": "synthetic",
+      "status": "skipped",
+      "suite": "Dependencies",
+      "suite_slug": "dependencies"
     }
   ]
 }
