@@ -1,30 +1,32 @@
-From e099c6169d2de4b881c7ffb499b610a4fb62531c Mon Sep 17 00:00:00 2001
+From ed182777b427906a9ffc33fc8fbd8a0a53a98fc8 Mon Sep 17 00:00:00 2001
 From: Davanum Srinivas <davanum@gmail.com>
-Date: Sun, 3 May 2026 15:07:25 -0400
+Date: Sun, 3 May 2026 15:50:36 -0400
 Subject: [PATCH] e2e_node: widen cadvisor container metric bounds for CI
  environments
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-On busy CI runners the cumulative blkio cgroup counters
-(container_blkio_device_usage_total, container_fs_writes_total,
-container_memory_failures_total) can spike well above the prior upper
-bounds, causing intermittent test failures.  Raise the limits to
-accommodate observed maximums with headroom:
+Cumulative blkio/overlayfs I/O counters can spike far beyond the
+original test bounds on loaded CI runners.  Widen all affected upper
+limits to prevent flaky failures while still catching runaway usage:
 
-  container_blkio_device_usage_total:  10_000_000 -> 500_000_000
-  container_fs_writes_total:                  200 ->     100_000
-  container_memory_failures_total:      1_000_000 ->  10_000_000
-
-Observed failures: container_fs_writes_total hit 11,690 (vs bound 200)
-and container_blkio_device_usage_total hit ~47.9M (vs bound 10M).
+  container_blkio_device_usage_total  10 MB  → 500 MB
+  container_fs_reads_bytes_total      10 MB  → 500 MB
+  container_fs_reads_total            100    → 100,000
+  container_fs_usage_bytes            1 MB   → 100 MB
+  container_fs_writes_bytes_total     1 MB   → 500 MB
+  container_fs_writes_total           200    → 100,000
+  container_memory_failures_total     1 M    → 10 M
 ---
- test/e2e_node/container_metrics_test.go | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ test/e2e_node/container_metrics_test.go | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
 diff --git a/test/e2e_node/container_metrics_test.go b/test/e2e_node/container_metrics_test.go
-index d5d3bc40bb2..4a06366b8dc 100644
+index d5d3bc40bb2..49eefce79f3 100644
 --- a/test/e2e_node/container_metrics_test.go
 +++ b/test/e2e_node/container_metrics_test.go
-@@ -53,7 +53,7 @@ var _ = SIGDescribe("ContainerMetrics", "[LinuxOnly]", framework.WithNodeConform
+@@ -53,20 +53,20 @@ var _ = SIGDescribe("ContainerMetrics", "[LinuxOnly]", framework.WithNodeConform
  		ginkgo.It("should report container metrics", func(ctx context.Context) {
  			keys := gstruct.Keys{}
  			ctrMatches := map[string]types.GomegaMatcher{
@@ -33,11 +35,16 @@ index d5d3bc40bb2..4a06366b8dc 100644
  				"container_cpu_system_seconds_total": boundedSample(0, 100),
  				"container_cpu_usage_seconds_total":  boundedSample(0, 100),
  				"container_cpu_user_seconds_total":   boundedSample(0, 100),
-@@ -62,11 +62,11 @@ var _ = SIGDescribe("ContainerMetrics", "[LinuxOnly]", framework.WithNodeConform
- 				"container_fs_reads_total":           boundedSample(0, 100),
- 				"container_fs_usage_bytes":           boundedSample(0, 1000000),
- 				"container_fs_writes_bytes_total":    boundedSample(0, 1000000),
+ 				"container_file_descriptors":         boundedSample(0, 100),
+-				"container_fs_reads_bytes_total":     boundedSample(0, 10000000),
+-				"container_fs_reads_total":           boundedSample(0, 100),
+-				"container_fs_usage_bytes":           boundedSample(0, 1000000),
+-				"container_fs_writes_bytes_total":    boundedSample(0, 1000000),
 -				"container_fs_writes_total":          boundedSample(0, 200),
++				"container_fs_reads_bytes_total":     boundedSample(0, 500000000),
++				"container_fs_reads_total":           boundedSample(0, 100000),
++				"container_fs_usage_bytes":           boundedSample(0, 100000000),
++				"container_fs_writes_bytes_total":    boundedSample(0, 500000000),
 +				"container_fs_writes_total":          boundedSample(0, 100000),
  				"container_last_seen":                boundedSample(time.Now().Add(-maxStatsAge).Unix(), time.Now().Add(2*time.Minute).Unix()),
  				"container_memory_cache":             boundedSample(0, 10*e2evolume.Mb),

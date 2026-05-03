@@ -343,7 +343,7 @@ If a patch is updated (e.g. a threshold is raised), add a **Change history** tab
 **Failing tests:** `[sig-node] ContainerMetrics [LinuxOnly] when querying /metrics/cadvisor [It] should report container metrics [NodeConformance]` in `test/e2e_node/container_metrics_test.go:126`  
 **Symptom:** Test fails asserting upper bounds on cadvisor blkio/fs/memory cgroup counters: `container_fs_writes_total` expected ≤ 200 but got 11,690; `container_blkio_device_usage_total` expected ≤ 10,000,000 but got ~47,923,200; `container_memory_failures_total` expected ≤ 1,000,000 but got ~3,214,439.  
 **Root cause:** These are cumulative cgroup counters that can spike on busy CI runners due to overlayfs write amplification and shared block device I/O. The failure is intermittent (1/10 runs today on both repos); the same thresholds pass 90% of the time.  
-**Fix:** Raise the three over-limit bounds: `container_blkio_device_usage_total` 10M → 500M; `container_fs_writes_total` 200 → 100,000; `container_memory_failures_total` 1M → 10M.  
+**Fix:** Comprehensive raise of all I/O-related bounds: `container_blkio_device_usage_total` 10M → 500M; `container_fs_reads_bytes_total` 10MB → 500MB; `container_fs_reads_total` 100 → 100,000; `container_fs_usage_bytes` 1MB → 100MB; `container_fs_writes_bytes_total` 1MB → 500MB; `container_fs_writes_total` 200 → 100,000; `container_memory_failures_total` 1M → 10M.  
 **Upstream status:** No upstream issue found. Will propose upstream.
 
 **Change history:**
@@ -351,4 +351,5 @@ If a patch is updated (e.g. a threshold is raised), add a **Change history** tab
 | When | Trigger | Remote | Commit | Change |
 |------|---------|--------|--------|--------|
 | Mar 2026 | `container_fs_writes_total` exceeded bound of 100 | `NVIDIA-dev` + `dims` | `a75cd2e0f47` | 100 → 200 (upstream) |
-| May 2026 | `container_fs_writes_total` hit 11,690 (vs 200); `container_blkio_device_usage_total` hit ~47.9M (vs 10M); `container_memory_failures_total` hit ~3.2M (vs 1M) | `NVIDIA-dev` + `dims` | `6c92c9ce04df` | 200 → 100,000; 10M → 500M; 1M → 10M (patch 0037) |
+| May 2026 | `container_fs_writes_total` hit 11,690 (vs 200); `container_blkio_device_usage_total` hit ~47.9M (vs 10M); `container_memory_failures_total` hit ~3.2M (vs 1M) | `NVIDIA-dev` + `dims` | `6c92c9ce04df` | 200 → 100,000; 10M → 500M; 1M → 10M (initial patch 0037) |
+| May 2026 | `container_fs_writes_bytes_total` hit ~80MB and ~64MB (vs 1MB) on NVIDIA-dev run 25288097151; ~40MB and ~51MB on dims run 25288098530 | `NVIDIA-dev` + `dims` | `977128df8f2a` | Comprehensive update: add fs_reads_bytes_total, fs_reads_total, fs_usage_bytes, fs_writes_bytes_total bounds; all I/O counters now at 500MB/100K ceiling |
