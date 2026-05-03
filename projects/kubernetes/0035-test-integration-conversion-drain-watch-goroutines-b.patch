@@ -1,0 +1,51 @@
+From 9db82cb4355d9dbe8c2812d9f05c30e4d227ae4d Mon Sep 17 00:00:00 2001
+From: Davanum Srinivas <davanum@gmail.com>
+Date: Sun, 3 May 2026 10:41:05 -0400
+Subject: [PATCH] test/integration/conversion: drain watch goroutines before
+ stopping webhook
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+After apiServerTearDown() cancels the server context, etcd watch goroutines
+that are already mid-event (inside serialProcessEvents → transform →
+prepareObjs → decodeObj) continue processing until the current event is
+done before checking context cancellation.
+
+If a watch goroutine is converting a CRD instance via the conversion webhook
+when webhookTearDown() closes the webhook server, it gets "connection
+refused". fatalOnDecodeError (set via KUBE_PANIC_WATCH_DECODE_ERROR in CI)
+converts this decode error into a panic, failing the test.
+
+PR #136909 correctly ordered apiServerTearDown() before webhookTearDown(),
+but did not account for goroutines already mid-event at the time the context
+is cancelled. Adding a 2-second drain window between the two tear-downs
+gives any in-progress watch goroutines time to complete their webhook calls
+while the server is still reachable, eliminating the race.
+
+Upstream issue: https://github.com/kubernetes/kubernetes/issues/136739
+
+Signed-off-by: Davanum Srinivas <davanum@gmail.com>
+---
+ .../test/integration/conversion/conversion_test.go           | 5 +++++
+ 1 file changed, 5 insertions(+)
+
+diff --git a/staging/src/k8s.io/apiextensions-apiserver/test/integration/conversion/conversion_test.go b/staging/src/k8s.io/apiextensions-apiserver/test/integration/conversion/conversion_test.go
+index 317bb2ff97a..6760e357cf3 100644
+--- a/staging/src/k8s.io/apiextensions-apiserver/test/integration/conversion/conversion_test.go
++++ b/staging/src/k8s.io/apiextensions-apiserver/test/integration/conversion/conversion_test.go
+@@ -1599,6 +1599,11 @@ func TestWebhookConversion_WhitespaceCABundleEtcdBypass(t *testing.T) {
+ 		// Ensure conversion webhook remains available until the apiserver
+ 		// and its etcd watches are fully shut down.
+ 		apiServerTearDown()
++		// After the apiserver stops, etcd watch goroutines may still be
++		// processing queued events that call the conversion webhook. Give them
++		// time to complete before closing the webhook server; otherwise they
++		// hit connection-refused and panic via fatalOnDecodeError.
++		time.Sleep(2 * time.Second)
+ 		webhookTearDown()
+ 	})
+ 
+-- 
+2.50.1
+

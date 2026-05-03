@@ -311,3 +311,13 @@ If a patch is updated (e.g. a threshold is raised), add a **Change history** tab
 | Date | Trigger | Remote | Commit SHA | Change |
 |------|---------|--------|------------|--------|
 | 2026-05-03 | `TestInsufficientCapacityNode` broken by initial `allScheduled` approach (run 25279812848) | NVIDIA-dev | 78bf60c93d | Replaced `allScheduled` with `pendingScheduling` counter that excludes `PodScheduled=False` pods |
+
+### 0035 — test/integration/conversion: drain watch goroutines before stopping webhook
+
+**File:** `0035-test-integration-conversion-drain-watch-goroutines-b.patch`  
+**Observed in:** Integration Tests — `dims/test-k8s`; first seen in run 25280385804 (2026-05-03, commit 0fef6f091f); NVIDIA-dev passed same commit (confirming flake)  
+**Failing tests:** `TestWebhookConversion_WhitespaceCABundleEtcdBypass` in `k8s.io/apiextensions-apiserver/test/integration/conversion`  
+**Symptom:** `panic: conversion webhook for stable.example.com/v1beta1, Kind=MultiVersion failed: Post "https://127.0.0.1:<port>/convert?timeout=30s": dial tcp ...: connect: connection refused` — goroutine 46213 panics in `etcd3.decodeObj` (watcher.go:775). In CI, `KUBE_PANIC_WATCH_DECODE_ERROR=true` causes `fatalOnDecodeError` to call `panic(err)` for any decode failure in the etcd watch path.  
+**Root cause:** After `apiServerTearDown()` cancels the server context, etcd watch goroutines already mid-event (inside `serialProcessEvents → transform → prepareObjs → decodeObj`) continue processing the current event before checking context cancellation. When CRD instances are decoded, webhook conversion is called. If `webhookTearDown()` has closed the webhook server before those goroutines complete, they receive "connection refused" → `fatalOnDecodeError` panics. PR #136909 (merged 2026-02-12) added ordering `apiServerTearDown()` before `webhookTearDown()` but did not account for goroutines already in-flight at context cancellation time.  
+**Fix:** Add `time.Sleep(2 * time.Second)` between `apiServerTearDown()` and `webhookTearDown()` in the test's `t.Cleanup`. This gives any in-progress watch goroutines time to complete their webhook calls while the server is still reachable before the webhook is closed.  
+**Upstream status:** Issue #136739 (open). PR #136909 merged but insufficient. Will propose improved fix upstream.
