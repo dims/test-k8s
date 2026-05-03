@@ -1,27 +1,28 @@
-From 32f8b8421ff8118c83e2408c7b5d3e21e3a961dd Mon Sep 17 00:00:00 2001
+From 9aab077dad732abdaa8379cc4ac326c31fc807ed Mon Sep 17 00:00:00 2001
 From: Davanum Srinivas <davanum@gmail.com>
-Date: Sun, 3 May 2026 08:56:38 -0400
+Date: Sun, 3 May 2026 09:23:50 -0400
 Subject: [PATCH] test/integration/daemonset: wait for scheduler binding before
  marking pods ready
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
 
 validateDaemonSetPodsAndMarkReady polls the informer for non-terminal pods
 and immediately returns success when N pods are found, even if spec.nodeName
-is still empty (scheduler has not yet bound the pod). DaemonSet pods are now
+is still empty (scheduler has not yet bound the pod). DaemonSet pods are
 created with NodeAffinity targeting a specific node and bound by the default
-scheduler—spec.nodeName is not set at pod-create time.
+scheduler; spec.nodeName is not set at pod-create time.
 
 When the scheduler is slow (loaded CI runner, peak hours), the first informer
 poll sees the pod without spec.nodeName, returns success without calling
 UpdateStatus, and the pod is never marked Running/Ready. The subsequent
 validateDaemonSetStatus then times out waiting for NumberReady==1.
 
-Track allScheduled in the poll closure and require it (in addition to
-nonTerminatedPods==numberPods) before returning success. This forces the poll
-to continue until every non-terminal pod has spec.nodeName set, at which
-point UpdateStatus is also called, ensuring NumberReady is updated promptly.
+Track pendingScheduling (non-terminal pods with empty spec.nodeName that do
+not yet have a PodScheduled=False condition). Require pendingScheduling==0
+(in addition to nonTerminatedPods==numberPods) before returning success.
+
+Pods with PodScheduled=False are excluded: those are explicitly unschedulable
+(e.g. TestInsufficientCapacityNode's 120M-request pod on a 100M-allocatable
+node) and will never receive a nodeName. Including them would cause an
+infinite wait for pods that are intentionally never scheduled.
 
 Signed-off-by: Davanum Srinivas <davanum@gmail.com>
 ---
@@ -29,27 +30,27 @@ Signed-off-by: Davanum Srinivas <davanum@gmail.com>
  1 file changed, 9 insertions(+), 1 deletion(-)
 
 diff --git a/test/integration/daemonset/daemonset_test.go b/test/integration/daemonset/daemonset_test.go
-index 8ba8b0aa58e..1e49f136bdb 100644
+index 8ba8b0aa58e..76ab7542f07 100644
 --- a/test/integration/daemonset/daemonset_test.go
 +++ b/test/integration/daemonset/daemonset_test.go
-@@ -282,6 +282,11 @@ func validateDaemonSetPodsAndMarkReady(
+@@ -282,6 +282,8 @@ func validateDaemonSetPodsAndMarkReady(
  	if err := wait.Poll(time.Second, 60*time.Second, func() (bool, error) {
  		objects := podInformer.GetIndexer().List()
  		nonTerminatedPods := 0
-+		// allScheduled tracks whether every non-terminal pod has spec.nodeName
-+		// set. DaemonSet pods are created with NodeAffinity and bound by the
-+		// scheduler; returning before binding completes means the pod is never
-+		// marked Running/Ready and validateDaemonSetStatus times out.
-+		allScheduled := true
++		// pendingScheduling: pods not yet bound by scheduler and not explicitly unschedulable (PodScheduled=False).
++		pendingScheduling := 0
  
  		for _, object := range objects {
  			pod := object.(*v1.Pod)
-@@ -302,6 +307,9 @@ func validateDaemonSetPodsAndMarkReady(
+@@ -302,6 +304,12 @@ func validateDaemonSetPodsAndMarkReady(
  				continue
  			}
  			nonTerminatedPods++
 +			if len(pod.Spec.NodeName) == 0 {
-+				allScheduled = false
++				_, scheduledCond := podutil.GetPodCondition(&pod.Status, v1.PodScheduled)
++				if scheduledCond == nil || scheduledCond.Status != v1.ConditionFalse {
++					pendingScheduling++
++				}
 +			}
  			if !podutil.IsPodReady(pod) && len(pod.Spec.NodeName) != 0 {
  				podCopy := pod.DeepCopy()
@@ -59,7 +60,7 @@ index 8ba8b0aa58e..1e49f136bdb 100644
  		}
  
 -		return nonTerminatedPods == numberPods, nil
-+		return nonTerminatedPods == numberPods && allScheduled, nil
++		return nonTerminatedPods == numberPods && pendingScheduling == 0, nil
  	}); err != nil {
  		t.Fatal(err)
  	}
