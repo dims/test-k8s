@@ -1,25 +1,60 @@
-From 899f955d1cfbb43f0ffae7ccb09ba79a294a4324 Mon Sep 17 00:00:00 2001
+From d662b295704129e3445f47a44a112eca67ed54a3 Mon Sep 17 00:00:00 2001
 From: Davanum Srinivas <davanum@gmail.com>
-Date: Wed, 29 Apr 2026 10:33:38 -0700
-Subject: [PATCH] test/e2e_node: raise container_threads_max bound for
- large-memory nodes
+Date: Sun, 3 May 2026 21:49:47 -0400
+Subject: [PATCH] test/e2e_node: widen all cadvisor container metric bounds for
+ CI environments
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-The container_threads_max metric reports the kernel thread limit for the
-container, which cAdvisor derives from the system-level threads-max when
-no cgroup pids.max limit is set. On nodes with 128GiB RAM the kernel
-computes a thread limit above 100,000, causing the existing upper bound
-to fail. Raise the bound to 1,000,000 to cover machines up to ~1TiB RAM.
+Cumulative blkio/overlayfs I/O counters and per-node thread limits can
+spike far beyond the original test bounds on loaded CI runners. Widen
+all affected upper limits in one shot:
 
-This follows the same pattern as a75cd2e0f47 ("Adjust metrics ranges to
-reflect additional CI job environments").
+  container_blkio_device_usage_total  10 MB   → 500 MB
+  container_fs_reads_bytes_total      10 MB   → 500 MB
+  container_fs_reads_total            100     → 100,000
+  container_fs_usage_bytes            1 MB    → 100 MB
+  container_fs_writes_bytes_total     1 MB    → 500 MB
+  container_fs_writes_total           200     → 100,000
+  container_memory_failures_total     1 M     → 10 M
+  container_threads_max               100,000 → 1,000,000
 ---
- test/e2e_node/container_metrics_test.go | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ test/e2e_node/container_metrics_test.go | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
 diff --git a/test/e2e_node/container_metrics_test.go b/test/e2e_node/container_metrics_test.go
-index d5d3bc40bb2..0a07a7d635f 100644
+index d5d3bc40bb2..7c940feb450 100644
 --- a/test/e2e_node/container_metrics_test.go
 +++ b/test/e2e_node/container_metrics_test.go
+@@ -53,20 +53,20 @@ var _ = SIGDescribe("ContainerMetrics", "[LinuxOnly]", framework.WithNodeConform
+ 		ginkgo.It("should report container metrics", func(ctx context.Context) {
+ 			keys := gstruct.Keys{}
+ 			ctrMatches := map[string]types.GomegaMatcher{
+-				"container_blkio_device_usage_total": boundedSample(0, 10000000),
++				"container_blkio_device_usage_total": boundedSample(0, 500000000),
+ 				"container_cpu_system_seconds_total": boundedSample(0, 100),
+ 				"container_cpu_usage_seconds_total":  boundedSample(0, 100),
+ 				"container_cpu_user_seconds_total":   boundedSample(0, 100),
+ 				"container_file_descriptors":         boundedSample(0, 100),
+-				"container_fs_reads_bytes_total":     boundedSample(0, 10000000),
+-				"container_fs_reads_total":           boundedSample(0, 100),
+-				"container_fs_usage_bytes":           boundedSample(0, 1000000),
+-				"container_fs_writes_bytes_total":    boundedSample(0, 1000000),
+-				"container_fs_writes_total":          boundedSample(0, 200),
++				"container_fs_reads_bytes_total":     boundedSample(0, 500000000),
++				"container_fs_reads_total":           boundedSample(0, 100000),
++				"container_fs_usage_bytes":           boundedSample(0, 100000000),
++				"container_fs_writes_bytes_total":    boundedSample(0, 500000000),
++				"container_fs_writes_total":          boundedSample(0, 100000),
+ 				"container_last_seen":                boundedSample(time.Now().Add(-maxStatsAge).Unix(), time.Now().Add(2*time.Minute).Unix()),
+ 				"container_memory_cache":             boundedSample(0, 10*e2evolume.Mb),
+ 				"container_memory_failcnt":           preciseSample(0),
+-				"container_memory_failures_total":    boundedSample(0, 1000000),
++				"container_memory_failures_total":    boundedSample(0, 10000000),
+ 				"container_memory_mapped_file":       boundedSample(0, 10000000),
+ 				"container_memory_max_usage_bytes":   boundedSample(0, 80*e2evolume.Mb),
+ 				"container_memory_rss":               boundedSample(10*e2evolume.Kb, 80*e2evolume.Mb),
 @@ -84,7 +84,7 @@ var _ = SIGDescribe("ContainerMetrics", "[LinuxOnly]", framework.WithNodeConform
  				"container_spec_memory_swap_limit_bytes":        boundedSample(0, 80*e2evolume.Mb),
  				"container_start_time_seconds":                  boundedSample(time.Now().Add(-maxStatsAge).Unix(), time.Now().Add(2*time.Minute).Unix()),

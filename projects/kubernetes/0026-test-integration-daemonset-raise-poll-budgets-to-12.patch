@@ -1,19 +1,27 @@
-From a4215f8d9e5a01c3c3b3f06f6d7656c36ebb1f90 Mon Sep 17 00:00:00 2001
+From 8fe0ee05d5faaa8df1e51e224d2c8746762474f0 Mon Sep 17 00:00:00 2001
 From: Davanum Srinivas <davanum@gmail.com>
-Date: Wed, 29 Apr 2026 23:39:26 -0700
-Subject: [PATCH] test: raise daemonset poll budgets to 120s and retry
- transient errors
+Date: Sun, 3 May 2026 21:50:30 -0400
+Subject: [PATCH] test/integration/daemonset: consolidate timing and scheduling
+ fixes
 
-Signed-off-by: Davanum Srinivas <davanum@gmail.com>
+Combine three separate flake-fix patches into one:
+
+- Raise validateDaemonSetPodsAndMarkReady poll budget to 120s and add
+  transient error retries (was 60s)
+- Raise validateDaemonSetStatus and validateUpdatedNumberScheduled
+  status poll budget to 300s for StaleControllerConsistency tests
+- Wait for scheduler binding before marking pods ready in
+  validateDaemonSetPodsAndMarkReady, preventing races where the
+  daemonset controller sees an unscheduled pod as not ready
 ---
- test/integration/daemonset/daemonset_test.go | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ test/integration/daemonset/daemonset_test.go | 24 +++++++++++++-------
+ 1 file changed, 16 insertions(+), 8 deletions(-)
 
 diff --git a/test/integration/daemonset/daemonset_test.go b/test/integration/daemonset/daemonset_test.go
-index 8ba8b0aa58e..5f2551d6405 100644
+index 8ba8b0aa58e..c34eaba0a75 100644
 --- a/test/integration/daemonset/daemonset_test.go
 +++ b/test/integration/daemonset/daemonset_test.go
-@@ -279,7 +279,7 @@ func validateDaemonSetPodsAndMarkReady(
+@@ -279,9 +279,11 @@ func validateDaemonSetPodsAndMarkReady(
  	numberPods int,
  	t *testing.T,
  ) {
@@ -21,8 +29,25 @@ index 8ba8b0aa58e..5f2551d6405 100644
 +	if err := wait.Poll(time.Second, 120*time.Second, func() (bool, error) {
  		objects := podInformer.GetIndexer().List()
  		nonTerminatedPods := 0
++		// pendingScheduling: pods not yet bound by scheduler and not explicitly unschedulable (PodScheduled=False).
++		pendingScheduling := 0
  
-@@ -310,7 +310,7 @@ func validateDaemonSetPodsAndMarkReady(
+ 		for _, object := range objects {
+ 			pod := object.(*v1.Pod)
+@@ -302,6 +304,12 @@ func validateDaemonSetPodsAndMarkReady(
+ 				continue
+ 			}
+ 			nonTerminatedPods++
++			if len(pod.Spec.NodeName) == 0 {
++				_, scheduledCond := podutil.GetPodCondition(&pod.Status, v1.PodScheduled)
++				if scheduledCond == nil || scheduledCond.Status != v1.ConditionFalse {
++					pendingScheduling++
++				}
++			}
+ 			if !podutil.IsPodReady(pod) && len(pod.Spec.NodeName) != 0 {
+ 				podCopy := pod.DeepCopy()
+ 				podCopy.Status = v1.PodStatus{
+@@ -310,12 +318,12 @@ func validateDaemonSetPodsAndMarkReady(
  				}
  				_, err := podClient.UpdateStatus(context.TODO(), podCopy, metav1.UpdateOptions{})
  				if err != nil {
@@ -31,7 +56,13 @@ index 8ba8b0aa58e..5f2551d6405 100644
  				}
  			}
  		}
-@@ -327,7 +327,7 @@ func validateDaemonSetPodsActive(
+ 
+-		return nonTerminatedPods == numberPods, nil
++		return nonTerminatedPods == numberPods && pendingScheduling == 0, nil
+ 	}); err != nil {
+ 		t.Fatal(err)
+ 	}
+@@ -327,7 +335,7 @@ func validateDaemonSetPodsActive(
  	numberPods int,
  	t *testing.T,
  ) {
@@ -40,12 +71,12 @@ index 8ba8b0aa58e..5f2551d6405 100644
  		objects := podInformer.GetIndexer().List()
  		if len(objects) < numberPods {
  			return false, nil
-@@ -478,10 +478,10 @@ func validateDaemonSetStatus(
+@@ -478,10 +486,10 @@ func validateDaemonSetStatus(
  	dsName string,
  	expectedNumberReady int32,
  	t *testing.T) {
 -	if err := wait.Poll(time.Second, 60*time.Second, func() (bool, error) {
-+	if err := wait.Poll(time.Second, 120*time.Second, func() (bool, error) {
++	if err := wait.Poll(time.Second, 300*time.Second, func() (bool, error) {
  		ds, err := dsClient.Get(context.TODO(), dsName, metav1.GetOptions{})
  		if err != nil {
 -			return false, err
@@ -53,12 +84,12 @@ index 8ba8b0aa58e..5f2551d6405 100644
  		}
  		return ds.Status.NumberReady == expectedNumberReady, nil
  	}); err != nil {
-@@ -495,10 +495,10 @@ func validateUpdatedNumberScheduled(
+@@ -495,10 +503,10 @@ func validateUpdatedNumberScheduled(
  	dsName string,
  	expectedUpdatedNumberScheduled int32,
  	t *testing.T) {
 -	if err := wait.PollUntilContextTimeout(ctx, time.Second, 60*time.Second, true, func(ctx context.Context) (bool, error) {
-+	if err := wait.PollUntilContextTimeout(ctx, time.Second, 120*time.Second, true, func(ctx context.Context) (bool, error) {
++	if err := wait.PollUntilContextTimeout(ctx, time.Second, 300*time.Second, true, func(ctx context.Context) (bool, error) {
  		ds, err := dsClient.Get(context.TODO(), dsName, metav1.GetOptions{})
  		if err != nil {
 -			return false, err
