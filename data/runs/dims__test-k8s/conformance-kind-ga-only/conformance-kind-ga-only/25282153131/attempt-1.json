@@ -65,75 +65,35 @@
     "schema_version": 1,
     "started_at": "2026-05-03T14:43:49Z",
     "upstream_comparison": {
-      "inventory_parity_status": "mismatch",
+      "inventory_parity_status": "extra-local-tests",
       "junit_files": [
-        "pr-logs/pull/136809/pull-kubernetes-conformance-kind-ga-only-parallel/2024402681254121472/artifacts/junit_01.xml"
+        "pr-logs/pull/136886/pull-kubernetes-conformance-kind-ga-only-parallel/2049436187910737920/artifacts/junit_01.xml"
       ],
-      "local_only_count": 2859,
+      "local_only_count": 1,
       "local_only_sample": [
-        "Kubernetes e2e suite::API Streaming (aka. WatchList) [FeatureGate:WatchList] reflector doesn't support receiving resources as Tables",
-        "Kubernetes e2e suite::API Streaming (aka. WatchList) [FeatureGate:WatchList] reflector using standard List doesn't support receiving resources as Tables",
-        "Kubernetes e2e suite::API Streaming (aka. WatchList) [FeatureGate:WatchList] server supports sending resources in Table format",
-        "Kubernetes e2e suite::API Streaming (aka. WatchList) [FeatureGate:WatchList] should NOT be requested by client-go's List method when WatchListClient is enabled",
-        "Kubernetes e2e suite::API Streaming (aka. WatchList) [FeatureGate:WatchList] should NOT be requested by dynamic client's List method when WatchListClient is enabled",
-        "Kubernetes e2e suite::API Streaming (aka. WatchList) [FeatureGate:WatchList] should NOT be requested by metadata client's List method when WatchListClient is enabled",
-        "Kubernetes e2e suite::API Streaming (aka. WatchList) [FeatureGate:WatchList] should be requested by informers when WatchListClient is enabled",
-        "Kubernetes e2e suite::API Streaming (aka. WatchList) [FeatureGate:WatchList] should be requested by metadatainformer when WatchListClient is enabled",
-        "Kubernetes e2e suite::CRUD Tests resource.k8s.io/v1alpha3 ResourcePoolStatusRequest",
-        "Kubernetes e2e suite::CRUD Tests resource.k8s.io/v1beta2 DeviceTaintRule",
-        "Kubernetes e2e suite::CSI Mock Node Volume Health [FeatureGate:CSIVolumeHealth] CSI Mock Node Volume Health return normal volume stats",
-        "Kubernetes e2e suite::CSI Mock Node Volume Health [FeatureGate:CSIVolumeHealth] CSI Mock Node Volume Health return normal volume stats with abnormal volume condition",
-        "Kubernetes e2e suite::CSI Mock Node Volume Health [FeatureGate:CSIVolumeHealth] CSI Mock Node Volume Health return normal volume stats without volume condition",
-        "Kubernetes e2e suite::CSI Mock VolumeLimitScaling scheduling [FeatureGate:VolumeLimitScaling] VolumeLimitScaling scheduling allows scheduling when driver not installed and CSIDriver does not opt in",
-        "Kubernetes e2e suite::CSI Mock VolumeLimitScaling scheduling [FeatureGate:VolumeLimitScaling] VolumeLimitScaling scheduling allows scheduling when driver not installed and CSIDriver object is not present",
-        "Kubernetes e2e suite::CSI Mock VolumeLimitScaling scheduling [FeatureGate:VolumeLimitScaling] VolumeLimitScaling scheduling blocks scheduling when driver not installed and CSIDriver opts in",
-        "Kubernetes e2e suite::CSI Mock selinux on mount metrics and SELinuxWarningController SELinuxMount metrics [LinuxOnly] [Feature:SELinux] error is bumped on a privileged and unprivileged Pod with given SELinux with MountOption policy",
-        "Kubernetes e2e suite::CSI Mock selinux on mount metrics and SELinuxWarningController SELinuxMount metrics [LinuxOnly] [Feature:SELinux] error is bumped on an unprivileged and privileged Pod with given SELinux with MountOption policy",
-        "Kubernetes e2e suite::CSI Mock selinux on mount metrics and SELinuxWarningController SELinuxMount metrics [LinuxOnly] [Feature:SELinux] error is bumped on two Pods with MountOption policy and a different context on RWOP volume",
-        "Kubernetes e2e suite::CSI Mock selinux on mount metrics and SELinuxWarningController SELinuxMount metrics [LinuxOnly] [Feature:SELinux] error is bumped on two Pods with a different context on RWO volume and SELinuxMount enabled"
+        "Kubernetes e2e suite::CRUD Tests resource.k8s.io/v1beta2 DeviceTaintRule"
       ],
       "local_test_count": 7581,
       "reference_job_name": "pull-kubernetes-conformance-kind-ga-only-parallel",
-      "reference_kubernetes_base_sha": "b08fa0cdf18610be74d9741cf361446a5f42ff76",
+      "reference_kubernetes_base_sha": "78994b5cf1fd09d94f8f1748fac83d15eb83c479",
       "reference_matches_kubernetes_sha": false,
-      "reference_pr_number": 136809,
-      "reference_pr_updated_at": "2026-05-04T05:17:30Z",
-      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/136809/pull-kubernetes-conformance-kind-ga-only-parallel/2024402681254121472",
+      "reference_pr_number": 136886,
+      "reference_pr_updated_at": "2026-05-04T06:23:09Z",
+      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/136886/pull-kubernetes-conformance-kind-ga-only-parallel/2049436187910737920",
       "reference_selection": "recent-success",
-      "reference_started_at": "2026-02-19T08:54:02Z",
+      "reference_started_at": "2026-04-29T10:52:37Z",
       "reference_started_json": {
-        "pull": "136809",
-        "repo-commit": "48edc8144d4a94b3c408381bf005c93a9700516d",
-        "repo-version": "48edc8144d4a94b3c408381bf005c93a9700516d",
+        "pull": "136886",
+        "repo-commit": "c05a991f6dec1475753d8919dc382ebb2a23a781",
+        "repo-version": "c05a991f6dec1475753d8919dc382ebb2a23a781",
         "repos": {
-          "kubernetes/kubernetes": "master:b08fa0cdf18610be74d9741cf361446a5f42ff76,136809:5eb29d7fc3b948bcddaf319f858f87ec37df06ec"
+          "kubernetes/kubernetes": "master:78994b5cf1fd09d94f8f1748fac83d15eb83c479,136886:f11d3765b7795bbe4f39ee7b3c8aae8b21871b43"
         },
-        "timestamp": 1771490212
+        "timestamp": 1777458855
       },
-      "upstream_only_count": 2710,
-      "upstream_only_sample": [
-        "Kubernetes e2e suite::API Streaming (aka. WatchList) [FeatureGate:WatchList] [Beta] reflector doesn't support receiving resources as Tables",
-        "Kubernetes e2e suite::API Streaming (aka. WatchList) [FeatureGate:WatchList] [Beta] server supports sending resources in Table format",
-        "Kubernetes e2e suite::API Streaming (aka. WatchList) [FeatureGate:WatchList] [Beta] should NOT be requested by client-go's List method when WatchListClient is enabled",
-        "Kubernetes e2e suite::API Streaming (aka. WatchList) [FeatureGate:WatchList] [Beta] should NOT be requested by dynamic client's List method when WatchListClient is enabled",
-        "Kubernetes e2e suite::API Streaming (aka. WatchList) [FeatureGate:WatchList] [Beta] should NOT be requested by metadata client's List method when WatchListClient is enabled",
-        "Kubernetes e2e suite::API Streaming (aka. WatchList) [FeatureGate:WatchList] [Beta] should be requested by informers when WatchListClient is enabled",
-        "Kubernetes e2e suite::API Streaming (aka. WatchList) [FeatureGate:WatchList] [Beta] should be requested by metadatainformer when WatchListClient is enabled",
-        "Kubernetes e2e suite::CSI Mock Node Volume Health [FeatureGate:CSIVolumeHealth] [Alpha] [Feature:OffByDefault] CSI Mock Node Volume Health [Slow] return normal volume stats",
-        "Kubernetes e2e suite::CSI Mock Node Volume Health [FeatureGate:CSIVolumeHealth] [Alpha] [Feature:OffByDefault] CSI Mock Node Volume Health [Slow] return normal volume stats with abnormal volume condition",
-        "Kubernetes e2e suite::CSI Mock Node Volume Health [FeatureGate:CSIVolumeHealth] [Alpha] [Feature:OffByDefault] CSI Mock Node Volume Health [Slow] return normal volume stats without volume condition",
-        "Kubernetes e2e suite::CSI Mock VolumeLimitScaling scheduling [FeatureGate:VolumeLimitScaling] [Alpha] [Feature:OffByDefault] VolumeLimitScaling scheduling allows scheduling when driver not installed and CSIDriver object is not present",
-        "Kubernetes e2e suite::CSI Mock VolumeLimitScaling scheduling [FeatureGate:VolumeLimitScaling] [Alpha] [Feature:OffByDefault] VolumeLimitScaling scheduling blocks scheduling when driver not installed and CSIDriver is present",
-        "Kubernetes e2e suite::CSI Mock selinux on mount metrics and SELinuxWarningController SELinuxMount metrics [LinuxOnly] [Feature:SELinux] [Serial] error is bumped on a privileged and unprivileged Pod with given SELinux with MountOption policy",
-        "Kubernetes e2e suite::CSI Mock selinux on mount metrics and SELinuxWarningController SELinuxMount metrics [LinuxOnly] [Feature:SELinux] [Serial] error is bumped on an unprivileged and privileged Pod with given SELinux with MountOption policy",
-        "Kubernetes e2e suite::CSI Mock selinux on mount metrics and SELinuxWarningController SELinuxMount metrics [LinuxOnly] [Feature:SELinux] [Serial] error is bumped on two Pods with MountOption policy and a different context on RWOP volume",
-        "Kubernetes e2e suite::CSI Mock selinux on mount metrics and SELinuxWarningController SELinuxMount metrics [LinuxOnly] [Feature:SELinux] [Serial] error is bumped on two Pods with a different context on RWO volume and SELinuxMount enabled",
-        "Kubernetes e2e suite::CSI Mock selinux on mount metrics and SELinuxWarningController SELinuxMount metrics [LinuxOnly] [Feature:SELinux] [Serial] error is bumped on two Pods with a different context on RWOP volume",
-        "Kubernetes e2e suite::CSI Mock selinux on mount metrics and SELinuxWarningController SELinuxMount metrics [LinuxOnly] [Feature:SELinux] [Serial] error is bumped on two Pods with a different context on RWX volume and SELinuxMount enabled",
-        "Kubernetes e2e suite::CSI Mock selinux on mount metrics and SELinuxWarningController SELinuxMount metrics [LinuxOnly] [Feature:SELinux] [Serial] error is bumped on two Pods with a different policy on RWO volume and SELinuxMount enabled (Recursive + MountOption)",
-        "Kubernetes e2e suite::CSI Mock selinux on mount metrics and SELinuxWarningController SELinuxMount metrics [LinuxOnly] [Feature:SELinux] [Serial] error is bumped on two Pods with a different policy on RWO volume and SELinuxMount enabled (Recursive + nil)"
-      ],
-      "upstream_test_count": 7432
+      "upstream_only_count": 0,
+      "upstream_only_sample": [],
+      "upstream_test_count": 7580
     },
     "upstream_testgrid_url": "https://testgrid.k8s.io/presubmits-kubernetes-blocking#pull-kubernetes-conformance-kind-ga-only-parallel",
     "workflow_file": ".github/workflows/conformance-kind.yml",
