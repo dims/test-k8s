@@ -1,0 +1,35 @@
+From 70ac2a016b8da795ddeda8b02369a8bec5244254 Mon Sep 17 00:00:00 2001
+From: Davanum Srinivas <davanum@gmail.com>
+Date: Tue, 5 May 2026 09:03:21 -0400
+Subject: [PATCH] kubelet: skip next init container on termination
+
+When a non-restartable init container exits successfully during pod
+termination, computeInitContainerActions was unconditionally queuing the
+next init container (including restartable sidecars) regardless of whether
+deletion had been requested. Guard the append with an
+IsPodTerminationRequested check so that sidecars are not started once the
+pod is being torn down, preventing the deletion from hanging until
+TerminationGracePeriodSeconds expires.
+
+Fixes: [sig-node] Containers Lifecycle restartable init containers
+  should not hang in termination if terminated during initialization
+---
+ pkg/kubelet/kuberuntime/kuberuntime_container.go | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/pkg/kubelet/kuberuntime/kuberuntime_container.go b/pkg/kubelet/kuberuntime/kuberuntime_container.go
+index d5bdcb0a7d8..26097dd3e30 100644
+--- a/pkg/kubelet/kuberuntime/kuberuntime_container.go
++++ b/pkg/kubelet/kuberuntime/kuberuntime_container.go
+@@ -1239,7 +1239,7 @@ func (m *kubeGenericRuntimeManager) computeInitContainerActions(ctx context.Cont
+ 				logger.V(4).Info("Init container has been initialized", "pod", klog.KObj(pod), "container", container.Name)
+ 				if i == (len(pod.Spec.InitContainers) - 1) {
+ 					podHasInitialized = true
+-				} else {
++				} else if !m.podStateProvider.IsPodTerminationRequested(pod.UID) {
+ 					// this init container is initialized for the first time, start the next one
+ 					changes.InitContainersToStart = append(changes.InitContainersToStart, i+1)
+ 				}
+--
+2.50.1
+
