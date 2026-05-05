@@ -1,6 +1,6 @@
-From 34bd227dc89998a74ecd8a5bf4df013ee5951122 Mon Sep 17 00:00:00 2001
+From 495786f46d7e1a676d6f0498289d0b7a28622c42 Mon Sep 17 00:00:00 2001
 From: Davanum Srinivas <davanum@gmail.com>
-Date: Wed, 29 Apr 2026 13:17:36 -0700
+Date: Tue, 5 May 2026 18:26:40 -0400
 Subject: [PATCH] test/integration: give apiserver startup more room in CI
 
 Integration flakes on slower runners fail before the local test server
@@ -18,17 +18,17 @@ past 60 s. Raise the health-check budget to 120 s.
  1 file changed, 3 insertions(+), 1 deletion(-)
 
 diff --git a/test/integration/framework/test_server.go b/test/integration/framework/test_server.go
-index eff7502d422..7cf3c850a51 100644
+index 3841578c615..75ed0c7985b 100644
 --- a/test/integration/framework/test_server.go
 +++ b/test/integration/framework/test_server.go
 @@ -222,7 +222,9 @@ func StartTestServer(ctx context.Context, t testing.TB, setup TestServerSetup) (
  	kubeAPIServerClientConfig.ServerName = ""
  
  	// wait for health
--	err = wait.PollImmediate(100*time.Millisecond, 10*time.Second, func() (done bool, err error) {
+-	err = wait.PollUntilContextTimeout(ctx, 100*time.Millisecond, 10*time.Second, true, func(ctx context.Context) (done bool, err error) {
 +	// Allow slower environments more time to finish etcd/apiserver startup
 +	// before the integration framework gives up on the test server.
-+	err = wait.PollImmediate(100*time.Millisecond, 120*time.Second, func() (done bool, err error) {
++	err = wait.PollUntilContextTimeout(ctx, 100*time.Millisecond, 120*time.Second, true, func(ctx context.Context) (done bool, err error) {
  		select {
  		case err := <-errCh:
  			return false, err
