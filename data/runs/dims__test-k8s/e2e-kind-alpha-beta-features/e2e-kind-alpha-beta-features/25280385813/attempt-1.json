@@ -65,8 +65,33 @@
     "schema_version": 1,
     "started_at": "2026-05-03T13:24:52Z",
     "upstream_comparison": {
-      "error": "command failed: gh pr list --repo kubernetes/kubernetes --state all --search sort:updated-desc --limit 50 --json number,updatedAt,statusCheckRollup\nstdout:\n\nstderr:\nHTTP 504: We couldn't respond to your request in time. Sorry about that. Please try resubmitting your request and contact us if the problem persists. (https://api.github.com/graphql)\n",
-      "inventory_parity_status": "upstream-reference-error"
+      "inventory_parity_status": "match",
+      "junit_files": [
+        "pr-logs/pull/138711/pull-kubernetes-e2e-kind-alpha-beta-features/2051307854442270720/artifacts/junit_01.xml"
+      ],
+      "local_only_count": 0,
+      "local_only_sample": [],
+      "local_test_count": 7581,
+      "reference_job_name": "pull-kubernetes-e2e-kind-alpha-beta-features",
+      "reference_kubernetes_base_sha": "7c7ae728f87f50e77181f4d0ffe42ad6908039de",
+      "reference_matches_kubernetes_sha": false,
+      "reference_pr_number": 138711,
+      "reference_pr_updated_at": "2026-05-05T18:07:06Z",
+      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/138711/pull-kubernetes-e2e-kind-alpha-beta-features/2051307854442270720",
+      "reference_selection": "recent-success",
+      "reference_started_at": "2026-05-04T14:58:11Z",
+      "reference_started_json": {
+        "pull": "138711",
+        "repo-commit": "70de8622d26aff39abd830fc18ced1f6fc37c56b",
+        "repo-version": "70de8622d26aff39abd830fc18ced1f6fc37c56b",
+        "repos": {
+          "kubernetes/kubernetes": "master:7c7ae728f87f50e77181f4d0ffe42ad6908039de,138711:3a8fa19caeb302ea48405a403d9ed65a286e18f3"
+        },
+        "timestamp": 1777904908
+      },
+      "upstream_only_count": 0,
+      "upstream_only_sample": [],
+      "upstream_test_count": 7581
     },
     "upstream_testgrid_url": "https://testgrid.k8s.io/presubmits-kubernetes-nonblocking#pull-kubernetes-e2e-kind-alpha-beta-features",
     "workflow_file": ".github/workflows/e2e-kind-alpha-beta-features.yml",

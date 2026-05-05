@@ -53,8 +53,21 @@
     "schema_version": 1,
     "started_at": "2026-05-03T16:04:48Z",
     "upstream_comparison": {
-      "error": "command failed: gh pr list --repo kubernetes/kubernetes --state all --search sort:updated-desc --limit 50 --json number,updatedAt,statusCheckRollup\nstdout:\n\nstderr:\nHTTP 504: We couldn't respond to your request in time. Sorry about that. Please try resubmitting your request and contact us if the problem persists. (https://api.github.com/graphql)\n",
-      "inventory_parity_status": "upstream-reference-error"
+      "inventory_parity_status": "local-tests-missing",
+      "junit_files": [
+        "pr-logs/pull/138657/pull-kubernetes-node-e2e-containerd/2051632727882469376/artifacts/junit_cos01.xml",
+        "pr-logs/pull/138657/pull-kubernetes-node-e2e-containerd/2051632727882469376/artifacts/junit_ubuntu01.xml"
+      ],
+      "local_test_count": 0,
+      "reference_job_name": "pull-kubernetes-node-e2e-containerd",
+      "reference_kubernetes_base_sha": "5dc1370abd8070bd110839fb44706518a4020192",
+      "reference_matches_kubernetes_sha": false,
+      "reference_pr_number": 138657,
+      "reference_pr_updated_at": "2026-05-05T18:36:24Z",
+      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/138657/pull-kubernetes-node-e2e-containerd/2051632727882469376",
+      "reference_selection": "recent-success",
+      "reference_started_at": "2026-05-05T12:39:14Z",
+      "upstream_test_count": 1206
     },
     "upstream_testgrid_url": "https://testgrid.k8s.io/presubmits-kubernetes-blocking#pull-kubernetes-node-e2e-containerd",
     "workflow_file": ".github/workflows/node-e2e.yml",

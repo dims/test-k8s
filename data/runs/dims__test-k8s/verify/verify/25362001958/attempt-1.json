@@ -65,8 +65,33 @@
     "schema_version": 1,
     "started_at": "2026-05-05T06:47:31Z",
     "upstream_comparison": {
-      "error": "command failed: gh pr list --repo kubernetes/kubernetes --state all --search sort:updated-desc --limit 50 --json number,updatedAt,statusCheckRollup\nstdout:\n\nstderr:\nHTTP 504: We couldn't respond to your request in time. Sorry about that. Please try resubmitting your request and contact us if the problem persists. (https://api.github.com/graphql)\n",
-      "inventory_parity_status": "upstream-reference-error"
+      "inventory_parity_status": "match",
+      "junit_files": [
+        "pr-logs/pull/137810/pull-kubernetes-verify/2051506771071078400/artifacts/junit_verify.xml"
+      ],
+      "local_only_count": 0,
+      "local_only_sample": [],
+      "local_test_count": 43,
+      "reference_job_name": "pull-kubernetes-verify",
+      "reference_kubernetes_base_sha": "12e62adc28d816c6cab0f2803c49b9871aabbf62",
+      "reference_matches_kubernetes_sha": true,
+      "reference_pr_number": 137810,
+      "reference_pr_updated_at": "2026-05-05T17:52:36Z",
+      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/137810/pull-kubernetes-verify/2051506771071078400",
+      "reference_selection": "exact-kubernetes-sha",
+      "reference_started_at": "2026-05-05T04:02:43Z",
+      "reference_started_json": {
+        "pull": "137810",
+        "repo-commit": "6a77a3324264b890b177d0373d3055a546bfcb5c",
+        "repo-version": "6a77a3324264b890b177d0373d3055a546bfcb5c",
+        "repos": {
+          "kubernetes/kubernetes": "master:12e62adc28d816c6cab0f2803c49b9871aabbf62,137810:ac6865b1e9dd016abdc8e1090eb9ed04699f2cdb"
+        },
+        "timestamp": 1777952334
+      },
+      "upstream_only_count": 0,
+      "upstream_only_sample": [],
+      "upstream_test_count": 43
     },
     "upstream_testgrid_url": "https://testgrid.k8s.io/presubmits-kubernetes-blocking#pull-kubernetes-verify",
     "workflow_file": ".github/workflows/verify.yml",

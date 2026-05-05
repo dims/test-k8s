@@ -65,8 +65,33 @@
     "schema_version": 1,
     "started_at": "2026-05-03T19:51:32Z",
     "upstream_comparison": {
-      "error": "command failed: gh pr list --repo kubernetes/kubernetes --state all --search sort:updated-desc --limit 50 --json number,updatedAt,statusCheckRollup\nstdout:\n\nstderr:\nHTTP 504: We couldn't respond to your request in time. Sorry about that. Please try resubmitting your request and contact us if the problem persists. (https://api.github.com/graphql)\n",
-      "inventory_parity_status": "upstream-reference-error"
+      "inventory_parity_status": "match",
+      "junit_files": [
+        "pr-logs/pull/138657/pull-kubernetes-conformance-kind-ga-only-parallel/2051632719435141120/artifacts/junit_01.xml"
+      ],
+      "local_only_count": 0,
+      "local_only_sample": [],
+      "local_test_count": 7581,
+      "reference_job_name": "pull-kubernetes-conformance-kind-ga-only-parallel",
+      "reference_kubernetes_base_sha": "5dc1370abd8070bd110839fb44706518a4020192",
+      "reference_matches_kubernetes_sha": false,
+      "reference_pr_number": 138657,
+      "reference_pr_updated_at": "2026-05-05T18:36:24Z",
+      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/138657/pull-kubernetes-conformance-kind-ga-only-parallel/2051632719435141120",
+      "reference_selection": "recent-success",
+      "reference_started_at": "2026-05-05T12:18:48Z",
+      "reference_started_json": {
+        "pull": "138657",
+        "repo-commit": "1251710035eb535376c2428e104d36769b1bb307",
+        "repo-version": "1251710035eb535376c2428e104d36769b1bb307",
+        "repos": {
+          "kubernetes/kubernetes": "master:5dc1370abd8070bd110839fb44706518a4020192,138657:e6fe0d9d46daa2ea6525123f9fc09bdf2d8ff422"
+        },
+        "timestamp": 1777982435
+      },
+      "upstream_only_count": 0,
+      "upstream_only_sample": [],
+      "upstream_test_count": 7581
     },
     "upstream_testgrid_url": "https://testgrid.k8s.io/presubmits-kubernetes-blocking#pull-kubernetes-conformance-kind-ga-only-parallel",
     "workflow_file": ".github/workflows/conformance-kind.yml",

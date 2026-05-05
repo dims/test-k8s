@@ -65,8 +65,33 @@
     "schema_version": 1,
     "started_at": "2026-05-04T01:58:53Z",
     "upstream_comparison": {
-      "error": "command failed: gh pr list --repo kubernetes/kubernetes --state all --search sort:updated-desc --limit 50 --json number,updatedAt,statusCheckRollup\nstdout:\n\nstderr:\nHTTP 504: We couldn't respond to your request in time. Sorry about that. Please try resubmitting your request and contact us if the problem persists. (https://api.github.com/graphql)\n",
-      "inventory_parity_status": "upstream-reference-error"
+      "inventory_parity_status": "match",
+      "junit_files": [
+        "pr-logs/pull/138368/pull-kubernetes-linter-hints/2044727552718671872/artifacts/junit_verify.xml"
+      ],
+      "local_only_count": 0,
+      "local_only_sample": [],
+      "local_test_count": 1,
+      "reference_job_name": "pull-kubernetes-linter-hints",
+      "reference_kubernetes_base_sha": "b2f73c0d6b427e2ab5ba225375aaefc0b9bc45b2",
+      "reference_matches_kubernetes_sha": false,
+      "reference_pr_number": 138368,
+      "reference_pr_updated_at": "2026-05-05T18:30:29Z",
+      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/138368/pull-kubernetes-linter-hints/2044727552718671872",
+      "reference_selection": "recent-success",
+      "reference_started_at": "2026-04-16T11:00:54Z",
+      "reference_started_json": {
+        "pull": "138368",
+        "repo-commit": "833c82a67580b1c2b20e362e54c9df84d0751f22",
+        "repo-version": "833c82a67580b1c2b20e362e54c9df84d0751f22",
+        "repos": {
+          "kubernetes/kubernetes": "master:b2f73c0d6b427e2ab5ba225375aaefc0b9bc45b2,138368:09d60b3606aeaf09a6bf761f3fbe8025cc5a0ecc"
+        },
+        "timestamp": 1776336113
+      },
+      "upstream_only_count": 0,
+      "upstream_only_sample": [],
+      "upstream_test_count": 1
     },
     "upstream_testgrid_url": "https://testgrid.k8s.io/presubmits-kubernetes-blocking#pull-kubernetes-linter-hints",
     "workflow_file": ".github/workflows/linter-hints.yml",
