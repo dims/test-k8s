@@ -1,0 +1,36 @@
+From 4a57f2a27041da2a2ee68b22d7a21adfec4e80c2 Mon Sep 17 00:00:00 2001
+From: Davanum Srinivas <davanum@gmail.com>
+Date: Tue, 5 May 2026 15:33:27 -0400
+Subject: [PATCH] test/e2e_node: raise node CPU UsageNanoCores upper bound to
+ 4e9
+
+The Summary API test checks that node-level CPU UsageNanoCores stays
+within bounded(100e3, 2e9). On 4-vCPU GitHub-hosted runners under load,
+the entire node can momentarily use more than 2 CPU cores (2e9
+nanocores), causing spurious test failures.
+
+Raise the upper bound from 2e9 to 4e9 to match the physical CPU count
+of the runner, while keeping the sanity check meaningful.
+
+Fixes: [sig-node] Summary API when querying /stats/summary should
+  report resource usage through the stats api [NodeConformance]
+---
+ test/e2e_node/summary_test.go | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/test/e2e_node/summary_test.go b/test/e2e_node/summary_test.go
+index a819bd422ba..213d75730fe 100644
+--- a/test/e2e_node/summary_test.go
++++ b/test/e2e_node/summary_test.go
+@@ -285,7 +285,7 @@ var _ = SIGDescribe("Summary API", framework.WithNodeConformance(), func() {
+ 					"SystemContainers": gstruct.MatchAllElements(summaryObjectID, systemContainers),
+ 					"CPU": ptrMatchAllFields(gstruct.Fields{
+ 						"Time":                 recent(maxStatsAge),
+-						"UsageNanoCores":       bounded(100e3, 2e9),
++						"UsageNanoCores":       bounded(100e3, 4e9),
+ 						"UsageCoreNanoSeconds": bounded(1e9, 1e15),
+ 						"PSI":                  psiExpectation(),
+ 					}),
+-- 
+2.50.1
+
