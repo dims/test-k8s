@@ -37,6 +37,7 @@ If a patch is updated (e.g. a threshold is raised), add a **Change history** tab
 |------|---------|--------|--------|--------|
 | Mar 2026 | Failures at ~31-35 s on cpu16 runners | `NVIDIA-dev` + `dims` | `243b075e` wave | 10 s → 60 s |
 | Apr 2026 | Failures at ~61 s on cpu32 runners (commits `a369ed79`, `91f0a706`) after runner upgrade; `dims` was green | `NVIDIA-dev` only | `9a0bb3d4` | 60 s → 120 s |
+| May 2026 | Patch conflict: upstream PR #138777 replaced `wait.PollImmediate` with `wait.PollUntilContextTimeout` in `test_server.go`; patch 0001 no longer applied cleanly | both | upstream commit `2a3ccd52500` | Rebased patch to target the new `PollUntilContextTimeout` call site (no threshold change) |
 
 ---
 
@@ -320,3 +321,24 @@ If a patch is updated (e.g. a threshold is raised), add a **Change history** tab
 **Fix:** Add `time.Sleep(2 * time.Second)` between `apiServerTearDown()` and `webhookTearDown()` in the test's `t.Cleanup`. This gives any in-progress watch goroutines time to complete their webhook calls while the server is still reachable before the webhook is closed.  
 **Upstream status:** Issue #136739 (open). PR #136909 merged but insufficient. Will propose improved fix upstream.
 
+---
+
+### 0037 — pkg/kubelet/kuberuntime: skip starting next init container on termination
+
+**File:** `0037-pkg-kubelet-kuberuntime-skip-starting-next-init-cont.patch`  
+**Observed in:** Node E2E — `dims/test-k8s` only; GitHub-hosted `ubuntu-24.04` (4-vCPU); first seen 2026-05-05; NVIDIA-dev passed same kubernetes SHA  
+**Failing tests:** `[sig-node] Containers Lifecycle restartable init containers should not hang in termination if terminated during initialization` in `test/e2e_node/`  
+**Symptom:** When a non-restartable init container exited successfully during pod termination, `computeInitContainerActions` unconditionally queued the next init container (including restartable sidecars) regardless of whether deletion had been requested. The sidecar was started, causing the pod deletion to hang until `TerminationGracePeriodSeconds` expired. The test timed out waiting for the pod to terminate.  
+**Fix:** Guard `changes.InitContainersToStart = append(...)` with `!m.podStateProvider.IsPodTerminationRequested(pod.UID)` so that no new init containers are started once pod deletion is in progress.  
+**Upstream status:** Local fix; not yet upstreamed at the time of writing.
+
+---
+
+### 0038 — test/e2e_node: raise node CPU UsageNanoCores upper bound to 4e9
+
+**File:** `0038-test-e2e_node-raise-node-CPU-UsageNanoCores-upper-bo.patch`  
+**Observed in:** Node E2E — `dims/test-k8s` only; GitHub-hosted `ubuntu-24.04` (4-vCPU); first seen 2026-05-05; NVIDIA-dev passed the same kubernetes SHA (larger/more consistent runners)  
+**Failing tests:** `[sig-node] Summary API when querying /stats/summary should report resource usage through the stats api [NodeConformance]` in `test/e2e_node/summary_test.go`  
+**Symptom:** The test asserts `UsageNanoCores` stays within `bounded(100e3, 2e9)` at the node level. On the 4-vCPU GitHub-hosted runner under CI load, the entire node briefly consumed more than 2 CPU cores (observed value: `2122130573 ns > 2e9 ns`). This is physically plausible on a 4-vCPU machine: 2e9 nanocores equals exactly 2 cores, so any moment of ≥50% aggregate utilisation across all 4 vCPUs causes a spurious failure.  
+**Fix:** Raise the upper bound from `2e9` to `4e9` in `test/e2e_node/summary_test.go:288`, matching the physical vCPU count of the dims runner. The sanity check (lower bound of `100e3`) is preserved.  
+**Upstream status:** Local workaround. The bound is inherently runner-specific (should be `numCPUs × 1e9`); a proper fix would query the node CPU count at runtime.
