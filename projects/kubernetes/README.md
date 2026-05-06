@@ -342,3 +342,14 @@ If a patch is updated (e.g. a threshold is raised), add a **Change history** tab
 **Symptom:** The test asserts `UsageNanoCores` stays within `bounded(100e3, 2e9)` at the node level. On the 4-vCPU GitHub-hosted runner under CI load, the entire node briefly consumed more than 2 CPU cores (observed value: `2122130573 ns > 2e9 ns`). This is physically plausible on a 4-vCPU machine: 2e9 nanocores equals exactly 2 cores, so any moment of ≥50% aggregate utilisation across all 4 vCPUs causes a spurious failure.  
 **Fix:** Raise the upper bound from `2e9` to `4e9` in `test/e2e_node/summary_test.go:288`, matching the physical vCPU count of the dims runner. The sanity check (lower bound of `100e3`) is preserved.  
 **Upstream status:** Local workaround. The bound is inherently runner-specific (should be `numCPUs × 1e9`); a proper fix would query the node CPU count at runtime.
+
+---
+
+### 0039 — test/integration/scheduler/batch: wait for informer propagation between pods
+
+**File:** `0039-test-integration-scheduler-batch-wait-for-informer-p.patch`  
+**Observed in:** Integration Tests — `dims/test-k8s` only; GitHub-hosted `ubuntu-24.04` (4-vCPU); first seen 2026-05-05 (SHA `8d4ef007d33`); NVIDIA-dev never failed this test  
+**Failing tests:** `TestBatchScenarios/three_pod_batch` in `test/integration/scheduler/batch/batch_test.go`  
+**Symptom:** `Expected pod tpb-batchp2 batched true, actually false`. The test creates pods sequentially and checks that pod2 and pod3 receive a batch scheduling hint (i.e. `TotalBatchedPods()` increments). The batch hint is only given when `batchStateCompatible` returns true, which requires the scheduler's informer snapshot to show pod1's chosen node as "full". On the slow 4-vCPU runner, `WaitForPodToScheduleWithTimeout` returns as soon as the API server records the binding, but the scheduler's internal nodeInfos snapshot may not yet reflect the assignment — the node still appears to have capacity, causing `batchStateCompatible` to return false (`NodeNotFull`) and suppressing the batch hint for pod2.  
+**Fix:** Add a 150 ms `time.Sleep` at the end of each pod iteration in `runScenario`, after confirming the pod is scheduled and recording the batch counter. This gives the informer watch event time to propagate before the next scheduling cycle begins. The 150 ms delay fits comfortably within the 500 ms `maxBatchAge` window, so the batch state is still valid when pod2 starts scheduling.  
+**Upstream status:** Local workaround; the root timing race is test-infrastructure-specific (informer propagation lag on under-resourced runners) and not a bug in the scheduler itself.

@@ -1,0 +1,42 @@
+From 115f73e0c48b368d451bfb21c9d3a18cdb0e0fe5 Mon Sep 17 00:00:00 2001
+From: Davanum Srinivas <davanum@gmail.com>
+Date: Wed, 6 May 2026 05:08:59 -0400
+Subject: [PATCH] test/integration/scheduler/batch: wait for informer
+ propagation between pods
+
+On slow CI runners, the scheduler's informer snapshot may not yet reflect
+a pod's node assignment as full by the time the next pod's scheduling cycle
+begins. This causes batchStateCompatible to return false (NodeNotFull),
+suppressing the expected batch hint and making TestBatchScenarios/three_pod_batch
+fail intermittently.
+
+Add a 150ms sleep after each pod is confirmed scheduled, giving the informer
+time to propagate the node binding before the next scheduling cycle starts.
+The delay fits comfortably within the 500ms maxBatchAge window.
+
+Fixes: TestBatchScenarios/three_pod_batch intermittent failures on 4-vCPU runners
+---
+ test/integration/scheduler/batch/batch_test.go | 7 +++++++
+ 1 file changed, 7 insertions(+)
+
+diff --git a/test/integration/scheduler/batch/batch_test.go b/test/integration/scheduler/batch/batch_test.go
+index ad05b2c27f8..0e072d74ee5 100644
+--- a/test/integration/scheduler/batch/batch_test.go
++++ b/test/integration/scheduler/batch/batch_test.go
+@@ -568,6 +568,13 @@ func runScenario(t *testing.T, tt *scenario, batch bool) ([]*v1.Pod, []bool) {
+ 		currBatched := getter.TotalBatchedPods()
+ 
+ 		batched = append(batched, currBatched > prevBatched)
++
++		// Allow the scheduler's informer snapshot to propagate the pod's node
++		// assignment before the next scheduling cycle starts. Without this, on
++		// slow CI runners the snapshot may not yet reflect the node as full,
++		// causing batchStateCompatible to return false (NodeNotFull) and
++		// suppressing the expected batch hint.
++		time.Sleep(150 * time.Millisecond)
+ 	}
+ 
+ 	return finalPods, batched
+-- 
+2.50.1
+
