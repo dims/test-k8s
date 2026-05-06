@@ -65,32 +65,36 @@
     "schema_version": 1,
     "started_at": "2026-05-05T06:40:32Z",
     "upstream_comparison": {
-      "inventory_parity_status": "match",
+      "inventory_parity_status": "mismatch",
       "junit_files": [
-        "pr-logs/pull/136915/pull-kubernetes-e2e-kind-alpha-beta-features/2051493914573017088/artifacts/junit_01.xml"
+        "pr-logs/pull/138676/pull-kubernetes-e2e-kind-alpha-beta-features/2052022988697505792/artifacts/junit_01.xml"
       ],
-      "local_only_count": 0,
-      "local_only_sample": [],
+      "local_only_count": 1,
+      "local_only_sample": [
+        "Kubernetes e2e suite::CRUD Tests resource.k8s.io/v1beta2 DeviceTaintRule"
+      ],
       "local_test_count": 7581,
       "reference_job_name": "pull-kubernetes-e2e-kind-alpha-beta-features",
-      "reference_kubernetes_base_sha": "12e62adc28d816c6cab0f2803c49b9871aabbf62",
-      "reference_matches_kubernetes_sha": true,
-      "reference_pr_number": 136915,
-      "reference_pr_updated_at": "2026-05-06T05:48:20Z",
-      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/136915/pull-kubernetes-e2e-kind-alpha-beta-features/2051493914573017088",
-      "reference_selection": "exact-kubernetes-sha",
-      "reference_started_at": "2026-05-05T03:18:28Z",
+      "reference_kubernetes_base_sha": "1f77090cd12d05c462e2e180b4f8becc12735728",
+      "reference_matches_kubernetes_sha": false,
+      "reference_pr_number": 138676,
+      "reference_pr_updated_at": "2026-05-06T15:49:28Z",
+      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/138676/pull-kubernetes-e2e-kind-alpha-beta-features/2052022988697505792",
+      "reference_selection": "recent-success",
+      "reference_started_at": "2026-05-06T14:22:15Z",
       "reference_started_json": {
-        "pull": "136915",
-        "repo-commit": "e204bb5baee1c1581484695cfdeff50eb9daacba",
-        "repo-version": "e204bb5baee1c1581484695cfdeff50eb9daacba",
+        "pull": "138676",
+        "repo-commit": "2102aef94965fe3bfe249f201a6c0d2327ba9082",
+        "repo-version": "2102aef94965fe3bfe249f201a6c0d2327ba9082",
         "repos": {
-          "kubernetes/kubernetes": "master:12e62adc28d816c6cab0f2803c49b9871aabbf62,136915:44822fa10a721d4f229a82b5726d92a6332f92ea"
+          "kubernetes/kubernetes": "master:1f77090cd12d05c462e2e180b4f8becc12735728,138676:58cf5d476d3a314f2b83bc3c2989e2e9ff07dca5"
         },
-        "timestamp": 1777949271
+        "timestamp": 1778075452
       },
-      "upstream_only_count": 0,
-      "upstream_only_sample": [],
+      "upstream_only_count": 1,
+      "upstream_only_sample": [
+        "Kubernetes e2e suite::CRUD Tests resource.k8s.io/v1 DeviceTaintRule"
+      ],
       "upstream_test_count": 7581
     },
     "upstream_testgrid_url": "https://testgrid.k8s.io/presubmits-kubernetes-nonblocking#pull-kubernetes-e2e-kind-alpha-beta-features",
