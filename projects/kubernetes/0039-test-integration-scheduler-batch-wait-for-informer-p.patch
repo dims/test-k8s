@@ -1,24 +1,56 @@
-From 115f73e0c48b368d451bfb21c9d3a18cdb0e0fe5 Mon Sep 17 00:00:00 2001
+From ed38dd6c45395f9c76e4770339b0215058c27034 Mon Sep 17 00:00:00 2001
 From: Davanum Srinivas <davanum@gmail.com>
-Date: Wed, 6 May 2026 05:08:59 -0400
-Subject: [PATCH] test/integration/scheduler/batch: wait for informer
- propagation between pods
+Date: Wed, 6 May 2026 05:56:35 -0400
+Subject: [PATCH] test/integration/scheduler/batch: fix timing flake in
+ TestBatchScenarios
 
-On slow CI runners, the scheduler's informer snapshot may not yet reflect
-a pod's node assignment as full by the time the next pod's scheduling cycle
-begins. This causes batchStateCompatible to return false (NodeNotFull),
-suppressing the expected batch hint and making TestBatchScenarios/three_pod_batch
-fail intermittently.
+Two related timing issues cause TestBatchScenarios/three_pod_batch to
+fail intermittently on slow CI runners:
 
-Add a 150ms sleep after each pod is confirmed scheduled, giving the informer
-time to propagate the node binding before the next scheduling cycle starts.
-The delay fits comfortably within the 500ms maxBatchAge window.
+1. Stale scheduler snapshot (NodeNotFull): WaitForPodToScheduleWithTimeout
+   returns as soon as the API server records the pod's binding, but the
+   scheduler's informer snapshot may not yet reflect the node as full.
+   When the next pod's scheduling cycle starts immediately, batchState-
+   Compatible finds the previous node still schedulable and flushes the
+   batch state (BatchFlushNodeNotFull). Add a 150ms sleep after each pod
+   to let the informer propagate before the next scheduling cycle begins.
 
-Fixes: TestBatchScenarios/three_pod_batch intermittent failures on 4-vCPU runners
+2. Batch state expiry (BatchFlushExpired): b.state.creationTime is set
+   during pod-1's StoreScheduleResults call. When pod-2 uses the provided
+   hint (hintedNode == chosenNode), StoreScheduleResults returns early
+   without refreshing creationTime. On a loaded runner, the chain of
+   pod-1 scheduling + pod-2 binding confirmation + sleep before pod-3
+   can exceed the 500ms maxBatchAge, causing pod-3's batchStateCompatible
+   check to fail with BatchFlushExpired. Refresh b.state.creationTime
+   whenever a hint is successfully used so the 500ms window is measured
+   from the most recent successful batch operation, not from pod-1.
+
+Fixes: TestBatchScenarios/three_pod_batch intermittent on 4-vCPU dims
+       runners and on loaded NVIDIA-dev runners after the sleep was added.
 ---
+ pkg/scheduler/framework/runtime/batch.go       | 8 ++++++++
  test/integration/scheduler/batch/batch_test.go | 7 +++++++
- 1 file changed, 7 insertions(+)
+ 2 files changed, 15 insertions(+)
 
+diff --git a/pkg/scheduler/framework/runtime/batch.go b/pkg/scheduler/framework/runtime/batch.go
+index 976cbd39e1a..64e564e70cf 100644
+--- a/pkg/scheduler/framework/runtime/batch.go
++++ b/pkg/scheduler/framework/runtime/batch.go
+@@ -114,6 +114,14 @@ func (b *OpportunisticBatch) StoreScheduleResults(ctx context.Context, signature
+ 			"profile", b.handle.ProfileName(), "cycleCount", cycleCount, "chosenNode", chosenNode)
+ 		metrics.BatchAttemptStats.WithLabelValues(b.handle.ProfileName(), metrics.BatchAttemptHintUsed).Inc()
+ 		b.batchedPods++
++		// Refresh the batch window so that subsequent pods in the same batch are
++		// not penalised by slow binding confirmation on the previous pod. The
++		// 500ms maxBatchAge is measured from state creation; without the refresh,
++		// the clock starts at pod-1's scheduling cycle and pod-N can expire before
++		// it even reaches batchStateCompatible.
++		if b.state != nil {
++			b.state.creationTime = time.Now()
++		}
+ 		return
+ 	}
+ 
 diff --git a/test/integration/scheduler/batch/batch_test.go b/test/integration/scheduler/batch/batch_test.go
 index ad05b2c27f8..0e072d74ee5 100644
 --- a/test/integration/scheduler/batch/batch_test.go

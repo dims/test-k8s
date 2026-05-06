@@ -345,11 +345,13 @@ If a patch is updated (e.g. a threshold is raised), add a **Change history** tab
 
 ---
 
-### 0039 — test/integration/scheduler/batch: wait for informer propagation between pods
+### 0039 — test/integration/scheduler/batch: fix timing flake in TestBatchScenarios
 
 **File:** `0039-test-integration-scheduler-batch-wait-for-informer-p.patch`  
-**Observed in:** Integration Tests — `dims/test-k8s` only; GitHub-hosted `ubuntu-24.04` (4-vCPU); first seen 2026-05-05 (SHA `8d4ef007d33`); NVIDIA-dev never failed this test  
+**Observed in:** Integration Tests — `dims/test-k8s` (4-vCPU, pod2 not batched); `NVIDIA-dev/test-k8s` (pod3 not batched after initial sleep-only fix); first seen 2026-05-05 (SHA `8d4ef007d33`)  
 **Failing tests:** `TestBatchScenarios/three_pod_batch` in `test/integration/scheduler/batch/batch_test.go`  
-**Symptom:** `Expected pod tpb-batchp2 batched true, actually false`. The test creates pods sequentially and checks that pod2 and pod3 receive a batch scheduling hint (i.e. `TotalBatchedPods()` increments). The batch hint is only given when `batchStateCompatible` returns true, which requires the scheduler's informer snapshot to show pod1's chosen node as "full". On the slow 4-vCPU runner, `WaitForPodToScheduleWithTimeout` returns as soon as the API server records the binding, but the scheduler's internal nodeInfos snapshot may not yet reflect the assignment — the node still appears to have capacity, causing `batchStateCompatible` to return false (`NodeNotFull`) and suppressing the batch hint for pod2.  
-**Fix:** Add a 150 ms `time.Sleep` at the end of each pod iteration in `runScenario`, after confirming the pod is scheduled and recording the batch counter. This gives the informer watch event time to propagate before the next scheduling cycle begins. The 150 ms delay fits comfortably within the 500 ms `maxBatchAge` window, so the batch state is still valid when pod2 starts scheduling.  
-**Upstream status:** Local workaround; the root timing race is test-infrastructure-specific (informer propagation lag on under-resourced runners) and not a bug in the scheduler itself.
+**Symptom (dims):** `Expected pod tpb-batchp2 batched true, actually false`. On the slow 4-vCPU runner, `WaitForPodToScheduleWithTimeout` returns as soon as the API server records the binding, but the scheduler's informer snapshot has not yet reflected the node as full. `batchStateCompatible` finds the previous node still schedulable and returns false (`BatchFlushNodeNotFull`).  
+**Symptom (NVIDIA-dev, secondary):** `Expected pod tpb-batchp3 batched true, actually false`. `b.state.creationTime` is set during pod-1's `StoreScheduleResults`. When pod-2 uses the provided hint (`hintedNode == chosenNode`), `StoreScheduleResults` returns early without refreshing `creationTime`. On a loaded runner, the chain of pod-1 scheduling + pod-2 binding confirmation + 150 ms sleep before pod-3 exceeds the 500 ms `maxBatchAge`, causing `batchStateCompatible` to return false (`BatchFlushExpired`) for pod-3.  
+**Fix (batch_test.go):** Add a 150 ms `time.Sleep` at the end of each pod iteration in `runScenario`. This gives the informer watch event time to propagate before the next scheduling cycle begins, so the previous node appears full in the snapshot.  
+**Fix (batch.go):** Refresh `b.state.creationTime = time.Now()` when a hint is successfully used (`hintedNode == chosenNode`). This resets the 500 ms window from the most recent successful batch operation rather than from pod-1's scheduling cycle, preventing `BatchFlushExpired` when individual pods are slow to bind on loaded runners.  
+**Upstream status:** Local workaround; the timing races are test-infrastructure-specific (slow runners) and not bugs in the scheduler itself.
