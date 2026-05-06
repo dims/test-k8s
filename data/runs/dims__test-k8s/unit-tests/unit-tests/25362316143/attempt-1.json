@@ -74,42 +74,38 @@
     "schema_version": 1,
     "started_at": "2026-05-05T06:56:28Z",
     "upstream_comparison": {
-      "inventory_parity_status": "extra-local-tests",
+      "inventory_parity_status": "missing-local-tests",
       "junit_files": [
-        "pr-logs/pull/138645/pull-kubernetes-unit/2049918166250819584/artifacts/junit_20260430-182630.xml"
+        "pr-logs/pull/136015/pull-kubernetes-unit/2051847847438979072/artifacts/junit_20260506-021427.xml",
+        "pr-logs/pull/136015/pull-kubernetes-unit/2051847847438979072/artifacts/junit_hack_tools_golangci_lint_20260506-023242.xml",
+        "pr-logs/pull/136015/pull-kubernetes-unit/2051847847438979072/artifacts/junit_hack_tools_instrumentation_20260506-023301.xml",
+        "pr-logs/pull/136015/pull-kubernetes-unit/2051847847438979072/artifacts/junit_vendor_20260506-023238.xml"
       ],
-      "local_only_count": 8,
-      "local_only_sample": [
-        "[sig-cluster-lifecycle] k8s.io/kubernetes/cmd/kubeadm/app/phases::patchnode",
-        "go.etcd.io/etcd/client/pkg/v3::fileutil",
-        "k8s.io/kubernetes/hack/tools/golangci-lint/sorted::pkg",
-        "k8s.io/kubernetes/hack/tools::instrumentation",
-        "sigs.k8s.io/logtools/logcheck::gclplugin",
-        "sigs.k8s.io/logtools/logcheck::pkg",
-        "sigs.k8s.io/logtools/logcheck::plugin",
-        "sigs.k8s.io/logtools::logcheck"
-      ],
+      "local_only_count": 0,
+      "local_only_sample": [],
       "local_test_count": 1379,
       "reference_job_name": "pull-kubernetes-unit",
-      "reference_kubernetes_base_sha": "57fbe0fb47fc3aebf98491ae52bfc24db12658e2",
+      "reference_kubernetes_base_sha": "3246a92e486ce702dd14f87631151f1cd86cf5db",
       "reference_matches_kubernetes_sha": false,
-      "reference_pr_number": 138645,
-      "reference_pr_updated_at": "2026-05-06T03:36:28Z",
-      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/138645/pull-kubernetes-unit/2049918166250819584",
+      "reference_pr_number": 136015,
+      "reference_pr_updated_at": "2026-05-06T05:01:30Z",
+      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/136015/pull-kubernetes-unit/2051847847438979072",
       "reference_selection": "recent-success",
-      "reference_started_at": "2026-04-30T18:47:19Z",
+      "reference_started_at": "2026-05-06T02:33:59Z",
       "reference_started_json": {
-        "pull": "138645",
-        "repo-commit": "62b149bb07c686215c187d736ea14d53ca01475d",
-        "repo-version": "62b149bb07c686215c187d736ea14d53ca01475d",
+        "pull": "136015",
+        "repo-commit": "49efcd61d4dddef74c0b8defb67fbb8feb8279ca",
+        "repo-version": "49efcd61d4dddef74c0b8defb67fbb8feb8279ca",
         "repos": {
-          "kubernetes/kubernetes": "master:57fbe0fb47fc3aebf98491ae52bfc24db12658e2,138645:718060ee5788264fac6aa412e3d518d5aaaabea4"
+          "kubernetes/kubernetes": "master:3246a92e486ce702dd14f87631151f1cd86cf5db,136015:0338d4ccc6ff42d635967c0addd9308efa78ee5a"
         },
-        "timestamp": 1777573583
+        "timestamp": 1778033652
       },
-      "upstream_only_count": 0,
-      "upstream_only_sample": [],
-      "upstream_test_count": 1371
+      "upstream_only_count": 1,
+      "upstream_only_sample": [
+        "[sig-api-machinery] k8s.io/code-generator/cmd/validation-gen/output_tests/tags::minproperties"
+      ],
+      "upstream_test_count": 1380
     },
     "upstream_testgrid_url": "https://testgrid.k8s.io/presubmits-kubernetes-blocking#pull-kubernetes-unit",
     "workflow_file": ".github/workflows/unit.yml",
