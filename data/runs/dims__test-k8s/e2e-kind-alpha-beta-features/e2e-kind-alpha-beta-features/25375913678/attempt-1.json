@@ -65,17 +65,37 @@
     "schema_version": 1,
     "started_at": "2026-05-05T12:19:04Z",
     "upstream_comparison": {
-      "inventory_parity_status": "upstream-tests-missing",
+      "inventory_parity_status": "mismatch",
+      "junit_files": [
+        "pr-logs/pull/138676/pull-kubernetes-e2e-kind-alpha-beta-features/2052283712191598592/artifacts/junit_01.xml"
+      ],
+      "local_only_count": 1,
+      "local_only_sample": [
+        "Kubernetes e2e suite::CRUD Tests resource.k8s.io/v1beta2 DeviceTaintRule"
+      ],
       "local_test_count": 7581,
       "reference_job_name": "pull-kubernetes-e2e-kind-alpha-beta-features",
-      "reference_kubernetes_base_sha": null,
+      "reference_kubernetes_base_sha": "d92b8fe8f29dfa96d514977244985b2dcd701515",
       "reference_matches_kubernetes_sha": false,
-      "reference_pr_number": 131260,
-      "reference_pr_updated_at": "2026-05-07T05:18:13Z",
-      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/131260/pull-kubernetes-e2e-kind-alpha-beta-features/2000841466892521472",
+      "reference_pr_number": 138676,
+      "reference_pr_updated_at": "2026-05-07T07:08:36Z",
+      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/138676/pull-kubernetes-e2e-kind-alpha-beta-features/2052283712191598592",
       "reference_selection": "recent-success",
-      "reference_started_at": "2025-12-16T08:45:33Z",
-      "upstream_test_count": 0
+      "reference_started_at": "2026-05-07T07:36:16Z",
+      "reference_started_json": {
+        "pull": "138676",
+        "repo-commit": "cf347cd4fb35dd0f52b61ccb719317f8812910ad",
+        "repo-version": "cf347cd4fb35dd0f52b61ccb719317f8812910ad",
+        "repos": {
+          "kubernetes/kubernetes": "master:d92b8fe8f29dfa96d514977244985b2dcd701515,138676:73d76bfecf6c74e947e35647a5dfc87d29200844"
+        },
+        "timestamp": 1778137571
+      },
+      "upstream_only_count": 1,
+      "upstream_only_sample": [
+        "Kubernetes e2e suite::CRUD Tests resource.k8s.io/v1 DeviceTaintRule"
+      ],
+      "upstream_test_count": 7581
     },
     "upstream_testgrid_url": "https://testgrid.k8s.io/presubmits-kubernetes-nonblocking#pull-kubernetes-e2e-kind-alpha-beta-features",
     "workflow_file": ".github/workflows/e2e-kind-alpha-beta-features.yml",
