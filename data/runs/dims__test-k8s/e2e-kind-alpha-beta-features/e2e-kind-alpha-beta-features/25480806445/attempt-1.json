@@ -65,32 +65,36 @@
     "schema_version": 1,
     "started_at": "2026-05-07T06:53:59Z",
     "upstream_comparison": {
-      "inventory_parity_status": "match",
+      "inventory_parity_status": "mismatch",
       "junit_files": [
-        "pr-logs/pull/138759/pull-kubernetes-e2e-kind-alpha-beta-features/2052347844983001088/artifacts/junit_01.xml"
+        "pr-logs/pull/138560/pull-kubernetes-e2e-kind-alpha-beta-features/2051804681780334592/artifacts/junit_01.xml"
       ],
-      "local_only_count": 0,
-      "local_only_sample": [],
+      "local_only_count": 1,
+      "local_only_sample": [
+        "Kubernetes e2e suite::StorageVersionMigration CRUD Tests storagemigration.k8s.io/v1beta1 StorageVersionMigration"
+      ],
       "local_test_count": 7581,
       "reference_job_name": "pull-kubernetes-e2e-kind-alpha-beta-features",
-      "reference_kubernetes_base_sha": "a11a1367fb1a1434bcc6c2d731b8b90722953607",
+      "reference_kubernetes_base_sha": "5d6e917ac112bf7f2b139da77c2e765784473bb2",
       "reference_matches_kubernetes_sha": false,
-      "reference_pr_number": 138759,
-      "reference_pr_updated_at": "2026-05-07T13:20:18Z",
-      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/138759/pull-kubernetes-e2e-kind-alpha-beta-features/2052347844983001088",
+      "reference_pr_number": 138560,
+      "reference_pr_updated_at": "2026-05-07T13:38:18Z",
+      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/138560/pull-kubernetes-e2e-kind-alpha-beta-features/2051804681780334592",
       "reference_selection": "recent-success",
-      "reference_started_at": "2026-05-07T11:51:14Z",
+      "reference_started_at": "2026-05-05T23:53:15Z",
       "reference_started_json": {
-        "pull": "138759",
-        "repo-commit": "c8e652f8a3adb8ac26017a711ef0172ea82f50b0",
-        "repo-version": "c8e652f8a3adb8ac26017a711ef0172ea82f50b0",
+        "pull": "138560",
+        "repo-commit": "fadec974940e10ed749c5721e4672cd2ce414017",
+        "repo-version": "fadec974940e10ed749c5721e4672cd2ce414017",
         "repos": {
-          "kubernetes/kubernetes": "master:a11a1367fb1a1434bcc6c2d731b8b90722953607,138759:978f5741d81a448fd7e4339e5ca99c8c75c92862"
+          "kubernetes/kubernetes": "master:5d6e917ac112bf7f2b139da77c2e765784473bb2,138560:e7cb4c40de91322e69c6a37abb14746f0a14d5f3"
         },
-        "timestamp": 1778152862
+        "timestamp": 1778023364
       },
-      "upstream_only_count": 0,
-      "upstream_only_sample": [],
+      "upstream_only_count": 1,
+      "upstream_only_sample": [
+        "Kubernetes e2e suite::StorageVersionMigration CRUD Tests storagemigration.k8s.io/v1 StorageVersionMigration"
+      ],
       "upstream_test_count": 7581
     },
     "upstream_testgrid_url": "https://testgrid.k8s.io/presubmits-kubernetes-nonblocking#pull-kubernetes-e2e-kind-alpha-beta-features",
