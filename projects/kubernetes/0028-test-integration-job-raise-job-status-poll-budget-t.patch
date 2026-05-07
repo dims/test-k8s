@@ -1,6 +1,6 @@
-From 29ddc1a93e47cb294f8761326dcebea1ae460b8f Mon Sep 17 00:00:00 2001
+From 55b603f4c652e55682c30360d394c42b8b029f61 Mon Sep 17 00:00:00 2001
 From: Davanum Srinivas <davanum@gmail.com>
-Date: Thu, 30 Apr 2026 20:18:41 -0700
+Date: Thu, 7 May 2026 11:01:56 -0400
 Subject: [PATCH] test/integration/job: raise job status poll budget to 60s for
  slow runners
 
@@ -14,18 +14,18 @@ stable on constrained runners.
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/test/integration/job/job_test.go b/test/integration/job/job_test.go
-index 038f1a106e4..dd60ce5d0cb 100644
+index c262fb67771..25cd99b1ace 100644
 --- a/test/integration/job/job_test.go
 +++ b/test/integration/job/job_test.go
-@@ -4736,7 +4736,7 @@ type podsByStatus struct {
+@@ -4266,7 +4266,7 @@ type podsByStatus struct {
  
- func validateJobsPodsStatusOnly(ctx context.Context, t testing.TB, clientSet clientset.Interface, jobObj *batchv1.Job, desired podsByStatus) {
+ func validateJobsPodsStatusOnly(ctx context.Context, t testing.TB, clientSet clientset.Interface, jobObj *batchv1.Job, statusType string, desired podsByStatus) {
  	t.Helper()
--	validateJobsPodsStatusOnlyWithTimeout(ctx, t, clientSet, jobObj, desired, wait.ForeverTestTimeout)
-+	validateJobsPodsStatusOnlyWithTimeout(ctx, t, clientSet, jobObj, desired, 2*wait.ForeverTestTimeout)
+-	validateJobsPodsStatusOnlyWithTimeout(ctx, t, clientSet, jobObj, statusType, desired, wait.ForeverTestTimeout)
++	validateJobsPodsStatusOnlyWithTimeout(ctx, t, clientSet, jobObj, statusType, desired, 2*wait.ForeverTestTimeout)
  }
  
- func validateJobsPodsStatusOnlyWithTimeout(ctx context.Context, t testing.TB, clientSet clientset.Interface, jobObj *batchv1.Job, desired podsByStatus, timeout time.Duration) {
+ func validateJobsPodsStatusOnlyWithTimeout(ctx context.Context, t testing.TB, clientSet clientset.Interface, jobObj *batchv1.Job, statusType string, desired podsByStatus, timeout time.Duration) {
 -- 
 2.50.1
 

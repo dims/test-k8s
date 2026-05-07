@@ -244,6 +244,12 @@ If a patch is updated (e.g. a threshold is raised), add a **Change history** tab
 **Fix:** Double the budget in `validateJobsPodsStatusOnly` from `wait.ForeverTestTimeout` to `2*wait.ForeverTestTimeout` (60 s). Passing cases resolve in well under 5 s; the extra headroom only matters under scheduler/controller starvation on constrained runners.  
 **Upstream status:** No open upstream issue. Local workaround.
 
+**Change history:**
+
+| Date | SHA | Change |
+|------|-----|--------|
+| 2026-05-07 | af6d86c7cc9 | Rebased against PR #138759 (`drop_job_features`) which refactored `validateJobsPodsStatusOnly` to add a `statusType string` parameter; updated patch to match new function signature |
+
 ---
 
 ### 0029 — test/integration/scheduler: wait for nodes in cache before scheduler restart
