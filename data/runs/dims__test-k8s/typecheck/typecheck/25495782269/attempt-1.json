@@ -29,9 +29,9 @@
         "junit_verify.xml"
       ]
     },
-    "collected_at": "2026-05-04T12:29:28Z",
+    "collected_at": "2026-05-07T12:34:55Z",
     "comparison_required": true,
-    "completed_at": "2026-05-04T12:29:34Z",
+    "completed_at": "2026-05-07T12:35:02Z",
     "containerd_ref": "main",
     "containerd_repo": "containerd/containerd",
     "containerd_sha": "2976f38ccbfcda5ef1364d63d60b0a304e4bf94a",
@@ -43,39 +43,55 @@
       "synthetic_cases": false
     },
     "display_order": 140,
-    "duration_seconds": 333,
+    "duration_seconds": 369,
     "event": "schedule",
     "github_ref": "main",
-    "github_sha": "13e0d6e61c8def175c30682fe2ae83f11e8ba82b",
-    "html_url": "https://github.com/dims/test-k8s/actions/runs/25318786508",
+    "github_sha": "f18982cca138fbc5fe54bc3de4a62fea7aed8afd",
+    "html_url": "https://github.com/dims/test-k8s/actions/runs/25495782269",
     "job_id": "typecheck",
     "job_name": "Typecheck",
     "job_slug": "typecheck",
     "kubernetes_ref": "master",
     "kubernetes_repo": "kubernetes/kubernetes",
-    "kubernetes_sha": "135f25c5321f3f7a66fa8ffe27b8b0407b265763",
+    "kubernetes_sha": "a11a1367fb1a1434bcc6c2d731b8b90722953607",
     "mirrored_prow_job": "pull-kubernetes-typecheck",
     "repo": "dims/test-k8s",
     "repo_slug": "dims__test-k8s",
     "result": "success",
     "run_attempt": 1,
-    "run_id": 25318786508,
-    "runner_label": "GitHub Actions 1000023022",
-    "runner_name": "GitHub Actions 1000023022",
+    "run_id": 25495782269,
+    "runner_label": "GitHub Actions 1000024417",
+    "runner_name": "GitHub Actions 1000024417",
     "schema_version": 1,
-    "started_at": "2026-05-04T12:24:01Z",
+    "started_at": "2026-05-07T12:28:53Z",
     "upstream_comparison": {
-      "inventory_parity_status": "upstream-tests-missing",
+      "inventory_parity_status": "match",
+      "junit_files": [
+        "pr-logs/pull/138464/pull-kubernetes-typecheck/2052353081366024192/artifacts/junit_verify.xml"
+      ],
+      "local_only_count": 0,
+      "local_only_sample": [],
       "local_test_count": 1,
       "reference_job_name": "pull-kubernetes-typecheck",
-      "reference_kubernetes_base_sha": null,
-      "reference_matches_kubernetes_sha": false,
-      "reference_pr_number": 135982,
-      "reference_pr_updated_at": "2026-05-07T10:51:47Z",
-      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/135982/pull-kubernetes-typecheck/2008838934070562816",
-      "reference_selection": "recent-success",
-      "reference_started_at": "2026-01-07T09:57:37Z",
-      "upstream_test_count": 0
+      "reference_kubernetes_base_sha": "a11a1367fb1a1434bcc6c2d731b8b90722953607",
+      "reference_matches_kubernetes_sha": true,
+      "reference_pr_number": 138464,
+      "reference_pr_updated_at": "2026-05-07T12:40:07Z",
+      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/138464/pull-kubernetes-typecheck/2052353081366024192",
+      "reference_selection": "exact-kubernetes-sha",
+      "reference_started_at": "2026-05-07T11:48:00Z",
+      "reference_started_json": {
+        "pull": "138464",
+        "repo-commit": "18ebfdf03d73a982f25b6a61b015297afe78abbc",
+        "repo-version": "18ebfdf03d73a982f25b6a61b015297afe78abbc",
+        "repos": {
+          "kubernetes/kubernetes": "master:a11a1367fb1a1434bcc6c2d731b8b90722953607,138464:28777d40808a1a79e532c51f86f99b85a0b84e99"
+        },
+        "timestamp": 1778154172
+      },
+      "upstream_only_count": 0,
+      "upstream_only_sample": [],
+      "upstream_test_count": 1
     },
     "upstream_testgrid_url": "https://testgrid.k8s.io/presubmits-kubernetes-blocking#pull-kubernetes-typecheck",
     "workflow_file": ".github/workflows/typecheck.yml",
@@ -85,7 +101,7 @@
   "suites": [
     {
       "cancelled": 0,
-      "duration_seconds": 176.109,
+      "duration_seconds": 137.956,
       "failed": 0,
       "file_source": "junit_verify.xml",
       "passed": 1,
@@ -99,7 +115,7 @@
   ],
   "summary": {
     "cancelled": 0,
-    "duration_seconds": 176.109,
+    "duration_seconds": 137.956,
     "failed": 0,
     "passed": 1,
     "skipped": 0,
@@ -109,7 +125,7 @@
   "tests": [
     {
       "classname": "verify",
-      "duration_seconds": 176.109,
+      "duration_seconds": 137.956,
       "failure_text": "",
       "file_source": "junit_verify.xml",
       "name": "typecheck",
