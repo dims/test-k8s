@@ -65,32 +65,36 @@
     "schema_version": 1,
     "started_at": "2026-05-05T22:28:02Z",
     "upstream_comparison": {
-      "inventory_parity_status": "match",
+      "inventory_parity_status": "mismatch",
       "junit_files": [
-        "pr-logs/pull/138874/pull-kubernetes-e2e-kind/2052535510684930048/artifacts/junit_01.xml"
+        "pr-logs/pull/138560/pull-kubernetes-e2e-kind/2051804676671672320/artifacts/junit_01.xml"
       ],
-      "local_only_count": 0,
-      "local_only_sample": [],
+      "local_only_count": 1,
+      "local_only_sample": [
+        "Kubernetes e2e suite::StorageVersionMigration CRUD Tests storagemigration.k8s.io/v1beta1 StorageVersionMigration"
+      ],
       "local_test_count": 7581,
       "reference_job_name": "pull-kubernetes-e2e-kind",
-      "reference_kubernetes_base_sha": "44d969be23ebee05fd55f10244db86598a2011c9",
-      "reference_matches_kubernetes_sha": false,
-      "reference_pr_number": 138874,
-      "reference_pr_updated_at": "2026-05-08T00:25:33Z",
-      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/138874/pull-kubernetes-e2e-kind/2052535510684930048",
-      "reference_selection": "recent-success",
-      "reference_started_at": "2026-05-08T00:17:20Z",
+      "reference_kubernetes_base_sha": "5d6e917ac112bf7f2b139da77c2e765784473bb2",
+      "reference_matches_kubernetes_sha": true,
+      "reference_pr_number": 138560,
+      "reference_pr_updated_at": "2026-05-07T22:38:40Z",
+      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/138560/pull-kubernetes-e2e-kind/2051804676671672320",
+      "reference_selection": "exact-kubernetes-sha",
+      "reference_started_at": "2026-05-05T23:51:58Z",
       "reference_started_json": {
-        "pull": "138874",
-        "repo-commit": "4374cb6bed4bc25fa705abb0d797f165c9c755cd",
-        "repo-version": "4374cb6bed4bc25fa705abb0d797f165c9c755cd",
+        "pull": "138560",
+        "repo-commit": "fadec974940e10ed749c5721e4672cd2ce414017",
+        "repo-version": "fadec974940e10ed749c5721e4672cd2ce414017",
         "repos": {
-          "kubernetes/kubernetes": "master:44d969be23ebee05fd55f10244db86598a2011c9,138874:76434e09367d339c4c8f89df9ae268b59e447d31"
+          "kubernetes/kubernetes": "master:5d6e917ac112bf7f2b139da77c2e765784473bb2,138560:e7cb4c40de91322e69c6a37abb14746f0a14d5f3"
         },
-        "timestamp": 1778197605
+        "timestamp": 1778023361
       },
-      "upstream_only_count": 0,
-      "upstream_only_sample": [],
+      "upstream_only_count": 1,
+      "upstream_only_sample": [
+        "Kubernetes e2e suite::StorageVersionMigration CRUD Tests storagemigration.k8s.io/v1 StorageVersionMigration"
+      ],
       "upstream_test_count": 7581
     },
     "upstream_testgrid_url": "https://testgrid.k8s.io/presubmits-kubernetes-blocking#pull-kubernetes-e2e-kind",
