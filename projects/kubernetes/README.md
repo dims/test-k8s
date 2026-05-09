@@ -347,7 +347,7 @@ If a patch is updated (e.g. a threshold is raised), add a **Change history** tab
 **Failing tests:** `[sig-node] Summary API when querying /stats/summary should report resource usage through the stats api [NodeConformance]` in `test/e2e_node/summary_test.go`  
 **Symptom:** The test asserts `UsageNanoCores` stays within `bounded(100e3, 2e9)` at the node level. On the 4-vCPU GitHub-hosted runner under CI load, the entire node briefly consumed more than 2 CPU cores (observed value: `2122130573 ns > 2e9 ns`). This is physically plausible on a 4-vCPU machine: 2e9 nanocores equals exactly 2 cores, so any moment of ≥50% aggregate utilisation across all 4 vCPUs causes a spurious failure.  
 **Fix:** Raise the upper bound from `2e9` to `4e9` in `test/e2e_node/summary_test.go:288`, matching the physical vCPU count of the dims runner. The sanity check (lower bound of `100e3`) is preserved.  
-**Upstream status:** Local workaround. The bound is inherently runner-specific (should be `numCPUs × 1e9`); a proper fix would query the node CPU count at runtime.
+**Upstream status:** Merged upstream as [`4a0637bd57a`](https://github.com/kubernetes/kubernetes/commit/4a0637bd57a114d61d676e2e7e231cd0422b7a65) on 2026-05-09. **Patch dropped.**
 
 ---
 
