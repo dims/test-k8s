@@ -1,0 +1,77 @@
+From c11372d47a50a36b8348e405edfcc9daae1670b7 Mon Sep 17 00:00:00 2001
+From: Davanum Srinivas <davanum@gmail.com>
+Date: Sun, 10 May 2026 16:19:15 -0400
+Subject: [PATCH] test/integration/storageversionmigrator: tolerate transient
+ MigrationFailed in chaos test
+
+On 4-vCPU GitHub-hosted runners under load the SVM controller can hit a
+conflict error (409) while updating the SVM status, log "Error syncing SVM
+resource, retrying" and transiently set the MigrationFailed condition before
+immediately retrying and eventually succeeding.
+
+isCRDMigrated previously returned a hard error on first sight of
+MigrationFailed, causing TestStorageVersionMigrationDuringChaos to fail
+even though all 10 migrations ultimately completed.
+
+Add a chaosMode bool parameter: when true, a transient MigrationFailed is
+logged and polling continues; the 5-minute context deadline is the real
+failure gate.  Non-chaos callers pass false and retain the existing
+fast-fail behaviour.
+---
+ .../storageversionmigrator_test.go                     |  4 ++--
+ test/integration/storageversionmigrator/util.go        | 10 +++++++++-
+ 2 files changed, 11 insertions(+), 3 deletions(-)
+
+diff --git a/test/integration/storageversionmigrator/storageversionmigrator_test.go b/test/integration/storageversionmigrator/storageversionmigrator_test.go
+index 4ecc884c4ac..c530dbe4973 100644
+--- a/test/integration/storageversionmigrator/storageversionmigrator_test.go
++++ b/test/integration/storageversionmigrator/storageversionmigrator_test.go
+@@ -264,7 +264,7 @@ func TestStorageVersionMigrationWithCRD(t *testing.T) {
+ 	if err != nil {
+ 		t.Fatalf("Failed to create SVM resource: %v", err)
+ 	}
+-	if ok := svmTest.isCRDMigrated(ctx, t, svm.Name, crd.Name, "triggercr"); !ok {
++	if ok := svmTest.isCRDMigrated(ctx, t, svm.Name, crd.Name, "triggercr", false); !ok {
+ 		t.Fatalf("CRD not migrated")
+ 	}
+ 
+@@ -346,7 +346,7 @@ func TestStorageVersionMigrationDuringChaos(t *testing.T) {
+ 				return
+ 			}
+ 			triggerCRName := "chaos-trigger-" + strconv.Itoa(i)
+-			if ok := svmTest.isCRDMigrated(ctx, t, svm.Name, crd.Name, triggerCRName); !ok {
++			if ok := svmTest.isCRDMigrated(ctx, t, svm.Name, crd.Name, triggerCRName, true); !ok {
+ 				t.Errorf("CRD not migrated")
+ 				return
+ 			}
+diff --git a/test/integration/storageversionmigrator/util.go b/test/integration/storageversionmigrator/util.go
+index 8bf75781d8c..83337623e07 100644
+--- a/test/integration/storageversionmigrator/util.go
++++ b/test/integration/storageversionmigrator/util.go
+@@ -1090,7 +1090,7 @@ func (svm *svmTest) isCRStoredAtVersion(t *testing.T, version, crName string) bo
+ 	return obj.GetAPIVersion() == fmt.Sprintf("%s/%s", crdGroup, version)
+ }
+ 
+-func (svm *svmTest) isCRDMigrated(ctx context.Context, t *testing.T, crdSVMName, crdName, triggerCRName string) bool {
++func (svm *svmTest) isCRDMigrated(ctx context.Context, t *testing.T, crdSVMName, crdName, triggerCRName string, chaosMode bool) bool {
+ 	t.Helper()
+ 
+ 	var triggerOnce sync.Once
+@@ -1108,6 +1108,14 @@ func (svm *svmTest) isCRDMigrated(ctx context.Context, t *testing.T, crdSVMName,
+ 			svmConditions := svmResource.Status.Conditions
+ 
+ 			if metaconditions.IsStatusConditionTrue(svmConditions, string(svmv1beta1.MigrationFailed)) {
++				if chaosMode {
++					// Under chaos the controller may transiently set MigrationFailed
++					// on a conflict error before immediately retrying. Keep polling so
++					// we observe recovery; the 5-minute context deadline is the real
++					// failure gate.
++					t.Logf("%q SVM has transient MigrationFailed during chaos, continuing to poll: %#v", crdSVMName, svmConditions)
++					return false, nil
++				}
+ 				t.Logf("%q SVM has failed migration, %#v", crdSVMName, svmConditions)
+ 				return false, fmt.Errorf("SVM has failed migration")
+ 			}
+-- 
+2.50.1
+

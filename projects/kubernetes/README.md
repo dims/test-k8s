@@ -351,6 +351,17 @@ If a patch is updated (e.g. a threshold is raised), add a **Change history** tab
 
 ---
 
+### 0040 — test/integration/storageversionmigrator: tolerate transient MigrationFailed in chaos test
+
+**File:** `0040-test-integration-storageversionmigrator-tolerate-tr.patch`  
+**Observed in:** Integration Tests — `dims/test-k8s` (4-vCPU ubuntu-24.04); `NVIDIA-dev/test-k8s` passed; first seen 2026-05-10 (recurred 3× at 01:00, 12:00, 18:26 UTC)  
+**Failing tests:** `TestStorageVersionMigrationDuringChaos` in `test/integration/storageversionmigrator/storageversionmigrator_test.go`  
+**Symptom:** On slow 4-vCPU runners the SVM controller hits a 409 conflict error while updating SVM status under chaos, logs `UnhandledError: Error syncing SVM resource, retrying err="the object has been modified"`, and transiently sets the `MigrationFailed` condition before immediately retrying. `isCRDMigrated` returned `false, error` on the first sight of `MigrationFailed`, causing `t.Errorf("CRD not migrated")` even though all 10 migrations ultimately completed within the 5-minute budget (test duration: ~48 s).  
+**Fix:** Add a `chaosMode bool` parameter to `isCRDMigrated`. When `true` (chaos test only), a transient `MigrationFailed` is logged and polling continues; the 5-minute context deadline is the real failure gate. Non-chaos callers pass `false` and retain the existing fast-fail behaviour.  
+**Upstream status:** Known upstream flake (labeled `kind/flake`); no upstream fix PR found at time of patching.
+
+---
+
 ### 0039 — test/integration/scheduler/batch: fix timing flake in TestBatchScenarios
 
 **File:** `0039-test-integration-scheduler-batch-wait-for-informer-p.patch`  
