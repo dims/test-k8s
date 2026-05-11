@@ -66,17 +66,33 @@
     "schema_version": 1,
     "started_at": "2026-05-09T14:38:45Z",
     "upstream_comparison": {
-      "inventory_parity_status": "upstream-tests-missing",
+      "inventory_parity_status": "match",
+      "junit_files": [
+        "pr-logs/pull/138903/pull-kubernetes-integration/2052810997760004096/artifacts/junit_20260508-180141.xml"
+      ],
+      "local_only_count": 0,
+      "local_only_sample": [],
       "local_test_count": 120,
       "reference_job_name": "pull-kubernetes-integration",
-      "reference_kubernetes_base_sha": null,
+      "reference_kubernetes_base_sha": "8e2ef002395acd883447347c101b76c625683990",
       "reference_matches_kubernetes_sha": false,
-      "reference_pr_number": 135607,
-      "reference_pr_updated_at": "2026-05-10T22:27:18Z",
-      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/135607/pull-kubernetes-integration/2003080305212133376",
+      "reference_pr_number": 138903,
+      "reference_pr_updated_at": "2026-05-11T00:26:01Z",
+      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/138903/pull-kubernetes-integration/2052810997760004096",
       "reference_selection": "recent-success",
-      "reference_started_at": "2025-12-22T13:17:45Z",
-      "upstream_test_count": 0
+      "reference_started_at": "2026-05-08T18:33:15Z",
+      "reference_started_json": {
+        "pull": "138903",
+        "repo-commit": "ab8091f1ad7e80586f67781e3b152f01809d6c03",
+        "repo-version": "ab8091f1ad7e80586f67781e3b152f01809d6c03",
+        "repos": {
+          "kubernetes/kubernetes": "master:8e2ef002395acd883447347c101b76c625683990,138903:85d3992ac1068e35329052506a1a01ec5bf703d9"
+        },
+        "timestamp": 1778263285
+      },
+      "upstream_only_count": 0,
+      "upstream_only_sample": [],
+      "upstream_test_count": 120
     },
     "upstream_testgrid_url": "https://testgrid.k8s.io/presubmits-kubernetes-blocking#pull-kubernetes-integration",
     "workflow_file": ".github/workflows/integration.yml",
