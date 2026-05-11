@@ -65,9 +65,9 @@
     "schema_version": 1,
     "started_at": "2026-05-09T00:37:57Z",
     "upstream_comparison": {
-      "inventory_parity_status": "match",
+      "inventory_parity_status": "missing-local-tests",
       "junit_files": [
-        "pr-logs/pull/138953/pull-kubernetes-conformance-kind-ga-only-parallel/2053739497090191360/artifacts/junit_01.xml"
+        "pr-logs/pull/138367/pull-kubernetes-conformance-kind-ga-only-parallel/2053753449748631552/artifacts/junit_01.xml"
       ],
       "local_only_count": 0,
       "local_only_sample": [],
@@ -75,23 +75,25 @@
       "reference_job_name": "pull-kubernetes-conformance-kind-ga-only-parallel",
       "reference_kubernetes_base_sha": "b6b2ab9ded421bba720e86fc17e8146074e84287",
       "reference_matches_kubernetes_sha": false,
-      "reference_pr_number": 138953,
-      "reference_pr_updated_at": "2026-05-11T08:26:49Z",
-      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/138953/pull-kubernetes-conformance-kind-ga-only-parallel/2053739497090191360",
+      "reference_pr_number": 138367,
+      "reference_pr_updated_at": "2026-05-11T09:17:38Z",
+      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/138367/pull-kubernetes-conformance-kind-ga-only-parallel/2053753449748631552",
       "reference_selection": "recent-success",
-      "reference_started_at": "2026-05-11T07:49:15Z",
+      "reference_started_at": "2026-05-11T08:45:25Z",
       "reference_started_json": {
-        "pull": "138953",
-        "repo-commit": "2021ce8d840063019ecb4a9a22d385368856605d",
-        "repo-version": "2021ce8d840063019ecb4a9a22d385368856605d",
+        "pull": "138367",
+        "repo-commit": "32c7a487c40047d30b20770dde430d39aa9cef5a",
+        "repo-version": "32c7a487c40047d30b20770dde430d39aa9cef5a",
         "repos": {
-          "kubernetes/kubernetes": "master:b6b2ab9ded421bba720e86fc17e8146074e84287,138953:a43aad2e837f50daf4f36ca1743cebc16ec1e567"
+          "kubernetes/kubernetes": "master:b6b2ab9ded421bba720e86fc17e8146074e84287,138367:d17ef179b4a193560c010e7af679797d89928361"
         },
-        "timestamp": 1778484678
+        "timestamp": 1778487985
       },
-      "upstream_only_count": 0,
-      "upstream_only_sample": [],
-      "upstream_test_count": 7581
+      "upstream_only_count": 1,
+      "upstream_only_sample": [
+        "Kubernetes e2e suite::Windows subpath cleanup pod with multiple subPath mounts should terminate cleanly"
+      ],
+      "upstream_test_count": 7582
     },
     "upstream_testgrid_url": "https://testgrid.k8s.io/presubmits-kubernetes-blocking#pull-kubernetes-conformance-kind-ga-only-parallel",
     "workflow_file": ".github/workflows/conformance-kind.yml",
