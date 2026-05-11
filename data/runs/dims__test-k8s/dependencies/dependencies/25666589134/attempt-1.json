@@ -29,12 +29,12 @@
         "junit_verify.xml"
       ]
     },
-    "collected_at": "2026-05-09T06:53:29Z",
+    "collected_at": "2026-05-11T11:17:40Z",
     "comparison_required": true,
-    "completed_at": "2026-05-09T06:53:34Z",
+    "completed_at": "2026-05-11T11:17:48Z",
     "containerd_ref": "main",
     "containerd_repo": "containerd/containerd",
-    "containerd_sha": "2976f38ccbfcda5ef1364d63d60b0a304e4bf94a",
+    "containerd_sha": "978119cbc621d6eaa834b991fd626f0522fb01e5",
     "data_quality": {
       "fallback_synthetic_cases": true,
       "inventory_state": "present",
@@ -43,51 +43,51 @@
       "synthetic_cases": false
     },
     "display_order": 150,
-    "duration_seconds": 249,
-    "event": "schedule",
+    "duration_seconds": 411,
+    "event": "push",
     "github_ref": "main",
-    "github_sha": "b3d5e89d1de984f93356e72ecb94a1d3dc3dc1f8",
-    "html_url": "https://github.com/dims/test-k8s/actions/runs/25594555431",
+    "github_sha": "ef99b22c66ebe72570bb701d143f78655132dade",
+    "html_url": "https://github.com/dims/test-k8s/actions/runs/25666589134",
     "job_id": "dependencies",
     "job_name": "Dependencies",
     "job_slug": "dependencies",
     "kubernetes_ref": "master",
     "kubernetes_repo": "kubernetes/kubernetes",
-    "kubernetes_sha": "ea231e60e7616f820c544bedc6074f68aa80828c",
+    "kubernetes_sha": "e3a4f147b2c6e3d3f0204d96acadf318b372d8af",
     "mirrored_prow_job": "pull-kubernetes-dependencies",
     "repo": "dims/test-k8s",
     "repo_slug": "dims__test-k8s",
     "result": "success",
     "run_attempt": 1,
-    "run_id": 25594555431,
-    "runner_label": "GitHub Actions 1000025065",
-    "runner_name": "GitHub Actions 1000025065",
+    "run_id": 25666589134,
+    "runner_label": "GitHub Actions 1000025863",
+    "runner_name": "GitHub Actions 1000025863",
     "schema_version": 1,
-    "started_at": "2026-05-09T06:49:25Z",
+    "started_at": "2026-05-11T11:10:57Z",
     "upstream_comparison": {
       "inventory_parity_status": "match",
       "junit_files": [
-        "pr-logs/pull/138937/pull-kubernetes-dependencies/2053583188076269568/artifacts/junit_verify.xml"
+        "pr-logs/pull/138953/pull-kubernetes-dependencies/2053789164859559936/artifacts/junit_verify.xml"
       ],
       "local_only_count": 0,
       "local_only_sample": [],
       "local_test_count": 3,
       "reference_job_name": "pull-kubernetes-dependencies",
-      "reference_kubernetes_base_sha": "5cf56a97d5ec9747371ff221e8d320e819950083",
-      "reference_matches_kubernetes_sha": false,
-      "reference_pr_number": 138937,
-      "reference_pr_updated_at": "2026-05-11T11:21:56Z",
-      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/138937/pull-kubernetes-dependencies/2053583188076269568",
-      "reference_selection": "recent-success",
-      "reference_started_at": "2026-05-10T21:11:06Z",
+      "reference_kubernetes_base_sha": "e3a4f147b2c6e3d3f0204d96acadf318b372d8af",
+      "reference_matches_kubernetes_sha": true,
+      "reference_pr_number": 138953,
+      "reference_pr_updated_at": "2026-05-11T11:18:28Z",
+      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/138953/pull-kubernetes-dependencies/2053789164859559936",
+      "reference_selection": "exact-kubernetes-sha",
+      "reference_started_at": "2026-05-11T10:49:53Z",
       "reference_started_json": {
-        "pull": "138937",
-        "repo-commit": "101b8f32ad43db4c10b9e10235105c005776970a",
-        "repo-version": "101b8f32ad43db4c10b9e10235105c005776970a",
+        "pull": "138953",
+        "repo-commit": "1fb9f65417d4838a2e3e997af6c95be65cc3e0c7",
+        "repo-version": "1fb9f65417d4838a2e3e997af6c95be65cc3e0c7",
         "repos": {
-          "kubernetes/kubernetes": "master:5cf56a97d5ec9747371ff221e8d320e819950083,138937:b488593fe25fcca68abf910a946e9ee756d0ac24"
+          "kubernetes/kubernetes": "master:e3a4f147b2c6e3d3f0204d96acadf318b372d8af,138953:a43aad2e837f50daf4f36ca1743cebc16ec1e567"
         },
-        "timestamp": 1778447390
+        "timestamp": 1778496499
       },
       "upstream_only_count": 0,
       "upstream_only_sample": [],
@@ -101,7 +101,7 @@
   "suites": [
     {
       "cancelled": 0,
-      "duration_seconds": 59.55801,
+      "duration_seconds": 62.619879999999995,
       "failed": 0,
       "file_source": "junit_verify.xml",
       "passed": 3,
@@ -115,7 +115,7 @@
   ],
   "summary": {
     "cancelled": 0,
-    "duration_seconds": 59.558,
+    "duration_seconds": 62.62,
     "failed": 0,
     "passed": 3,
     "skipped": 0,
@@ -125,7 +125,7 @@
   "tests": [
     {
       "classname": "verify",
-      "duration_seconds": 8.99404,
+      "duration_seconds": 9.99838,
       "failure_text": "",
       "file_source": "junit_verify.xml",
       "name": "external-dependencies-version",
@@ -138,7 +138,7 @@
     },
     {
       "classname": "verify",
-      "duration_seconds": 9.35477,
+      "duration_seconds": 10.2679,
       "failure_text": "",
       "file_source": "junit_verify.xml",
       "name": "vendor-licenses",
@@ -151,7 +151,7 @@
     },
     {
       "classname": "verify",
-      "duration_seconds": 41.2092,
+      "duration_seconds": 42.3536,
       "failure_text": "",
       "file_source": "junit_verify.xml",
       "name": "vendor",
