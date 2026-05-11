@@ -1,0 +1,39 @@
+From 8ead2b8bebb9ce1761692ed2ff4c3ec572430b19 Mon Sep 17 00:00:00 2001
+From: Davanum Srinivas <davanum@gmail.com>
+Date: Mon, 11 May 2026 07:09:43 -0400
+Subject: [PATCH] pkg/kubelet/cm/dra: stop plugin manager before TempDir
+ cleanup in TestPrepareResources
+
+initDRAPluginManager starts background goroutines including a ResourceHealthStatus
+health stream (enabled by default since 1.36 Beta) that writes checkpoint files into
+the stateFileDirectory.  When the test subtest returns, defer cancel() fires but the
+goroutines may still be writing.  t.TempDir() then calls os.RemoveAll which races
+with those writes producing:
+
+  TempDir RemoveAll cleanup: unlinkat .../001: directory not empty
+
+Register a t.Cleanup that calls cancel() and manager.draPlugins.Stop().  Because
+t.Cleanup callbacks run in LIFO order after the test function returns, and t.TempDir()
+registers its own cleanup before this one, Stop() runs first -- blocking until all
+goroutines finish -- then os.RemoveAll proceeds on an idle directory.
+---
+ pkg/kubelet/cm/dra/manager_test.go | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/pkg/kubelet/cm/dra/manager_test.go b/pkg/kubelet/cm/dra/manager_test.go
+index 02b7204a25d..30c4855e333 100644
+--- a/pkg/kubelet/cm/dra/manager_test.go
++++ b/pkg/kubelet/cm/dra/manager_test.go
+@@ -1180,6 +1180,9 @@ dra_operations_duration_seconds_count{is_error="false",operation_name="PrepareRe
+ 			manager, err := NewManager(tCtx.Logger(), fakeKubeClient, t.TempDir())
+ 			require.NoError(t, err, "create DRA manager")
+ 			manager.initDRAPluginManager(backgroundCtx, getFakeNode, time.Second /* very short wiping delay for testing */)
++			// t.Cleanup runs before t.TempDir cleanup (LIFO), ensuring health stream
++			// goroutines finish before os.RemoveAll deletes the state directory.
++			t.Cleanup(func() { cancel(); manager.draPlugins.Stop() })
+ 
+ 			if test.claim != nil {
+ 				if _, err := fakeKubeClient.ResourceV1().ResourceClaims(test.pod.Namespace).Create(tCtx, test.claim, metav1.CreateOptions{}); err != nil {
+-- 
+2.50.1
+
