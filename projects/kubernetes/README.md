@@ -394,3 +394,15 @@ If a patch is updated (e.g. a threshold is raised), add a **Change history** tab
 **Symptom:** `testing.go:1464: TempDir RemoveAll cleanup: unlinkat /tmp/TestUnprepareResourcesunknown_driver.../001: directory not empty`. Identical root cause to patch 0041: `initDRAPluginManager` → `RegisterPlugin` starts a `ResourceHealthStatus` health stream goroutine that writes checkpoint files into the `t.TempDir()` state directory. In the `unknown_driver` subtest the function returns early (driver not registered error), so `t.TempDir()`'s `os.RemoveAll` races with the goroutine's writes.  
 **Fix:** Register a `t.Cleanup` callback immediately after `initDRAPluginManager` that calls `manager.draPlugins.Stop()`. `Stop()` cancels the plugin manager's internal context and blocks via `wg.Wait()` until all goroutines finish. LIFO cleanup ordering ensures this runs before `t.TempDir()`'s `os.RemoveAll`. Unlike the patch 0041 fix, no external `cancel()` call is needed — `Stop()` cancels the plugin manager's own derived context directly.  
 **Upstream status:** Local workaround; not reported upstream.
+
+---
+
+### 0043 — test(client-go/cache): fix race in TestReflectorRespectStoreTransformer/real-fifo
+
+**File:** `0043-test-client-go-cache-fix-race-in-TestReflectorRespec.patch`  
+**Observed in:** Unit Tests — `dims/test-k8s` only (4-vCPU); `NVIDIA-dev/test-k8s` (32-vCPU) was green; first seen 2026-05-12 13:00 UTC scheduled wave  
+**Failing tests:** `TestReflectorRespectStoreTransformer/real-fifo` in `staging/src/k8s.io/client-go/tools/cache/reflector_test.go`  
+**Symptom:** `reflector_test.go:2265: expected informer to contain 3 objects, but got: 2` and `reflector_test.go:2277: expected transformer to be invoked 5 times, but got: 4`. Both counts are off by one — pod3 (the event that follows the Bookmark) is not yet in the store when the test checks.  
+**Root cause:** The Bookmark has `rv=3` and `InitialEventsAnnotationKey=true`. When the Reflector processes the Bookmark it calls `Replace()` and sets `lastSyncResourceVersion=3`. The test polls for `lastSyncResourceVersion == lastExpectedRV` where `lastExpectedRV` was also `"3"`. The poll returns immediately after the Bookmark — before pod3 (also `rv=3`, sent right after the Bookmark in the fake watcher goroutine) is consumed by the Reflector. The subsequent store-count and transformer-count assertions then observe the partially-processed state.  
+**Fix:** Give pod3 `rv=4` and set `lastExpectedRV="4"`. The Bookmark keeps `rv=3` (correctly marking end of the initial sync). `lastSyncResourceVersion` only advances to `"4"` after pod3 is processed, so the poll cannot return before pod3 lands in the store. Counts become race-free.  
+**Upstream status:** Local workaround; not reported upstream.

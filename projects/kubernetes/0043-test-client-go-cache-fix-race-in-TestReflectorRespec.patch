@@ -1,0 +1,50 @@
+From 0ec88ebde765d2210d6e6c94888f00aa0469e118 Mon Sep 17 00:00:00 2001
+From: Davanum Srinivas <davanum@gmail.com>
+Date: Tue, 12 May 2026 09:48:55 -0400
+Subject: [PATCH] test(client-go/cache): fix race in
+ TestReflectorRespectStoreTransformer/real-fifo
+
+The Bookmark has rv=3 and InitialEventsAnnotationKey=true.  Reflector
+processes the Bookmark, sets lastSyncResourceVersion=3, and calls
+Replace().  The test polls until lastSyncResourceVersion==lastExpectedRV.
+With lastExpectedRV=3, the poll returns immediately after the Bookmark --
+before pod3 (also rv=3, sent right after the Bookmark) is processed.
+The subsequent store-count and transformer-count checks then see 2 objects
+instead of 3.
+
+Give pod3 rv=4 and set lastExpectedRV=4.  The poll now only returns
+after pod3 is consumed, making the post-poll assertions race-free.
+The Bookmark keeps rv=3, correctly marking the end of the initial sync.
+---
+ .../src/k8s.io/client-go/tools/cache/reflector_test.go   | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
+
+diff --git a/staging/src/k8s.io/client-go/tools/cache/reflector_test.go b/staging/src/k8s.io/client-go/tools/cache/reflector_test.go
+index 337c608fbc8..a327cfb590d 100644
+--- a/staging/src/k8s.io/client-go/tools/cache/reflector_test.go
++++ b/staging/src/k8s.io/client-go/tools/cache/reflector_test.go
+@@ -2197,15 +2197,18 @@ func TestReflectorRespectStoreTransformer(t *testing.T) {
+ 
+ 			preExisting1 := mkPod("foo-1", "1")
+ 			preExisting2 := mkPod("foo-2", "2")
+-			pod3 := mkPod("foo-3", "3")
++			// rv=4 so the poll for lastSyncResourceVersion only satisfies after
++			// pod3 is processed; the Bookmark (rv=3) alone would satisfy "3"
++			// before pod3 lands, causing a store-count race.
++			pod3 := mkPod("foo-3", "4")
+ 
+-			lastExpectedRV := "3"
++			lastExpectedRV := "4"
+ 			events := []watch.Event{
+ 				{Type: watch.Added, Object: preExisting1},
+ 				{Type: watch.Added, Object: preExisting2},
+ 				{Type: watch.Bookmark, Object: &v1.Pod{
+ 					ObjectMeta: metav1.ObjectMeta{
+-						ResourceVersion: lastExpectedRV,
++						ResourceVersion: "3",
+ 						Annotations: map[string]string{
+ 							metav1.InitialEventsAnnotationKey: "true",
+ 						},
+-- 
+2.50.1
+
