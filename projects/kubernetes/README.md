@@ -406,3 +406,16 @@ If a patch is updated (e.g. a threshold is raised), add a **Change history** tab
 **Root cause:** The Bookmark has `rv=3` and `InitialEventsAnnotationKey=true`. When the Reflector processes the Bookmark it calls `Replace()` and sets `lastSyncResourceVersion=3`. The test polls for `lastSyncResourceVersion == lastExpectedRV` where `lastExpectedRV` was also `"3"`. The poll returns immediately after the Bookmark — before pod3 (also `rv=3`, sent right after the Bookmark in the fake watcher goroutine) is consumed by the Reflector. The subsequent store-count and transformer-count assertions then observe the partially-processed state.  
 **Fix:** Give pod3 `rv=4` and set `lastExpectedRV="4"`. The Bookmark keeps `rv=3` (correctly marking end of the initial sync). `lastSyncResourceVersion` only advances to `"4"` after pod3 is processed, so the poll cannot return before pod3 lands in the store. Counts become race-free.  
 **Upstream status:** Local workaround; not reported upstream.
+
+
+---
+
+### 0044 — test/integration/storageversionmigrator: tolerate 404 in chaos audit check
+
+**File:** `0044-test-integration-storageversionmigrator-tolerate-404-in-chaos-audit-check.patch`  
+**Observed in:** Integration Tests — `NVIDIA-dev/test-k8s` push wave triggered by patch 0043 commit; first seen 2026-05-12  
+**Failing tests:** `TestStorageVersionMigrationDuringChaos` in `test/integration/storageversionmigrator/`  
+**Symptom:** `util.go:324: svm controller had invalid response code for event: utils.AuditEvent{...Verb:"patch", Code:404, StatusMessage:"testcrds.stable.example.com \"chaos-cr-4\" not found"}`. The `t.Cleanup` audit check in `svmSetup` treats any response code other than HTTP 200 or HTTP 409 as an error.  
+**Root cause:** `createChaos` starts goroutines that continuously create and delete CRs during the migration. The SVM controller lists CRs, then attempts to patch them. A chaos goroutine can delete a CR in the window between the list and the patch, producing a legitimate HTTP 404 (NotFound) response. This is not a controller bug — it is expected concurrent-deletion behaviour — but the audit cleanup's strict code allowlist rejected it.  
+**Fix:** Add a `chaosMode bool` field to `svmTest`. `createChaos` sets `svm.chaosMode = true` before starting chaos goroutines. The `t.Cleanup` audit check inserts `http.StatusNotFound` into the valid-codes set when `chaosMode` is true, so legitimate 404s from chaos-deleted CRs are not treated as failures.  
+**Upstream status:** Local workaround; not reported upstream.

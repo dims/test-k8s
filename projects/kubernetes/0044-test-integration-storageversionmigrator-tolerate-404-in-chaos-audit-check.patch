@@ -1,0 +1,60 @@
+From ebdc11635861df3f04b3bffa86dd118fdfc3b794 Mon Sep 17 00:00:00 2001
+From: Davanum Srinivas <davanum@gmail.com>
+Date: Tue, 12 May 2026 10:33:06 -0400
+Subject: [PATCH] test/integration/storageversionmigrator: tolerate 404 in
+ chaos audit check
+
+Chaos goroutines created by createChaos continuously delete CRs. The SVM
+controller can list a CR then attempt to patch it after the chaos goroutine
+has already deleted it, producing a legitimate HTTP 404 response. The audit
+cleanup in svmSetup previously only allowed HTTP 200 and 409, causing
+TestStorageVersionMigrationDuringChaos to fail with:
+
+  util.go:324: svm controller had invalid response code for event:
+  ...Verb:"patch", Code:404, StatusMessage:"testcrds...not found"
+
+Add a chaosMode bool field to svmTest, set it in createChaos, and insert
+http.StatusNotFound into the valid-codes set when chaosMode is true.
+---
+ test/integration/storageversionmigrator/util.go | 11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
+
+diff --git a/test/integration/storageversionmigrator/util.go b/test/integration/storageversionmigrator/util.go
+index 83337623e07..f5ee20d7df8 100644
+--- a/test/integration/storageversionmigrator/util.go
++++ b/test/integration/storageversionmigrator/util.go
+@@ -255,6 +255,9 @@ type svmTest struct {
+ 	server                      *kubeapiservertesting.TestServer
+ 	apiextensionsclient         *apiextensionsclientset.Clientset
+ 	filePathForEncryptionConfig string
++	// chaosMode is set by createChaos; allows the audit cleanup to tolerate 404
++	// responses from the SVM controller when chaos goroutines race-delete CRs.
++	chaosMode bool
+ }
+ 
+ func svmSetup(ctx context.Context, t *testing.T) *svmTest {
+@@ -315,7 +318,12 @@ func svmSetup(ctx context.Context, t *testing.T) *svmTest {
+ 	}
+ 
+ 	t.Cleanup(func() {
+-		var validCodes = sets.New[int32](http.StatusOK, http.StatusConflict) // make sure SVM controller never creates
++		validCodes := sets.New[int32](http.StatusOK, http.StatusConflict) // make sure SVM controller never creates
++		if svmTest.chaosMode {
++			// Chaos goroutines can delete CRs between when the SVM controller lists them
++			// and when it patches them, producing legitimate 404s that are not errors.
++			validCodes.Insert(http.StatusNotFound)
++		}
+ 		_ = svmTest.countMatchingAuditEvents(t, func(event utils.AuditEvent) bool {
+ 			if event.User != "system:serviceaccount:kube-system:storage-version-migrator-controller" {
+ 				return false
+@@ -1191,6 +1199,7 @@ func (svm *svmTest) validateRVAndGeneration(ctx context.Context, t *testing.T, c
+ }
+ 
+ func (svm *svmTest) createChaos(ctx context.Context, t *testing.T) {
++	svm.chaosMode = true
+ 	var wg sync.WaitGroup
+ 	ctx, cancel := context.WithCancel(ctx)
+ 
+-- 
+2.50.1
+
