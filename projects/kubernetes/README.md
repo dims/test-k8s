@@ -419,3 +419,15 @@ If a patch is updated (e.g. a threshold is raised), add a **Change history** tab
 **Root cause:** `createChaos` starts goroutines that continuously create and delete CRs during the migration. The SVM controller lists CRs, then attempts to patch them. A chaos goroutine can delete a CR in the window between the list and the patch, producing a legitimate HTTP 404 (NotFound) response. This is not a controller bug — it is expected concurrent-deletion behaviour — but the audit cleanup's strict code allowlist rejected it.  
 **Fix:** Add a `chaosMode bool` field to `svmTest`. `createChaos` sets `svm.chaosMode = true` before starting chaos goroutines. The `t.Cleanup` audit check inserts `http.StatusNotFound` into the valid-codes set when `chaosMode` is true, so legitimate 404s from chaos-deleted CRs are not treated as failures.  
 **Upstream status:** Local workaround; not reported upstream.
+
+---
+
+### 0045 — test/integration/scheduler/batch: raise MaxBatchAge for slow runners
+
+**File:** `0045-test-integration-scheduler-batch-raise-MaxBatchAge-for-slow-runners.patch`  
+**Observed in:** Integration Tests — `NVIDIA-dev/test-k8s` (32-vCPU runner); first seen 2026-05-12 14:34 UTC push wave  
+**Failing tests:** `TestBatchScenarios/three_pod_batch` in `test/integration/scheduler/batch/batch_test.go`  
+**Symptom:** `batch_test.go:370: Expected pod tpb-batchp3 batched true, actually false`. Pod3 is scheduled but not detected as batched — `TotalBatchedPods()` does not increment for pod3.  
+**Root cause:** `BatchFlushExpired`. After pod2 uses its hint, `StoreScheduleResults` resets `b.state.creationTime` (patch 0039). However, `WaitForPodToScheduleWithTimeout` blocks until the API-server binding confirmation (not the scheduling cycle itself), which takes 200–400ms on a loaded runner. The test's 150ms post-scheduling sleep (patch 0039) then pushes the total elapsed time past the hard-coded 500ms `maxBatchAge` before pod3's scheduling cycle calls `batchStateCompatible`.  
+**Fix:** Export `maxBatchAge` as `var MaxBatchAge` (was `const`) so test suites can override it. In `TestMain` for the integration test suite, set `MaxBatchAge = 5s`. The 5s window tolerates any realistic CI binding latency while still catching genuine stale-state scenarios (the test has no intentional pauses between pods).  
+**Upstream status:** Local workaround; not reported upstream.

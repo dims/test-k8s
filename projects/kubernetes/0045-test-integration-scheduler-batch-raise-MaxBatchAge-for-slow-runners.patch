@@ -1,0 +1,91 @@
+From b8ba751d59d2092ce8bb77409e3e2466f56fe4d5 Mon Sep 17 00:00:00 2001
+From: Davanum Srinivas <davanum@gmail.com>
+Date: Tue, 12 May 2026 11:15:54 -0400
+Subject: [PATCH] test/integration/scheduler/batch: raise MaxBatchAge for slow
+ runners
+
+TestBatchScenarios/three_pod_batch fails intermittently on loaded CI
+runners with:
+
+  batch_test.go:370: Expected pod tpb-batchp3 batched true, actually false
+
+Root cause: BatchFlushExpired. After pod2 uses its batch hint,
+StoreScheduleResults resets b.state.creationTime (patch 0039). However,
+WaitForPodToScheduleWithTimeout waits for the API-server binding
+confirmation (not for the scheduling cycle itself), which can take
+200-400ms on a loaded runner. Adding the 150ms post-scheduling sleep and
+pod3 queue time, the total elapsed time since the creationTime reset can
+easily exceed the hard-coded 500ms MaxBatchAge before pod3's scheduling
+cycle calls batchStateCompatible.
+
+Fix:
+- Export maxBatchAge as var MaxBatchAge so test suites can widen it.
+- In TestMain, set MaxBatchAge = 5s. The five-second window is large
+  enough to tolerate any realistic CI latency while still catching
+  genuine stale-state cases (the test does not have intentional pauses
+  between pods).
+---
+ pkg/scheduler/framework/runtime/batch.go      | 11 ++++++-----
+ test/integration/scheduler/batch/main_test.go |  6 ++++++
+ 2 files changed, 12 insertions(+), 5 deletions(-)
+
+diff --git a/pkg/scheduler/framework/runtime/batch.go b/pkg/scheduler/framework/runtime/batch.go
+index 64e564e70cf..1faa9a1103b 100644
+--- a/pkg/scheduler/framework/runtime/batch.go
++++ b/pkg/scheduler/framework/runtime/batch.go
+@@ -54,9 +54,10 @@ type schedulingCycle struct {
+ 	succeeded  bool
+ }
+ 
+-const (
+-	maxBatchAge = 500 * time.Millisecond
+-)
++// MaxBatchAge is the maximum time a batch state remains valid between consecutive
++// pods. It is a variable so tests on slow CI runners can increase it without
++// changing production semantics.
++var MaxBatchAge = 500 * time.Millisecond
+ 
+ // GetNodeHint provides a hint for the pod based on filtering a scoring results of previous cycles. Caching works only for consecutive pods
+ // with the same signature that are scheduled in 1-pod-per-node manner (otherwise previous scores could not be reused).
+@@ -116,7 +117,7 @@ func (b *OpportunisticBatch) StoreScheduleResults(ctx context.Context, signature
+ 		b.batchedPods++
+ 		// Refresh the batch window so that subsequent pods in the same batch are
+ 		// not penalised by slow binding confirmation on the previous pod. The
+-		// 500ms maxBatchAge is measured from state creation; without the refresh,
++		// 500ms MaxBatchAge is measured from state creation; without the refresh,
+ 		// the clock starts at pod-1's scheduling cycle and pod-N can expire before
+ 		// it even reaches batchStateCompatible.
+ 		if b.state != nil {
+@@ -207,7 +208,7 @@ func (b *OpportunisticBatch) batchStateCompatible(ctx context.Context, pod *v1.P
+ 	// If the state is too old, throw the state away. This is to avoid
+ 	// cases where we either have huge numbers of compatible pods in a
+ 	// row or we have a long wait between pods.
+-	if time.Now().After((b.state.creationTime.Add(maxBatchAge))) {
++	if time.Now().After((b.state.creationTime.Add(MaxBatchAge))) {
+ 		b.logUnusableState(logger, cycleCount, metrics.BatchFlushExpired)
+ 		return false
+ 	}
+diff --git a/test/integration/scheduler/batch/main_test.go b/test/integration/scheduler/batch/main_test.go
+index 8075d6901a0..45e3a27c56d 100644
+--- a/test/integration/scheduler/batch/main_test.go
++++ b/test/integration/scheduler/batch/main_test.go
+@@ -18,10 +18,16 @@ package batch
+ 
+ import (
+ 	"testing"
++	"time"
+ 
++	frameworkruntime "k8s.io/kubernetes/pkg/scheduler/framework/runtime"
+ 	"k8s.io/kubernetes/test/integration/framework"
+ )
+ 
+ func TestMain(m *testing.M) {
++	// Slow CI runners can take >500ms between pod2 binding confirmation and
++	// pod3's scheduling cycle start (binding wait + queue time). Increase
++	// MaxBatchAge so BatchFlushExpired does not race against wall-clock latency.
++	frameworkruntime.MaxBatchAge = 5 * time.Second
+ 	framework.EtcdMain(m.Run)
+ }
+-- 
+2.50.1
+
