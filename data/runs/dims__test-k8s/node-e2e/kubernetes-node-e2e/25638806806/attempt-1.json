@@ -65,35 +65,38 @@
     "schema_version": 1,
     "started_at": "2026-05-10T20:20:41Z",
     "upstream_comparison": {
-      "inventory_parity_status": "match",
+      "inventory_parity_status": "missing-local-tests",
       "junit_files": [
-        "pr-logs/pull/138132/pull-kubernetes-node-e2e-containerd/2054173129952989184/artifacts/junit_cos01.xml",
-        "pr-logs/pull/138132/pull-kubernetes-node-e2e-containerd/2054173129952989184/artifacts/junit_ubuntu01.xml"
+        "pr-logs/pull/138127/pull-kubernetes-node-e2e-containerd/2052802209342558208/artifacts/junit_cos01.xml",
+        "pr-logs/pull/138127/pull-kubernetes-node-e2e-containerd/2052802209342558208/artifacts/junit_ubuntu01.xml"
       ],
       "local_only_count": 0,
       "local_only_sample": [],
       "local_test_count": 1206,
       "reference_job_name": "pull-kubernetes-node-e2e-containerd",
-      "reference_kubernetes_base_sha": "300eda2f2f4af5095a8c85f8a6d4350a41211e58",
+      "reference_kubernetes_base_sha": "dfbe9362f942dbe2fe7166e3a0bcab7d9b9e1bf0",
       "reference_matches_kubernetes_sha": false,
-      "reference_pr_number": 138132,
-      "reference_pr_updated_at": "2026-05-12T12:57:39Z",
-      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/138132/pull-kubernetes-node-e2e-containerd/2054173129952989184",
+      "reference_pr_number": 138127,
+      "reference_pr_updated_at": "2026-05-12T13:10:35Z",
+      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/138127/pull-kubernetes-node-e2e-containerd/2052802209342558208",
       "reference_selection": "recent-success",
-      "reference_started_at": "2026-05-12T12:50:48Z",
+      "reference_started_at": "2026-05-08T18:00:43Z",
       "reference_started_json": {
-        "pull": "138132",
-        "repo-commit": "fea7e44b4ed1c6e2e17b1abf74d727322faf15dd",
-        "repo-version": "fea7e44b4ed1c6e2e17b1abf74d727322faf15dd",
+        "pull": "138127",
+        "repo-commit": "ff7516d550a8dc03e921d1860f630a17056d9516",
+        "repo-version": "ff7516d550a8dc03e921d1860f630a17056d9516",
         "repos": {
-          "kubernetes/kubernetes": "master:300eda2f2f4af5095a8c85f8a6d4350a41211e58,138132:b73ae65d927a8833e962f0608b2bdeae7242e7a6",
+          "kubernetes/kubernetes": "master:dfbe9362f942dbe2fe7166e3a0bcab7d9b9e1bf0,138127:b634f42b118193707b86ff6acde2c8f3c5a77507",
           "kubernetes/test-infra": "master"
         },
-        "timestamp": 1778588045
+        "timestamp": 1778261218
       },
-      "upstream_only_count": 0,
-      "upstream_only_sample": [],
-      "upstream_test_count": 1206
+      "upstream_only_count": 2,
+      "upstream_only_sample": [
+        "E2eNode Suite::HugepageAwareMemoryAvailable [Feature:Eviction] with feature gate disabled should include hugepage capacity in memory.available",
+        "E2eNode Suite::HugepageAwareMemoryAvailable [Feature:Eviction] with feature gate enabled should subtract hugepage capacity from memory.available"
+      ],
+      "upstream_test_count": 1208
     },
     "upstream_testgrid_url": "https://testgrid.k8s.io/presubmits-kubernetes-blocking#pull-kubernetes-node-e2e-containerd",
     "workflow_file": ".github/workflows/node-e2e.yml",
