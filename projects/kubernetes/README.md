@@ -383,3 +383,14 @@ If a patch is updated (e.g. a threshold is raised), add a **Change history** tab
 **Symptom:** `testing.go:1464: TempDir RemoveAll cleanup: unlinkat /tmp/TestPrepareResources.../001: directory not empty`. The test subtest calls `t.TempDir()` for the DRA manager's state directory and then immediately returns early (feature-disabled error path). The `defer cancel()` fires, but the `ResourceHealthStatus` health stream goroutine (enabled by default since v1.36 Beta) started by `initDRAPluginManager` → `RegisterPlugin` is still writing checkpoint files into the state directory when `os.RemoveAll` runs during `t.TempDir()` cleanup.  
 **Fix:** Register a `t.Cleanup` callback immediately after `initDRAPluginManager` that calls `cancel()` and `manager.draPlugins.Stop()`. Because `t.Cleanup` callbacks run in LIFO order after the test function returns, this cleanup executes before the `t.TempDir()` cleanup. `Stop()` cancels the plugin manager's context, closes all gRPC connections, and blocks until all tracked goroutines (including health stream goroutines) finish. The state directory is then idle when `os.RemoveAll` runs.  
 **Upstream status:** Local workaround; not reported upstream.
+
+---
+
+### 0042 — pkg/kubelet/cm/dra: stop plugin manager before TempDir cleanup in TestUnprepareResources
+
+**File:** `0042-pkg-kubelet-cm-dra-stop-plugin-manager-before-TempD.patch`  
+**Observed in:** Unit Tests — `NVIDIA-dev/test-k8s` only (32-vCPU self-hosted runner); `dims/test-k8s` (4-vCPU) was green; first seen 2026-05-12 01:00 UTC wave  
+**Failing tests:** `TestUnprepareResources/unknown_driver` in `pkg/kubelet/cm/dra/manager_test.go`  
+**Symptom:** `testing.go:1464: TempDir RemoveAll cleanup: unlinkat /tmp/TestUnprepareResourcesunknown_driver.../001: directory not empty`. Identical root cause to patch 0041: `initDRAPluginManager` → `RegisterPlugin` starts a `ResourceHealthStatus` health stream goroutine that writes checkpoint files into the `t.TempDir()` state directory. In the `unknown_driver` subtest the function returns early (driver not registered error), so `t.TempDir()`'s `os.RemoveAll` races with the goroutine's writes.  
+**Fix:** Register a `t.Cleanup` callback immediately after `initDRAPluginManager` that calls `manager.draPlugins.Stop()`. `Stop()` cancels the plugin manager's internal context and blocks via `wg.Wait()` until all goroutines finish. LIFO cleanup ordering ensures this runs before `t.TempDir()`'s `os.RemoveAll`. Unlike the patch 0041 fix, no external `cancel()` call is needed — `Stop()` cancels the plugin manager's own derived context directly.  
+**Upstream status:** Local workaround; not reported upstream.

@@ -1,0 +1,38 @@
+From 484367ac0d3daf1653307c64399fa73f937d53df Mon Sep 17 00:00:00 2001
+From: Davanum Srinivas <davanum@gmail.com>
+Date: Mon, 11 May 2026 21:23:55 -0400
+Subject: [PATCH] pkg/kubelet/cm/dra: stop plugin manager before TempDir
+ cleanup in TestUnprepareResources
+
+Same race as TestPrepareResources: initDRAPluginManager starts health stream
+goroutines (ResourceHealthStatus Beta, default-true since 1.36) that write
+checkpoint files into the stateFileDirectory. t.TempDir() cleanup races with
+those writes producing:
+
+  TempDir RemoveAll cleanup: unlinkat .../001: directory not empty
+
+Register a t.Cleanup that calls manager.draPlugins.Stop() after
+initDRAPluginManager. Stop() cancels the plugin manager's internal context
+and waits (wg.Wait()) for all goroutines to finish. Because t.Cleanup
+runs in LIFO order, this fires before t.TempDir()'s os.RemoveAll.
+---
+ pkg/kubelet/cm/dra/manager_test.go | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/pkg/kubelet/cm/dra/manager_test.go b/pkg/kubelet/cm/dra/manager_test.go
+index 30c4855e333..71e0b2895b3 100644
+--- a/pkg/kubelet/cm/dra/manager_test.go
++++ b/pkg/kubelet/cm/dra/manager_test.go
+@@ -1516,6 +1516,9 @@ dra_operations_duration_seconds_count{is_error="false",operation_name="Unprepare
+ 			manager, err := NewManager(tCtx.Logger(), fakeKubeClient, t.TempDir())
+ 			require.NoError(t, err, "create DRA manager")
+ 			manager.initDRAPluginManager(tCtx, getFakeNode, time.Second /* very short wiping delay for testing */)
++			// t.Cleanup runs before t.TempDir cleanup (LIFO), ensuring health stream
++			// goroutines finish before os.RemoveAll deletes the state directory.
++			t.Cleanup(func() { manager.draPlugins.Stop() })
+ 
+ 			plg := manager.GetWatcherHandler()
+ 			if err := plg.RegisterPlugin(test.driverName, draServerInfo.socketName, []string{drapb.DRAPluginService}, pluginClientTimeout); err != nil {
+-- 
+2.50.1
+
