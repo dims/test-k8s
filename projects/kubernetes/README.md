@@ -431,3 +431,15 @@ If a patch is updated (e.g. a threshold is raised), add a **Change history** tab
 **Root cause:** `BatchFlushExpired`. After pod2 uses its hint, `StoreScheduleResults` resets `b.state.creationTime` (patch 0039). However, `WaitForPodToScheduleWithTimeout` blocks until the API-server binding confirmation (not the scheduling cycle itself), which takes 200–400ms on a loaded runner. The test's 150ms post-scheduling sleep (patch 0039) then pushes the total elapsed time past the hard-coded 500ms `maxBatchAge` before pod3's scheduling cycle calls `batchStateCompatible`.  
 **Fix:** Export `maxBatchAge` as `var MaxBatchAge` (was `const`) so test suites can override it. In `TestMain` for the integration test suite, set `MaxBatchAge = 5s`. The 5s window tolerates any realistic CI binding latency while still catching genuine stale-state scenarios (the test has no intentional pauses between pods).  
 **Upstream status:** Local workaround; not reported upstream.
+
+---
+
+### 0046 — test/integration/apiextensions: poll Apply rejection in TestApplyCRDuringCRDFinalization
+
+**File:** `0046-test-integration-apiextensions-poll-Apply-rejection-in-TestApplyCRDuringCRDFinalization.patch`  
+**Observed in:** Integration Tests — `dims/test-k8s` (4-vCPU ubuntu-24.04); first seen 2026-05-13 12:54 UTC (run 25800378280); NVIDIA-dev passed same wave  
+**Failing tests:** `TestApplyCRDuringCRDFinalization` in `staging/src/k8s.io/apiextensions-apiserver/test/integration/`  
+**Symptom:** `finalization_test.go:210: An error is expected but got nil.` After the wait loop confirms the CRD's `Terminating` condition is true (via direct API GET), the immediately-following `Apply` call returns nil instead of the expected `create not allowed while custom resource definition is terminating` error.  
+**Root cause:** A different flake mode than patch 0025 addressed. The `Terminating` condition is observed on the CRD object via the apiextensions client, but the apiextensions CR handler that rejects CR Apply reads from a separate informer cache that may briefly lag behind the apiserver write. The Apply can succeed during the small window between the wait loop returning and the handler's informer observing the Terminating condition.  
+**Fix:** Replace the single-shot `require.ErrorContains` after the Apply with a `wait.PollUntilContextTimeout` loop that retries the Apply until it returns an error containing the expected message. Uses `wait.ForeverTestTimeout` as the deadline, matching the wait-for-Terminating loop above it.  
+**Upstream status:** Related to GitHub issue [#137603](https://github.com/kubernetes/kubernetes/issues/137603). Local workaround until the upstream fix lands.
