@@ -443,3 +443,18 @@ If a patch is updated (e.g. a threshold is raised), add a **Change history** tab
 **Root cause:** A different flake mode than patch 0025 addressed. The `Terminating` condition is observed on the CRD object via the apiextensions client, but the apiextensions CR handler that rejects CR Apply reads from a separate informer cache that may briefly lag behind the apiserver write. The Apply can succeed during the small window between the wait loop returning and the handler's informer observing the Terminating condition.  
 **Fix:** Replace the single-shot `require.ErrorContains` after the Apply with a `wait.PollUntilContextTimeout` loop that retries the Apply until it returns an error containing the expected message. Uses `wait.ForeverTestTimeout` as the deadline, matching the wait-for-Terminating loop above it.  
 **Upstream status:** Related to GitHub issue [#137603](https://github.com/kubernetes/kubernetes/issues/137603). Local workaround until the upstream fix lands.
+
+---
+
+### 0047 — test(client-go/cache): wait for controller exit before source Shutdown in TestResetWatch
+
+**File:** `0047-test-client-go-cache-wait-for-controller-exit-before-Shutdown-in-TestResetWatch.patch`  
+**Observed in:** Unit Tests — `NVIDIA-dev/test-k8s` (32-vCPU self-hosted runner); first seen 2026-05-13 18:48 UTC (run 25819488026); dims `Unit Tests` passed the same wave  
+**Failing tests:** `TestResetWatch` (package `k8s.io/client-go/tools/cache`) in `staging/src/k8s.io/client-go/tools/cache/controller_test.go`  
+**Symptom:** Package-level FAIL with goleak reporting two leaked goroutines:  
+&nbsp;&nbsp;&nbsp;&nbsp;`=== FAIL: k8s.io/client-go/tools/cache  (0.00s)` (tests themselves PASS)  
+&nbsp;&nbsp;&nbsp;&nbsp;`Goroutine N in state sync.WaitGroup.Wait` — `controller.RunWithContext` blocked at `Group.Wait()`  
+&nbsp;&nbsp;&nbsp;&nbsp;`Goroutine M in state sync.RWMutex.RLock` — reflector blocked in `FakeControllerSource.Watch()` at `fake_controller_source.go:244` (RLock).  
+**Root cause:** `FakeControllerSource.Shutdown()` deliberately takes the source's write lock and never releases it (commented `// Purposely no unlock`). If a reflector goroutine is still running when the test's `t.Cleanup` fires Shutdown and the reflector then enters `source.Watch()` (which takes RLock), the RLock deadlocks because there is a held write lock. The reflector goroutine cannot check ctx cancellation while blocked on RLock, so the controller's `Group.Wait()` never returns and goleak reports the leak.  
+**Fix:** Capture the controller goroutine's exit with a `done` channel (closed when `c.RunWithContext` returns), then register a second `t.Cleanup` that does `cancel(); <-done`. The new cleanup is registered after the existing `source.Shutdown` cleanup, so by `t.Cleanup`'s LIFO order it runs first — ensuring the controller (and all reflector goroutines) have fully exited before Shutdown takes the lock.  
+**Upstream status:** Local workaround; not reported upstream.

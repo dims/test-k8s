@@ -1,0 +1,58 @@
+From e5eb336f6fc1c68124935a96a10473d43a1d9f09 Mon Sep 17 00:00:00 2001
+From: Davanum Srinivas <davanum@gmail.com>
+Date: Wed, 13 May 2026 15:20:15 -0400
+Subject: [PATCH] test(client-go/cache): wait for controller exit before source
+ Shutdown in TestResetWatch
+
+FakeControllerSource.Shutdown() deliberately acquires the source's
+write lock and never releases it. If a reflector goroutine is still
+running when Shutdown fires and enters source.Watch() (which does
+RLock) afterward, the RLock deadlocks and goleak reports the leak:
+
+    === FAIL: k8s.io/client-go/tools/cache  (0.00s)
+    goleak: Errors on successful test run: found unexpected goroutines:
+    Goroutine ... in state sync.WaitGroup.Wait, 1 minutes, ...
+    Goroutine ... in state sync.RWMutex.RLock, 1 minutes, ...
+      fake_controller_source.go:244
+
+Wait for the controller goroutine to fully exit (via a done channel
+closed when c.RunWithContext returns) before allowing the existing
+source.Shutdown cleanup to run. The new t.Cleanup is registered after
+the Shutdown one, so by LIFO order it runs first and the controller
+has stopped before Shutdown takes the lock.
+
+Signed-off-by: Davanum Srinivas <davanum@gmail.com>
+---
+ .../client-go/tools/cache/controller_test.go     | 16 +++++++++++++++-
+ 1 file changed, 15 insertions(+), 1 deletion(-)
+
+diff --git a/staging/src/k8s.io/client-go/tools/cache/controller_test.go b/staging/src/k8s.io/client-go/tools/cache/controller_test.go
+index 1751bc4cb26..7a7ba39ca3a 100644
+--- a/staging/src/k8s.io/client-go/tools/cache/controller_test.go
++++ b/staging/src/k8s.io/client-go/tools/cache/controller_test.go
+@@ -1077,7 +1077,21 @@ func TestResetWatch(t *testing.T) {
+ 				},
+ 			}
+ 			c := New(cfg)
+-			go c.RunWithContext(ctx)
++			done := make(chan struct{})
++			go func() {
++				defer close(done)
++				c.RunWithContext(ctx)
++			}()
++			// FakeControllerSource.Shutdown() takes the source's write lock and
++			// deliberately never releases it; if a reflector goroutine is still
++			// running and enters source.Watch() (which does RLock) after Shutdown
++			// has fired, it will deadlock and leak under goleak. Wait for the
++			// controller to fully exit before allowing the Shutdown cleanup (which
++			// was registered earlier and runs after this one per LIFO order).
++			t.Cleanup(func() {
++				cancel()
++				<-done
++			})
+ 			if !WaitForCacheSync(ctx.Done(), c.HasSynced) {
+ 				t.Fatal("Timed out waiting for cache sync")
+ 			}
+-- 
+2.50.1
+
