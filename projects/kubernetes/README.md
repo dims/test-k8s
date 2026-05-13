@@ -270,7 +270,7 @@ If a patch is updated (e.g. a threshold is raised), add a **Change history** tab
 **Failing tests:** `TestPodGroupAdmission/PodGroup_referencing_terminating_Workload_is_rejected` in `test/integration/scheduler/podgroup/admission/`  
 **Symptom:** After deleting a Workload (which sets `DeletionTimestamp` but leaves the object due to a finalizer), the admission plugin's informer-backed lister may still return the old object without `DeletionTimestamp`. On the 32-vCPU runner the PodGroup creation test completes so quickly that the lister is stale; the admission plugin passes the PodGroup creation when it should reject. The test expects a Forbidden error but gets success.  
 **Fix:** Replace the lister-based Workload lookup in `Validate()` with a direct API call (`p.client.SchedulingV1alpha2().Workloads(...).Get()`), ensuring fresh state. The informer is retained for the `WaitForReady` check. Also update the unit test to populate the fake client (not just the informer store) to match the new code path.  
-**Upstream status:** Production bug in `plugin/pkg/admission/podgroup` (KEP-5832, PR #137464). The lister is unsuitable for this check because DeletionTimestamp changes need strong consistency. Will propose upstream fix.
+**Upstream status:** Production bug in `plugin/pkg/admission/podgroup` (KEP-5832, PR #137464). The lister is unsuitable for this check because DeletionTimestamp changes need strong consistency. Will propose upstream fix. **Patch dropped 2026-05-13:** upstream merged [PR #139008](https://github.com/kubernetes/kubernetes/pull/139008) (commit `17460de7bdb`) reverting the entire KEP-5832 PodGroup admission feature; the files this patch modifies no longer exist on master.
 
 ---
 
