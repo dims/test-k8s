@@ -65,17 +65,35 @@
     "schema_version": 1,
     "started_at": "2026-05-12T12:41:51Z",
     "upstream_comparison": {
-      "inventory_parity_status": "upstream-tests-missing",
+      "inventory_parity_status": "extra-local-tests",
+      "junit_files": [
+        "pr-logs/pull/138496/pull-kubernetes-conformance-kind-ga-only-parallel/2049221144799612928/artifacts/junit_01.xml"
+      ],
+      "local_only_count": 1,
+      "local_only_sample": [
+        "Kubernetes e2e suite::CRUD Tests resource.k8s.io/v1beta2 DeviceTaintRule"
+      ],
       "local_test_count": 7581,
       "reference_job_name": "pull-kubernetes-conformance-kind-ga-only-parallel",
-      "reference_kubernetes_base_sha": null,
+      "reference_kubernetes_base_sha": "a716ee6f51c20672ca87e3e1ef1f05e02f56bea3",
       "reference_matches_kubernetes_sha": false,
-      "reference_pr_number": 128866,
-      "reference_pr_updated_at": "2026-05-13T09:13:39Z",
-      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/128866/pull-kubernetes-conformance-kind-ga-only-parallel/1975116194742538240",
+      "reference_pr_number": 138496,
+      "reference_pr_updated_at": "2026-05-13T11:02:05Z",
+      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/138496/pull-kubernetes-conformance-kind-ga-only-parallel/2049221144799612928",
       "reference_selection": "recent-success",
-      "reference_started_at": "2025-10-06T08:53:16Z",
-      "upstream_test_count": 0
+      "reference_started_at": "2026-04-28T20:34:32Z",
+      "reference_started_json": {
+        "pull": "138496",
+        "repo-commit": "d35a508d9332d5885250dc14ba3515f996940266",
+        "repo-version": "d35a508d9332d5885250dc14ba3515f996940266",
+        "repos": {
+          "kubernetes/kubernetes": "master:a716ee6f51c20672ca87e3e1ef1f05e02f56bea3,138496:20756d033d8d42fa0cd4acfbf9babc01274bceaa"
+        },
+        "timestamp": 1777407396
+      },
+      "upstream_only_count": 0,
+      "upstream_only_sample": [],
+      "upstream_test_count": 7580
     },
     "upstream_testgrid_url": "https://testgrid.k8s.io/presubmits-kubernetes-blocking#pull-kubernetes-conformance-kind-ga-only-parallel",
     "workflow_file": ".github/workflows/conformance-kind.yml",

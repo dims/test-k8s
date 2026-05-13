@@ -66,17 +66,38 @@
     "schema_version": 1,
     "started_at": "2026-05-10T20:20:41Z",
     "upstream_comparison": {
-      "inventory_parity_status": "upstream-tests-missing",
+      "inventory_parity_status": "mismatch",
+      "junit_files": [
+        "pr-logs/pull/138496/pull-kubernetes-integration/2049221144539566080/artifacts/junit_20260428-201648.xml"
+      ],
+      "local_only_count": 2,
+      "local_only_sample": [
+        "[sig-autoscaling] k8s.io/kubernetes/test/integration::podautoscaler",
+        "[sig-scheduling] k8s.io/kubernetes/test/integration/scheduler_perf::gangscheduling"
+      ],
       "local_test_count": 120,
       "reference_job_name": "pull-kubernetes-integration",
-      "reference_kubernetes_base_sha": null,
+      "reference_kubernetes_base_sha": "a716ee6f51c20672ca87e3e1ef1f05e02f56bea3",
       "reference_matches_kubernetes_sha": false,
-      "reference_pr_number": 128866,
-      "reference_pr_updated_at": "2026-05-13T09:13:39Z",
-      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/128866/pull-kubernetes-integration/1975116194448936960",
+      "reference_pr_number": 138496,
+      "reference_pr_updated_at": "2026-05-13T11:02:05Z",
+      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/138496/pull-kubernetes-integration/2049221144539566080",
       "reference_selection": "recent-success",
-      "reference_started_at": "2025-10-06T09:17:38Z",
-      "upstream_test_count": 0
+      "reference_started_at": "2026-04-28T20:48:24Z",
+      "reference_started_json": {
+        "pull": "138496",
+        "repo-commit": "d35a508d9332d5885250dc14ba3515f996940266",
+        "repo-version": "d35a508d9332d5885250dc14ba3515f996940266",
+        "repos": {
+          "kubernetes/kubernetes": "master:a716ee6f51c20672ca87e3e1ef1f05e02f56bea3,138496:20756d033d8d42fa0cd4acfbf9babc01274bceaa"
+        },
+        "timestamp": 1777407398
+      },
+      "upstream_only_count": 1,
+      "upstream_only_sample": [
+        "[sig-api-machinery] k8s.io/kubernetes/test/integration/apiserver/cel/authorizerselector::selectordisabled"
+      ],
+      "upstream_test_count": 119
     },
     "upstream_testgrid_url": "https://testgrid.k8s.io/presubmits-kubernetes-blocking#pull-kubernetes-integration",
     "workflow_file": ".github/workflows/integration.yml",
