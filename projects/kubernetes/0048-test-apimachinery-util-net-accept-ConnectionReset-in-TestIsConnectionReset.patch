@@ -1,0 +1,45 @@
+From 5a6499bd3906308b11a64103f69fbad8c46f6286 Mon Sep 17 00:00:00 2001
+From: Davanum Srinivas <davanum@gmail.com>
+Date: Thu, 14 May 2026 10:23:18 -0400
+Subject: [PATCH] test(apimachinery/util/net): accept ConnectionReset in
+ TestIsConnectionReset
+
+The test deliberately breaks a TCP connection by stopping the LB
+mid-stream, then asserts the next GET fails with HTTP2ConnectionLost
+(detected via the HTTP/2 ping mechanism with PingTimeout=1s). On
+heavily loaded CI runners the kernel can detect the broken socket
+faster than the HTTP/2 ping and surface a TCP-level RST instead:
+
+    util_test.go:199: expected HTTP2ConnectionLost error, got Get
+    "https://...": read tcp ...: read: connection reset by peer
+
+Both errors indicate the connection is no longer usable; accept
+either to avoid flaking on the kernel-vs-HTTP/2 timing race.
+
+Signed-off-by: Davanum Srinivas <davanum@gmail.com>
+---
+ .../src/k8s.io/apimachinery/pkg/util/net/util_test.go    | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
+
+diff --git a/staging/src/k8s.io/apimachinery/pkg/util/net/util_test.go b/staging/src/k8s.io/apimachinery/pkg/util/net/util_test.go
+index 90b14a864c0..278aac290ae 100644
+--- a/staging/src/k8s.io/apimachinery/pkg/util/net/util_test.go
++++ b/staging/src/k8s.io/apimachinery/pkg/util/net/util_test.go
+@@ -195,7 +195,12 @@ func TestIsConnectionReset(t *testing.T) {
+ 	close(stopCh)
+ 	<-stoppedCh
+ 	_, err = c.Get("https://" + lb.ln.Addr().String())
+-	if !IsHTTP2ConnectionLost(err) {
+-		t.Fatalf("expected HTTP2ConnectionLost error, got %v", err)
++	// On heavily loaded CI runners the kernel can surface the broken
++	// connection as a TCP-level RST ("connection reset by peer") before
++	// the HTTP/2 ping mechanism (PingTimeout=1s) detects the silent loss.
++	// Both errors indicate the connection is no longer usable, so accept
++	// either rather than failing on the timing race.
++	if !IsHTTP2ConnectionLost(err) && !IsConnectionReset(err) {
++		t.Fatalf("expected HTTP2ConnectionLost or ConnectionReset error, got %v", err)
+ 	}
+ }
+-- 
+2.50.1
+

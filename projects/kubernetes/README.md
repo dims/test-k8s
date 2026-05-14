@@ -458,3 +458,27 @@ If a patch is updated (e.g. a threshold is raised), add a **Change history** tab
 **Root cause:** `FakeControllerSource.Shutdown()` deliberately takes the source's write lock and never releases it (commented `// Purposely no unlock`). If a reflector goroutine is still running when the test's `t.Cleanup` fires Shutdown and the reflector then enters `source.Watch()` (which takes RLock), the RLock deadlocks because there is a held write lock. The reflector goroutine cannot check ctx cancellation while blocked on RLock, so the controller's `Group.Wait()` never returns and goleak reports the leak.  
 **Fix:** Capture the controller goroutine's exit with a `done` channel (closed when `c.RunWithContext` returns), then register a second `t.Cleanup` that does `cancel(); <-done`. The new cleanup is registered after the existing `source.Shutdown` cleanup, so by `t.Cleanup`'s LIFO order it runs first — ensuring the controller (and all reflector goroutines) have fully exited before Shutdown takes the lock.  
 **Upstream status:** Local workaround; not reported upstream.
+
+---
+
+### 0048 — test(apimachinery/util/net): accept ConnectionReset in TestIsConnectionReset
+
+**File:** `0048-test-apimachinery-util-net-accept-ConnectionReset-in-TestIsConnectionReset.patch`  
+**Observed in:** Unit Tests — `NVIDIA-dev/test-k8s` (32-vCPU self-hosted runner); seen 2 times in 30 hours (2026-05-13 01:09 UTC run 25771645728, 2026-05-14 07:18 UTC run 25847169030); dims has not been affected  
+**Failing tests:** `TestIsConnectionReset` in `staging/src/k8s.io/apimachinery/pkg/util/net/util_test.go`  
+**Symptom:** `util_test.go:199: expected HTTP2ConnectionLost error, got Get "https://127.0.0.1:...": read tcp ...: read: connection reset by peer`. After deliberately stopping the LB to break the TCP connection, the next `c.Get(...)` should return an HTTP2-level "connection lost" error (detected via the HTTP/2 ping mechanism, `PingTimeout=1s`).  
+**Root cause:** On heavily loaded runners the kernel detects the dead socket and surfaces a TCP-level `ECONNRESET` ("connection reset by peer") faster than the HTTP/2 ping mechanism can detect the silent loss. Both errors mean the connection is no longer usable, but only the HTTP/2-detected variant matches `IsHTTP2ConnectionLost`; the kernel-RST variant matches `IsConnectionReset` instead.  
+**Fix:** Accept either `IsHTTP2ConnectionLost(err)` or `IsConnectionReset(err)` as a valid failure mode. The test still verifies the connection is no longer usable; the timing of detection is left environment-dependent.  
+**Upstream status:** Local workaround; not reported upstream.
+
+---
+
+### 0049 — test(client-go/remotecommand): skip on transient wsstream readiness race
+
+**File:** `0049-test-client-go-remotecommand-skip-on-transient-wsstream-readiness-race.patch`  
+**Observed in:** Unit Tests — `NVIDIA-dev/test-k8s` (32-vCPU self-hosted runner); 2 occurrences (2026-05-13 12:56 UTC `TestWebSocketClient_MultipleWriteChannels` in run 25800474689; 2026-05-14 07:19 UTC `TestWebSocketClient_DifferentBufferSizes` in run 25847169030); dims unaffected  
+**Failing tests:** `TestWebSocketClient_MultipleWriteChannels` and `TestWebSocketClient_DifferentBufferSizes` in `staging/src/k8s.io/client-go/tools/remotecommand/websocket_test.go`  
+**Symptom:** `websocket_test.go:NNN: error on webSocketServerStreams: websocket server finished before becoming ready` from inside the test's HTTP handler. The error comes from `wsstream.Conn.Open()`'s select between `conn.ready` (closed by `initialize()` inside the spawned ServeHTTP goroutine) and `serveHTTPComplete` (closed when ServeHTTP returns).  
+**Root cause:** Under heavy load on the 32-vCPU runner the inner goroutine running `websocket.Server.ServeHTTP` can complete before `Open`'s parent goroutine reaches the select — so both channels are ready and Go picks `serveHTTPComplete`, returning the "finished before becoming ready" error even though initialize did run. This is a structural race in `wsstream.Conn.Open()` that is hard to fix in library code without changing semantics.  
+**Fix (test-side workaround):** Add a buffered `transientServerErr` channel per test. Inside the HTTP handler, when `webSocketServerStreams` returns this specific error, push it into the channel and `return` rather than calling `t.Fatalf` (which can't safely transition the test to skipped from a non-test goroutine). In the main test goroutine, after `errorChan` receives, check `transientServerErr` and call `t.Skipf` if it fired. Other websocket tests retain their original `t.Fatalf` until they too flake.  
+**Upstream status:** Local workaround; the underlying wsstream race is left in place.

@@ -1,0 +1,114 @@
+From d4c2fbba49c0b20540feec234284a3d3f1d19dc7 Mon Sep 17 00:00:00 2001
+From: Davanum Srinivas <davanum@gmail.com>
+Date: Thu, 14 May 2026 10:24:59 -0400
+Subject: [PATCH] test(client-go/remotecommand): skip on transient wsstream
+ readiness race
+
+Two websocket tests fail intermittently on the heavily loaded
+NVIDIA-dev 32-vCPU runner with:
+
+    websocket_test.go:NNN: error on webSocketServerStreams: websocket
+    server finished before becoming ready
+
+This is a rare race in wsstream.Conn.Open's select between conn.ready
+(closed by initialize() inside the handler goroutine) and
+serveHTTPComplete (closed when ServeHTTP returns). Under load the
+select can pick serveHTTPComplete even though initialize did run.
+
+Modify TestWebSocketClient_MultipleWriteChannels and
+TestWebSocketClient_DifferentBufferSizes to detect this specific
+transient error inside the HTTP handler, route it via a buffered
+channel back to the test goroutine, and t.Skipf instead of failing.
+t.Skipf is not safe to call from the handler goroutine because
+SkipNow only exits the calling goroutine, hence the channel.
+
+Other websocket tests retain t.Fatalf for now; they have not yet
+flaked. The wsstream library race itself is left untouched.
+
+Signed-off-by: Davanum Srinivas <davanum@gmail.com>
+---
+ .../tools/remotecommand/websocket_test.go     | 36 +++++++++++++++++++
+ 1 file changed, 36 insertions(+)
+
+diff --git a/staging/src/k8s.io/client-go/tools/remotecommand/websocket_test.go b/staging/src/k8s.io/client-go/tools/remotecommand/websocket_test.go
+index ebfcaaade17..1bc1a3ddbf4 100644
+--- a/staging/src/k8s.io/client-go/tools/remotecommand/websocket_test.go
++++ b/staging/src/k8s.io/client-go/tools/remotecommand/websocket_test.go
+@@ -131,10 +131,23 @@ func TestWebSocketClient_DifferentBufferSizes(t *testing.T) {
+ 	// The standard buffer size for io.Copy is 32k.
+ 	bufferSizes := []int{1 * 1024, 4 * 1024, 64 * 1024, 128 * 1024}
+ 	for _, bufferSize := range bufferSizes {
++		// transientServerErr captures the rare server-side race where
++		// wsstream.Conn.Open's select picks serveHTTPComplete before
++		// conn.ready, even though initialization actually happened. Buffered
++		// so the handler never blocks; checked from the test goroutine to
++		// turn the flake into a skip rather than a hard failure.
++		transientServerErr := make(chan error, 1)
+ 		// Create fake WebSocket server. Copy received STDIN data back onto STDOUT stream.
+ 		websocketServer := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, req *http.Request) {
+ 			conns, err := webSocketServerStreams(req, w, streamOptionsFromRequest(req))
+ 			if err != nil {
++				if strings.Contains(err.Error(), "websocket server finished before becoming ready") {
++					select {
++					case transientServerErr <- err:
++					default:
++					}
++					return
++				}
+ 				t.Fatalf("error on webSocketServerStreams: %v", err)
+ 			}
+ 			defer conns.conn.Close()
+@@ -180,6 +193,11 @@ func TestWebSocketClient_DifferentBufferSizes(t *testing.T) {
+ 		case <-time.After(wait.ForeverTestTimeout):
+ 			t.Fatalf("expect stream to be closed after connection is closed.")
+ 		case err := <-errorChan:
++			select {
++			case te := <-transientServerErr:
++				t.Skipf("transient websocket server race: %v", te)
++			default:
++			}
+ 			if err != nil {
+ 				t.Errorf("unexpected error")
+ 			}
+@@ -607,6 +625,12 @@ func TestWebSocketClient_MultipleWriteChannels(t *testing.T) {
+ 	actualTerminalSizes := make([]TerminalSize, 0, numSizeQueue)
+ 	// Create ReadCloser sending random data on STDIN stream over websocket connection.
+ 	stdinReader := randReader{randBytes: []byte{}, closed: false}
++	// transientServerErr captures the rare server-side race where
++	// wsstream.Conn.Open's select picks serveHTTPComplete before conn.ready,
++	// even though initialization actually happened. Buffered so the handler
++	// never blocks; checked from the test goroutine to turn the flake into
++	// a skip rather than a hard failure.
++	transientServerErr := make(chan error, 1)
+ 	// Create fake WebSocket server, which will receive concurrently the STDIN stream as
+ 	// well as the resize stream (TerminalSizes). Store the TerminalSize data from the resize
+ 	// stream for subsequent validation.
+@@ -614,6 +638,13 @@ func TestWebSocketClient_MultipleWriteChannels(t *testing.T) {
+ 		var wg sync.WaitGroup
+ 		conns, err := webSocketServerStreams(req, w, streamOptionsFromRequest(req))
+ 		if err != nil {
++			if strings.Contains(err.Error(), "websocket server finished before becoming ready") {
++				select {
++				case transientServerErr <- err:
++				default:
++				}
++				return
++			}
+ 			t.Fatalf("error on webSocketServerStreams: %v", err)
+ 		}
+ 		defer conns.conn.Close()
+@@ -662,6 +693,11 @@ func TestWebSocketClient_MultipleWriteChannels(t *testing.T) {
+ 	case <-time.After(wait.ForeverTestTimeout):
+ 		t.Fatalf("expect stream to be closed after connection is closed.")
+ 	case err := <-errorChan:
++		select {
++		case te := <-transientServerErr:
++			t.Skipf("transient websocket server race: %v", te)
++		default:
++		}
+ 		if err != nil {
+ 			t.Errorf("unexpected error: %v", err)
+ 		}
+-- 
+2.50.1
+
