@@ -68,17 +68,34 @@
     "schema_version": 1,
     "started_at": "2026-05-12T12:39:41Z",
     "upstream_comparison": {
-      "inventory_parity_status": "upstream-tests-missing",
+      "inventory_parity_status": "match",
+      "junit_files": [
+        "pr-logs/pull/138724/pull-kubernetes-cmd/2054732170932523008/artifacts/junit_20260514-011844.xml",
+        "pr-logs/pull/138724/pull-kubernetes-cmd/2054732170932523008/artifacts/junit_test-cmd.xml"
+      ],
+      "local_only_count": 0,
+      "local_only_sample": [],
       "local_test_count": 93,
       "reference_job_name": "pull-kubernetes-cmd",
-      "reference_kubernetes_base_sha": null,
+      "reference_kubernetes_base_sha": "6ad1a1b81bc41bd543f0bb28bd58e25bec6d6f0b",
       "reference_matches_kubernetes_sha": false,
-      "reference_pr_number": 135921,
-      "reference_pr_updated_at": "2026-05-14T19:36:19Z",
-      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/135921/pull-kubernetes-cmd/2003599726649282560",
+      "reference_pr_number": 138724,
+      "reference_pr_updated_at": "2026-05-14T19:50:39Z",
+      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/138724/pull-kubernetes-cmd/2054732170932523008",
       "reference_selection": "recent-success",
-      "reference_started_at": "2025-12-23T23:09:33Z",
-      "upstream_test_count": 0
+      "reference_started_at": "2026-05-14T01:32:53Z",
+      "reference_started_json": {
+        "pull": "138724",
+        "repo-commit": "e909d828f9118d9a39515217dce7537ed53b4e1d",
+        "repo-version": "e909d828f9118d9a39515217dce7537ed53b4e1d",
+        "repos": {
+          "kubernetes/kubernetes": "master:6ad1a1b81bc41bd543f0bb28bd58e25bec6d6f0b,138724:2a20703d9f508e8d8bd68b91b9ceeac3a40e0a7d"
+        },
+        "timestamp": 1778721391
+      },
+      "upstream_only_count": 0,
+      "upstream_only_sample": [],
+      "upstream_test_count": 93
     },
     "upstream_testgrid_url": "https://testgrid.k8s.io/presubmits-kubernetes-blocking#pull-kubernetes-cmd",
     "workflow_file": ".github/workflows/cmd-tests.yml",
