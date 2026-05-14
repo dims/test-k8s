@@ -65,32 +65,36 @@
     "schema_version": 1,
     "started_at": "2026-05-12T18:38:52Z",
     "upstream_comparison": {
-      "inventory_parity_status": "match",
+      "inventory_parity_status": "mismatch",
       "junit_files": [
-        "pr-logs/pull/138917/pull-kubernetes-e2e-kind/2054276919850962944/artifacts/junit_01.xml"
+        "pr-logs/pull/138914/pull-kubernetes-e2e-kind/2054749723692109824/artifacts/junit_01.xml"
       ],
-      "local_only_count": 0,
-      "local_only_sample": [],
+      "local_only_count": 1,
+      "local_only_sample": [
+        "Kubernetes e2e suite::Kubelet-Stats Kubelet stats collection for Windows nodes when running 10 pods should return within 10 seconds"
+      ],
       "local_test_count": 7581,
       "reference_job_name": "pull-kubernetes-e2e-kind",
-      "reference_kubernetes_base_sha": "bd854a9dd5121b29444d792f795dbbbc1238b2f3",
-      "reference_matches_kubernetes_sha": true,
-      "reference_pr_number": 138917,
-      "reference_pr_updated_at": "2026-05-13T22:56:10Z",
-      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/138917/pull-kubernetes-e2e-kind/2054276919850962944",
-      "reference_selection": "exact-kubernetes-sha",
-      "reference_started_at": "2026-05-12T19:39:10Z",
+      "reference_kubernetes_base_sha": "d1782c50a824105c7b4a4d41d88e148845f85a45",
+      "reference_matches_kubernetes_sha": false,
+      "reference_pr_number": 138914,
+      "reference_pr_updated_at": "2026-05-14T02:56:58Z",
+      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/138914/pull-kubernetes-e2e-kind/2054749723692109824",
+      "reference_selection": "recent-success",
+      "reference_started_at": "2026-05-14T02:56:00Z",
       "reference_started_json": {
-        "pull": "138917",
-        "repo-commit": "5cc3e6e0fd8d50f28369fa4c57d8f898b18707da",
-        "repo-version": "5cc3e6e0fd8d50f28369fa4c57d8f898b18707da",
+        "pull": "138914",
+        "repo-commit": "4283bbc62619d1ec91dd52b7fa38fa87c6cb438f",
+        "repo-version": "4283bbc62619d1ec91dd52b7fa38fa87c6cb438f",
         "repos": {
-          "kubernetes/kubernetes": "master:bd854a9dd5121b29444d792f795dbbbc1238b2f3,138917:8b841e674046a4d5df88d80f56788c694fd29725"
+          "kubernetes/kubernetes": "master:d1782c50a824105c7b4a4d41d88e148845f85a45,138914:c0f754c3995e317fe00a58405dc228b9a0922e5a"
         },
-        "timestamp": 1778612944
+        "timestamp": 1778725523
       },
-      "upstream_only_count": 0,
-      "upstream_only_sample": [],
+      "upstream_only_count": 1,
+      "upstream_only_sample": [
+        "Kubernetes e2e suite::Kubelet-Stats Kubelet stats collection for Windows nodes when running up to 10 pods should return within 10 seconds"
+      ],
       "upstream_test_count": 7581
     },
     "upstream_testgrid_url": "https://testgrid.k8s.io/presubmits-kubernetes-blocking#pull-kubernetes-e2e-kind",
