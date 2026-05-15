@@ -65,17 +65,37 @@
     "schema_version": 1,
     "started_at": "2026-05-12T00:31:18Z",
     "upstream_comparison": {
-      "inventory_parity_status": "upstream-tests-missing",
+      "inventory_parity_status": "mismatch",
+      "junit_files": [
+        "pr-logs/pull/137981/pull-kubernetes-e2e-kind/2055045375588306944/artifacts/junit_01.xml"
+      ],
+      "local_only_count": 1,
+      "local_only_sample": [
+        "Kubernetes e2e suite::Kubelet-Stats Kubelet stats collection for Windows nodes when running 10 pods should return within 10 seconds"
+      ],
       "local_test_count": 7581,
       "reference_job_name": "pull-kubernetes-e2e-kind",
-      "reference_kubernetes_base_sha": null,
+      "reference_kubernetes_base_sha": "4f39ba34ffac132fbcc2743b9d8ae9d70ddb0010",
       "reference_matches_kubernetes_sha": false,
-      "reference_pr_number": 133386,
-      "reference_pr_updated_at": "2026-05-15T05:04:37Z",
-      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/133386/pull-kubernetes-e2e-kind/1952834077631451136",
+      "reference_pr_number": 137981,
+      "reference_pr_updated_at": "2026-05-15T06:45:07Z",
+      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/137981/pull-kubernetes-e2e-kind/2055045375588306944",
       "reference_selection": "recent-success",
-      "reference_started_at": "2025-08-05T21:11:15Z",
-      "upstream_test_count": 0
+      "reference_started_at": "2026-05-14T22:32:45Z",
+      "reference_started_json": {
+        "pull": "137981",
+        "repo-commit": "6718c32536599dd82fc9b087899cee241c5f6c22",
+        "repo-version": "6718c32536599dd82fc9b087899cee241c5f6c22",
+        "repos": {
+          "kubernetes/kubernetes": "master:4f39ba34ffac132fbcc2743b9d8ae9d70ddb0010,137981:c0361f74a0d222f4b15c435bdf05a85cdf079c20"
+        },
+        "timestamp": 1778796151
+      },
+      "upstream_only_count": 1,
+      "upstream_only_sample": [
+        "Kubernetes e2e suite::Kubelet-Stats Kubelet stats collection for Windows nodes when running up to 10 pods should return within 10 seconds"
+      ],
+      "upstream_test_count": 7581
     },
     "upstream_testgrid_url": "https://testgrid.k8s.io/presubmits-kubernetes-blocking#pull-kubernetes-e2e-kind",
     "workflow_file": ".github/workflows/e2e-kind.yml",
