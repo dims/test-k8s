@@ -65,35 +65,37 @@
     "schema_version": 1,
     "started_at": "2026-05-14T18:30:16Z",
     "upstream_comparison": {
-      "inventory_parity_status": "match",
+      "inventory_parity_status": "missing-local-tests",
       "junit_files": [
-        "pr-logs/pull/139061/pull-kubernetes-node-e2e-containerd/2054946114045480960/artifacts/junit_cos01.xml",
-        "pr-logs/pull/139061/pull-kubernetes-node-e2e-containerd/2054946114045480960/artifacts/junit_ubuntu01.xml"
+        "pr-logs/pull/139067/pull-kubernetes-node-e2e-containerd/2055202506652258304/artifacts/junit_cos01.xml",
+        "pr-logs/pull/139067/pull-kubernetes-node-e2e-containerd/2055202506652258304/artifacts/junit_ubuntu01.xml"
       ],
       "local_only_count": 0,
       "local_only_sample": [],
       "local_test_count": 1206,
       "reference_job_name": "pull-kubernetes-node-e2e-containerd",
-      "reference_kubernetes_base_sha": "74868ab04d6c3e13eb6bc5895f5140c30429f063",
-      "reference_matches_kubernetes_sha": true,
-      "reference_pr_number": 139061,
-      "reference_pr_updated_at": "2026-05-15T09:45:55Z",
-      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/139061/pull-kubernetes-node-e2e-containerd/2054946114045480960",
-      "reference_selection": "exact-kubernetes-sha",
-      "reference_started_at": "2026-05-14T16:03:26Z",
+      "reference_kubernetes_base_sha": "3758f0870776d808e0350f3ade62bb5f95f3b4f9",
+      "reference_matches_kubernetes_sha": false,
+      "reference_pr_number": 139067,
+      "reference_pr_updated_at": "2026-05-15T12:38:23Z",
+      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/139067/pull-kubernetes-node-e2e-containerd/2055202506652258304",
+      "reference_selection": "recent-success",
+      "reference_started_at": "2026-05-15T09:00:16Z",
       "reference_started_json": {
-        "pull": "139061",
-        "repo-commit": "1a0a423379dcfd73904086a9c6968557e511b22b",
-        "repo-version": "1a0a423379dcfd73904086a9c6968557e511b22b",
+        "pull": "139067",
+        "repo-commit": "50eccb80a19f3c9568d26310c31645c7239efa8d",
+        "repo-version": "50eccb80a19f3c9568d26310c31645c7239efa8d",
         "repos": {
-          "kubernetes/kubernetes": "master:74868ab04d6c3e13eb6bc5895f5140c30429f063,139061:09b3daa521bd2d0a2c10b9bb64fa09336bfab0f3",
+          "kubernetes/kubernetes": "master:3758f0870776d808e0350f3ade62bb5f95f3b4f9,139067:0fb942bfd8c725b75d93648e3f40c73190f84a8e",
           "kubernetes/test-infra": "master"
         },
-        "timestamp": 1778772338
+        "timestamp": 1778833466
       },
-      "upstream_only_count": 0,
-      "upstream_only_sample": [],
-      "upstream_test_count": 1206
+      "upstream_only_count": 1,
+      "upstream_only_sample": [
+        "E2eNode Suite::MemoryQoS feature rollback should not clobber other cgroup values when clearing stale memory protection at startup"
+      ],
+      "upstream_test_count": 1207
     },
     "upstream_testgrid_url": "https://testgrid.k8s.io/presubmits-kubernetes-blocking#pull-kubernetes-node-e2e-containerd",
     "workflow_file": ".github/workflows/node-e2e.yml",
