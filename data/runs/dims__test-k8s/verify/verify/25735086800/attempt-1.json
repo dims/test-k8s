@@ -65,17 +65,33 @@
     "schema_version": 1,
     "started_at": "2026-05-12T12:41:47Z",
     "upstream_comparison": {
-      "inventory_parity_status": "upstream-tests-missing",
+      "inventory_parity_status": "match",
+      "junit_files": [
+        "pr-logs/pull/139075/pull-kubernetes-verify/2055190166644985856/artifacts/junit_verify.xml"
+      ],
+      "local_only_count": 0,
+      "local_only_sample": [],
       "local_test_count": 43,
       "reference_job_name": "pull-kubernetes-verify",
-      "reference_kubernetes_base_sha": null,
+      "reference_kubernetes_base_sha": "3758f0870776d808e0350f3ade62bb5f95f3b4f9",
       "reference_matches_kubernetes_sha": false,
-      "reference_pr_number": 136731,
-      "reference_pr_updated_at": "2026-05-15T07:47:04Z",
-      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/136731/pull-kubernetes-verify/2021466360596402176",
+      "reference_pr_number": 139075,
+      "reference_pr_updated_at": "2026-05-15T07:58:54Z",
+      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/139075/pull-kubernetes-verify/2055190166644985856",
       "reference_selection": "recent-success",
-      "reference_started_at": "2026-02-11T06:32:03Z",
-      "upstream_test_count": 0
+      "reference_started_at": "2026-05-15T08:01:44Z",
+      "reference_started_json": {
+        "pull": "139075",
+        "repo-commit": "dd7d2c646380db71437da9084a964024f8f3093c",
+        "repo-version": "dd7d2c646380db71437da9084a964024f8f3093c",
+        "repos": {
+          "kubernetes/kubernetes": "master:3758f0870776d808e0350f3ade62bb5f95f3b4f9,139075:a28b9112b751f143522bd38039544449a53b4880"
+        },
+        "timestamp": 1778830735
+      },
+      "upstream_only_count": 0,
+      "upstream_only_sample": [],
+      "upstream_test_count": 43
     },
     "upstream_testgrid_url": "https://testgrid.k8s.io/presubmits-kubernetes-blocking#pull-kubernetes-verify",
     "workflow_file": ".github/workflows/verify.yml",
