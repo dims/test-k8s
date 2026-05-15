@@ -65,33 +65,38 @@
     "schema_version": 1,
     "started_at": "2026-05-15T00:39:15Z",
     "upstream_comparison": {
-      "inventory_parity_status": "match",
+      "inventory_parity_status": "mismatch",
       "junit_files": [
-        "pr-logs/pull/138951/pull-kubernetes-conformance-kind-ga-only-parallel/2055173917701574656/artifacts/junit_01.xml"
+        "pr-logs/pull/138182/pull-kubernetes-conformance-kind-ga-only-parallel/2049151447169241088/artifacts/junit_01.xml"
       ],
-      "local_only_count": 0,
-      "local_only_sample": [],
+      "local_only_count": 2,
+      "local_only_sample": [
+        "Kubernetes e2e suite::CRUD Tests resource.k8s.io/v1beta2 DeviceTaintRule",
+        "Kubernetes e2e suite::Kubelet-Stats Kubelet stats collection for Windows nodes when running up to 10 pods should return within 10 seconds"
+      ],
       "local_test_count": 7581,
       "reference_job_name": "pull-kubernetes-conformance-kind-ga-only-parallel",
-      "reference_kubernetes_base_sha": "f1dc1f92cfbd9f63e93c47e0a792d184c61e9974",
-      "reference_matches_kubernetes_sha": true,
-      "reference_pr_number": 138951,
-      "reference_pr_updated_at": "2026-05-15T07:30:30Z",
-      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/138951/pull-kubernetes-conformance-kind-ga-only-parallel/2055173917701574656",
-      "reference_selection": "exact-kubernetes-sha",
-      "reference_started_at": "2026-05-15T06:49:23Z",
+      "reference_kubernetes_base_sha": "9df1be6658366af8427ad1f8632f56ce70e47c08",
+      "reference_matches_kubernetes_sha": false,
+      "reference_pr_number": 138182,
+      "reference_pr_updated_at": "2026-05-15T08:17:26Z",
+      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/138182/pull-kubernetes-conformance-kind-ga-only-parallel/2049151447169241088",
+      "reference_selection": "recent-success",
+      "reference_started_at": "2026-04-28T15:57:42Z",
       "reference_started_json": {
-        "pull": "138951",
-        "repo-commit": "ecf1f4944d4cc6f5a9af36d78b658094c024843a",
-        "repo-version": "ecf1f4944d4cc6f5a9af36d78b658094c024843a",
+        "pull": "138182",
+        "repo-commit": "e006c67fdb343ef4a8282ccfd77084161a8f5655",
+        "repo-version": "e006c67fdb343ef4a8282ccfd77084161a8f5655",
         "repos": {
-          "kubernetes/kubernetes": "master:f1dc1f92cfbd9f63e93c47e0a792d184c61e9974,138951:b96072e3726c4d0f47ffb49e7f7d72bf890b69ca"
+          "kubernetes/kubernetes": "master:9df1be6658366af8427ad1f8632f56ce70e47c08,138182:525954af802616c2ba0adb1ca97934f5ae89890b"
         },
-        "timestamp": 1778826649
+        "timestamp": 1777390781
       },
-      "upstream_only_count": 0,
-      "upstream_only_sample": [],
-      "upstream_test_count": 7581
+      "upstream_only_count": 1,
+      "upstream_only_sample": [
+        "Kubernetes e2e suite::Kubelet-Stats Kubelet stats collection for Windows nodes when running 10 pods should return within 10 seconds"
+      ],
+      "upstream_test_count": 7580
     },
     "upstream_testgrid_url": "https://testgrid.k8s.io/presubmits-kubernetes-blocking#pull-kubernetes-conformance-kind-ga-only-parallel",
     "workflow_file": ".github/workflows/conformance-kind.yml",

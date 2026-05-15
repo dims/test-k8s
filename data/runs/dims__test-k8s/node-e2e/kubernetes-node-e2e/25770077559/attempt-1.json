@@ -65,35 +65,39 @@
     "schema_version": 1,
     "started_at": "2026-05-13T00:18:22Z",
     "upstream_comparison": {
-      "inventory_parity_status": "match",
+      "inventory_parity_status": "extra-local-tests",
       "junit_files": [
-        "pr-logs/pull/135339/pull-kubernetes-node-e2e-containerd/2053645222725816320/artifacts/junit_cos01.xml",
-        "pr-logs/pull/135339/pull-kubernetes-node-e2e-containerd/2053645222725816320/artifacts/junit_ubuntu01.xml"
+        "pr-logs/pull/138182/pull-kubernetes-node-e2e-containerd/2049151447378956288/artifacts/junit_cos01.xml",
+        "pr-logs/pull/138182/pull-kubernetes-node-e2e-containerd/2049151447378956288/artifacts/junit_ubuntu01.xml"
       ],
-      "local_only_count": 0,
-      "local_only_sample": [],
+      "local_only_count": 3,
+      "local_only_sample": [
+        "E2eNode Suite::Device Plugin Multiple [Feature:DevicePlugin] DevicePlugin Device Plugin Multiple: Basic rollout of device plugins with zero downtime",
+        "E2eNode Suite::Device Plugin Multiple [Feature:DevicePlugin] DevicePlugin Device Plugin Multiple: DP2 changed its mind",
+        "E2eNode Suite::Device Plugin Multiple [Feature:DevicePlugin] DevicePlugin Device Plugin Multiple: DP2 takes long time to start working"
+      ],
       "local_test_count": 1206,
       "reference_job_name": "pull-kubernetes-node-e2e-containerd",
-      "reference_kubernetes_base_sha": "5cf56a97d5ec9747371ff221e8d320e819950083",
+      "reference_kubernetes_base_sha": "9df1be6658366af8427ad1f8632f56ce70e47c08",
       "reference_matches_kubernetes_sha": false,
-      "reference_pr_number": 135339,
-      "reference_pr_updated_at": "2026-05-15T07:56:49Z",
-      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/135339/pull-kubernetes-node-e2e-containerd/2053645222725816320",
+      "reference_pr_number": 138182,
+      "reference_pr_updated_at": "2026-05-15T08:17:26Z",
+      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/138182/pull-kubernetes-node-e2e-containerd/2049151447378956288",
       "reference_selection": "recent-success",
-      "reference_started_at": "2026-05-11T01:52:31Z",
+      "reference_started_at": "2026-04-28T16:17:06Z",
       "reference_started_json": {
-        "pull": "135339",
-        "repo-commit": "26b396e922c619c16c0da28d3d8e78a41b642ca0",
-        "repo-version": "26b396e922c619c16c0da28d3d8e78a41b642ca0",
+        "pull": "138182",
+        "repo-commit": "e006c67fdb343ef4a8282ccfd77084161a8f5655",
+        "repo-version": "e006c67fdb343ef4a8282ccfd77084161a8f5655",
         "repos": {
-          "kubernetes/kubernetes": "master:5cf56a97d5ec9747371ff221e8d320e819950083,135339:0c9e81b7e1f26af9e9a968d79e9b92ade67b806d",
+          "kubernetes/kubernetes": "master:9df1be6658366af8427ad1f8632f56ce70e47c08,138182:525954af802616c2ba0adb1ca97934f5ae89890b",
           "kubernetes/test-infra": "master"
         },
-        "timestamp": 1778462239
+        "timestamp": 1777390794
       },
       "upstream_only_count": 0,
       "upstream_only_sample": [],
-      "upstream_test_count": 1206
+      "upstream_test_count": 1203
     },
     "upstream_testgrid_url": "https://testgrid.k8s.io/presubmits-kubernetes-blocking#pull-kubernetes-node-e2e-containerd",
     "workflow_file": ".github/workflows/node-e2e.yml",
