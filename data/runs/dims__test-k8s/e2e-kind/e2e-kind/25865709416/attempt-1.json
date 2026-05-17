@@ -65,37 +65,40 @@
     "schema_version": 1,
     "started_at": "2026-05-14T14:27:46Z",
     "upstream_comparison": {
-      "inventory_parity_status": "mismatch",
+      "inventory_parity_status": "missing-local-tests",
       "junit_files": [
-        "pr-logs/pull/138417/pull-kubernetes-e2e-kind/2050307788936056832/artifacts/junit_01.xml"
+        "pr-logs/pull/137023/pull-kubernetes-e2e-kind/2055989000077840384/artifacts/junit_01.xml"
       ],
-      "local_only_count": 1,
-      "local_only_sample": [
-        "Kubernetes e2e suite::Kubelet-Stats Kubelet stats collection for Windows nodes when running up to 10 pods should return within 10 seconds"
-      ],
+      "local_only_count": 0,
+      "local_only_sample": [],
       "local_test_count": 7581,
       "reference_job_name": "pull-kubernetes-e2e-kind",
-      "reference_kubernetes_base_sha": "33576824d74d7b7290b04d13315c6aca3375fec4",
+      "reference_kubernetes_base_sha": "85a1ec91f131c7af928d4dc8e1a335c59fae7d42",
       "reference_matches_kubernetes_sha": false,
-      "reference_pr_number": 138417,
-      "reference_pr_updated_at": "2026-05-17T12:35:19Z",
-      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/138417/pull-kubernetes-e2e-kind/2050307788936056832",
+      "reference_pr_number": 137023,
+      "reference_pr_updated_at": "2026-05-17T12:58:51Z",
+      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/137023/pull-kubernetes-e2e-kind/2055989000077840384",
       "reference_selection": "recent-success",
-      "reference_started_at": "2026-05-01T20:44:44Z",
+      "reference_started_at": "2026-05-17T12:58:42Z",
       "reference_started_json": {
-        "pull": "138417",
-        "repo-commit": "49498e2cc2a9dfc1ff78d925ab7ba7a2ea2f208f",
-        "repo-version": "49498e2cc2a9dfc1ff78d925ab7ba7a2ea2f208f",
+        "pull": "137023",
+        "repo-commit": "0fa5a91fdf92dbc6d91d2b47d3dd6d78d4dd9506",
+        "repo-version": "0fa5a91fdf92dbc6d91d2b47d3dd6d78d4dd9506",
         "repos": {
-          "kubernetes/kubernetes": "master:33576824d74d7b7290b04d13315c6aca3375fec4,138417:fd96ec14e128a0004edb7450775d1b3a36491a8f"
+          "kubernetes/kubernetes": "master:85a1ec91f131c7af928d4dc8e1a335c59fae7d42,137023:ad958a8e2ce91225a6f0202e21942051a76b5330"
         },
-        "timestamp": 1777666473
+        "timestamp": 1779020982
       },
-      "upstream_only_count": 1,
+      "upstream_only_count": 6,
       "upstream_only_sample": [
-        "Kubernetes e2e suite::Kubelet-Stats Kubelet stats collection for Windows nodes when running 10 pods should return within 10 seconds"
+        "Kubernetes e2e suite::ContainerUlimits PSA Integration [FeatureGate:ContainerUlimits] should allow boundary ulimit values in privileged PSA namespace",
+        "Kubernetes e2e suite::ContainerUlimits PSA Integration [FeatureGate:ContainerUlimits] should allow valid container ulimits in privileged PSA namespace",
+        "Kubernetes e2e suite::ContainerUlimits PSA Integration [FeatureGate:ContainerUlimits] should reject container ulimits in baseline PSA namespace",
+        "Kubernetes e2e suite::ContainerUlimits PSA Integration [FeatureGate:ContainerUlimits] should reject container ulimits in restricted PSA namespace",
+        "Kubernetes e2e suite::ContainerUlimits PSA Integration [FeatureGate:ContainerUlimits] should reject invalid container ulimit configuration in privileged PSA namespace",
+        "Kubernetes e2e suite::ContainerUlimits PSA Integration [FeatureGate:ContainerUlimits] should reject out-of-range ulimit values in privileged PSA namespace"
       ],
-      "upstream_test_count": 7581
+      "upstream_test_count": 7587
     },
     "upstream_testgrid_url": "https://testgrid.k8s.io/presubmits-kubernetes-blocking#pull-kubernetes-e2e-kind",
     "workflow_file": ".github/workflows/e2e-kind.yml",
