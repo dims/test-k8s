@@ -29,12 +29,12 @@
         "junit_verify.xml"
       ]
     },
-    "collected_at": "2026-05-13T07:00:16Z",
+    "collected_at": "2026-05-17T12:17:42Z",
     "comparison_required": true,
-    "completed_at": "2026-05-13T07:00:22Z",
+    "completed_at": "2026-05-17T12:17:46Z",
     "containerd_ref": "main",
     "containerd_repo": "containerd/containerd",
-    "containerd_sha": "dca7c8779aa6155ce309a6a4150c1dc092426e1e",
+    "containerd_sha": "6085e86b5ee54c9b9ba5d5f675caf26c4c9e3f81",
     "data_quality": {
       "fallback_synthetic_cases": true,
       "inventory_state": "present",
@@ -43,39 +43,55 @@
       "synthetic_cases": false
     },
     "display_order": 130,
-    "duration_seconds": 180,
+    "duration_seconds": 135,
     "event": "schedule",
     "github_ref": "main",
-    "github_sha": "3ae10155d982d69ac4e3f0f2a5024a5ff1d1feb6",
-    "html_url": "https://github.com/dims/test-k8s/actions/runs/25783578669",
+    "github_sha": "69c4cbe8607a92e2dce850a18e5887199c43de38",
+    "html_url": "https://github.com/dims/test-k8s/actions/runs/25990571320",
     "job_id": "linter-hints",
     "job_name": "Linter Hints",
     "job_slug": "linter-hints",
     "kubernetes_ref": "master",
     "kubernetes_repo": "kubernetes/kubernetes",
-    "kubernetes_sha": "a5427793cf97682060cf24bfe8c22b956626efda",
+    "kubernetes_sha": "85a1ec91f131c7af928d4dc8e1a335c59fae7d42",
     "mirrored_prow_job": "pull-kubernetes-linter-hints",
     "repo": "dims/test-k8s",
     "repo_slug": "dims__test-k8s",
     "result": "success",
     "run_attempt": 1,
-    "run_id": 25783578669,
-    "runner_label": "GitHub Actions 1000026642",
-    "runner_name": "GitHub Actions 1000026642",
+    "run_id": 25990571320,
+    "runner_label": "GitHub Actions 1000028090",
+    "runner_name": "GitHub Actions 1000028090",
     "schema_version": 1,
-    "started_at": "2026-05-13T06:57:22Z",
+    "started_at": "2026-05-17T12:15:31Z",
     "upstream_comparison": {
-      "inventory_parity_status": "upstream-tests-missing",
+      "inventory_parity_status": "match",
+      "junit_files": [
+        "pr-logs/pull/132167/pull-kubernetes-linter-hints/2055896863940284416/artifacts/junit_verify.xml"
+      ],
+      "local_only_count": 0,
+      "local_only_sample": [],
       "local_test_count": 1,
       "reference_job_name": "pull-kubernetes-linter-hints",
-      "reference_kubernetes_base_sha": null,
-      "reference_matches_kubernetes_sha": false,
-      "reference_pr_number": 136487,
-      "reference_pr_updated_at": "2026-05-17T09:41:02Z",
-      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/136487/pull-kubernetes-linter-hints/2021611612212826112",
-      "reference_selection": "recent-success",
-      "reference_started_at": "2026-02-11T16:06:49Z",
-      "upstream_test_count": 0
+      "reference_kubernetes_base_sha": "85a1ec91f131c7af928d4dc8e1a335c59fae7d42",
+      "reference_matches_kubernetes_sha": true,
+      "reference_pr_number": 132167,
+      "reference_pr_updated_at": "2026-05-17T11:40:29Z",
+      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/132167/pull-kubernetes-linter-hints/2055896863940284416",
+      "reference_selection": "exact-kubernetes-sha",
+      "reference_started_at": "2026-05-17T06:43:39Z",
+      "reference_started_json": {
+        "pull": "132167",
+        "repo-commit": "6ed0f4e3480c0d77bec5ab980470c7bce36d6853",
+        "repo-version": "6ed0f4e3480c0d77bec5ab980470c7bce36d6853",
+        "repos": {
+          "kubernetes/kubernetes": "master:85a1ec91f131c7af928d4dc8e1a335c59fae7d42,132167:5f287d8bc3f577e6ae4cb0de3e4394575e027308"
+        },
+        "timestamp": 1778999070
+      },
+      "upstream_only_count": 0,
+      "upstream_only_sample": [],
+      "upstream_test_count": 1
     },
     "upstream_testgrid_url": "https://testgrid.k8s.io/presubmits-kubernetes-blocking#pull-kubernetes-linter-hints",
     "workflow_file": ".github/workflows/linter-hints.yml",
@@ -85,7 +101,7 @@
   "suites": [
     {
       "cancelled": 0,
-      "duration_seconds": 0.0109925,
+      "duration_seconds": 0.0118895,
       "failed": 0,
       "file_source": "junit_verify.xml",
       "passed": 1,
@@ -99,7 +115,7 @@
   ],
   "summary": {
     "cancelled": 0,
-    "duration_seconds": 0.011,
+    "duration_seconds": 0.012,
     "failed": 0,
     "passed": 1,
     "skipped": 0,
@@ -109,7 +125,7 @@
   "tests": [
     {
       "classname": "verify",
-      "duration_seconds": 0.0109925,
+      "duration_seconds": 0.0118895,
       "failure_text": "",
       "file_source": "junit_verify.xml",
       "name": "golangci-lint-pr-hints",
