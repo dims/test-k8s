@@ -74,36 +74,38 @@
     "schema_version": 1,
     "started_at": "2026-05-16T06:55:35Z",
     "upstream_comparison": {
-      "inventory_parity_status": "match",
+      "inventory_parity_status": "missing-local-tests",
       "junit_files": [
-        "pr-logs/pull/139051/pull-kubernetes-unit/2055166213905977344/artifacts/junit_20260515-060030.xml",
-        "pr-logs/pull/139051/pull-kubernetes-unit/2055166213905977344/artifacts/junit_hack_tools_golangci_lint_20260515-061846.xml",
-        "pr-logs/pull/139051/pull-kubernetes-unit/2055166213905977344/artifacts/junit_hack_tools_instrumentation_20260515-061906.xml",
-        "pr-logs/pull/139051/pull-kubernetes-unit/2055166213905977344/artifacts/junit_vendor_20260515-061843.xml"
+        "pr-logs/pull/131862/pull-kubernetes-unit/2056220959026712576/artifacts/junit_20260518-035527.xml",
+        "pr-logs/pull/131862/pull-kubernetes-unit/2056220959026712576/artifacts/junit_hack_tools_golangci_lint_20260518-041354.xml",
+        "pr-logs/pull/131862/pull-kubernetes-unit/2056220959026712576/artifacts/junit_hack_tools_instrumentation_20260518-041413.xml",
+        "pr-logs/pull/131862/pull-kubernetes-unit/2056220959026712576/artifacts/junit_vendor_20260518-041351.xml"
       ],
       "local_only_count": 0,
       "local_only_sample": [],
       "local_test_count": 1401,
       "reference_job_name": "pull-kubernetes-unit",
-      "reference_kubernetes_base_sha": "f1dc1f92cfbd9f63e93c47e0a792d184c61e9974",
+      "reference_kubernetes_base_sha": "e7d98b4f9b108277c989addb48befa78b4c43658",
       "reference_matches_kubernetes_sha": false,
-      "reference_pr_number": 139051,
-      "reference_pr_updated_at": "2026-05-18T03:15:19Z",
-      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/139051/pull-kubernetes-unit/2055166213905977344",
+      "reference_pr_number": 131862,
+      "reference_pr_updated_at": "2026-05-18T05:01:13Z",
+      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/131862/pull-kubernetes-unit/2056220959026712576",
       "reference_selection": "recent-success",
-      "reference_started_at": "2026-05-15T06:20:07Z",
+      "reference_started_at": "2026-05-18T04:15:12Z",
       "reference_started_json": {
-        "pull": "139051",
-        "repo-commit": "314b238fc635ea194c21fbf6f8464f8fc7a93a36",
-        "repo-version": "314b238fc635ea194c21fbf6f8464f8fc7a93a36",
+        "pull": "131862",
+        "repo-commit": "55ec870d4c9fd29ae22304228e5499885bfb6336",
+        "repo-version": "55ec870d4c9fd29ae22304228e5499885bfb6336",
         "repos": {
-          "kubernetes/kubernetes": "master:f1dc1f92cfbd9f63e93c47e0a792d184c61e9974,139051:74a3dc31e9e1c8ece5a8530a2e503d8858624646"
+          "kubernetes/kubernetes": "master:e7d98b4f9b108277c989addb48befa78b4c43658,131862:24e38d6d130501d034bd95cdebcfe85f636f398a"
         },
-        "timestamp": 1778824813
+        "timestamp": 1779076499
       },
-      "upstream_only_count": 0,
-      "upstream_only_sample": [],
-      "upstream_test_count": 1401
+      "upstream_only_count": 1,
+      "upstream_only_sample": [
+        "[sig-testing] k8s.io/kubernetes/test/utils::localupcluster"
+      ],
+      "upstream_test_count": 1402
     },
     "upstream_testgrid_url": "https://testgrid.k8s.io/presubmits-kubernetes-blocking#pull-kubernetes-unit",
     "workflow_file": ".github/workflows/unit.yml",
