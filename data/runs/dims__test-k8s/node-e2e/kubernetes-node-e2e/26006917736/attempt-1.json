@@ -67,8 +67,8 @@
     "upstream_comparison": {
       "inventory_parity_status": "missing-local-tests",
       "junit_files": [
-        "pr-logs/pull/139129/pull-kubernetes-node-e2e-containerd/2056275798028980224/artifacts/junit_cos01.xml",
-        "pr-logs/pull/139129/pull-kubernetes-node-e2e-containerd/2056275798028980224/artifacts/junit_ubuntu01.xml"
+        "pr-logs/pull/125918/pull-kubernetes-node-e2e-containerd/2056285610603188224/artifacts/junit_cos01.xml",
+        "pr-logs/pull/125918/pull-kubernetes-node-e2e-containerd/2056285610603188224/artifacts/junit_ubuntu01.xml"
       ],
       "local_only_count": 0,
       "local_only_sample": [],
@@ -76,26 +76,31 @@
       "reference_job_name": "pull-kubernetes-node-e2e-containerd",
       "reference_kubernetes_base_sha": "e7d98b4f9b108277c989addb48befa78b4c43658",
       "reference_matches_kubernetes_sha": true,
-      "reference_pr_number": 139129,
-      "reference_pr_updated_at": "2026-05-18T09:21:52Z",
-      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/139129/pull-kubernetes-node-e2e-containerd/2056275798028980224",
+      "reference_pr_number": 125918,
+      "reference_pr_updated_at": "2026-05-18T11:09:11Z",
+      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/125918/pull-kubernetes-node-e2e-containerd/2056285610603188224",
       "reference_selection": "exact-kubernetes-sha",
-      "reference_started_at": "2026-05-18T08:05:11Z",
+      "reference_started_at": "2026-05-18T08:43:32Z",
       "reference_started_json": {
-        "pull": "139129",
-        "repo-commit": "06e910b4eaade5652a0ffd0099fbd59313fca8a7",
-        "repo-version": "06e910b4eaade5652a0ffd0099fbd59313fca8a7",
+        "pull": "125918",
+        "repo-commit": "fc3407d4dfec097e7d9580d1bb7490c18c222a09",
+        "repo-version": "fc3407d4dfec097e7d9580d1bb7490c18c222a09",
         "repos": {
-          "kubernetes/kubernetes": "master:e7d98b4f9b108277c989addb48befa78b4c43658,139129:92c670f183f0b56ce816aaa70bdd06b9f74e34be",
+          "kubernetes/kubernetes": "master:e7d98b4f9b108277c989addb48befa78b4c43658,125918:62df15bc2121d2029821c71a033071a22e4850b2",
           "kubernetes/test-infra": "master"
         },
-        "timestamp": 1779089362
+        "timestamp": 1779091709
       },
-      "upstream_only_count": 1,
+      "upstream_only_count": 6,
       "upstream_only_sample": [
-        "E2eNode Suite::NodeProblemDetector [Feature:NodeProblemDetector] SystemLogMonitor should generate node condition and events for corresponding errors"
+        "E2eNode Suite::Pod Restart with PodStartingOrderByPriority Featuregate critical pod preemption with PodStartingOrderByPriority enabled under CPU pressure should preempt previously-running low-priority pods when a new system-critical pod needs resources after kubelet restart",
+        "E2eNode Suite::Pod Restart with PodStartingOrderByPriority Featuregate critical pod preemption without PodStartingOrderByPriority under CPU pressure should preempt previously-running low-priority pods when a new system-critical pod needs resources after kubelet restart with creation-time ordering",
+        "E2eNode Suite::Pod Restart with PodStartingOrderByPriority Featuregate new pod rejection with PodStartingOrderByPriority enabled under CPU pressure should reject a new high-priority pod that was never running and re-admit previously-running low-priority pods after kubelet restart",
+        "E2eNode Suite::Pod Restart with PodStartingOrderByPriority Featuregate new pod rejection without PodStartingOrderByPriority under CPU pressure should reject a new high-priority pod that was never running and re-admit previously-running low-priority pods after kubelet restart with creation-time ordering",
+        "E2eNode Suite::Pod Restart with PodStartingOrderByPriority Featuregate with PodStartingOrderByPriority enabled should start high-priority pods before low-priority pods after kubelet restart",
+        "E2eNode Suite::Pod Restart with PodStartingOrderByPriority Featuregate without PodStartingOrderByPriority (default creation-time ordering) should start low-priority pods before high-priority pods after kubelet restart because low-priority pods have older creation timestamps"
       ],
-      "upstream_test_count": 1208
+      "upstream_test_count": 1213
     },
     "upstream_testgrid_url": "https://testgrid.k8s.io/presubmits-kubernetes-blocking#pull-kubernetes-node-e2e-containerd",
     "workflow_file": ".github/workflows/node-e2e.yml",
