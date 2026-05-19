@@ -65,44 +65,7 @@
     "schema_version": 1,
     "started_at": "2026-05-16T18:14:51Z",
     "upstream_comparison": {
-      "inventory_parity_status": "mismatch",
-      "junit_files": [
-        "pr-logs/pull/136915/pull-kubernetes-e2e-kind-alpha-beta-features/2056497660419903488/artifacts/junit_01.xml"
-      ],
-      "local_only_count": 4,
-      "local_only_sample": [
-        "Kubernetes e2e suite::Kubectl client Kubectl apply apply set/view last-applied",
-        "Kubernetes e2e suite::Kubectl client Kubectl apply should apply a new configuration to an existing RC",
-        "Kubernetes e2e suite::Kubectl client Kubectl apply should reuse port when apply to an existing SVC",
-        "Kubernetes e2e suite::Kubectl client Kubectl prune with applyset should apply and prune objects"
-      ],
-      "local_test_count": 7581,
-      "reference_job_name": "pull-kubernetes-e2e-kind-alpha-beta-features",
-      "reference_kubernetes_base_sha": "ee954c1067272102c6b2dfe02bd98d5ed493a450",
-      "reference_matches_kubernetes_sha": false,
-      "reference_pr_number": 136915,
-      "reference_pr_updated_at": "2026-05-18T23:03:44Z",
-      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/136915/pull-kubernetes-e2e-kind-alpha-beta-features/2056497660419903488",
-      "reference_selection": "recent-success",
-      "reference_started_at": "2026-05-18T22:41:10Z",
-      "reference_started_json": {
-        "pull": "136915",
-        "repo-commit": "0e6df83a3457ccc7cd881e13a4b53f7bd43c7d48",
-        "repo-version": "0e6df83a3457ccc7cd881e13a4b53f7bd43c7d48",
-        "repos": {
-          "kubernetes/kubernetes": "master:ee954c1067272102c6b2dfe02bd98d5ed493a450,136915:a54a6c6b2bfcb6c1483d9ab6303dc0d30e5ec38e"
-        },
-        "timestamp": 1779142254
-      },
-      "upstream_only_count": 5,
-      "upstream_only_sample": [
-        "Kubernetes e2e suite::Windows subpath cleanup pod with multiple subPath mounts should terminate cleanly",
-        "Kubernetes e2e suite::kubectl apply Kubectl prune with applyset should apply and prune objects",
-        "Kubernetes e2e suite::kubectl apply apply set/view last-applied",
-        "Kubernetes e2e suite::kubectl apply should apply a new configuration to an existing RC",
-        "Kubernetes e2e suite::kubectl apply should reuse port when apply to an existing SVC"
-      ],
-      "upstream_test_count": 7582
+      "inventory_parity_status": "upstream-reference-missing"
     },
     "upstream_testgrid_url": "https://testgrid.k8s.io/presubmits-kubernetes-nonblocking#pull-kubernetes-e2e-kind-alpha-beta-features",
     "workflow_file": ".github/workflows/e2e-kind-alpha-beta-features.yml",
