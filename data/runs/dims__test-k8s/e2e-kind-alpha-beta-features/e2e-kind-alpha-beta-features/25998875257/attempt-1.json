@@ -65,46 +65,7 @@
     "schema_version": 1,
     "started_at": "2026-05-17T18:17:59Z",
     "upstream_comparison": {
-      "inventory_parity_status": "mismatch",
-      "junit_files": [
-        "pr-logs/pull/137223/pull-kubernetes-e2e-kind-alpha-beta-features/2056746058716811264/artifacts/junit_01.xml"
-      ],
-      "local_only_count": 4,
-      "local_only_sample": [
-        "Kubernetes e2e suite::Kubectl client Kubectl apply apply set/view last-applied",
-        "Kubernetes e2e suite::Kubectl client Kubectl apply should apply a new configuration to an existing RC",
-        "Kubernetes e2e suite::Kubectl client Kubectl apply should reuse port when apply to an existing SVC",
-        "Kubernetes e2e suite::Kubectl client Kubectl prune with applyset should apply and prune objects"
-      ],
-      "local_test_count": 7581,
-      "reference_job_name": "pull-kubernetes-e2e-kind-alpha-beta-features",
-      "reference_kubernetes_base_sha": "52c25d73a76c5318a5400cd02a8acba2f5c6be40",
-      "reference_matches_kubernetes_sha": false,
-      "reference_pr_number": 137223,
-      "reference_pr_updated_at": "2026-05-19T15:09:44Z",
-      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/137223/pull-kubernetes-e2e-kind-alpha-beta-features/2056746058716811264",
-      "reference_selection": "recent-success",
-      "reference_started_at": "2026-05-19T15:07:27Z",
-      "reference_started_json": {
-        "pull": "137223",
-        "repo-commit": "aa3a431435eecc1fcb6fee0dac4c669a714b483f",
-        "repo-version": "aa3a431435eecc1fcb6fee0dac4c669a714b483f",
-        "repos": {
-          "kubernetes/kubernetes": "master:52c25d73a76c5318a5400cd02a8acba2f5c6be40,137223:ef661cebc66c11d5bb76b7b79222a325f6c7b33c"
-        },
-        "timestamp": 1779201479
-      },
-      "upstream_only_count": 7,
-      "upstream_only_sample": [
-        "Kubernetes e2e suite::EmptyDir volumes should apply mount options on default medium",
-        "Kubernetes e2e suite::EmptyDir volumes should apply mount options on tmpfs medium",
-        "Kubernetes e2e suite::Windows subpath cleanup pod with multiple subPath mounts should terminate cleanly",
-        "Kubernetes e2e suite::kubectl apply Kubectl prune with applyset should apply and prune objects",
-        "Kubernetes e2e suite::kubectl apply apply set/view last-applied",
-        "Kubernetes e2e suite::kubectl apply should apply a new configuration to an existing RC",
-        "Kubernetes e2e suite::kubectl apply should reuse port when apply to an existing SVC"
-      ],
-      "upstream_test_count": 7584
+      "inventory_parity_status": "upstream-reference-missing"
     },
     "upstream_testgrid_url": "https://testgrid.k8s.io/presubmits-kubernetes-nonblocking#pull-kubernetes-e2e-kind-alpha-beta-features",
     "workflow_file": ".github/workflows/e2e-kind-alpha-beta-features.yml",
