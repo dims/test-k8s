@@ -65,33 +65,44 @@
     "schema_version": 1,
     "started_at": "2026-05-16T00:36:57Z",
     "upstream_comparison": {
-      "inventory_parity_status": "match",
+      "inventory_parity_status": "mismatch",
       "junit_files": [
-        "pr-logs/pull/139100/pull-kubernetes-conformance-kind-ga-only-parallel/2055416086353940480/artifacts/junit_01.xml"
+        "pr-logs/pull/139162/pull-kubernetes-conformance-kind-ga-only-parallel/2056777504940625920/artifacts/junit_01.xml"
       ],
-      "local_only_count": 0,
-      "local_only_sample": [],
+      "local_only_count": 4,
+      "local_only_sample": [
+        "Kubernetes e2e suite::Kubectl client Kubectl apply apply set/view last-applied",
+        "Kubernetes e2e suite::Kubectl client Kubectl apply should apply a new configuration to an existing RC",
+        "Kubernetes e2e suite::Kubectl client Kubectl apply should reuse port when apply to an existing SVC",
+        "Kubernetes e2e suite::Kubectl client Kubectl prune with applyset should apply and prune objects"
+      ],
       "local_test_count": 7581,
       "reference_job_name": "pull-kubernetes-conformance-kind-ga-only-parallel",
-      "reference_kubernetes_base_sha": "d4130f14a03d555a01b1a008606f21f6a0d8eefc",
-      "reference_matches_kubernetes_sha": true,
-      "reference_pr_number": 139100,
-      "reference_pr_updated_at": "2026-05-19T14:19:41Z",
-      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/139100/pull-kubernetes-conformance-kind-ga-only-parallel/2055416086353940480",
-      "reference_selection": "exact-kubernetes-sha",
-      "reference_started_at": "2026-05-15T22:51:15Z",
+      "reference_kubernetes_base_sha": "5d922c71d1384a729201a02423f6c7e0584abb4d",
+      "reference_matches_kubernetes_sha": false,
+      "reference_pr_number": 139162,
+      "reference_pr_updated_at": "2026-05-19T17:05:56Z",
+      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/139162/pull-kubernetes-conformance-kind-ga-only-parallel/2056777504940625920",
+      "reference_selection": "recent-success",
+      "reference_started_at": "2026-05-19T17:00:35Z",
       "reference_started_json": {
-        "pull": "139100",
-        "repo-commit": "202bfc25da45b9686f4b1a01c2f72368b8742157",
-        "repo-version": "202bfc25da45b9686f4b1a01c2f72368b8742157",
+        "pull": "139162",
+        "repo-commit": "bd64f61c3e870d127bbff1b9f8e2939a16c39029",
+        "repo-version": "bd64f61c3e870d127bbff1b9f8e2939a16c39029",
         "repos": {
-          "kubernetes/kubernetes": "master:d4130f14a03d555a01b1a008606f21f6a0d8eefc,139100:1f43a1cf0a22ce9569b6710e55407ac15e181e88"
+          "kubernetes/kubernetes": "master:5d922c71d1384a729201a02423f6c7e0584abb4d,139162:44823e013eb88b253216be4bf48226068eca7cb8"
         },
-        "timestamp": 1778884387
+        "timestamp": 1779208973
       },
-      "upstream_only_count": 0,
-      "upstream_only_sample": [],
-      "upstream_test_count": 7581
+      "upstream_only_count": 5,
+      "upstream_only_sample": [
+        "Kubernetes e2e suite::Windows subpath cleanup pod with multiple subPath mounts should terminate cleanly",
+        "Kubernetes e2e suite::kubectl apply Kubectl prune with applyset should apply and prune objects",
+        "Kubernetes e2e suite::kubectl apply apply set/view last-applied",
+        "Kubernetes e2e suite::kubectl apply should apply a new configuration to an existing RC",
+        "Kubernetes e2e suite::kubectl apply should reuse port when apply to an existing SVC"
+      ],
+      "upstream_test_count": 7582
     },
     "upstream_testgrid_url": "https://testgrid.k8s.io/presubmits-kubernetes-blocking#pull-kubernetes-conformance-kind-ga-only-parallel",
     "workflow_file": ".github/workflows/conformance-kind.yml",
