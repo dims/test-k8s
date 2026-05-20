@@ -65,40 +65,33 @@
     "schema_version": 1,
     "started_at": "2026-05-17T00:40:31Z",
     "upstream_comparison": {
-      "inventory_parity_status": "missing-local-tests",
+      "inventory_parity_status": "match",
       "junit_files": [
-        "pr-logs/pull/137023/pull-kubernetes-conformance-kind-ga-only-parallel/2055989000203669504/artifacts/junit_01.xml"
+        "pr-logs/pull/139025/pull-kubernetes-conformance-kind-ga-only-parallel/2056364148668764160/artifacts/junit_01.xml"
       ],
       "local_only_count": 0,
       "local_only_sample": [],
       "local_test_count": 7581,
       "reference_job_name": "pull-kubernetes-conformance-kind-ga-only-parallel",
-      "reference_kubernetes_base_sha": "85a1ec91f131c7af928d4dc8e1a335c59fae7d42",
-      "reference_matches_kubernetes_sha": true,
-      "reference_pr_number": 137023,
-      "reference_pr_updated_at": "2026-05-20T00:22:01Z",
-      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/137023/pull-kubernetes-conformance-kind-ga-only-parallel/2055989000203669504",
-      "reference_selection": "exact-kubernetes-sha",
-      "reference_started_at": "2026-05-17T12:48:27Z",
+      "reference_kubernetes_base_sha": "001e574e12abd57d4f7a64b08aedd0f05088de35",
+      "reference_matches_kubernetes_sha": false,
+      "reference_pr_number": 139025,
+      "reference_pr_updated_at": "2026-05-20T05:11:10Z",
+      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/139025/pull-kubernetes-conformance-kind-ga-only-parallel/2056364148668764160",
+      "reference_selection": "recent-success",
+      "reference_started_at": "2026-05-18T13:38:09Z",
       "reference_started_json": {
-        "pull": "137023",
-        "repo-commit": "0fa5a91fdf92dbc6d91d2b47d3dd6d78d4dd9506",
-        "repo-version": "0fa5a91fdf92dbc6d91d2b47d3dd6d78d4dd9506",
+        "pull": "139025",
+        "repo-commit": "2f76be889bcda37ca111668f1281a2b979c2fdd6",
+        "repo-version": "2f76be889bcda37ca111668f1281a2b979c2fdd6",
         "repos": {
-          "kubernetes/kubernetes": "master:85a1ec91f131c7af928d4dc8e1a335c59fae7d42,137023:ad958a8e2ce91225a6f0202e21942051a76b5330"
+          "kubernetes/kubernetes": "master:001e574e12abd57d4f7a64b08aedd0f05088de35,139025:9b2b31c3c59f3560b9ab0a9994e38f70da5ca8ed"
         },
-        "timestamp": 1779021040
+        "timestamp": 1779110421
       },
-      "upstream_only_count": 6,
-      "upstream_only_sample": [
-        "Kubernetes e2e suite::ContainerUlimits PSA Integration [FeatureGate:ContainerUlimits] should allow boundary ulimit values in privileged PSA namespace",
-        "Kubernetes e2e suite::ContainerUlimits PSA Integration [FeatureGate:ContainerUlimits] should allow valid container ulimits in privileged PSA namespace",
-        "Kubernetes e2e suite::ContainerUlimits PSA Integration [FeatureGate:ContainerUlimits] should reject container ulimits in baseline PSA namespace",
-        "Kubernetes e2e suite::ContainerUlimits PSA Integration [FeatureGate:ContainerUlimits] should reject container ulimits in restricted PSA namespace",
-        "Kubernetes e2e suite::ContainerUlimits PSA Integration [FeatureGate:ContainerUlimits] should reject invalid container ulimit configuration in privileged PSA namespace",
-        "Kubernetes e2e suite::ContainerUlimits PSA Integration [FeatureGate:ContainerUlimits] should reject out-of-range ulimit values in privileged PSA namespace"
-      ],
-      "upstream_test_count": 7587
+      "upstream_only_count": 0,
+      "upstream_only_sample": [],
+      "upstream_test_count": 7581
     },
     "upstream_testgrid_url": "https://testgrid.k8s.io/presubmits-kubernetes-blocking#pull-kubernetes-conformance-kind-ga-only-parallel",
     "workflow_file": ".github/workflows/conformance-kind.yml",
