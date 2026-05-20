@@ -65,46 +65,36 @@
     "schema_version": 1,
     "started_at": "2026-05-19T18:36:27Z",
     "upstream_comparison": {
-      "inventory_parity_status": "mismatch",
+      "inventory_parity_status": "missing-local-tests",
       "junit_files": [
-        "pr-logs/pull/139045/pull-kubernetes-e2e-kind/2054640972691673088/artifacts/junit_01.xml"
+        "pr-logs/pull/139196/pull-kubernetes-e2e-kind/2057169448313294848/artifacts/junit_01.xml"
       ],
-      "local_only_count": 6,
-      "local_only_sample": [
-        "Kubernetes e2e suite::Kubelet-Stats Kubelet stats collection for Windows nodes when running up to 10 pods should return within 10 seconds",
-        "Kubernetes e2e suite::Windows subpath cleanup pod with multiple subPath mounts should terminate cleanly",
-        "Kubernetes e2e suite::kubectl apply Kubectl prune with applyset should apply and prune objects",
-        "Kubernetes e2e suite::kubectl apply apply set/view last-applied",
-        "Kubernetes e2e suite::kubectl apply should apply a new configuration to an existing RC",
-        "Kubernetes e2e suite::kubectl apply should reuse port when apply to an existing SVC"
-      ],
+      "local_only_count": 0,
+      "local_only_sample": [],
       "local_test_count": 7582,
       "reference_job_name": "pull-kubernetes-e2e-kind",
-      "reference_kubernetes_base_sha": "12484ce715d4c2030d894ebb2841e2cb027db7d0",
+      "reference_kubernetes_base_sha": "c9faa15c836d6b746175330d15390a31a977d8b5",
       "reference_matches_kubernetes_sha": false,
-      "reference_pr_number": 139045,
-      "reference_pr_updated_at": "2026-05-20T19:15:03Z",
-      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/139045/pull-kubernetes-e2e-kind/2054640972691673088",
+      "reference_pr_number": 139196,
+      "reference_pr_updated_at": "2026-05-20T19:27:14Z",
+      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/139196/pull-kubernetes-e2e-kind/2057169448313294848",
       "reference_selection": "recent-success",
-      "reference_started_at": "2026-05-13T19:42:13Z",
+      "reference_started_at": "2026-05-20T19:09:34Z",
       "reference_started_json": {
-        "pull": "139045",
-        "repo-commit": "9a11ee0755c440f5586544d2c1be9f035bf38601",
-        "repo-version": "9a11ee0755c440f5586544d2c1be9f035bf38601",
+        "pull": "139196",
+        "repo-commit": "fd337f2b25fd8f3e5a881dc497221b3c52d456e2",
+        "repo-version": "fd337f2b25fd8f3e5a881dc497221b3c52d456e2",
         "repos": {
-          "kubernetes/kubernetes": "master:12484ce715d4c2030d894ebb2841e2cb027db7d0,139045:12a654c8b02ec38c6077fe9efe6e28c5e9adbe2f"
+          "kubernetes/kubernetes": "master:c9faa15c836d6b746175330d15390a31a977d8b5,139196:93a2605ee347f99136c156d4dc08aae50e7e86e0"
         },
-        "timestamp": 1778699585
+        "timestamp": 1779302421
       },
-      "upstream_only_count": 5,
+      "upstream_only_count": 2,
       "upstream_only_sample": [
-        "Kubernetes e2e suite::Kubectl client Kubectl apply apply set/view last-applied",
-        "Kubernetes e2e suite::Kubectl client Kubectl apply should apply a new configuration to an existing RC",
-        "Kubernetes e2e suite::Kubectl client Kubectl apply should reuse port when apply to an existing SVC",
-        "Kubernetes e2e suite::Kubectl client Kubectl prune with applyset should apply and prune objects",
-        "Kubernetes e2e suite::Kubelet-Stats Kubelet stats collection for Windows nodes when running 10 pods should return within 10 seconds"
+        "Kubernetes e2e suite::Netpol NetworkPolicy between server and client should not allow all ports if it cannot limit to the requested port",
+        "Kubernetes e2e suite::must prefer device plugin over DRA when both advertise the same resource on a node"
       ],
-      "upstream_test_count": 7581
+      "upstream_test_count": 7584
     },
     "upstream_testgrid_url": "https://testgrid.k8s.io/presubmits-kubernetes-blocking#pull-kubernetes-e2e-kind",
     "workflow_file": ".github/workflows/e2e-kind.yml",
