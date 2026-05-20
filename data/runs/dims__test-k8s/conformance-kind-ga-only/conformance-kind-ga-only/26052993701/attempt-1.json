@@ -65,33 +65,46 @@
     "schema_version": 1,
     "started_at": "2026-05-18T18:37:44Z",
     "upstream_comparison": {
-      "inventory_parity_status": "match",
+      "inventory_parity_status": "mismatch",
       "junit_files": [
-        "pr-logs/pull/139094/pull-kubernetes-conformance-kind-ga-only-parallel/2056446871857008640/artifacts/junit_01.xml"
+        "pr-logs/pull/135437/pull-kubernetes-conformance-kind-ga-only-parallel/2050382613545226240/artifacts/junit_01.xml"
       ],
-      "local_only_count": 0,
-      "local_only_sample": [],
+      "local_only_count": 6,
+      "local_only_sample": [
+        "Kubernetes e2e suite::Kubelet-Stats Kubelet stats collection for Windows nodes when running up to 10 pods should return within 10 seconds",
+        "Kubernetes e2e suite::Windows subpath cleanup pod with multiple subPath mounts should terminate cleanly",
+        "Kubernetes e2e suite::kubectl apply Kubectl prune with applyset should apply and prune objects",
+        "Kubernetes e2e suite::kubectl apply apply set/view last-applied",
+        "Kubernetes e2e suite::kubectl apply should apply a new configuration to an existing RC",
+        "Kubernetes e2e suite::kubectl apply should reuse port when apply to an existing SVC"
+      ],
       "local_test_count": 7582,
       "reference_job_name": "pull-kubernetes-conformance-kind-ga-only-parallel",
-      "reference_kubernetes_base_sha": "ee954c1067272102c6b2dfe02bd98d5ed493a450",
-      "reference_matches_kubernetes_sha": true,
-      "reference_pr_number": 139094,
-      "reference_pr_updated_at": "2026-05-20T19:18:41Z",
-      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/139094/pull-kubernetes-conformance-kind-ga-only-parallel/2056446871857008640",
-      "reference_selection": "exact-kubernetes-sha",
-      "reference_started_at": "2026-05-18T19:07:08Z",
+      "reference_kubernetes_base_sha": "8c3162c114135c93500d3d789a83936c2cdcecf7",
+      "reference_matches_kubernetes_sha": false,
+      "reference_pr_number": 135437,
+      "reference_pr_updated_at": "2026-05-20T20:49:55Z",
+      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/135437/pull-kubernetes-conformance-kind-ga-only-parallel/2050382613545226240",
+      "reference_selection": "recent-success",
+      "reference_started_at": "2026-05-02T01:30:19Z",
       "reference_started_json": {
-        "pull": "139094",
-        "repo-commit": "918a78abb142f9bab9a462b3d8e9bb1bd509c2eb",
-        "repo-version": "918a78abb142f9bab9a462b3d8e9bb1bd509c2eb",
+        "pull": "135437",
+        "repo-commit": "e8e454d749bc4400f1a6c1bdafd7d8be6fbabbc4",
+        "repo-version": "e8e454d749bc4400f1a6c1bdafd7d8be6fbabbc4",
         "repos": {
-          "kubernetes/kubernetes": "master:ee954c1067272102c6b2dfe02bd98d5ed493a450,139094:e40b284bf2b4a811ee11b597f39ee782588186bf"
+          "kubernetes/kubernetes": "master:8c3162c114135c93500d3d789a83936c2cdcecf7,135437:ce680fea207a0bf944457d5d92a0bfd599f37e1e"
         },
-        "timestamp": 1779130144
+        "timestamp": 1777684315
       },
-      "upstream_only_count": 0,
-      "upstream_only_sample": [],
-      "upstream_test_count": 7582
+      "upstream_only_count": 5,
+      "upstream_only_sample": [
+        "Kubernetes e2e suite::Kubectl client Kubectl apply apply set/view last-applied",
+        "Kubernetes e2e suite::Kubectl client Kubectl apply should apply a new configuration to an existing RC",
+        "Kubernetes e2e suite::Kubectl client Kubectl apply should reuse port when apply to an existing SVC",
+        "Kubernetes e2e suite::Kubectl client Kubectl prune with applyset should apply and prune objects",
+        "Kubernetes e2e suite::Kubelet-Stats Kubelet stats collection for Windows nodes when running 10 pods should return within 10 seconds"
+      ],
+      "upstream_test_count": 7581
     },
     "upstream_testgrid_url": "https://testgrid.k8s.io/presubmits-kubernetes-blocking#pull-kubernetes-conformance-kind-ga-only-parallel",
     "workflow_file": ".github/workflows/conformance-kind.yml",
