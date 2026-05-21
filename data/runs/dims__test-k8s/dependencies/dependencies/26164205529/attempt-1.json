@@ -65,17 +65,33 @@
     "schema_version": 1,
     "started_at": "2026-05-20T13:00:54Z",
     "upstream_comparison": {
-      "inventory_parity_status": "upstream-tests-missing",
+      "inventory_parity_status": "match",
+      "junit_files": [
+        "pr-logs/pull/139161/pull-kubernetes-dependencies/2057076612729409536/artifacts/junit_verify.xml"
+      ],
+      "local_only_count": 0,
+      "local_only_sample": [],
       "local_test_count": 3,
       "reference_job_name": "pull-kubernetes-dependencies",
-      "reference_kubernetes_base_sha": null,
-      "reference_matches_kubernetes_sha": false,
-      "reference_pr_number": 134151,
-      "reference_pr_updated_at": "2026-05-21T11:12:34Z",
-      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/134151/pull-kubernetes-dependencies/1968945184406245376",
-      "reference_selection": "recent-success",
-      "reference_started_at": "2025-09-19T07:49:49Z",
-      "upstream_test_count": 0
+      "reference_kubernetes_base_sha": "f196ee6f5fc691b4305222d87544cc9468dad085",
+      "reference_matches_kubernetes_sha": true,
+      "reference_pr_number": 139161,
+      "reference_pr_updated_at": "2026-05-21T12:10:38Z",
+      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/139161/pull-kubernetes-dependencies/2057076612729409536",
+      "reference_selection": "exact-kubernetes-sha",
+      "reference_started_at": "2026-05-20T12:32:57Z",
+      "reference_started_json": {
+        "pull": "139161",
+        "repo-commit": "9e9b91d6073f05b20f0861ab319e05d5bdc7b328",
+        "repo-version": "9e9b91d6073f05b20f0861ab319e05d5bdc7b328",
+        "repos": {
+          "kubernetes/kubernetes": "master:f196ee6f5fc691b4305222d87544cc9468dad085,139161:dd1f040ac9c22a4ac0056569b98ff2bf2470081b"
+        },
+        "timestamp": 1779280290
+      },
+      "upstream_only_count": 0,
+      "upstream_only_sample": [],
+      "upstream_test_count": 3
     },
     "upstream_testgrid_url": "https://testgrid.k8s.io/presubmits-kubernetes-blocking#pull-kubernetes-dependencies",
     "workflow_file": ".github/workflows/dependencies.yml",
