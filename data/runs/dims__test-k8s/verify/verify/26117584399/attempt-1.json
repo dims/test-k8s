@@ -65,17 +65,35 @@
     "schema_version": 1,
     "started_at": "2026-05-19T18:38:09Z",
     "upstream_comparison": {
-      "inventory_parity_status": "upstream-tests-missing",
+      "inventory_parity_status": "extra-local-tests",
+      "junit_files": [
+        "pr-logs/pull/138643/pull-kubernetes-verify/2054568597908361216/artifacts/junit_verify.xml"
+      ],
+      "local_only_count": 1,
+      "local_only_sample": [
+        "verify::metrics-documentation-list"
+      ],
       "local_test_count": 44,
       "reference_job_name": "pull-kubernetes-verify",
-      "reference_kubernetes_base_sha": null,
+      "reference_kubernetes_base_sha": "cc9fd614c429f43e67fd8ded5e160fd784d860a8",
       "reference_matches_kubernetes_sha": false,
-      "reference_pr_number": 134151,
-      "reference_pr_updated_at": "2026-05-21T08:38:10Z",
-      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/134151/pull-kubernetes-verify/1968945185689702400",
+      "reference_pr_number": 138643,
+      "reference_pr_updated_at": "2026-05-21T09:19:09Z",
+      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/138643/pull-kubernetes-verify/2054568597908361216",
       "reference_selection": "recent-success",
-      "reference_started_at": "2025-09-19T08:10:35Z",
-      "upstream_test_count": 0
+      "reference_started_at": "2026-05-13T14:48:10Z",
+      "reference_started_json": {
+        "pull": "138643",
+        "repo-commit": "283be14bfeac309c4fb4618133c4b68576a78dcf",
+        "repo-version": "283be14bfeac309c4fb4618133c4b68576a78dcf",
+        "repos": {
+          "kubernetes/kubernetes": "master:cc9fd614c429f43e67fd8ded5e160fd784d860a8,138643:a30c21c512b537ca9a1507f4ca33201bc769377d"
+        },
+        "timestamp": 1778682330
+      },
+      "upstream_only_count": 0,
+      "upstream_only_sample": [],
+      "upstream_test_count": 43
     },
     "upstream_testgrid_url": "https://testgrid.k8s.io/presubmits-kubernetes-blocking#pull-kubernetes-verify",
     "workflow_file": ".github/workflows/verify.yml",
