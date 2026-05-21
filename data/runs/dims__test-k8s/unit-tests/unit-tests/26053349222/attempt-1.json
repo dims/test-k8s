@@ -74,39 +74,8 @@
     "schema_version": 1,
     "started_at": "2026-05-18T18:44:44Z",
     "upstream_comparison": {
-      "inventory_parity_status": "missing-local-tests",
-      "junit_files": [
-        "pr-logs/pull/139218/pull-kubernetes-unit/2057452372023578624/artifacts/junit_20260521-132607.xml",
-        "pr-logs/pull/139218/pull-kubernetes-unit/2057452372023578624/artifacts/junit_hack_tools_golangci_lint_20260521-134412.xml",
-        "pr-logs/pull/139218/pull-kubernetes-unit/2057452372023578624/artifacts/junit_hack_tools_instrumentation_20260521-134431.xml",
-        "pr-logs/pull/139218/pull-kubernetes-unit/2057452372023578624/artifacts/junit_vendor_20260521-134408.xml"
-      ],
-      "local_only_count": 0,
-      "local_only_sample": [],
-      "local_test_count": 1403,
-      "reference_job_name": "pull-kubernetes-unit",
-      "reference_kubernetes_base_sha": "ea692abff6bb8ed2b7e20d7e27de76f77bf083d6",
-      "reference_matches_kubernetes_sha": false,
-      "reference_pr_number": 139218,
-      "reference_pr_updated_at": "2026-05-21T14:00:42Z",
-      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/139218/pull-kubernetes-unit/2057452372023578624",
-      "reference_selection": "recent-success",
-      "reference_started_at": "2026-05-21T13:45:33Z",
-      "reference_started_json": {
-        "pull": "139218",
-        "repo-commit": "2f7dec7ccc2709c03674b7905dcc7a70264be2c3",
-        "repo-version": "2f7dec7ccc2709c03674b7905dcc7a70264be2c3",
-        "repos": {
-          "kubernetes/kubernetes": "master:ea692abff6bb8ed2b7e20d7e27de76f77bf083d6,139218:47b90bdc91f6fd6d61645443237211c84c51d6f8"
-        },
-        "timestamp": 1779369938
-      },
-      "upstream_only_count": 2,
-      "upstream_only_sample": [
-        "[sig-testing] k8s.io/kubernetes/test/declarative_validation/apps::scale",
-        "[sig-testing] k8s.io/kubernetes/test/declarative_validation/autoscaling::scale"
-      ],
-      "upstream_test_count": 1405
+      "error": "command failed: gh pr list --repo kubernetes/kubernetes --state all --search sort:updated-desc --limit 50 --json number,updatedAt,statusCheckRollup\nstdout:\n\nstderr:\nHTTP 502: 502 Bad Gateway (https://api.github.com/graphql)\n",
+      "inventory_parity_status": "upstream-reference-error"
     },
     "upstream_testgrid_url": "https://testgrid.k8s.io/presubmits-kubernetes-blocking#pull-kubernetes-unit",
     "workflow_file": ".github/workflows/unit.yml",

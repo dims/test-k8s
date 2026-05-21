@@ -65,35 +65,8 @@
     "schema_version": 1,
     "started_at": "2026-05-21T07:08:00Z",
     "upstream_comparison": {
-      "inventory_parity_status": "match",
-      "junit_files": [
-        "pr-logs/pull/138567/pull-kubernetes-node-e2e-containerd/2057381007560019968/artifacts/junit_cos01.xml",
-        "pr-logs/pull/138567/pull-kubernetes-node-e2e-containerd/2057381007560019968/artifacts/junit_ubuntu01.xml"
-      ],
-      "local_only_count": 0,
-      "local_only_sample": [],
-      "local_test_count": 1207,
-      "reference_job_name": "pull-kubernetes-node-e2e-containerd",
-      "reference_kubernetes_base_sha": "ec8eaa5789ffe26b3642911e445d12330843c5e4",
-      "reference_matches_kubernetes_sha": true,
-      "reference_pr_number": 138567,
-      "reference_pr_updated_at": "2026-05-21T13:49:36Z",
-      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/138567/pull-kubernetes-node-e2e-containerd/2057381007560019968",
-      "reference_selection": "exact-kubernetes-sha",
-      "reference_started_at": "2026-05-21T09:15:20Z",
-      "reference_started_json": {
-        "pull": "138567",
-        "repo-commit": "8b12f00ff4e5c3ec2653343a58f2389a990d1efb",
-        "repo-version": "8b12f00ff4e5c3ec2653343a58f2389a990d1efb",
-        "repos": {
-          "kubernetes/kubernetes": "master:ec8eaa5789ffe26b3642911e445d12330843c5e4,138567:c9fff79cfe3d9b575b40133a5b6172c2da765734",
-          "kubernetes/test-infra": "master"
-        },
-        "timestamp": 1779352860
-      },
-      "upstream_only_count": 0,
-      "upstream_only_sample": [],
-      "upstream_test_count": 1207
+      "error": "command failed: gh pr list --repo kubernetes/kubernetes --state all --search sort:updated-desc --limit 50 --json number,updatedAt,statusCheckRollup\nstdout:\n\nstderr:\nHTTP 502: 502 Bad Gateway (https://api.github.com/graphql)\n",
+      "inventory_parity_status": "upstream-reference-error"
     },
     "upstream_testgrid_url": "https://testgrid.k8s.io/presubmits-kubernetes-blocking#pull-kubernetes-node-e2e-containerd",
     "workflow_file": ".github/workflows/node-e2e.yml",

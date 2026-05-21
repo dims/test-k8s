@@ -65,46 +65,8 @@
     "schema_version": 1,
     "started_at": "2026-05-18T13:11:22Z",
     "upstream_comparison": {
-      "inventory_parity_status": "mismatch",
-      "junit_files": [
-        "pr-logs/pull/139218/pull-kubernetes-e2e-kind/2057452371818057728/artifacts/junit_01.xml"
-      ],
-      "local_only_count": 4,
-      "local_only_sample": [
-        "Kubernetes e2e suite::Kubectl client Kubectl apply apply set/view last-applied",
-        "Kubernetes e2e suite::Kubectl client Kubectl apply should apply a new configuration to an existing RC",
-        "Kubernetes e2e suite::Kubectl client Kubectl apply should reuse port when apply to an existing SVC",
-        "Kubernetes e2e suite::Kubectl client Kubectl prune with applyset should apply and prune objects"
-      ],
-      "local_test_count": 7581,
-      "reference_job_name": "pull-kubernetes-e2e-kind",
-      "reference_kubernetes_base_sha": "ea692abff6bb8ed2b7e20d7e27de76f77bf083d6",
-      "reference_matches_kubernetes_sha": false,
-      "reference_pr_number": 139218,
-      "reference_pr_updated_at": "2026-05-21T14:00:42Z",
-      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/139218/pull-kubernetes-e2e-kind/2057452371818057728",
-      "reference_selection": "recent-success",
-      "reference_started_at": "2026-05-21T13:55:46Z",
-      "reference_started_json": {
-        "pull": "139218",
-        "repo-commit": "2f7dec7ccc2709c03674b7905dcc7a70264be2c3",
-        "repo-version": "2f7dec7ccc2709c03674b7905dcc7a70264be2c3",
-        "repos": {
-          "kubernetes/kubernetes": "master:ea692abff6bb8ed2b7e20d7e27de76f77bf083d6,139218:47b90bdc91f6fd6d61645443237211c84c51d6f8"
-        },
-        "timestamp": 1779369884
-      },
-      "upstream_only_count": 7,
-      "upstream_only_sample": [
-        "Kubernetes e2e suite::Netpol NetworkPolicy between server and client should not allow all ports if it cannot limit to the requested port",
-        "Kubernetes e2e suite::Windows subpath cleanup pod with multiple subPath mounts should terminate cleanly",
-        "Kubernetes e2e suite::kubectl apply Kubectl prune with applyset should apply and prune objects",
-        "Kubernetes e2e suite::kubectl apply apply set/view last-applied",
-        "Kubernetes e2e suite::kubectl apply should apply a new configuration to an existing RC",
-        "Kubernetes e2e suite::kubectl apply should reuse port when apply to an existing SVC",
-        "Kubernetes e2e suite::must prefer device plugin over DRA when both advertise the same resource on a node"
-      ],
-      "upstream_test_count": 7584
+      "error": "command failed: gh pr list --repo kubernetes/kubernetes --state all --search sort:updated-desc --limit 50 --json number,updatedAt,statusCheckRollup\nstdout:\n\nstderr:\nHTTP 502: 502 Bad Gateway (https://api.github.com/graphql)\n",
+      "inventory_parity_status": "upstream-reference-error"
     },
     "upstream_testgrid_url": "https://testgrid.k8s.io/presubmits-kubernetes-blocking#pull-kubernetes-e2e-kind",
     "workflow_file": ".github/workflows/e2e-kind.yml",
