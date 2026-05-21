@@ -65,36 +65,33 @@
     "schema_version": 1,
     "started_at": "2026-05-18T18:37:44Z",
     "upstream_comparison": {
-      "inventory_parity_status": "missing-local-tests",
+      "inventory_parity_status": "match",
       "junit_files": [
-        "pr-logs/pull/139032/pull-kubernetes-conformance-kind-ga-only-parallel/2057556405342179328/artifacts/junit_01.xml"
+        "pr-logs/pull/139105/pull-kubernetes-conformance-kind-ga-only-parallel/2056521203820007424/artifacts/junit_01.xml"
       ],
       "local_only_count": 0,
       "local_only_sample": [],
       "local_test_count": 7582,
       "reference_job_name": "pull-kubernetes-conformance-kind-ga-only-parallel",
-      "reference_kubernetes_base_sha": "441eccd7e56fad199921c2843014970d2c85b8bd",
-      "reference_matches_kubernetes_sha": false,
-      "reference_pr_number": 139032,
-      "reference_pr_updated_at": "2026-05-21T20:41:41Z",
-      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/139032/pull-kubernetes-conformance-kind-ga-only-parallel/2057556405342179328",
-      "reference_selection": "recent-success",
-      "reference_started_at": "2026-05-21T20:36:12Z",
+      "reference_kubernetes_base_sha": "ee954c1067272102c6b2dfe02bd98d5ed493a450",
+      "reference_matches_kubernetes_sha": true,
+      "reference_pr_number": 139105,
+      "reference_pr_updated_at": "2026-05-21T22:29:22Z",
+      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/139105/pull-kubernetes-conformance-kind-ga-only-parallel/2056521203820007424",
+      "reference_selection": "exact-kubernetes-sha",
+      "reference_started_at": "2026-05-19T00:02:23Z",
       "reference_started_json": {
-        "pull": "139032",
-        "repo-commit": "31d2299be2627104507fa511ac0b2ea0c234b59f",
-        "repo-version": "31d2299be2627104507fa511ac0b2ea0c234b59f",
+        "pull": "139105",
+        "repo-commit": "0cf198bf71430e273d5ac6824ea83d68a5311a96",
+        "repo-version": "0cf198bf71430e273d5ac6824ea83d68a5311a96",
         "repos": {
-          "kubernetes/kubernetes": "master:441eccd7e56fad199921c2843014970d2c85b8bd,139032:0ef2c80f73a1d8d5561312919d5d590756da3c91"
+          "kubernetes/kubernetes": "master:ee954c1067272102c6b2dfe02bd98d5ed493a450,139105:2dd817e3ba0eb6434554d18a20069b62bfb3e27c"
         },
-        "timestamp": 1779394686
+        "timestamp": 1779147867
       },
-      "upstream_only_count": 2,
-      "upstream_only_sample": [
-        "Kubernetes e2e suite::Netpol NetworkPolicy between server and client should not allow all ports if it cannot limit to the requested port",
-        "Kubernetes e2e suite::must prefer device plugin over DRA when both advertise the same resource on a node"
-      ],
-      "upstream_test_count": 7584
+      "upstream_only_count": 0,
+      "upstream_only_sample": [],
+      "upstream_test_count": 7582
     },
     "upstream_testgrid_url": "https://testgrid.k8s.io/presubmits-kubernetes-blocking#pull-kubernetes-conformance-kind-ga-only-parallel",
     "workflow_file": ".github/workflows/conformance-kind.yml",
