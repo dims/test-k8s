@@ -29,12 +29,12 @@
         "junit_01.xml"
       ]
     },
-    "collected_at": "2026-05-20T07:40:03Z",
+    "collected_at": "2026-05-21T01:10:37Z",
     "comparison_required": true,
-    "completed_at": "2026-05-20T07:40:18Z",
+    "completed_at": "2026-05-21T01:10:47Z",
     "containerd_ref": "main",
     "containerd_repo": "containerd/containerd",
-    "containerd_sha": "ebb98be63956ccfe8f601b09bf0233d5902ecc28",
+    "containerd_sha": "aa334cbeb43547aa410f6356f08adc8adfffc027",
     "data_quality": {
       "fallback_synthetic_cases": false,
       "inventory_state": "present",
@@ -43,39 +43,55 @@
       "synthetic_cases": false
     },
     "display_order": 190,
-    "duration_seconds": 1535,
+    "duration_seconds": 1597,
     "event": "schedule",
     "github_ref": "main",
     "github_sha": "69c4cbe8607a92e2dce850a18e5887199c43de38",
-    "html_url": "https://github.com/dims/test-k8s/actions/runs/26147432305",
+    "html_url": "https://github.com/dims/test-k8s/actions/runs/26198529443",
     "job_id": "conformance-kind",
     "job_name": "Conformance (kind, GA-only)",
     "job_slug": "conformance-kind-ga-only",
     "kubernetes_ref": "master",
     "kubernetes_repo": "kubernetes/kubernetes",
-    "kubernetes_sha": "621e250502ddeeab8274836e88b506c0c4f57232",
+    "kubernetes_sha": "5edef25b704d23ec01d46c3a7414f922a3a67aec",
     "mirrored_prow_job": "pull-kubernetes-conformance-kind-ga-only-parallel",
     "repo": "dims/test-k8s",
     "repo_slug": "dims__test-k8s",
     "result": "success",
     "run_attempt": 1,
-    "run_id": 26147432305,
-    "runner_label": "GitHub Actions 1000028959",
-    "runner_name": "GitHub Actions 1000028959",
+    "run_id": 26198529443,
+    "runner_label": "GitHub Actions 1000029194",
+    "runner_name": "GitHub Actions 1000029194",
     "schema_version": 1,
-    "started_at": "2026-05-20T07:14:43Z",
+    "started_at": "2026-05-21T00:44:10Z",
     "upstream_comparison": {
-      "inventory_parity_status": "upstream-tests-missing",
-      "local_test_count": 7583,
+      "inventory_parity_status": "match",
+      "junit_files": [
+        "pr-logs/pull/139181/pull-kubernetes-conformance-kind-ga-only-parallel/2057258240298717184/artifacts/junit_01.xml"
+      ],
+      "local_only_count": 0,
+      "local_only_sample": [],
+      "local_test_count": 7584,
       "reference_job_name": "pull-kubernetes-conformance-kind-ga-only-parallel",
-      "reference_kubernetes_base_sha": null,
-      "reference_matches_kubernetes_sha": false,
-      "reference_pr_number": 136354,
-      "reference_pr_updated_at": "2026-05-21T01:24:15Z",
-      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/136354/pull-kubernetes-conformance-kind-ga-only-parallel/2013699509833437184",
-      "reference_selection": "recent-success",
-      "reference_started_at": "2026-01-20T20:04:14Z",
-      "upstream_test_count": 0
+      "reference_kubernetes_base_sha": "5edef25b704d23ec01d46c3a7414f922a3a67aec",
+      "reference_matches_kubernetes_sha": true,
+      "reference_pr_number": 139181,
+      "reference_pr_updated_at": "2026-05-21T00:54:53Z",
+      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/139181/pull-kubernetes-conformance-kind-ga-only-parallel/2057258240298717184",
+      "reference_selection": "exact-kubernetes-sha",
+      "reference_started_at": "2026-05-21T00:50:57Z",
+      "reference_started_json": {
+        "pull": "139181",
+        "repo-commit": "c406ac15fae7386430b2ebc0247a19615859e50c",
+        "repo-version": "c406ac15fae7386430b2ebc0247a19615859e50c",
+        "repos": {
+          "kubernetes/kubernetes": "master:5edef25b704d23ec01d46c3a7414f922a3a67aec,139181:ee088569209e1cf69693d3a74e3a2282b988ecc0"
+        },
+        "timestamp": 1779323588
+      },
+      "upstream_only_count": 0,
+      "upstream_only_sample": [],
+      "upstream_test_count": 7584
     },
     "upstream_testgrid_url": "https://testgrid.k8s.io/presubmits-kubernetes-blocking#pull-kubernetes-conformance-kind-ga-only-parallel",
     "workflow_file": ".github/workflows/conformance-kind.yml",
@@ -85,25 +101,25 @@
   "suites": [
     {
       "cancelled": 0,
-      "duration_seconds": 7208.145839955999,
+      "duration_seconds": 6766.030761843998,
       "failed": 0,
       "file_source": "junit_01.xml",
       "passed": 417,
-      "skipped": 7167,
+      "skipped": 7168,
       "source": "junit",
       "suite": "Kubernetes e2e suite",
       "suite_slug": "kubernetes-e2e-suite",
-      "tests": 7584,
+      "tests": 7585,
       "unknown": 0
     }
   ],
   "summary": {
     "cancelled": 0,
-    "duration_seconds": 7208.146,
+    "duration_seconds": 6766.031,
     "failed": 0,
     "passed": 417,
-    "skipped": 7167,
-    "tests": 7584,
+    "skipped": 7168,
+    "tests": 7585,
     "unknown": 0
   },
   "tests": [
@@ -252,7 +268,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 0.879991097,
+      "duration_seconds": 0.124739065,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-api-machinery] API priority and fairness should support FlowSchema API operations [Conformance]",
@@ -265,7 +281,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 0.201579717,
+      "duration_seconds": 0.419176198,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-api-machinery] API priority and fairness should support PriorityLevelConfiguration API operations [Conformance]",
@@ -278,7 +294,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 16.500274394,
+      "duration_seconds": 15.34090741,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-api-machinery] AdmissionWebhook [Privileged:ClusterAdmin] listing mutating webhooks should work [Conformance]",
@@ -291,7 +307,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 15.637932268,
+      "duration_seconds": 3.950304413,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-api-machinery] AdmissionWebhook [Privileged:ClusterAdmin] listing validating webhooks should work [Conformance]",
@@ -304,7 +320,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 13.182663607,
+      "duration_seconds": 3.5535850570000003,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-api-machinery] AdmissionWebhook [Privileged:ClusterAdmin] patching/updating a mutating webhook should work [Conformance]",
@@ -317,7 +333,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 15.135462943,
+      "duration_seconds": 3.900596077,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-api-machinery] AdmissionWebhook [Privileged:ClusterAdmin] patching/updating a validating webhook should work [Conformance]",
@@ -330,7 +346,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 5.490562259,
+      "duration_seconds": 4.675472673,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-api-machinery] AdmissionWebhook [Privileged:ClusterAdmin] should be able to create and update mutating webhook configurations with match conditions [Conformance]",
@@ -343,7 +359,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 6.755846533,
+      "duration_seconds": 6.494522431,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-api-machinery] AdmissionWebhook [Privileged:ClusterAdmin] should be able to create and update validating webhook configurations with match conditions [Conformance]",
@@ -356,7 +372,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 6.064488797,
+      "duration_seconds": 9.153894021,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-api-machinery] AdmissionWebhook [Privileged:ClusterAdmin] should be able to deny attaching pod [Conformance]",
@@ -369,7 +385,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 6.728636389,
+      "duration_seconds": 13.94949663,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-api-machinery] AdmissionWebhook [Privileged:ClusterAdmin] should be able to deny custom resource creation, update and deletion [Conformance]",
@@ -382,7 +398,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 15.821229929,
+      "duration_seconds": 23.155494658,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-api-machinery] AdmissionWebhook [Privileged:ClusterAdmin] should be able to deny pod and configmap creation [Conformance]",
@@ -395,7 +411,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 15.629881701,
+      "duration_seconds": 5.77471966,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-api-machinery] AdmissionWebhook [Privileged:ClusterAdmin] should deny crd creation [Conformance]",
@@ -408,7 +424,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 19.138055061,
+      "duration_seconds": 15.509160576,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-api-machinery] AdmissionWebhook [Privileged:ClusterAdmin] should honor timeout [Conformance]",
@@ -421,7 +437,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 5.94909789,
+      "duration_seconds": 2.747842339,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-api-machinery] AdmissionWebhook [Privileged:ClusterAdmin] should include webhook resources in discovery documents [Conformance]",
@@ -434,7 +450,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 15.515432892,
+      "duration_seconds": 21.023477491,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-api-machinery] AdmissionWebhook [Privileged:ClusterAdmin] should mutate configmap [Conformance]",
@@ -447,7 +463,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 18.203059778,
+      "duration_seconds": 7.089812604,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-api-machinery] AdmissionWebhook [Privileged:ClusterAdmin] should mutate custom resource [Conformance]",
@@ -460,7 +476,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 14.131090372,
+      "duration_seconds": 8.667687254,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-api-machinery] AdmissionWebhook [Privileged:ClusterAdmin] should mutate custom resource with different stored version [Conformance]",
@@ -473,7 +489,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 8.745727059,
+      "duration_seconds": 8.162140857,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-api-machinery] AdmissionWebhook [Privileged:ClusterAdmin] should mutate custom resource with pruning [Conformance]",
@@ -486,7 +502,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 23.718894876,
+      "duration_seconds": 4.854541553,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-api-machinery] AdmissionWebhook [Privileged:ClusterAdmin] should mutate everything except 'skip-me' configmaps [Conformance]",
@@ -499,7 +515,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 15.831371331,
+      "duration_seconds": 3.810314105,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-api-machinery] AdmissionWebhook [Privileged:ClusterAdmin] should mutate pod and apply defaults after mutation [Conformance]",
@@ -512,7 +528,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 15.164267009,
+      "duration_seconds": 14.765730958,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-api-machinery] AdmissionWebhook [Privileged:ClusterAdmin] should not be able to mutate or prevent deletion of webhook configuration objects [Conformance]",
@@ -525,7 +541,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 5.065721231,
+      "duration_seconds": 4.462905989,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-api-machinery] AdmissionWebhook [Privileged:ClusterAdmin] should reject mutating webhook configurations with invalid match conditions [Conformance]",
@@ -538,7 +554,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 5.800536217,
+      "duration_seconds": 4.58079607,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-api-machinery] AdmissionWebhook [Privileged:ClusterAdmin] should reject validating webhook configurations with invalid match conditions [Conformance]",
@@ -551,7 +567,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 19.866943559,
+      "duration_seconds": 3.4657409599999998,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-api-machinery] AdmissionWebhook [Privileged:ClusterAdmin] should unconditionally reject operations on fail closed webhook [Conformance]",
@@ -564,7 +580,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 0.086734588,
+      "duration_seconds": 0.0805247,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-api-machinery] AggregatedDiscovery should support aggregated discovery interface [Conformance]",
@@ -577,7 +593,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 3.244373472,
+      "duration_seconds": 3.089271805,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-api-machinery] AggregatedDiscovery should support aggregated discovery interface for CRDs [Conformance]",
@@ -590,7 +606,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 0.086563857,
+      "duration_seconds": 0.164248312,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-api-machinery] AggregatedDiscovery should support raw aggregated discovery endpoint Accept headers [Conformance]",
@@ -603,7 +619,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 3.174386687,
+      "duration_seconds": 3.072479456,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-api-machinery] AggregatedDiscovery should support raw aggregated discovery request for CRDs [Conformance]",
@@ -616,7 +632,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 29.30754653,
+      "duration_seconds": 26.628414096,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-api-machinery] Aggregator Should be able to support the 1.17 Sample API Server using the current Aggregator [LinuxOnly] [Conformance]",
@@ -824,7 +840,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 9.175151548,
+      "duration_seconds": 6.883450567,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-api-machinery] CustomResourceConversionWebhook [Privileged:ClusterAdmin] should be able to convert a non homogeneous list of CRs [Conformance]",
@@ -837,7 +853,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 8.304606174,
+      "duration_seconds": 6.65464222,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-api-machinery] CustomResourceConversionWebhook [Privileged:ClusterAdmin] should be able to convert from CR v1 to CR v2 [Conformance]",
@@ -850,7 +866,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 63.239337491,
+      "duration_seconds": 63.269072817,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-api-machinery] CustomResourceDefinition Watch [Privileged:ClusterAdmin] CustomResourceDefinition Watch watch on custom resource definition objects [Conformance]",
@@ -863,7 +879,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 1.351188222,
+      "duration_seconds": 1.062780061,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-api-machinery] CustomResourceDefinition resources [Privileged:ClusterAdmin] Simple CustomResourceDefinition creating/deleting custom resource definition objects works [Conformance]",
@@ -876,7 +892,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 0.648383081,
+      "duration_seconds": 0.585920079,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-api-machinery] CustomResourceDefinition resources [Privileged:ClusterAdmin] Simple CustomResourceDefinition getting/updating/patching custom resource definition status sub-resource works [Conformance]",
@@ -889,7 +905,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 7.475410749,
+      "duration_seconds": 5.875622108,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-api-machinery] CustomResourceDefinition resources [Privileged:ClusterAdmin] Simple CustomResourceDefinition listing custom resource definition objects works [Conformance]",
@@ -902,7 +918,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 3.276429132,
+      "duration_seconds": 3.131240447,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-api-machinery] CustomResourceDefinition resources [Privileged:ClusterAdmin] custom resource defaulting for requests and from storage works [Conformance]",
@@ -915,7 +931,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 0.406301541,
+      "duration_seconds": 0.101537527,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-api-machinery] CustomResourceDefinition resources [Privileged:ClusterAdmin] should include custom resource definition resources in discovery documents [Conformance]",
@@ -928,7 +944,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 11.662289326,
+      "duration_seconds": 8.072822349,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-api-machinery] CustomResourceFieldSelectors [Privileged:ClusterAdmin] CustomResourceFieldSelectors MUST list and watch custom resources matching the field selector [Conformance]",
@@ -954,7 +970,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 9.394457356,
+      "duration_seconds": 7.113906777,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-api-machinery] CustomResourcePublishOpenAPI [Privileged:ClusterAdmin] removes definition from spec when one version gets changed to not be served [Conformance]",
@@ -967,7 +983,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 12.402577269,
+      "duration_seconds": 10.440240553,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-api-machinery] CustomResourcePublishOpenAPI [Privileged:ClusterAdmin] updates the published spec when one version gets renamed [Conformance]",
@@ -980,7 +996,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 6.134326132,
+      "duration_seconds": 4.921645043,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-api-machinery] CustomResourcePublishOpenAPI [Privileged:ClusterAdmin] works for CRD preserving unknown fields at the schema root [Conformance]",
@@ -993,7 +1009,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 5.5772726299999995,
+      "duration_seconds": 3.728964367,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-api-machinery] CustomResourcePublishOpenAPI [Privileged:ClusterAdmin] works for CRD preserving unknown fields in an embedded object [Conformance]",
@@ -1006,7 +1022,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 6.22160807,
+      "duration_seconds": 6.850438885,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-api-machinery] CustomResourcePublishOpenAPI [Privileged:ClusterAdmin] works for CRD with validation schema [Conformance]",
@@ -1019,7 +1035,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 5.308085686,
+      "duration_seconds": 5.545090856,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-api-machinery] CustomResourcePublishOpenAPI [Privileged:ClusterAdmin] works for CRD without validation schema [Conformance]",
@@ -1032,7 +1048,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 9.489032755,
+      "duration_seconds": 7.490727192,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-api-machinery] CustomResourcePublishOpenAPI [Privileged:ClusterAdmin] works for multiple CRDs of different groups [Conformance]",
@@ -1045,7 +1061,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 7.776936847,
+      "duration_seconds": 8.418269284,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-api-machinery] CustomResourcePublishOpenAPI [Privileged:ClusterAdmin] works for multiple CRDs of same group and version but different kinds [Conformance]",
@@ -1058,7 +1074,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 23.264371732,
+      "duration_seconds": 15.641620032,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-api-machinery] CustomResourcePublishOpenAPI [Privileged:ClusterAdmin] works for multiple CRDs of same group but different versions [Conformance]",
@@ -1188,7 +1204,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 0.760928489,
+      "duration_seconds": 0.601456919,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-api-machinery] Discovery should locate the groupVersion and a resource within each APIGroup [Conformance]",
@@ -1201,7 +1217,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 0.324619164,
+      "duration_seconds": 0.292779633,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-api-machinery] Discovery should validate PreferredVersion for each APIGroup [Conformance]",
@@ -1240,7 +1256,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 3.552913665,
+      "duration_seconds": 3.099145153,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-api-machinery] FieldValidation should create/apply a CR with unknown fields for CRD with no validation schema [Conformance]",
@@ -1253,7 +1269,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 3.001809792,
+      "duration_seconds": 3.121829839,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-api-machinery] FieldValidation should create/apply a valid CR for CRD with validation schema [Conformance]",
@@ -1266,7 +1282,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 3.379518447,
+      "duration_seconds": 3.109460343,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-api-machinery] FieldValidation should create/apply an invalid CR with extra properties for CRD with validation schema [Conformance]",
@@ -1279,7 +1295,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 2.943993334,
+      "duration_seconds": 3.704283431,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-api-machinery] FieldValidation should detect duplicates in a CR when preserving unknown fields [Conformance]",
@@ -1292,7 +1308,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 0.208838368,
+      "duration_seconds": 0.0941035,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-api-machinery] FieldValidation should detect unknown and duplicate fields of a typed object [Conformance]",
@@ -1305,7 +1321,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 3.316488664,
+      "duration_seconds": 3.775325105,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-api-machinery] FieldValidation should detect unknown metadata fields in both the root and embedded object of a CR [Conformance]",
@@ -1318,7 +1334,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 0.236421485,
+      "duration_seconds": 0.102476477,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-api-machinery] FieldValidation should detect unknown metadata fields of a typed object [Conformance]",
@@ -1331,7 +1347,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 0.825546884,
+      "duration_seconds": 0.718668677,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-api-machinery] Garbage collector should delete RS created by deployment when not orphaning [Conformance]",
@@ -1357,7 +1373,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 10.398486326,
+      "duration_seconds": 11.126052152,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-api-machinery] Garbage collector should delete pods created by rc when not orphaning [Conformance]",
@@ -1383,7 +1399,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 5.280784691,
+      "duration_seconds": 5.561580066,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-api-machinery] Garbage collector should not be blocked by dependency circle [Conformance]",
@@ -1409,7 +1425,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 1.413289144,
+      "duration_seconds": 1.326734425,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-api-machinery] Garbage collector should orphan RS created by deployment when deleteOptions.PropagationPolicy is Orphan [Conformance]",
@@ -1500,7 +1516,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 0.553065232,
+      "duration_seconds": 1.694254371,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-api-machinery] MutatingAdmissionPolicy [Privileged:ClusterAdmin] should mutate a Deployment [Conformance]",
@@ -1513,7 +1529,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 0.95087995,
+      "duration_seconds": 0.754852809,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-api-machinery] MutatingAdmissionPolicy [Privileged:ClusterAdmin] should mutate a Deployment with annotations [Conformance]",
@@ -1526,7 +1542,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 0.3576398,
+      "duration_seconds": 0.087911802,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-api-machinery] MutatingAdmissionPolicy [Privileged:ClusterAdmin] should support MutatingAdmissionPolicy API operations [Conformance]",
@@ -1539,7 +1555,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 0.316132703,
+      "duration_seconds": 0.353770142,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-api-machinery] MutatingAdmissionPolicy [Privileged:ClusterAdmin] should support MutatingAdmissionPolicyBinding API operations [Conformance]",
@@ -1695,7 +1711,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 16.451709235,
+      "duration_seconds": 13.114273961,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-api-machinery] OrderedNamespaceDeletion namespace deletion should delete pod first [Conformance]",
@@ -1825,7 +1841,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 220.306206657,
+      "duration_seconds": 225.137749036,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-api-machinery] ResourceQuota should apply changes to a resourcequota status [Conformance]",
@@ -1838,7 +1854,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 0.114519446,
+      "duration_seconds": 0.10048173,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-api-machinery] ResourceQuota should be able to update and delete ResourceQuota. [Conformance]",
@@ -1864,7 +1880,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 26.432839127,
+      "duration_seconds": 24.167422309,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-api-machinery] ResourceQuota should create a ResourceQuota and capture the life of a configMap. [Conformance]",
@@ -1916,7 +1932,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 7.198644193,
+      "duration_seconds": 5.289052575,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-api-machinery] ResourceQuota should create a ResourceQuota and capture the life of a pod. [Conformance]",
@@ -1929,7 +1945,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 7.094271093,
+      "duration_seconds": 9.079359121,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-api-machinery] ResourceQuota should create a ResourceQuota and capture the life of a replica set. [Conformance]",
@@ -1942,7 +1958,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 5.240257011,
+      "duration_seconds": 9.245324072,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-api-machinery] ResourceQuota should create a ResourceQuota and capture the life of a replication controller. [Conformance]",
@@ -1955,7 +1971,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 12.210183418,
+      "duration_seconds": 10.362254398,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-api-machinery] ResourceQuota should create a ResourceQuota and capture the life of a secret. [Conformance]",
@@ -1968,7 +1984,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 9.378057781,
+      "duration_seconds": 7.26404151,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-api-machinery] ResourceQuota should create a ResourceQuota and capture the life of a service. [Conformance]",
@@ -1981,7 +1997,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 5.345986585,
+      "duration_seconds": 7.090359195,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-api-machinery] ResourceQuota should create a ResourceQuota and ensure its status is promptly calculated. [Conformance]",
@@ -1994,7 +2010,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 0.357880745,
+      "duration_seconds": 0.103077249,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-api-machinery] ResourceQuota should manage the lifecycle of a ResourceQuota [Conformance]",
@@ -2020,7 +2036,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 2.074896131,
+      "duration_seconds": 6.1299236,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-api-machinery] ResourceQuota should verify ResourceQuota with best effort scope. [Conformance]",
@@ -2059,7 +2075,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 24.472253161,
+      "duration_seconds": 28.662643296,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-api-machinery] ResourceQuota should verify ResourceQuota with terminating scopes. [Conformance]",
@@ -2202,7 +2218,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 21.758076017,
+      "duration_seconds": 21.558556181,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-api-machinery] Servers with support for API chunking should return chunks of results for list calls [Conformance]",
@@ -2215,7 +2231,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 537.892358139,
+      "duration_seconds": 538.066360707,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-api-machinery] Servers with support for API chunking should support continue listing from the last key if the original version has been compacted away, though the list is inconsistent [Conformance] [Slow]",
@@ -2228,7 +2244,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 0.369169864,
+      "duration_seconds": 0.389050756,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-api-machinery] Servers with support for Table transformation should return a 406 for a backend which does not implement metadata [Conformance]",
@@ -2306,7 +2322,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 1.200083684,
+      "duration_seconds": 0.929815437,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-api-machinery] ValidatingAdmissionPolicy [Privileged:ClusterAdmin] should allow expressions to refer variables. [Conformance]",
@@ -2319,7 +2335,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 0.618026399,
+      "duration_seconds": 0.251375879,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-api-machinery] ValidatingAdmissionPolicy [Privileged:ClusterAdmin] should support ValidatingAdmissionPolicy API operations [Conformance]",
@@ -2332,7 +2348,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 0.553903248,
+      "duration_seconds": 0.301573315,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-api-machinery] ValidatingAdmissionPolicy [Privileged:ClusterAdmin] should support ValidatingAdmissionPolicyBinding API operations [Conformance]",
@@ -2371,7 +2387,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 0.369151187,
+      "duration_seconds": 1.04823828,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-api-machinery] ValidatingAdmissionPolicy [Privileged:ClusterAdmin] should validate against a Deployment [Conformance]",
@@ -2384,7 +2400,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 0.215511272,
+      "duration_seconds": 0.215561559,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-api-machinery] Watchers should be able to restart watching from the last resource version observed by the previous watch [Conformance]",
@@ -2397,7 +2413,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 0.098847037,
+      "duration_seconds": 0.197281605,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-api-machinery] Watchers should be able to start watching from a specific resource version [Conformance]",
@@ -2410,7 +2426,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 20.110010619,
+      "duration_seconds": 20.07757848,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-api-machinery] Watchers should observe add, update, and delete watch notifications on configmaps [Conformance]",
@@ -2423,7 +2439,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 10.065468741,
+      "duration_seconds": 10.270327547,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-api-machinery] Watchers should observe an object deletion if it stops meeting the requirements of the selector [Conformance]",
@@ -2436,7 +2452,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 2.940066696,
+      "duration_seconds": 2.8608295,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-api-machinery] Watchers should receive events on concurrent watches in same order [Conformance]",
@@ -2527,7 +2543,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 0.30082677,
+      "duration_seconds": 0.500487411,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-api-machinery] server version should find the server version [Conformance]",
@@ -2605,7 +2621,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 300.140035249,
+      "duration_seconds": 300.081449363,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-apps] CronJob should not schedule jobs when suspended [Conformance] [Slow]",
@@ -2618,7 +2634,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 6.128835965,
+      "duration_seconds": 32.364773064,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-apps] CronJob should not schedule new jobs when ForbidConcurrent [Conformance] [Slow]",
@@ -2644,7 +2660,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 102.078927103,
+      "duration_seconds": 120.145242763,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-apps] CronJob should replace jobs when ReplaceConcurrent [Conformance]",
@@ -2657,7 +2673,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 112.074519148,
+      "duration_seconds": 98.053193823,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-apps] CronJob should schedule multiple jobs concurrently [Conformance]",
@@ -2683,7 +2699,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 0.103180016,
+      "duration_seconds": 0.097754102,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-apps] CronJob should support CronJob API operations [Conformance]",
@@ -2891,7 +2907,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 12.256835335,
+      "duration_seconds": 2.263029338,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-apps] Deployment Deployment should have a working scale subresource [Conformance]",
@@ -2904,7 +2920,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 2.312134491,
+      "duration_seconds": 2.175413099,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-apps] Deployment RecreateDeployment should delete old pods and create new ones [Conformance]",
@@ -2917,7 +2933,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 17.465887415,
+      "duration_seconds": 7.274413568,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-apps] Deployment RollingUpdateDeployment should delete old pods and create new ones [Conformance]",
@@ -2943,7 +2959,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 5.196083519,
+      "duration_seconds": 4.174027662,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-apps] Deployment deployment should delete old replica sets [Conformance]",
@@ -2956,7 +2972,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 8.698608536,
+      "duration_seconds": 8.624813679,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-apps] Deployment deployment should support proportional scaling [Conformance]",
@@ -2969,7 +2985,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 21.54994975,
+      "duration_seconds": 18.511103132,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-apps] Deployment deployment should support rollover [Conformance]",
@@ -3008,7 +3024,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 11.847136694,
+      "duration_seconds": 4.452728267,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-apps] Deployment should run the lifecycle of a Deployment [Conformance]",
@@ -3021,7 +3037,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 2.347132289,
+      "duration_seconds": 2.197367215,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-apps] Deployment should validate Deployment Status endpoints [Conformance]",
@@ -3047,7 +3063,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 6.251843937,
+      "duration_seconds": 4.367883907,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-apps] DisruptionController Listing PodDisruptionBudgets for all namespaces should list and delete a collection of PodDisruptionBudgets [Conformance]",
@@ -3151,7 +3167,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 14.767628529,
+      "duration_seconds": 10.676376927,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-apps] DisruptionController should block an eviction until the PDB is updated to allow it [Conformance]",
@@ -3164,7 +3180,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 4.295698629,
+      "duration_seconds": 6.069978343,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-apps] DisruptionController should create a PodDisruptionBudget [Conformance]",
@@ -3255,7 +3271,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 6.231994204,
+      "duration_seconds": 6.125179533,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-apps] DisruptionController should observe PodDisruptionBudget status updated [Conformance]",
@@ -3281,7 +3297,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 6.368088686,
+      "duration_seconds": 4.180971058,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-apps] DisruptionController should update/patch PodDisruptionBudget status [Conformance]",
@@ -3307,7 +3323,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 7.381457994,
+      "duration_seconds": 7.22873631,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-apps] Job should adopt matching orphans and release non-matching pods [Conformance]",
@@ -3333,7 +3349,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 54.908297439,
+      "duration_seconds": 52.527839087,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-apps] Job should allow to use a pod failure policy to ignore failure matching on DisruptionTarget condition [Conformance]",
@@ -3359,7 +3375,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 6.20705724,
+      "duration_seconds": 6.16206309,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-apps] Job should allow to use the pod failure policy on exit code to fail the job early [Conformance]",
@@ -3398,7 +3414,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 4.293541549,
+      "duration_seconds": 2.06776383,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-apps] Job should apply changes to a job status [Conformance]",
@@ -3424,7 +3440,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 12.235360829,
+      "duration_seconds": 16.861151284,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-apps] Job should create pods for an Indexed job with completion indexes and specified hostname [Conformance]",
@@ -3450,7 +3466,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 7.29164397,
+      "duration_seconds": 5.507293126,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-apps] Job should delete a job [Conformance]",
@@ -3476,7 +3492,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 24.091796517,
+      "duration_seconds": 26.383009952,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-apps] Job should execute all indexes despite some failing when using backoffLimitPerIndex [Conformance]",
@@ -3515,7 +3531,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 16.536248783,
+      "duration_seconds": 10.317465998,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-apps] Job should manage the lifecycle of a job [Conformance]",
@@ -3528,7 +3544,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 6.210066646,
+      "duration_seconds": 8.175490079,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-apps] Job should mark indexes as failed when the FailIndex action is matched in podFailurePolicy [Conformance]",
@@ -3593,7 +3609,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 18.574300139,
+      "duration_seconds": 12.178591859,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-apps] Job should run a job to completion when tasks sometimes fail and are locally restarted [Conformance]",
@@ -3645,7 +3661,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 8.549008691000001,
+      "duration_seconds": 6.168661727,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-apps] Job should terminate job execution when the number of failed indexes exceeds maxFailedIndexes [Conformance]",
@@ -3671,7 +3687,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 6.198489663,
+      "duration_seconds": 6.122052796,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-apps] Job with successPolicy should succeeded when all indexes succeeded [Conformance]",
@@ -3684,7 +3700,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 12.684004532,
+      "duration_seconds": 6.696870282,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-apps] Job with successPolicy succeededCount rule should succeeded even when some indexes remain pending [Conformance]",
@@ -3697,7 +3713,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 6.217434559,
+      "duration_seconds": 6.088625702,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-apps] Job with successPolicy succeededIndexes rule should succeeded even when some indexes remain pending [Conformance]",
@@ -3710,7 +3726,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 8.339067547,
+      "duration_seconds": 7.135169038,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-apps] ReplicaSet Replace and Patch tests [Conformance]",
@@ -3723,7 +3739,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 2.267091756,
+      "duration_seconds": 14.233699396,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-apps] ReplicaSet Replicaset should have a working scale subresource [Conformance]",
@@ -3736,7 +3752,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 7.222777051,
+      "duration_seconds": 4.192535384,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-apps] ReplicaSet should adopt matching pods on creation and release no longer matching pods [Conformance]",
@@ -3749,7 +3765,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 5.161838183,
+      "duration_seconds": 5.302540942,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-apps] ReplicaSet should list and delete a collection of ReplicaSets [Conformance]",
@@ -3775,7 +3791,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 5.237045241,
+      "duration_seconds": 5.096344616,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-apps] ReplicaSet should serve a basic image on each replica with a public image [Conformance]",
@@ -3801,7 +3817,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 5.184936659,
+      "duration_seconds": 5.202818204,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-apps] ReplicaSet should validate Replicaset Status endpoints [Conformance]",
@@ -3814,7 +3830,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 2.190869682,
+      "duration_seconds": 5.186628258,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-apps] ReplicationController should adopt matching pods on creation [Conformance]",
@@ -3827,7 +3843,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 2.140234266,
+      "duration_seconds": 2.223949291,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-apps] ReplicationController should get and update a ReplicationController scale [Conformance]",
@@ -3840,7 +3856,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 1.6831301669999998,
+      "duration_seconds": 5.483704684,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-apps] ReplicationController should release no longer matching pods [Conformance]",
@@ -3866,7 +3882,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 5.524746517,
+      "duration_seconds": 5.111071264,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-apps] ReplicationController should serve a basic image on each replica with a public image [Conformance]",
@@ -3879,7 +3895,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 1.164311297,
+      "duration_seconds": 2.12517691,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-apps] ReplicationController should surface a failure condition on a common issue like exceeded quota [Conformance]",
@@ -3892,7 +3908,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 4.867135159,
+      "duration_seconds": 3.6092699809999997,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-apps] ReplicationController should test the lifecycle of a ReplicationController [Conformance]",
@@ -3931,7 +3947,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 55.062046941,
+      "duration_seconds": 55.097959309,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-apps] StatefulSet Basic StatefulSet functionality [StatefulSetBasic] Burst scaling should run to completion even with unhealthy pods [Conformance] [Slow]",
@@ -3944,7 +3960,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 370.619937871,
+      "duration_seconds": 369.63903016,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-apps] StatefulSet Basic StatefulSet functionality [StatefulSetBasic] Scaling should happen in predictable order and halt if any stateful pod is unhealthy [Conformance] [Slow]",
@@ -3957,7 +3973,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 18.555576342,
+      "duration_seconds": 16.433885116,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-apps] StatefulSet Basic StatefulSet functionality [StatefulSetBasic] Should recreate evicted statefulset [Conformance]",
@@ -3983,7 +3999,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 20.465060969,
+      "duration_seconds": 20.276805239,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-apps] StatefulSet Basic StatefulSet functionality [StatefulSetBasic] should have a working scale subresource [Conformance]",
@@ -4009,7 +4025,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 20.241215096,
+      "duration_seconds": 20.62416243,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-apps] StatefulSet Basic StatefulSet functionality [StatefulSetBasic] should list, patch and delete a collection of StatefulSets [Conformance]",
@@ -4035,7 +4051,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 71.290488435,
+      "duration_seconds": 90.84263912,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-apps] StatefulSet Basic StatefulSet functionality [StatefulSetBasic] should perform canary updates and phased rolling updates of template modifications [Conformance]",
@@ -4074,7 +4090,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 92.815989405,
+      "duration_seconds": 92.601794911,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-apps] StatefulSet Basic StatefulSet functionality [StatefulSetBasic] should perform rolling updates and roll backs of template modifications [Conformance]",
@@ -4126,7 +4142,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 20.408040695,
+      "duration_seconds": 20.167289787,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-apps] StatefulSet Basic StatefulSet functionality [StatefulSetBasic] should validate Statefulset Status endpoints [Conformance]",
@@ -4347,7 +4363,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 0.172256588,
+      "duration_seconds": 0.245926664,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-architecture] Conformance Tests should have at least two untainted nodes [Conformance]",
@@ -4360,7 +4376,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 1.241987895,
+      "duration_seconds": 0.294448005,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-auth] Certificates API [Privileged:ClusterAdmin] should support CSR API operations [Conformance]",
@@ -4555,7 +4571,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 34.629837746,
+      "duration_seconds": 36.150104378,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-auth] ServiceAccounts ServiceAccountIssuerDiscovery should support OIDC discovery of service account issuer [Conformance]",
@@ -4581,7 +4597,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 0.51675579,
+      "duration_seconds": 0.313872707,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-auth] ServiceAccounts should allow opting out of API token automount [Conformance]",
@@ -4594,7 +4610,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 0.183070875,
+      "duration_seconds": 0.294386564,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-auth] ServiceAccounts should create a serviceAccountToken and ensure a successful TokenReview [Conformance]",
@@ -4607,7 +4623,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 1.291525936,
+      "duration_seconds": 1.526218141,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-auth] ServiceAccounts should guarantee kube-root-ca.crt exist in any namespace [Conformance]",
@@ -4620,7 +4636,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 6.322670607,
+      "duration_seconds": 8.679729337,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-auth] ServiceAccounts should mount an API token into pods [Conformance]",
@@ -4633,7 +4649,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 6.271251391,
+      "duration_seconds": 4.13172235,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-auth] ServiceAccounts should mount projected service account token [Conformance]",
@@ -4646,7 +4662,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 0.147793997,
+      "duration_seconds": 0.152022203,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-auth] ServiceAccounts should run through the lifecycle of a ServiceAccount [Conformance]",
@@ -4685,7 +4701,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 0.367983736,
+      "duration_seconds": 0.542946642,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-auth] ServiceAccounts should update a ServiceAccount [Conformance]",
@@ -4698,7 +4714,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 0.199010239,
+      "duration_seconds": 0.104632266,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-auth] SubjectReview should support SubjectReview API operations [Conformance]",
@@ -5790,7 +5806,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 7.453877346,
+      "duration_seconds": 7.429372355,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-cli] Kubectl client Guestbook application should create and stop a working application [Conformance]",
@@ -5803,7 +5819,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 0.713224121,
+      "duration_seconds": 0.209291761,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-cli] Kubectl client Kubectl api-versions should check if v1 is in available api versions [Conformance]",
@@ -5829,7 +5845,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 0.188672267,
+      "duration_seconds": 0.198802365,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-cli] Kubectl client Kubectl cluster-info should check if Kubernetes control plane services is included in cluster-info [Conformance]",
@@ -5907,7 +5923,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 2.7349831,
+      "duration_seconds": 2.141418807,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-cli] Kubectl client Kubectl describe should check if kubectl describe prints relevant information for rc and pods [Conformance]",
@@ -5920,7 +5936,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 1.346198308,
+      "duration_seconds": 0.567682326,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-cli] Kubectl client Kubectl diff should check if kubectl diff finds a difference for Deployments [Conformance]",
@@ -5946,7 +5962,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 7.05818672,
+      "duration_seconds": 8.587505732,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-cli] Kubectl client Kubectl expose should create services for rc [Conformance]",
@@ -5972,7 +5988,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 5.807364025,
+      "duration_seconds": 2.856840832,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-cli] Kubectl client Kubectl label should update the label on a resource [Conformance]",
@@ -5985,7 +6001,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 1.5160589660000001,
+      "duration_seconds": 3.503109855,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-cli] Kubectl client Kubectl patch should add annotations for pods in rc [Conformance]",
@@ -5998,7 +6014,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 7.532478424,
+      "duration_seconds": 7.755893467,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-cli] Kubectl client Kubectl replace should update a single-container pod's image [Conformance]",
@@ -6011,7 +6027,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 2.152279093,
+      "duration_seconds": 2.639796336,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-cli] Kubectl client Kubectl run pod should create a pod from an image when restart is Never [Conformance]",
@@ -6024,7 +6040,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 2.253375368,
+      "duration_seconds": 3.470556751,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-cli] Kubectl client Kubectl server-side dry-run should check if kubectl can dry-run update Pods [Conformance]",
@@ -6128,7 +6144,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 0.100143756,
+      "duration_seconds": 0.429251442,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-cli] Kubectl client Kubectl version should check is all data is printed [Conformance]",
@@ -6141,7 +6157,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 0.119832119,
+      "duration_seconds": 0.100186349,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-cli] Kubectl client Proxy server should support --unix-socket=/path [Conformance]",
@@ -6154,7 +6170,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 0.093865306,
+      "duration_seconds": 0.339062311,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-cli] Kubectl client Proxy server should support proxy with --port 0 [Conformance]",
@@ -6388,7 +6404,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 12.571274812,
+      "duration_seconds": 12.73286028,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-cli] Kubectl client Update Demo should create and stop a replication controller [Conformance]",
@@ -6401,7 +6417,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 15.679053611,
+      "duration_seconds": 19.295541382,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-cli] Kubectl client Update Demo should scale a replication controller [Conformance]",
@@ -6518,7 +6534,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 6.931030479,
+      "duration_seconds": 8.651414823,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-cli] Kubectl logs logs should be able to retrieve and filter logs [Conformance]",
@@ -7077,7 +7093,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 0.402746495,
+      "duration_seconds": 0.202021018,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-instrumentation] Events API should delete a collection of events [Conformance]",
@@ -7090,7 +7106,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 0.202252171,
+      "duration_seconds": 0.64563911,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-instrumentation] Events API should ensure that an event can be fetched, patched, deleted, and listed [Conformance]",
@@ -7103,7 +7119,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 0.182006449,
+      "duration_seconds": 0.20241938,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-instrumentation] Events should delete a collection of events [Conformance]",
@@ -7116,7 +7132,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 0.330935611,
+      "duration_seconds": 0.91538791,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-instrumentation] Events should manage the lifecycle of an event [Conformance]",
@@ -7220,7 +7236,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 0.151837979,
+      "duration_seconds": 0.075841753,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-network] API Server should have Endpoints and EndpointSlices pointing to API Server [Conformance]",
@@ -7233,7 +7249,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 0.092441127,
+      "duration_seconds": 0.104562999,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-network] API Server should provide secure master service [Conformance]",
@@ -7454,7 +7470,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 2.366543382,
+      "duration_seconds": 4.187576104,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-network] DNS should provide /etc/hosts entries for the cluster [Conformance]",
@@ -7467,7 +7483,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 34.546953947,
+      "duration_seconds": 10.341527083999999,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-network] DNS should provide DNS for ExternalName services [Conformance]",
@@ -7493,7 +7509,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 2.258136736,
+      "duration_seconds": 2.127985997,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-network] DNS should provide DNS for pods for Hostname [Conformance]",
@@ -7506,7 +7522,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 4.367126433,
+      "duration_seconds": 4.189023083,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-network] DNS should provide DNS for pods for Subdomain [Conformance]",
@@ -7519,7 +7535,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 7.14263773,
+      "duration_seconds": 7.25017994,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-network] DNS should provide DNS for services [Conformance]",
@@ -7532,7 +7548,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 6.563241368,
+      "duration_seconds": 6.288928831,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-network] DNS should provide DNS for the cluster [Conformance]",
@@ -7558,7 +7574,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 27.903676714,
+      "duration_seconds": 11.259197312,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-network] DNS should resolve DNS of partial qualified names for services [LinuxOnly] [Conformance]",
@@ -7584,7 +7600,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 4.523333287,
+      "duration_seconds": 2.295002808,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-network] DNS should support configurable pod DNS nameservers [Conformance]",
@@ -7649,7 +7665,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 4.338753938,
+      "duration_seconds": 14.649778088,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-network] EndpointSlice should create Endpoints and EndpointSlices for Pods matching a Service [Conformance]",
@@ -7662,7 +7678,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 0.229207951,
+      "duration_seconds": 0.110225561,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-network] EndpointSlice should create and delete EndpointSlices for a Service with a selector that matches no pods [Conformance]",
@@ -7675,7 +7691,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 10.071635048,
+      "duration_seconds": 8.646005608,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-network] EndpointSlice should support a Service with multiple endpoint IPs specified in multiple EndpointSlices [Conformance]",
@@ -7688,7 +7704,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 4.425277092,
+      "duration_seconds": 12.887785133,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-network] EndpointSlice should support a Service with multiple ports specified in multiple EndpointSlices [Conformance]",
@@ -7701,7 +7717,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 0.257781845,
+      "duration_seconds": 0.220689214,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-network] EndpointSlice should support creating EndpointSlice API operations [Conformance]",
@@ -7727,7 +7743,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 2.199929414,
+      "duration_seconds": 2.108657715,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-network] EndpointSliceMirroring should mirror a custom Endpoints resource through create update and delete [Conformance]",
@@ -7740,7 +7756,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 0.640632575,
+      "duration_seconds": 0.161370656,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-network] Endpoints should test the lifecycle of an Endpoint [Conformance]",
@@ -7753,7 +7769,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 6.517566422,
+      "duration_seconds": 2.292465994,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-network] EndpointsController should create Endpoints for Pods matching a Service [Conformance]",
@@ -7766,7 +7782,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 2.262915962,
+      "duration_seconds": 0.143326525,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-network] EndpointsController should create and delete Endpoints for a Service with a selector that matches no pods [Conformance]",
@@ -7779,7 +7795,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 19.218036958,
+      "duration_seconds": 15.510919889,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-network] HostPort validates that there is no conflict between pods with same hostPort but different hostIP and protocol [LinuxOnly] [Conformance]",
@@ -7792,7 +7808,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 0.754827017,
+      "duration_seconds": 0.120740067,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-network] Ingress API should support creating Ingress API operations [Conformance]",
@@ -7805,7 +7821,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 0.35818734,
+      "duration_seconds": 0.403564573,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-network] IngressClass API should support creating IngressClass API operations [Conformance]",
@@ -8780,7 +8796,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 18.715157888,
+      "duration_seconds": 16.406967619,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-network] Networking Granular Checks: Pods should function for intra-pod communication: http [Conformance] [NodeConformance]",
@@ -8806,7 +8822,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 16.939497162,
+      "duration_seconds": 16.407223272,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-network] Networking Granular Checks: Pods should function for intra-pod communication: udp [Conformance] [NodeConformance]",
@@ -8819,7 +8835,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 19.783061202,
+      "duration_seconds": 17.321996927,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-network] Networking Granular Checks: Pods should function for node-pod communication: http [LinuxOnly] [Conformance] [NodeConformance]",
@@ -8845,7 +8861,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 18.501466306,
+      "duration_seconds": 18.721904381999998,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-network] Networking Granular Checks: Pods should function for node-pod communication: udp [LinuxOnly] [Conformance] [NodeConformance]",
@@ -9235,7 +9251,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 4.442872873,
+      "duration_seconds": 2.1023356460000002,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-network] Proxy version v1 A set of valid responses are returned for both pod and service Proxy [Conformance]",
@@ -9248,7 +9264,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 4.31119917,
+      "duration_seconds": 2.2290696309999998,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-network] Proxy version v1 A set of valid responses are returned for both pod and service ProxyWithPath [Conformance]",
@@ -9287,7 +9303,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 5.017046303,
+      "duration_seconds": 2.79515055,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-network] Proxy version v1 should proxy through a service and a pod [Conformance]",
@@ -9313,7 +9329,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 11.429566743,
+      "duration_seconds": 17.35606872,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-network] Service endpoints latency should not be very high [Conformance]",
@@ -9326,7 +9342,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 0.096734548,
+      "duration_seconds": 0.099421459,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-network] ServiceCIDR and IPAddress API should support IPAddress API operations [Conformance]",
@@ -9339,7 +9355,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 0.458074595,
+      "duration_seconds": 0.151221595,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-network] ServiceCIDR and IPAddress API should support ServiceCIDR API operations [Conformance]",
@@ -9378,7 +9394,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 6.402264973,
+      "duration_seconds": 4.42111087,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-network] Services should be able to change the type from ClusterIP to ExternalName [Conformance]",
@@ -9391,7 +9407,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 14.059049871,
+      "duration_seconds": 4.717907471,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-network] Services should be able to change the type from ExternalName to ClusterIP [Conformance]",
@@ -9404,7 +9420,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 14.657496469,
+      "duration_seconds": 4.812930146,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-network] Services should be able to change the type from ExternalName to NodePort [Conformance]",
@@ -9417,7 +9433,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 6.454726906,
+      "duration_seconds": 4.518783058,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-network] Services should be able to change the type from NodePort to ExternalName [Conformance]",
@@ -9443,7 +9459,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 7.583748817,
+      "duration_seconds": 7.791446431,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-network] Services should be able to create a functioning NodePort service [Conformance]",
@@ -9456,7 +9472,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 41.756930945,
+      "duration_seconds": 36.07473935,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-network] Services should be able to switch session affinity for NodePort service [LinuxOnly] [Conformance]",
@@ -9469,7 +9485,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 39.058689139,
+      "duration_seconds": 41.0080579,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-network] Services should be able to switch session affinity for service with type clusterIP [LinuxOnly] [Conformance]",
@@ -9573,7 +9589,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 1.228295862,
+      "duration_seconds": 0.661789159,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-network] Services should complete a service status lifecycle [Conformance]",
@@ -9625,7 +9641,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 0.303270916,
+      "duration_seconds": 0.079779154,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-network] Services should delete a collection of services [Conformance]",
@@ -9703,7 +9719,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 0.12889456,
+      "duration_seconds": 0.090657564,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-network] Services should find a service from listing all namespaces [Conformance]",
@@ -9742,7 +9758,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 7.862606953,
+      "duration_seconds": 5.565122465,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-network] Services should have session affinity work for NodePort service [LinuxOnly] [Conformance]",
@@ -9755,7 +9771,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 17.153829465,
+      "duration_seconds": 4.824990147,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-network] Services should have session affinity work for service with type clusterIP [LinuxOnly] [Conformance]",
@@ -9898,7 +9914,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 11.238636142,
+      "duration_seconds": 9.57721722,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-network] Services should serve a basic endpoint from pods [Conformance]",
@@ -9924,7 +9940,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 34.415066825,
+      "duration_seconds": 33.067586781,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-network] Services should serve endpoints on same port and different protocols [Conformance]",
@@ -9937,7 +9953,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 12.699425871999999,
+      "duration_seconds": 8.258110789,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-network] Services should serve multiport endpoints from pods [Conformance]",
@@ -10496,7 +10512,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 4.133807417,
+      "duration_seconds": 4.047919329,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-node] ConfigMap should be consumable as environment variable names with various prefixes [Conformance]",
@@ -10509,7 +10525,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 4.124088068,
+      "duration_seconds": 4.276948024,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-node] ConfigMap should be consumable via environment variable [Conformance] [NodeConformance]",
@@ -10522,7 +10538,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 4.070358782,
+      "duration_seconds": 6.376259829,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-node] ConfigMap should be consumable via the environment [Conformance] [NodeConformance]",
@@ -10535,7 +10551,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 0.479994313,
+      "duration_seconds": 0.105062831,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-node] ConfigMap should fail to create ConfigMap with empty key [Conformance]",
@@ -10548,7 +10564,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 0.540979855,
+      "duration_seconds": 0.16482449,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-node] ConfigMap should run through a ConfigMap lifecycle [Conformance]",
@@ -10561,7 +10577,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 0.390703857,
+      "duration_seconds": 0.216821159,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-node] ConfigMap should update ConfigMap successfully [Conformance] [NodeConformance]",
@@ -10574,7 +10590,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 18.693185776,
+      "duration_seconds": 18.206037381,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-node] Container Lifecycle Hook when create a pod with lifecycle hook should execute poststart exec hook properly [Conformance] [NodeConformance]",
@@ -10587,7 +10603,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 16.188817889,
+      "duration_seconds": 20.399176977,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-node] Container Lifecycle Hook when create a pod with lifecycle hook should execute poststart http hook properly [Conformance] [NodeConformance]",
@@ -10613,7 +10629,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 21.016485675,
+      "duration_seconds": 18.193654425,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-node] Container Lifecycle Hook when create a pod with lifecycle hook should execute prestop exec hook properly [Conformance] [NodeConformance]",
@@ -10626,7 +10642,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 18.422349164,
+      "duration_seconds": 37.026301796,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-node] Container Lifecycle Hook when create a pod with lifecycle hook should execute prestop http hook properly [Conformance] [NodeConformance]",
@@ -10652,7 +10668,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 5.390064593,
+      "duration_seconds": 4.108965624,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-node] Container Runtime blackbox test on terminated container should report termination message as empty when pod succeeds and TerminationMessagePolicy FallbackToLogsOnError is set [Conformance] [NodeConformance]",
@@ -10665,7 +10681,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 4.124606596,
+      "duration_seconds": 4.368940239,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-node] Container Runtime blackbox test on terminated container should report termination message from file when pod succeeds and TerminationMessagePolicy FallbackToLogsOnError is set [Conformance] [NodeConformance]",
@@ -10678,7 +10694,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 4.2823093199999995,
+      "duration_seconds": 4.162371323,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-node] Container Runtime blackbox test on terminated container should report termination message from log output if TerminationMessagePolicy FallbackToLogsOnError is set [Conformance] [NodeConformance]",
@@ -10704,7 +10720,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 4.478317036,
+      "duration_seconds": 4.101854107,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-node] Container Runtime blackbox test on terminated container should report termination message if TerminationMessagePath is set as non-root user and at a non-default path [Conformance] [NodeConformance]",
@@ -10769,7 +10785,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 31.390912741,
+      "duration_seconds": 37.138414331,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-node] Container Runtime blackbox test when starting a container that exits should run with the expected status [Conformance] [NodeConformance]",
@@ -10795,7 +10811,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 4.329035601,
+      "duration_seconds": 18.621613818,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-node] Containers should be able to override the image's default arguments (container cmd) [Conformance] [NodeConformance]",
@@ -10808,7 +10824,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 4.226344885,
+      "duration_seconds": 4.172038897,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-node] Containers should be able to override the image's default command (container entrypoint) [Conformance] [NodeConformance]",
@@ -10821,7 +10837,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 6.629625334,
+      "duration_seconds": 4.342357636,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-node] Containers should be able to override the image's default command and arguments [Conformance] [NodeConformance]",
@@ -10834,7 +10850,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 2.043326094,
+      "duration_seconds": 4.255439255,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-node] Containers should use the image defaults if command and args are blank [Conformance] [NodeConformance]",
@@ -10899,7 +10915,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 4.238744507,
+      "duration_seconds": 14.174569611,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-node] Downward API should provide container's limits.cpu/memory and requests.cpu/memory as env vars [Conformance] [NodeConformance]",
@@ -10912,7 +10928,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 4.245765671,
+      "duration_seconds": 6.16344687,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-node] Downward API should provide default limits.cpu/memory from node allocatable [Conformance] [NodeConformance]",
@@ -10938,7 +10954,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 6.47330658,
+      "duration_seconds": 8.484361763999999,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-node] Downward API should provide host IP as an env var [Conformance] [NodeConformance]",
@@ -10951,7 +10967,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 4.081218237,
+      "duration_seconds": 4.075074962,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-node] Downward API should provide hostIPs as an env var [Conformance] [NodeConformance]",
@@ -10964,7 +10980,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 4.214417736,
+      "duration_seconds": 4.228979482,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-node] Downward API should provide pod UID as env vars [Conformance] [NodeConformance]",
@@ -10977,7 +10993,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 4.146992841,
+      "duration_seconds": 4.220083925,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-node] Downward API should provide pod name, namespace and IP address as env vars [Conformance] [NodeConformance]",
@@ -10990,7 +11006,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 4.373229824,
+      "duration_seconds": 6.778307407,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-node] Ephemeral Containers should update the ephemeral containers in an existing pod [Conformance] [NodeConformance]",
@@ -11003,7 +11019,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 4.708026471,
+      "duration_seconds": 4.222437578,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-node] Ephemeral Containers will start an ephemeral container in an existing pod [Conformance] [NodeConformance]",
@@ -11198,7 +11214,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 4.577299388,
+      "duration_seconds": 4.417492737,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-node] ImageVolume should succeed with pod and pull policy of Always [LinuxOnly] [MinimumKubeletVersion:1.35] [Conformance]",
@@ -11211,7 +11227,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 21.444074263,
+      "duration_seconds": 4.590215014,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-node] InitContainer should invoke init containers on a RestartAlways pod [Conformance] [NodeConformance]",
@@ -11224,7 +11240,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 5.397793089,
+      "duration_seconds": 5.833208932,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-node] InitContainer should invoke init containers on a RestartNever pod [Conformance] [NodeConformance]",
@@ -11237,7 +11253,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 4.394849369,
+      "duration_seconds": 4.728576657,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-node] InitContainer should not start app containers and fail the pod if init containers fail on a RestartNever pod [Conformance] [NodeConformance]",
@@ -11250,7 +11266,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 40.902783609,
+      "duration_seconds": 40.768084863,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-node] InitContainer should not start app containers if init containers fail on a RestartAlways pod [Conformance] [NodeConformance]",
@@ -11302,7 +11318,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 2.058496176,
+      "duration_seconds": 4.168713231,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-node] Kubelet when scheduling a busybox command in a pod should print the output to logs [Conformance] [NodeConformance]",
@@ -11315,7 +11331,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 0.088867308,
+      "duration_seconds": 0.211280649,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-node] Kubelet when scheduling a busybox command that always fails in a pod should be possible to delete [Conformance] [NodeConformance]",
@@ -11328,7 +11344,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 4.116561662,
+      "duration_seconds": 4.094576754,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-node] Kubelet when scheduling a busybox command that always fails in a pod should have an terminated reason [Conformance] [NodeConformance]",
@@ -11341,7 +11357,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 2.052230146,
+      "duration_seconds": 2.068904216,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-node] Kubelet when scheduling a read only busybox container should not write to root filesystem [LinuxOnly] [Conformance] [NodeConformance]",
@@ -11354,7 +11370,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 6.608155701,
+      "duration_seconds": 6.7901178909999995,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-node] Kubelet when scheduling an agnhost Pod with hostAliases should write entries to /etc/hosts [Conformance] [NodeConformance]",
@@ -11380,7 +11396,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 6.61038578,
+      "duration_seconds": 13.935291273,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-node] KubeletManagedEtcHosts should test kubelet managed /etc/hosts file [Conformance] [NodeConformance]",
@@ -11393,7 +11409,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 0.11488836,
+      "duration_seconds": 0.262518036,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-node] Lease lease API should be available [Conformance]",
@@ -11562,7 +11578,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 0.161903579,
+      "duration_seconds": 0.229457674,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-node] Node Lifecycle should run through the lifecycle of a node [Conformance]",
@@ -14279,7 +14295,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 14.997770583,
+      "duration_seconds": 11.123503127,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-node] Pod InPlace Resize Container burstable pods - extended 6 containers - various operations performed (including adding limits and requests) [MinimumKubeletVersion:1.34] [Conformance]",
@@ -14292,7 +14308,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 57.087620848,
+      "duration_seconds": 62.529914223,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-node] Pod InPlace Resize Container burstable pods - extended resize with equivalents [MinimumKubeletVersion:1.34] [Conformance]",
@@ -14318,7 +14334,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 60.455239422,
+      "duration_seconds": 57.917920606,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-node] Pod InPlace Resize Container guaranteed pods with multiple containers 3 containers - increase cpu & mem on c1, c2, decrease cpu & mem on c3 - net increase [MinimumKubeletVersion:1.34] [Conformance]",
@@ -14331,7 +14347,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 46.993599086,
+      "duration_seconds": 60.289739031,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-node] Pod InPlace Resize Container guaranteed pods with multiple containers 3 containers - increase cpu & mem on c1, decrease cpu & mem on c2, c3 - net decrease [MinimumKubeletVersion:1.34] [Conformance]",
@@ -14344,7 +14360,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 61.89689603,
+      "duration_seconds": 57.934077686,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-node] Pod InPlace Resize Container guaranteed pods with multiple containers 3 containers - increase: CPU (c1,c3), memory (c2, c3) ; decrease: CPU (c2) [MinimumKubeletVersion:1.34] [Conformance]",
@@ -14669,7 +14685,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 8.115573874,
+      "duration_seconds": 4.940778864,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-node] Pod InPlace Resize Container resize pod via the replace endpoint [MinimumKubeletVersion:1.34] [Conformance]",
@@ -14994,7 +15010,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 0.205928935,
+      "duration_seconds": 0.332368287,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-node] PodTemplates should delete a collection of pod templates [Conformance]",
@@ -15007,7 +15023,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 0.148536424,
+      "duration_seconds": 0.097119394,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-node] PodTemplates should replace a pod template [Conformance]",
@@ -15020,7 +15036,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 0.127285074,
+      "duration_seconds": 0.304242917,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-node] PodTemplates should run the lifecycle of PodTemplates [Conformance]",
@@ -15033,7 +15049,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 2.238467162,
+      "duration_seconds": 2.043110069,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-node] Pods Extended (pod generation) Pod Generation custom-set generation on new pods and graceful delete [Conformance]",
@@ -15046,7 +15062,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 262.215154068,
+      "duration_seconds": 265.681551426,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-node] Pods Extended (pod generation) Pod Generation issue 500 podspec updates and verify generation and observedGeneration eventually converge [MinimumKubeletVersion:1.34] [Conformance]",
@@ -15059,7 +15075,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 13.898112396,
+      "duration_seconds": 13.774890068,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-node] Pods Extended (pod generation) Pod Generation pod generation should start at 1 and increment per update [MinimumKubeletVersion:1.34] [Conformance]",
@@ -15163,7 +15179,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 0.374200443,
+      "duration_seconds": 0.087319576,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-node] Pods Extended Pods Set QOS Class should be set on Pods with matching resource requests and limits for memory and cpu [Conformance]",
@@ -15176,7 +15192,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 10.982771735,
+      "duration_seconds": 6.67074742,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-node] Pods should allow activeDeadlineSeconds to be updated [Conformance] [NodeConformance]",
@@ -15189,7 +15205,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 13.430473462,
+      "duration_seconds": 4.3037789459999996,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-node] Pods should be submitted and removed [Conformance] [NodeConformance]",
@@ -15202,7 +15218,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 2.879909741,
+      "duration_seconds": 3.186802752,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-node] Pods should be updated [Conformance] [NodeConformance]",
@@ -15228,7 +15244,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 6.193035984,
+      "duration_seconds": 6.196355834,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-node] Pods should contain environment variables for services [Conformance] [NodeConformance]",
@@ -15241,7 +15257,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 5.092398454,
+      "duration_seconds": 6.280160722,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-node] Pods should delete a collection of pods [Conformance]",
@@ -15254,7 +15270,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 2.110761518,
+      "duration_seconds": 4.072657893,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-node] Pods should get a host IP [Conformance] [NodeConformance]",
@@ -15280,7 +15296,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 2.051324876,
+      "duration_seconds": 2.088242982,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-node] Pods should patch a pod status [Conformance]",
@@ -15293,7 +15309,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 4.913887723,
+      "duration_seconds": 4.929544837,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-node] Pods should run through the lifecycle of Pods and PodStatus [Conformance]",
@@ -15319,7 +15335,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 2.156138628,
+      "duration_seconds": 2.14840992,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-node] Pods should support remote command execution over websockets [Conformance] [NodeConformance]",
@@ -15332,7 +15348,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 2.1290255829999998,
+      "duration_seconds": 2.118073343,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-node] Pods should support retrieving logs from the container over websockets [Conformance] [NodeConformance]",
@@ -15358,7 +15374,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 9.413921802,
+      "duration_seconds": 9.105063416,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-node] PreStop should call prestop when killing a pod [Conformance]",
@@ -15397,7 +15413,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 242.764619599,
+      "duration_seconds": 247.359403933,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-node] Probing container should *not* be restarted with a /healthz http liveness probe [Conformance] [NodeConformance]",
@@ -15410,7 +15426,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 242.663235383,
+      "duration_seconds": 242.659460406,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-node] Probing container should *not* be restarted with a GRPC liveness probe [Conformance] [NodeConformance]",
@@ -15423,7 +15439,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 246.624388326,
+      "duration_seconds": 244.030341739,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-node] Probing container should *not* be restarted with a exec \"cat /tmp/health\" liveness probe [Conformance] [NodeConformance]",
@@ -15449,7 +15465,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 242.912871604,
+      "duration_seconds": 243.532419274,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-node] Probing container should *not* be restarted with a tcp:8080 liveness probe [Conformance] [NodeConformance]",
@@ -15501,7 +15517,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 24.779741216,
+      "duration_seconds": 22.316040819,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-node] Probing container should be restarted with a /healthz http liveness probe [Conformance] [NodeConformance]",
@@ -15514,7 +15530,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 67.035308645,
+      "duration_seconds": 76.689612112,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-node] Probing container should be restarted with a GRPC liveness probe [Conformance] [NodeConformance]",
@@ -15527,7 +15543,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 52.38218944,
+      "duration_seconds": 52.492447884,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-node] Probing container should be restarted with a exec \"cat /tmp/health\" liveness probe [Conformance] [NodeConformance]",
@@ -15579,7 +15595,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 161.751983672,
+      "duration_seconds": 147.67813111,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-node] Probing container should have monotonically increasing restart count [Conformance] [NodeConformance]",
@@ -15657,7 +15673,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 22.335773604,
+      "duration_seconds": 22.482452458,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-node] Probing container with readiness probe should not be ready before initial delay and never restart [Conformance] [NodeConformance]",
@@ -15670,7 +15686,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 60.16822897,
+      "duration_seconds": 60.111125322,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-node] Probing container with readiness probe that fails should never be ready and never restart [Conformance] [NodeConformance]",
@@ -16086,7 +16102,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 0.179385743,
+      "duration_seconds": 0.197668157,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-node] RuntimeClass should reject a Pod requesting a deleted RuntimeClass [Conformance] [NodeConformance]",
@@ -16099,7 +16115,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 0.112758483,
+      "duration_seconds": 0.507551438,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-node] RuntimeClass should reject a Pod requesting a non-existent RuntimeClass [Conformance] [NodeConformance]",
@@ -16151,7 +16167,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 2.105583695,
+      "duration_seconds": 0.216157403,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-node] RuntimeClass should schedule a Pod requesting a RuntimeClass and initialize its Overhead [Conformance] [NodeConformance]",
@@ -16164,7 +16180,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 2.051060978,
+      "duration_seconds": 0.224931235,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-node] RuntimeClass should schedule a Pod requesting a RuntimeClass without PodOverhead [Conformance] [NodeConformance]",
@@ -16177,7 +16193,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 0.135303968,
+      "duration_seconds": 0.765688824,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-node] RuntimeClass should support RuntimeClasses API operations [Conformance]",
@@ -16203,7 +16219,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 4.244462235,
+      "duration_seconds": 4.166115071,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-node] Secrets should be consumable as environment variable names variable names with various prefixes [Conformance]",
@@ -16216,7 +16232,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 6.541672021,
+      "duration_seconds": 4.19665054,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-node] Secrets should be consumable from pods in env vars [Conformance] [NodeConformance]",
@@ -16229,7 +16245,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 4.222918979,
+      "duration_seconds": 4.06925068,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-node] Secrets should be consumable via the environment [Conformance] [NodeConformance]",
@@ -16242,7 +16258,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 0.097380198,
+      "duration_seconds": 0.097629826,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-node] Secrets should fail to create secret due to empty secret key [Conformance]",
@@ -16255,7 +16271,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 0.437572879,
+      "duration_seconds": 0.195312494,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-node] Secrets should patch a secret [Conformance]",
@@ -16372,7 +16388,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 6.439942117,
+      "duration_seconds": 4.075813104,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-node] Security Context When creating a container with runAsUser should run the container with uid 65534 [LinuxOnly] [Conformance] [NodeConformance]",
@@ -16476,7 +16492,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 4.138470114,
+      "duration_seconds": 4.228518385,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-node] Security Context When creating a pod with privileged should run the container as unprivileged when false [LinuxOnly] [Conformance] [NodeConformance]",
@@ -16502,7 +16518,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 4.115511796,
+      "duration_seconds": 4.170893811,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-node] Security Context When creating a pod with readOnlyRootFilesystem should run the container with writable rootfs when readOnlyRootFilesystem=false [Conformance] [NodeConformance]",
@@ -16515,7 +16531,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 4.126849302,
+      "duration_seconds": 4.065032392,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-node] Security Context should support container.SecurityContext.RunAsUser And container.SecurityContext.RunAsGroup [LinuxOnly] [Conformance]",
@@ -16541,7 +16557,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 6.266841544,
+      "duration_seconds": 4.260834792,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-node] Security Context should support pod.Spec.SecurityContext.RunAsUser And pod.Spec.SecurityContext.RunAsGroup [LinuxOnly] [Conformance]",
@@ -16684,7 +16700,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 12.812660088,
+      "duration_seconds": 10.569768978,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-node] Security Context when creating containers with AllowPrivilegeEscalation should not allow privilege escalation when false [LinuxOnly] [Conformance] [NodeConformance]",
@@ -16723,7 +16739,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 0.093847147,
+      "duration_seconds": 0.094079427,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-node] Sysctls [LinuxOnly] should reject invalid sysctls [Conformance] [NodeConformance]",
@@ -16736,7 +16752,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 6.486197149,
+      "duration_seconds": 4.172884511,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-node] Sysctls [LinuxOnly] should support sysctls [Environment:NotInUserNS] [Conformance] [NodeConformance]",
@@ -16788,7 +16804,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 6.35103417,
+      "duration_seconds": 4.178054998,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-node] Variable Expansion should allow composing env vars into new env vars [Conformance] [NodeConformance]",
@@ -16801,7 +16817,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 4.103108037,
+      "duration_seconds": 4.152160737,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-node] Variable Expansion should allow substituting values in a container's args [Conformance] [NodeConformance]",
@@ -16814,7 +16830,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 4.380640269,
+      "duration_seconds": 4.180129454,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-node] Variable Expansion should allow substituting values in a container's command [Conformance] [NodeConformance]",
@@ -16827,7 +16843,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 6.476221953,
+      "duration_seconds": 6.176913587,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-node] Variable Expansion should allow substituting values in a volume subpath [Conformance]",
@@ -16840,7 +16856,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 4.319259392,
+      "duration_seconds": 4.270081966,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-node] Variable Expansion should fail substituting values in a volume subpath with absolute path [Conformance]",
@@ -16853,7 +16869,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 8.508780866,
+      "duration_seconds": 4.124054917,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-node] Variable Expansion should fail substituting values in a volume subpath with backticks [Conformance]",
@@ -16866,7 +16882,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 39.376393082,
+      "duration_seconds": 49.32192041,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-node] Variable Expansion should succeed in writing subpaths in container [Conformance]",
@@ -16879,7 +16895,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 155.173251482,
+      "duration_seconds": 154.88269278799999,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-node] Variable Expansion should verify that a failing subpath expansion can be modified during the lifecycle of a container [Conformance] [Slow]",
@@ -16892,7 +16908,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 2.4787455449999998,
+      "duration_seconds": 2.519322824,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-node] [DRA] CRUD Tests resource.k8s.io/v1 DeviceClass [Conformance]",
@@ -16905,7 +16921,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 0.458468788,
+      "duration_seconds": 6.645544122,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-node] [DRA] CRUD Tests resource.k8s.io/v1 ResourceClaim [Conformance]",
@@ -16918,7 +16934,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 4.568904825,
+      "duration_seconds": 2.385637687,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-node] [DRA] CRUD Tests resource.k8s.io/v1 ResourceClaimTemplate [Conformance]",
@@ -16931,7 +16947,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 0.633282988,
+      "duration_seconds": 0.202299025,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-node] [DRA] CRUD Tests resource.k8s.io/v1 ResourceSlice [Conformance]",
@@ -17014,6 +17030,19 @@
       "file_source": "junit_01.xml",
       "name": "[It] [sig-node] [DRA] [FeatureGate:DRAExtendedResource] [Feature:DynamicResourceAllocation] must cleanup extended resource claims when pods fail [KubeletMinVersion:1.34] [Beta] [FeatureGate:DynamicResourceAllocation] [kubelet: [>=1.34]]",
       "name_slug": "it-sig-node-dra-featuregate-draextendedresource-feature-dynamicresourceallocation-must-cleanup-extended-resource-claims-when-pods-fail-kubeletminversion-1-34-beta-featuregate-dynamicresourceallocation-kubelet-1-34",
+      "owner_hint": "kubernetes-e2e-suite",
+      "source": "junit",
+      "status": "skipped",
+      "suite": "Kubernetes e2e suite",
+      "suite_slug": "kubernetes-e2e-suite"
+    },
+    {
+      "classname": "Kubernetes e2e suite",
+      "duration_seconds": 0.0,
+      "failure_text": "",
+      "file_source": "junit_01.xml",
+      "name": "[It] [sig-node] [DRA] [FeatureGate:DRAExtendedResource] [Feature:DynamicResourceAllocation] must prefer device plugin over DRA when both advertise the same resource on a node [KubeletMinVersion:1.35] [Beta] [FeatureGate:DynamicResourceAllocation] [Serial] [kubelet: [>=1.35]]",
+      "name_slug": "it-sig-node-dra-featuregate-draextendedresource-feature-dynamicresourceallocation-must-prefer-device-plugin-over-dra-when-both-advertise-the-same-resource-on-a-node-kubeletminversion-1-35-beta-featuregate-dynamicresourceallocation-serial-kubelet-1-35",
       "owner_hint": "kubernetes-e2e-suite",
       "source": "junit",
       "status": "skipped",
@@ -18660,7 +18689,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 7.306999526,
+      "duration_seconds": 7.530067483,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-scheduling] LimitRange should create a LimitRange with defaults and ensure pod has those defaults applied. [Conformance]",
@@ -18673,7 +18702,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 0.34447914,
+      "duration_seconds": 0.099324044,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-scheduling] LimitRange should list, patch and delete a LimitRange by collection [Conformance]",
@@ -29177,7 +29206,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 0.120576494,
+      "duration_seconds": 0.18079984,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-storage] CSIInlineVolumes should run through the lifecycle of a CSIDriver [Conformance]",
@@ -29190,7 +29219,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 0.100076636,
+      "duration_seconds": 0.212997654,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-storage] CSIInlineVolumes should support CSIVolumeSource in Pod API [Conformance]",
@@ -29203,7 +29232,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 0.328232462,
+      "duration_seconds": 0.350053597,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-storage] CSINodes CSI Conformance should run through the lifecycle of a csinode [Conformance]",
@@ -29216,7 +29245,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 0.251491427,
+      "duration_seconds": 0.139960699,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-storage] CSIStorageCapacity should support CSIStorageCapacities API operations [Conformance]",
@@ -29255,7 +29284,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 2.249715621,
+      "duration_seconds": 2.122920272,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-storage] ConfigMap binary data should be reflected in volume [Conformance] [NodeConformance]",
@@ -29268,7 +29297,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 75.706400049,
+      "duration_seconds": 73.216245801,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-storage] ConfigMap optional updates should be reflected in volume [Conformance] [NodeConformance]",
@@ -29281,7 +29310,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 4.317230816,
+      "duration_seconds": 4.294802465,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-storage] ConfigMap should be consumable from pods in volume [Conformance] [NodeConformance]",
@@ -29294,7 +29323,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 4.279177082,
+      "duration_seconds": 4.232453777,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-storage] ConfigMap should be consumable from pods in volume as non-root [Conformance] [NodeConformance]",
@@ -29333,7 +29362,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 6.38685233,
+      "duration_seconds": 4.130080255,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-storage] ConfigMap should be consumable from pods in volume with defaultMode set [LinuxOnly] [Conformance] [NodeConformance]",
@@ -29346,7 +29375,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 4.298161814,
+      "duration_seconds": 4.169653764,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-storage] ConfigMap should be consumable from pods in volume with mappings [Conformance] [NodeConformance]",
@@ -29359,7 +29388,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 8.454918117,
+      "duration_seconds": 4.065430031,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-storage] ConfigMap should be consumable from pods in volume with mappings and Item mode set [LinuxOnly] [Conformance] [NodeConformance]",
@@ -29372,7 +29401,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 6.273107632,
+      "duration_seconds": 4.159344826,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-storage] ConfigMap should be consumable from pods in volume with mappings as non-root [Conformance] [NodeConformance]",
@@ -29398,7 +29427,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 6.272244252,
+      "duration_seconds": 4.064476493,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-storage] ConfigMap should be consumable in multiple volumes in the same pod [Conformance] [NodeConformance]",
@@ -29411,7 +29440,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 0.104227786,
+      "duration_seconds": 0.28835639,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-storage] ConfigMap should be immutable if `immutable` field is set [Conformance]",
@@ -29424,7 +29453,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 87.833823077,
+      "duration_seconds": 70.789621982,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-storage] ConfigMap updates should be reflected in volume [Conformance] [NodeConformance]",
@@ -29463,7 +29492,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 6.136812965,
+      "duration_seconds": 6.282282412,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-storage] Downward API volume should provide container's cpu limit [Conformance] [NodeConformance]",
@@ -29476,7 +29505,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 6.44873564,
+      "duration_seconds": 4.190738464,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-storage] Downward API volume should provide container's cpu request [Conformance] [NodeConformance]",
@@ -29489,7 +29518,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 4.232046512,
+      "duration_seconds": 4.398159081,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-storage] Downward API volume should provide container's memory limit [Conformance] [NodeConformance]",
@@ -29502,7 +29531,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 4.115445117,
+      "duration_seconds": 4.116910447,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-storage] Downward API volume should provide container's memory request [Conformance] [NodeConformance]",
@@ -29515,7 +29544,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 6.438964914,
+      "duration_seconds": 4.059383403,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-storage] Downward API volume should provide node allocatable (cpu) as default cpu limit if the limit is not set [Conformance] [NodeConformance]",
@@ -29528,7 +29557,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 6.548469214,
+      "duration_seconds": 4.281489145,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-storage] Downward API volume should provide node allocatable (memory) as default memory limit if the limit is not set [Conformance] [NodeConformance]",
@@ -29567,7 +29596,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 10.367654076,
+      "duration_seconds": 4.179109791,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-storage] Downward API volume should provide podname only [Conformance] [NodeConformance]",
@@ -29580,7 +29609,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 6.539678536,
+      "duration_seconds": 6.490497025,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-storage] Downward API volume should set DefaultMode on files [LinuxOnly] [Conformance] [NodeConformance]",
@@ -29593,7 +29622,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 6.827780507,
+      "duration_seconds": 4.128151145,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-storage] Downward API volume should set mode on item file [LinuxOnly] [Conformance] [NodeConformance]",
@@ -29606,7 +29635,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 15.031190203,
+      "duration_seconds": 4.741428998,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-storage] Downward API volume should update annotations on modification [Conformance] [NodeConformance]",
@@ -29619,7 +29648,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 4.898357862,
+      "duration_seconds": 4.672489035,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-storage] Downward API volume should update labels on modification [Conformance] [NodeConformance]",
@@ -29723,7 +29752,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 4.147473678,
+      "duration_seconds": 4.166065981,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-storage] EmptyDir volumes pod should support shared volumes between containers [Conformance]",
@@ -29736,7 +29765,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 4.234159817,
+      "duration_seconds": 4.174681191,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-storage] EmptyDir volumes should support (non-root,0644,default) [LinuxOnly] [Conformance] [NodeConformance]",
@@ -29749,7 +29778,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 6.43727716,
+      "duration_seconds": 12.62010923,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-storage] EmptyDir volumes should support (non-root,0644,tmpfs) [LinuxOnly] [Conformance] [NodeConformance]",
@@ -29762,7 +29791,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 10.720696269,
+      "duration_seconds": 4.182912736,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-storage] EmptyDir volumes should support (non-root,0666,default) [LinuxOnly] [Conformance] [NodeConformance]",
@@ -29775,7 +29804,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 4.393738568,
+      "duration_seconds": 4.115887667,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-storage] EmptyDir volumes should support (non-root,0666,tmpfs) [LinuxOnly] [Conformance] [NodeConformance]",
@@ -29788,7 +29817,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 4.208602493,
+      "duration_seconds": 10.487307167,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-storage] EmptyDir volumes should support (non-root,0777,default) [LinuxOnly] [Conformance] [NodeConformance]",
@@ -29801,7 +29830,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 4.171924276,
+      "duration_seconds": 6.196982381,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-storage] EmptyDir volumes should support (non-root,0777,tmpfs) [LinuxOnly] [Conformance] [NodeConformance]",
@@ -29814,7 +29843,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 8.244084577,
+      "duration_seconds": 4.338721604,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-storage] EmptyDir volumes should support (root,0644,default) [LinuxOnly] [Conformance] [NodeConformance]",
@@ -29827,7 +29856,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 8.589080007,
+      "duration_seconds": 4.284608276,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-storage] EmptyDir volumes should support (root,0644,tmpfs) [LinuxOnly] [Conformance] [NodeConformance]",
@@ -29840,7 +29869,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 6.7002369470000005,
+      "duration_seconds": 6.229501439,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-storage] EmptyDir volumes should support (root,0666,default) [LinuxOnly] [Conformance] [NodeConformance]",
@@ -29853,7 +29882,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 12.400512435,
+      "duration_seconds": 4.136909202,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-storage] EmptyDir volumes should support (root,0666,tmpfs) [LinuxOnly] [Conformance] [NodeConformance]",
@@ -29866,7 +29895,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 4.258201959,
+      "duration_seconds": 4.300818061,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-storage] EmptyDir volumes should support (root,0777,default) [LinuxOnly] [Conformance] [NodeConformance]",
@@ -29879,7 +29908,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 6.303928379,
+      "duration_seconds": 12.473848301,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-storage] EmptyDir volumes should support (root,0777,tmpfs) [LinuxOnly] [Conformance] [NodeConformance]",
@@ -29892,7 +29921,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 6.730933988,
+      "duration_seconds": 4.131960863,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-storage] EmptyDir volumes volume on default medium should have the correct mode [LinuxOnly] [Conformance] [NodeConformance]",
@@ -29905,7 +29934,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 12.776251024,
+      "duration_seconds": 4.157512763,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-storage] EmptyDir volumes volume on tmpfs should have the correct mode [LinuxOnly] [Conformance] [NodeConformance]",
@@ -30022,7 +30051,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 4.344054143,
+      "duration_seconds": 2.217764527,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-storage] EmptyDir wrapper volumes should not conflict [Conformance]",
@@ -95919,7 +95948,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 0.280412916,
+      "duration_seconds": 0.272166618,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-storage] PersistentVolumes CSI Conformance should apply changes to a pv/pvc status [Conformance]",
@@ -95932,7 +95961,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 7.385231372,
+      "duration_seconds": 6.693858548,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-storage] PersistentVolumes CSI Conformance should run through the lifecycle of a PV and a PVC [Conformance]",
@@ -97063,7 +97092,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 4.179988299,
+      "duration_seconds": 4.088725721,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-storage] Projected combined should project all components that make up the projection API [Projection] [Conformance] [NodeConformance]",
@@ -97102,7 +97131,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 69.667814289,
+      "duration_seconds": 6.396241863,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-storage] Projected configMap optional updates should be reflected in volume [Conformance] [NodeConformance]",
@@ -97115,7 +97144,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 4.082449441,
+      "duration_seconds": 4.072727657,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-storage] Projected configMap should be consumable from pods in volume [Conformance] [NodeConformance]",
@@ -97128,7 +97157,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 4.226558511,
+      "duration_seconds": 4.098107346,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-storage] Projected configMap should be consumable from pods in volume as non-root [Conformance] [NodeConformance]",
@@ -97167,7 +97196,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 4.203702845,
+      "duration_seconds": 4.210634602,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-storage] Projected configMap should be consumable from pods in volume with defaultMode set [LinuxOnly] [Conformance] [NodeConformance]",
@@ -97180,7 +97209,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 6.404871902,
+      "duration_seconds": 6.410826092,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-storage] Projected configMap should be consumable from pods in volume with mappings [Conformance] [NodeConformance]",
@@ -97193,7 +97222,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 4.413066557,
+      "duration_seconds": 6.218812509,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-storage] Projected configMap should be consumable from pods in volume with mappings and Item mode set [LinuxOnly] [Conformance] [NodeConformance]",
@@ -97206,7 +97235,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 6.208646105,
+      "duration_seconds": 6.545609687,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-storage] Projected configMap should be consumable from pods in volume with mappings as non-root [Conformance] [NodeConformance]",
@@ -97232,7 +97261,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 6.9138824450000005,
+      "duration_seconds": 4.493455316,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-storage] Projected configMap should be consumable in multiple volumes in the same pod [Conformance] [NodeConformance]",
@@ -97245,7 +97274,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 84.178321849,
+      "duration_seconds": 91.381974654,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-storage] Projected configMap updates should be reflected in volume [Conformance] [NodeConformance]",
@@ -97258,7 +97287,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 6.367225498,
+      "duration_seconds": 4.197975512,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-storage] Projected downwardAPI should provide container's cpu limit [Conformance] [NodeConformance]",
@@ -97271,7 +97300,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 4.164994789,
+      "duration_seconds": 4.093493909,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-storage] Projected downwardAPI should provide container's cpu request [Conformance] [NodeConformance]",
@@ -97284,7 +97313,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 4.508935222,
+      "duration_seconds": 4.469728815,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-storage] Projected downwardAPI should provide container's memory limit [Conformance] [NodeConformance]",
@@ -97297,7 +97326,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 4.440600921,
+      "duration_seconds": 4.1021923,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-storage] Projected downwardAPI should provide container's memory request [Conformance] [NodeConformance]",
@@ -97310,7 +97339,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 4.173593124,
+      "duration_seconds": 4.124516163,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-storage] Projected downwardAPI should provide node allocatable (cpu) as default cpu limit if the limit is not set [Conformance] [NodeConformance]",
@@ -97323,7 +97352,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 6.357244559,
+      "duration_seconds": 12.370750527,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-storage] Projected downwardAPI should provide node allocatable (memory) as default memory limit if the limit is not set [Conformance] [NodeConformance]",
@@ -97362,7 +97391,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 6.59710617,
+      "duration_seconds": 4.388878186,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-storage] Projected downwardAPI should provide podname only [Conformance] [NodeConformance]",
@@ -97375,7 +97404,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 6.276906867,
+      "duration_seconds": 4.048985856,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-storage] Projected downwardAPI should set DefaultMode on files [LinuxOnly] [Conformance] [NodeConformance]",
@@ -97388,7 +97417,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 6.27651165,
+      "duration_seconds": 6.163874078,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-storage] Projected downwardAPI should set mode on item file [LinuxOnly] [Conformance] [NodeConformance]",
@@ -97401,7 +97430,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 4.970480762,
+      "duration_seconds": 6.663389524,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-storage] Projected downwardAPI should update annotations on modification [Conformance] [NodeConformance]",
@@ -97414,7 +97443,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 6.876121095,
+      "duration_seconds": 6.755183689,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-storage] Projected downwardAPI should update labels on modification [Conformance] [NodeConformance]",
@@ -97453,7 +97482,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 94.468588637,
+      "duration_seconds": 12.809465849,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-storage] Projected secret optional updates should be reflected in volume [Conformance] [NodeConformance]",
@@ -97479,7 +97508,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 4.348875025,
+      "duration_seconds": 8.382077122,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-storage] Projected secret should be consumable from pods in volume [Conformance] [NodeConformance]",
@@ -97492,7 +97521,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 4.092767306,
+      "duration_seconds": 4.315297087,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-storage] Projected secret should be consumable from pods in volume as non-root with defaultMode and fsGroup set [LinuxOnly] [Conformance] [NodeConformance]",
@@ -97505,7 +97534,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 4.229938845,
+      "duration_seconds": 4.064269369,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-storage] Projected secret should be consumable from pods in volume with defaultMode set [LinuxOnly] [Conformance] [NodeConformance]",
@@ -97518,7 +97547,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 6.172142117,
+      "duration_seconds": 4.055620976,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-storage] Projected secret should be consumable from pods in volume with mappings [Conformance] [NodeConformance]",
@@ -97531,7 +97560,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 4.180847991,
+      "duration_seconds": 6.204438826,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-storage] Projected secret should be consumable from pods in volume with mappings and Item Mode set [LinuxOnly] [Conformance] [NodeConformance]",
@@ -97544,7 +97573,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 8.907840918,
+      "duration_seconds": 4.093242719,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-storage] Projected secret should be consumable in multiple volumes in a pod [Conformance] [NodeConformance]",
@@ -97596,7 +97625,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 69.39242107,
+      "duration_seconds": 16.17098275,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-storage] Secrets optional updates should be reflected in volume [Conformance] [NodeConformance]",
@@ -97609,7 +97638,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 6.654638557,
+      "duration_seconds": 4.343685839,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-storage] Secrets should be able to mount in a volume regardless of a different secret existing with same name in different namespace [Conformance] [NodeConformance]",
@@ -97622,7 +97651,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 6.680912016,
+      "duration_seconds": 6.196689429,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-storage] Secrets should be consumable from pods in volume [Conformance] [NodeConformance]",
@@ -97635,7 +97664,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 8.423882666,
+      "duration_seconds": 4.132375756,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-storage] Secrets should be consumable from pods in volume as non-root with defaultMode and fsGroup set [LinuxOnly] [Conformance] [NodeConformance]",
@@ -97648,7 +97677,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 12.316938138,
+      "duration_seconds": 12.731243621,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-storage] Secrets should be consumable from pods in volume with defaultMode set [LinuxOnly] [Conformance] [NodeConformance]",
@@ -97661,7 +97690,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 6.226666761,
+      "duration_seconds": 4.202646332,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-storage] Secrets should be consumable from pods in volume with mappings [Conformance] [NodeConformance]",
@@ -97674,7 +97703,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 4.119491155,
+      "duration_seconds": 4.142581645,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-storage] Secrets should be consumable from pods in volume with mappings and Item Mode set [LinuxOnly] [Conformance] [NodeConformance]",
@@ -97687,7 +97716,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 4.1806146,
+      "duration_seconds": 4.286012966,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-storage] Secrets should be consumable in multiple volumes in a pod [Conformance] [NodeConformance]",
@@ -97700,7 +97729,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 0.331805068,
+      "duration_seconds": 0.094041986,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-storage] Secrets should be immutable if `immutable` field is set [Conformance]",
@@ -97726,7 +97755,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 0.475511711,
+      "duration_seconds": 0.123831482,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-storage] StorageClasses CSI Conformance should run through the lifecycle of a StorageClass [Conformance]",
@@ -97739,7 +97768,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 24.681365194,
+      "duration_seconds": 24.24611299,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-storage] Subpath Atomic writer volumes should support subpaths with configmap pod [Conformance]",
@@ -97752,7 +97781,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 24.429115598,
+      "duration_seconds": 24.137566167,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-storage] Subpath Atomic writer volumes should support subpaths with configmap pod with mountPath of existing file [Conformance]",
@@ -97765,7 +97794,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 24.427991603,
+      "duration_seconds": 24.34770594,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-storage] Subpath Atomic writer volumes should support subpaths with downward pod [Conformance]",
@@ -97778,7 +97807,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 32.841386269,
+      "duration_seconds": 26.825193854,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-storage] Subpath Atomic writer volumes should support subpaths with projected pod [Conformance]",
@@ -97791,7 +97820,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 24.401339549,
+      "duration_seconds": 24.374279645,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-storage] Subpath Atomic writer volumes should support subpaths with secret pod [Conformance]",
@@ -98090,7 +98119,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 0.191632035,
+      "duration_seconds": 0.195136864,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-storage] VolumeAttachment Conformance should apply changes to a volumeattachment status [Conformance]",
@@ -98103,7 +98132,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 0.778586909,
+      "duration_seconds": 0.641553223,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-storage] VolumeAttachment Conformance should run through the lifecycle of a VolumeAttachment [Conformance]",
@@ -98116,7 +98145,7 @@
     },
     {
       "classname": "Kubernetes e2e suite",
-      "duration_seconds": 4.539960447,
+      "duration_seconds": 2.249210322,
       "failure_text": "",
       "file_source": "junit_01.xml",
       "name": "[It] [sig-storage] VolumeAttributesClass [FeatureGate:VolumeAttributesClass] should run through the lifecycle of a VolumeAttributesClass [Conformance]",
