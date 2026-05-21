@@ -74,8 +74,36 @@
     "schema_version": 1,
     "started_at": "2026-05-21T13:20:05Z",
     "upstream_comparison": {
-      "error": "command failed: gh pr list --repo kubernetes/kubernetes --state all --search sort:updated-desc --limit 50 --json number,updatedAt,statusCheckRollup\nstdout:\n\nstderr:\nHTTP 502: 502 Bad Gateway (https://api.github.com/graphql)\n",
-      "inventory_parity_status": "upstream-reference-error"
+      "inventory_parity_status": "match",
+      "junit_files": [
+        "pr-logs/pull/133498/pull-kubernetes-unit/2057458884628451328/artifacts/junit_20260521-135043.xml",
+        "pr-logs/pull/133498/pull-kubernetes-unit/2057458884628451328/artifacts/junit_hack_tools_golangci_lint_20260521-140832.xml",
+        "pr-logs/pull/133498/pull-kubernetes-unit/2057458884628451328/artifacts/junit_hack_tools_instrumentation_20260521-140850.xml",
+        "pr-logs/pull/133498/pull-kubernetes-unit/2057458884628451328/artifacts/junit_vendor_20260521-140828.xml"
+      ],
+      "local_only_count": 0,
+      "local_only_sample": [],
+      "local_test_count": 1405,
+      "reference_job_name": "pull-kubernetes-unit",
+      "reference_kubernetes_base_sha": "ea692abff6bb8ed2b7e20d7e27de76f77bf083d6",
+      "reference_matches_kubernetes_sha": true,
+      "reference_pr_number": 133498,
+      "reference_pr_updated_at": "2026-05-21T14:12:06Z",
+      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/133498/pull-kubernetes-unit/2057458884628451328",
+      "reference_selection": "exact-kubernetes-sha",
+      "reference_started_at": "2026-05-21T14:09:48Z",
+      "reference_started_json": {
+        "pull": "133498",
+        "repo-commit": "ecb25950d159173442f8835837b39fcea4657c35",
+        "repo-version": "ecb25950d159173442f8835837b39fcea4657c35",
+        "repos": {
+          "kubernetes/kubernetes": "master:ea692abff6bb8ed2b7e20d7e27de76f77bf083d6,133498:267b657570d6c8e3fab72363a9b24cdd77c6f728"
+        },
+        "timestamp": 1779371429
+      },
+      "upstream_only_count": 0,
+      "upstream_only_sample": [],
+      "upstream_test_count": 1405
     },
     "upstream_testgrid_url": "https://testgrid.k8s.io/presubmits-kubernetes-blocking#pull-kubernetes-unit",
     "workflow_file": ".github/workflows/unit.yml",

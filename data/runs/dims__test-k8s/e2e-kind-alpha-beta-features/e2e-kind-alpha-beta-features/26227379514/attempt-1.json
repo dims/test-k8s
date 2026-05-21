@@ -65,8 +65,33 @@
     "schema_version": 1,
     "started_at": "2026-05-21T12:57:58Z",
     "upstream_comparison": {
-      "error": "command failed: gh pr list --repo kubernetes/kubernetes --state all --search sort:updated-desc --limit 50 --json number,updatedAt,statusCheckRollup\nstdout:\n\nstderr:\nHTTP 502: 502 Bad Gateway (https://api.github.com/graphql)\n",
-      "inventory_parity_status": "upstream-reference-error"
+      "inventory_parity_status": "match",
+      "junit_files": [
+        "pr-logs/pull/139217/pull-kubernetes-e2e-kind-alpha-beta-features/2057435188840894464/artifacts/junit_01.xml"
+      ],
+      "local_only_count": 0,
+      "local_only_sample": [],
+      "local_test_count": 7584,
+      "reference_job_name": "pull-kubernetes-e2e-kind-alpha-beta-features",
+      "reference_kubernetes_base_sha": "b7d7fe41250d1e27d48e56605feb598f358e9a9c",
+      "reference_matches_kubernetes_sha": true,
+      "reference_pr_number": 139217,
+      "reference_pr_updated_at": "2026-05-21T12:40:09Z",
+      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/139217/pull-kubernetes-e2e-kind-alpha-beta-features/2057435188840894464",
+      "reference_selection": "exact-kubernetes-sha",
+      "reference_started_at": "2026-05-21T12:48:03Z",
+      "reference_started_json": {
+        "pull": "139217",
+        "repo-commit": "6c40526347509d400a39c84224bff33472e4ad8f",
+        "repo-version": "6c40526347509d400a39c84224bff33472e4ad8f",
+        "repos": {
+          "kubernetes/kubernetes": "master:b7d7fe41250d1e27d48e56605feb598f358e9a9c,139217:fccad37a5434c9ad85848587b6233bf65737e6fd"
+        },
+        "timestamp": 1779365868
+      },
+      "upstream_only_count": 0,
+      "upstream_only_sample": [],
+      "upstream_test_count": 7584
     },
     "upstream_testgrid_url": "https://testgrid.k8s.io/presubmits-kubernetes-nonblocking#pull-kubernetes-e2e-kind-alpha-beta-features",
     "workflow_file": ".github/workflows/e2e-kind-alpha-beta-features.yml",

@@ -65,8 +65,36 @@
     "schema_version": 1,
     "started_at": "2026-05-19T07:14:26Z",
     "upstream_comparison": {
-      "error": "command failed: gh pr list --repo kubernetes/kubernetes --state all --search sort:updated-desc --limit 50 --json number,updatedAt,statusCheckRollup\nstdout:\n\nstderr:\nHTTP 502: 502 Bad Gateway (https://api.github.com/graphql)\n",
-      "inventory_parity_status": "upstream-reference-error"
+      "inventory_parity_status": "missing-local-tests",
+      "junit_files": [
+        "pr-logs/pull/138771/pull-kubernetes-conformance-kind-ga-only-parallel/2057218119679610880/artifacts/junit_01.xml"
+      ],
+      "local_only_count": 0,
+      "local_only_sample": [],
+      "local_test_count": 7582,
+      "reference_job_name": "pull-kubernetes-conformance-kind-ga-only-parallel",
+      "reference_kubernetes_base_sha": "42203f13fdf655d08b7bfa23ac2395184d0bd5b0",
+      "reference_matches_kubernetes_sha": false,
+      "reference_pr_number": 138771,
+      "reference_pr_updated_at": "2026-05-21T14:14:28Z",
+      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/138771/pull-kubernetes-conformance-kind-ga-only-parallel/2057218119679610880",
+      "reference_selection": "recent-success",
+      "reference_started_at": "2026-05-20T22:11:56Z",
+      "reference_started_json": {
+        "pull": "138771",
+        "repo-commit": "67a0b0fcdec9cb3279a020dac74c61b1cf21a555",
+        "repo-version": "67a0b0fcdec9cb3279a020dac74c61b1cf21a555",
+        "repos": {
+          "kubernetes/kubernetes": "master:42203f13fdf655d08b7bfa23ac2395184d0bd5b0,138771:34a7656cd10d8b43f125cf5e0d03a9afaaf85a25"
+        },
+        "timestamp": 1779314029
+      },
+      "upstream_only_count": 2,
+      "upstream_only_sample": [
+        "Kubernetes e2e suite::Netpol NetworkPolicy between server and client should not allow all ports if it cannot limit to the requested port",
+        "Kubernetes e2e suite::must prefer device plugin over DRA when both advertise the same resource on a node"
+      ],
+      "upstream_test_count": 7584
     },
     "upstream_testgrid_url": "https://testgrid.k8s.io/presubmits-kubernetes-blocking#pull-kubernetes-conformance-kind-ga-only-parallel",
     "workflow_file": ".github/workflows/conformance-kind.yml",
