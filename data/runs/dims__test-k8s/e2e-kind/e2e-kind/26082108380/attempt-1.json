@@ -65,36 +65,33 @@
     "schema_version": 1,
     "started_at": "2026-05-19T07:11:22Z",
     "upstream_comparison": {
-      "inventory_parity_status": "missing-local-tests",
+      "inventory_parity_status": "match",
       "junit_files": [
-        "pr-logs/pull/139212/pull-kubernetes-e2e-kind/2057344318997270528/artifacts/junit_01.xml"
+        "pr-logs/pull/138572/pull-kubernetes-e2e-kind/2056664892772978688/artifacts/junit_01.xml"
       ],
       "local_only_count": 0,
       "local_only_sample": [],
       "local_test_count": 7582,
       "reference_job_name": "pull-kubernetes-e2e-kind",
-      "reference_kubernetes_base_sha": "ec8eaa5789ffe26b3642911e445d12330843c5e4",
-      "reference_matches_kubernetes_sha": false,
-      "reference_pr_number": 139212,
-      "reference_pr_updated_at": "2026-05-21T15:07:13Z",
-      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/139212/pull-kubernetes-e2e-kind/2057344318997270528",
-      "reference_selection": "recent-success",
-      "reference_started_at": "2026-05-21T06:47:18Z",
+      "reference_kubernetes_base_sha": "0cf3c17f479853fe24b6b7ddaf05528747929fa3",
+      "reference_matches_kubernetes_sha": true,
+      "reference_pr_number": 138572,
+      "reference_pr_updated_at": "2026-05-21T16:51:08Z",
+      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/138572/pull-kubernetes-e2e-kind/2056664892772978688",
+      "reference_selection": "exact-kubernetes-sha",
+      "reference_started_at": "2026-05-19T09:46:05Z",
       "reference_started_json": {
-        "pull": "139212",
-        "repo-commit": "d8ad48ce7e05d397b6e34326ebf9977182bda862",
-        "repo-version": "d8ad48ce7e05d397b6e34326ebf9977182bda862",
+        "pull": "138572",
+        "repo-commit": "7eb6f710b7e578e9af97398f9574afb3a3de7222",
+        "repo-version": "7eb6f710b7e578e9af97398f9574afb3a3de7222",
         "repos": {
-          "kubernetes/kubernetes": "master:ec8eaa5789ffe26b3642911e445d12330843c5e4,139212:db8504b7c951ffe1b123c0577d578a7ea4c4c393"
+          "kubernetes/kubernetes": "master:0cf3c17f479853fe24b6b7ddaf05528747929fa3,138572:27cec580ae358a9f468483eab6e4d4efd9627b7d"
         },
-        "timestamp": 1779344236
+        "timestamp": 1779182188
       },
-      "upstream_only_count": 2,
-      "upstream_only_sample": [
-        "Kubernetes e2e suite::Netpol NetworkPolicy between server and client should not allow all ports if it cannot limit to the requested port",
-        "Kubernetes e2e suite::must prefer device plugin over DRA when both advertise the same resource on a node"
-      ],
-      "upstream_test_count": 7584
+      "upstream_only_count": 0,
+      "upstream_only_sample": [],
+      "upstream_test_count": 7582
     },
     "upstream_testgrid_url": "https://testgrid.k8s.io/presubmits-kubernetes-blocking#pull-kubernetes-e2e-kind",
     "workflow_file": ".github/workflows/e2e-kind.yml",
