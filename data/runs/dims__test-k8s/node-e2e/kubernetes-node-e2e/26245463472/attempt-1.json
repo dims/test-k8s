@@ -65,37 +65,35 @@
     "schema_version": 1,
     "started_at": "2026-05-21T18:31:49Z",
     "upstream_comparison": {
-      "inventory_parity_status": "missing-local-tests",
+      "inventory_parity_status": "match",
       "junit_files": [
-        "pr-logs/pull/139129/pull-kubernetes-node-e2e-containerd/2057534707905597440/artifacts/junit_cos01.xml",
-        "pr-logs/pull/139129/pull-kubernetes-node-e2e-containerd/2057534707905597440/artifacts/junit_ubuntu01.xml"
+        "pr-logs/pull/134860/pull-kubernetes-node-e2e-containerd/2057855244213161984/artifacts/junit_cos01.xml",
+        "pr-logs/pull/134860/pull-kubernetes-node-e2e-containerd/2057855244213161984/artifacts/junit_ubuntu01.xml"
       ],
       "local_only_count": 0,
       "local_only_sample": [],
       "local_test_count": 1207,
       "reference_job_name": "pull-kubernetes-node-e2e-containerd",
-      "reference_kubernetes_base_sha": "f176c7f2692e00503d39c84e06e9cf27b9294150",
-      "reference_matches_kubernetes_sha": true,
-      "reference_pr_number": 139129,
-      "reference_pr_updated_at": "2026-05-22T14:02:57Z",
-      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/139129/pull-kubernetes-node-e2e-containerd/2057534707905597440",
-      "reference_selection": "exact-kubernetes-sha",
-      "reference_started_at": "2026-05-21T19:30:23Z",
+      "reference_kubernetes_base_sha": "e136f39334a72b7d35069a97d373ccaa0211dcae",
+      "reference_matches_kubernetes_sha": false,
+      "reference_pr_number": 134860,
+      "reference_pr_updated_at": "2026-05-22T16:41:57Z",
+      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/134860/pull-kubernetes-node-e2e-containerd/2057855244213161984",
+      "reference_selection": "recent-success",
+      "reference_started_at": "2026-05-22T16:41:55Z",
       "reference_started_json": {
-        "pull": "139129",
-        "repo-commit": "96a7d8b9f48c9f5503672beb0c1f9b3cfc9ba35c",
-        "repo-version": "96a7d8b9f48c9f5503672beb0c1f9b3cfc9ba35c",
+        "pull": "134860",
+        "repo-commit": "7b6e4351e54e67652aa741e658987f0f15ec4aa2",
+        "repo-version": "7b6e4351e54e67652aa741e658987f0f15ec4aa2",
         "repos": {
-          "kubernetes/kubernetes": "master:f176c7f2692e00503d39c84e06e9cf27b9294150,139129:007e6c00021342984a9516b5621e354659ccb3c8",
+          "kubernetes/kubernetes": "master:e136f39334a72b7d35069a97d373ccaa0211dcae,134860:b2d07eeff853fda8ef2c9373cbcd604c0e324d95",
           "kubernetes/test-infra": "master"
         },
-        "timestamp": 1779389507
+        "timestamp": 1779465932
       },
-      "upstream_only_count": 1,
-      "upstream_only_sample": [
-        "E2eNode Suite::NodeProblemDetector [Feature:NodeProblemDetector] SystemLogMonitor should generate node condition and events for corresponding errors"
-      ],
-      "upstream_test_count": 1208
+      "upstream_only_count": 0,
+      "upstream_only_sample": [],
+      "upstream_test_count": 1207
     },
     "upstream_testgrid_url": "https://testgrid.k8s.io/presubmits-kubernetes-blocking#pull-kubernetes-node-e2e-containerd",
     "workflow_file": ".github/workflows/node-e2e.yml",

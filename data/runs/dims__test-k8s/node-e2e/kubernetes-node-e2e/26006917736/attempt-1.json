@@ -65,37 +65,35 @@
     "schema_version": 1,
     "started_at": "2026-05-18T00:17:28Z",
     "upstream_comparison": {
-      "inventory_parity_status": "extra-local-tests",
+      "inventory_parity_status": "match",
       "junit_files": [
-        "pr-logs/pull/139066/pull-kubernetes-node-e2e-containerd/2054963896120250368/artifacts/junit_cos01.xml",
-        "pr-logs/pull/139066/pull-kubernetes-node-e2e-containerd/2054963896120250368/artifacts/junit_ubuntu01.xml"
+        "pr-logs/pull/139121/pull-kubernetes-node-e2e-containerd/2056192332893523968/artifacts/junit_cos01.xml",
+        "pr-logs/pull/139121/pull-kubernetes-node-e2e-containerd/2056192332893523968/artifacts/junit_ubuntu01.xml"
       ],
-      "local_only_count": 1,
-      "local_only_sample": [
-        "E2eNode Suite::MemoryQoS feature rollback should not clobber other cgroup values when clearing stale memory protection at startup"
-      ],
+      "local_only_count": 0,
+      "local_only_sample": [],
       "local_test_count": 1207,
       "reference_job_name": "pull-kubernetes-node-e2e-containerd",
-      "reference_kubernetes_base_sha": "74868ab04d6c3e13eb6bc5895f5140c30429f063",
-      "reference_matches_kubernetes_sha": false,
-      "reference_pr_number": 139066,
-      "reference_pr_updated_at": "2026-05-22T15:12:10Z",
-      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/139066/pull-kubernetes-node-e2e-containerd/2054963896120250368",
-      "reference_selection": "recent-success",
-      "reference_started_at": "2026-05-14T17:13:43Z",
+      "reference_kubernetes_base_sha": "e7d98b4f9b108277c989addb48befa78b4c43658",
+      "reference_matches_kubernetes_sha": true,
+      "reference_pr_number": 139121,
+      "reference_pr_updated_at": "2026-05-22T16:03:58Z",
+      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/139121/pull-kubernetes-node-e2e-containerd/2056192332893523968",
+      "reference_selection": "exact-kubernetes-sha",
+      "reference_started_at": "2026-05-18T02:35:55Z",
       "reference_started_json": {
-        "pull": "139066",
-        "repo-commit": "c74e2a302bd58fe59d9f538a0b3105c807876bd8",
-        "repo-version": "c74e2a302bd58fe59d9f538a0b3105c807876bd8",
+        "pull": "139121",
+        "repo-commit": "4514e22807d2f974eb33a6d943ff881386765888",
+        "repo-version": "4514e22807d2f974eb33a6d943ff881386765888",
         "repos": {
-          "kubernetes/kubernetes": "master:74868ab04d6c3e13eb6bc5895f5140c30429f063,139066:3d4febbee27e431326da261b262c24d921a89940",
+          "kubernetes/kubernetes": "master:e7d98b4f9b108277c989addb48befa78b4c43658,139121:f4d97c13f50c272a53b56885ebb0999e2c6277c3",
           "kubernetes/test-infra": "master"
         },
-        "timestamp": 1778776578
+        "timestamp": 1779069460
       },
       "upstream_only_count": 0,
       "upstream_only_sample": [],
-      "upstream_test_count": 1206
+      "upstream_test_count": 1207
     },
     "upstream_testgrid_url": "https://testgrid.k8s.io/presubmits-kubernetes-blocking#pull-kubernetes-node-e2e-containerd",
     "workflow_file": ".github/workflows/node-e2e.yml",
