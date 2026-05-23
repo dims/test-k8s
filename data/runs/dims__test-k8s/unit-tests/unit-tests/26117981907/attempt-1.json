@@ -74,66 +74,39 @@
     "schema_version": 1,
     "started_at": "2026-05-19T18:45:30Z",
     "upstream_comparison": {
-      "inventory_parity_status": "mismatch",
+      "inventory_parity_status": "missing-local-tests",
       "junit_files": [
-        "pr-logs/pull/137099/pull-kubernetes-unit/2051897269241778176/artifacts/junit_20260506-053102.xml",
-        "pr-logs/pull/137099/pull-kubernetes-unit/2051897269241778176/artifacts/junit_hack_tools_golangci_lint_20260506-054909.xml",
-        "pr-logs/pull/137099/pull-kubernetes-unit/2051897269241778176/artifacts/junit_hack_tools_instrumentation_20260506-054928.xml",
-        "pr-logs/pull/137099/pull-kubernetes-unit/2051897269241778176/artifacts/junit_vendor_20260506-054906.xml"
+        "pr-logs/pull/139183/pull-kubernetes-unit/2058129486024544256/artifacts/junit_20260523-101904.xml",
+        "pr-logs/pull/139183/pull-kubernetes-unit/2058129486024544256/artifacts/junit_hack_tools_golangci_lint_20260523-103653.xml",
+        "pr-logs/pull/139183/pull-kubernetes-unit/2058129486024544256/artifacts/junit_hack_tools_instrumentation_20260523-103712.xml",
+        "pr-logs/pull/139183/pull-kubernetes-unit/2058129486024544256/artifacts/junit_vendor_20260523-103650.xml"
       ],
-      "local_only_count": 31,
-      "local_only_sample": [
-        "[sig-api-machinery] k8s.io/apiserver/pkg/storage/cacher::consistency",
-        "[sig-api-machinery] k8s.io/code-generator/cmd/register-gen::generators",
-        "[sig-api-machinery] k8s.io/code-generator/pkg::apidefinitions",
-        "[sig-instrumentation] k8s.io/apiserver/pkg/storage::metrics",
-        "[sig-testing] k8s.io/kubernetes/test/declarative_validation/admissionregistration::validatingadmissionpolicybinding",
-        "[sig-testing] k8s.io/kubernetes/test/declarative_validation/autoscaling::horizontalpodautoscaler",
-        "[sig-testing] k8s.io/kubernetes/test/declarative_validation/batch::cronjob",
-        "[sig-testing] k8s.io/kubernetes/test/declarative_validation/certificates::certificatesigningrequest",
-        "[sig-testing] k8s.io/kubernetes/test/declarative_validation/certificates::clustertrustbundle",
-        "[sig-testing] k8s.io/kubernetes/test/declarative_validation/core::replicationcontroller",
-        "[sig-testing] k8s.io/kubernetes/test/declarative_validation/discovery::endpointslice",
-        "[sig-testing] k8s.io/kubernetes/test/declarative_validation/flowcontrol::prioritylevelconfiguration",
-        "[sig-testing] k8s.io/kubernetes/test/declarative_validation/networking::ingressclass",
-        "[sig-testing] k8s.io/kubernetes/test/declarative_validation/networking::ipaddress",
-        "[sig-testing] k8s.io/kubernetes/test/declarative_validation/networking::networkpolicy",
-        "[sig-testing] k8s.io/kubernetes/test/declarative_validation/node::runtimeclass",
-        "[sig-testing] k8s.io/kubernetes/test/declarative_validation/rbac::clusterrole",
-        "[sig-testing] k8s.io/kubernetes/test/declarative_validation/rbac::clusterrolebinding",
-        "[sig-testing] k8s.io/kubernetes/test/declarative_validation/rbac::role",
-        "[sig-testing] k8s.io/kubernetes/test/declarative_validation/rbac::rolebinding"
-      ],
+      "local_only_count": 0,
+      "local_only_sample": [],
       "local_test_count": 1403,
       "reference_job_name": "pull-kubernetes-unit",
-      "reference_kubernetes_base_sha": "8d4ef007d33716a96701aef51734ad311dedad52",
+      "reference_kubernetes_base_sha": "dd3ea47d4c38c6a1f189a3b46730fbe46c351723",
       "reference_matches_kubernetes_sha": false,
-      "reference_pr_number": 137099,
-      "reference_pr_updated_at": "2026-05-23T10:24:51Z",
-      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/137099/pull-kubernetes-unit/2051897269241778176",
+      "reference_pr_number": 139183,
+      "reference_pr_updated_at": "2026-05-23T11:46:20Z",
+      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/139183/pull-kubernetes-unit/2058129486024544256",
       "reference_selection": "recent-success",
-      "reference_started_at": "2026-05-06T05:50:26Z",
+      "reference_started_at": "2026-05-23T10:38:10Z",
       "reference_started_json": {
-        "pull": "137099",
-        "repo-commit": "b49447633fbe171d46989f1b14e9eee088499f85",
-        "repo-version": "b49447633fbe171d46989f1b14e9eee088499f85",
+        "pull": "139183",
+        "repo-commit": "b8b75e8eab345684fd2baf0c18a4655ed2d2efbd",
+        "repo-version": "b8b75e8eab345684fd2baf0c18a4655ed2d2efbd",
         "repos": {
-          "kubernetes/kubernetes": "master:8d4ef007d33716a96701aef51734ad311dedad52,137099:d36b043f727f67f93c2fe9fa17d41fbfe1253313"
+          "kubernetes/kubernetes": "master:dd3ea47d4c38c6a1f189a3b46730fbe46c351723,139183:4d24257a5ea222d138e2cc62ba4315faa78880ac"
         },
-        "timestamp": 1778045447
+        "timestamp": 1779531516
       },
-      "upstream_only_count": 8,
+      "upstream_only_count": 2,
       "upstream_only_sample": [
-        "[sig-auth] k8s.io/kubernetes/pkg/registry/rbac::clusterrole",
-        "[sig-auth] k8s.io/kubernetes/pkg/registry/rbac::clusterrolebinding",
-        "[sig-auth] k8s.io/kubernetes/pkg/registry/rbac::role",
-        "[sig-auth] k8s.io/kubernetes/pkg/registry/rbac::rolebinding",
-        "[sig-instrumentation] k8s.io/apiserver/pkg/storage/cacher::metrics",
-        "[sig-node] k8s.io/kubernetes/pkg/registry/node::runtimeclass",
-        "k8s.io/kubernetes/pkg/registry/resource::resourcepoolstatusrequest",
-        "k8s.io/kubernetes/plugin/pkg/admission::podgroup"
+        "[sig-testing] k8s.io/kubernetes/test/declarative_validation/apps::scale",
+        "[sig-testing] k8s.io/kubernetes/test/declarative_validation/autoscaling::scale"
       ],
-      "upstream_test_count": 1380
+      "upstream_test_count": 1405
     },
     "upstream_testgrid_url": "https://testgrid.k8s.io/presubmits-kubernetes-blocking#pull-kubernetes-unit",
     "workflow_file": ".github/workflows/unit.yml",
