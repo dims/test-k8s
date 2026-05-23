@@ -65,33 +65,48 @@
     "schema_version": 1,
     "started_at": "2026-05-22T00:36:00Z",
     "upstream_comparison": {
-      "inventory_parity_status": "match",
+      "inventory_parity_status": "mismatch",
       "junit_files": [
-        "pr-logs/pull/138643/pull-kubernetes-e2e-kind/2057733785184636928/artifacts/junit_01.xml"
+        "pr-logs/pull/137099/pull-kubernetes-e2e-kind/2051897269002702848/artifacts/junit_01.xml"
       ],
-      "local_only_count": 0,
-      "local_only_sample": [],
+      "local_only_count": 8,
+      "local_only_sample": [
+        "Kubernetes e2e suite::Kubelet-Stats Kubelet stats collection for Windows nodes when running up to 10 pods should return within 10 seconds",
+        "Kubernetes e2e suite::Netpol NetworkPolicy between server and client should not allow all ports if it cannot limit to the requested port",
+        "Kubernetes e2e suite::Windows subpath cleanup pod with multiple subPath mounts should terminate cleanly",
+        "Kubernetes e2e suite::kubectl apply Kubectl prune with applyset should apply and prune objects",
+        "Kubernetes e2e suite::kubectl apply apply set/view last-applied",
+        "Kubernetes e2e suite::kubectl apply should apply a new configuration to an existing RC",
+        "Kubernetes e2e suite::kubectl apply should reuse port when apply to an existing SVC",
+        "Kubernetes e2e suite::must prefer device plugin over DRA when both advertise the same resource on a node"
+      ],
       "local_test_count": 7584,
       "reference_job_name": "pull-kubernetes-e2e-kind",
-      "reference_kubernetes_base_sha": "e136f39334a72b7d35069a97d373ccaa0211dcae",
-      "reference_matches_kubernetes_sha": true,
-      "reference_pr_number": 138643,
-      "reference_pr_updated_at": "2026-05-23T02:16:05Z",
-      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/138643/pull-kubernetes-e2e-kind/2057733785184636928",
-      "reference_selection": "exact-kubernetes-sha",
-      "reference_started_at": "2026-05-22T08:32:05Z",
+      "reference_kubernetes_base_sha": "8d4ef007d33716a96701aef51734ad311dedad52",
+      "reference_matches_kubernetes_sha": false,
+      "reference_pr_number": 137099,
+      "reference_pr_updated_at": "2026-05-23T10:24:51Z",
+      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/137099/pull-kubernetes-e2e-kind/2051897269002702848",
+      "reference_selection": "recent-success",
+      "reference_started_at": "2026-05-06T06:04:32Z",
       "reference_started_json": {
-        "pull": "138643",
-        "repo-commit": "1b34044f49299c98015e1e0109cdc87dd131f946",
-        "repo-version": "1b34044f49299c98015e1e0109cdc87dd131f946",
+        "pull": "137099",
+        "repo-commit": "b49447633fbe171d46989f1b14e9eee088499f85",
+        "repo-version": "b49447633fbe171d46989f1b14e9eee088499f85",
         "repos": {
-          "kubernetes/kubernetes": "master:e136f39334a72b7d35069a97d373ccaa0211dcae,138643:68acdf68c19059ca651ed09f162ebff45067e672"
+          "kubernetes/kubernetes": "master:8d4ef007d33716a96701aef51734ad311dedad52,137099:d36b043f727f67f93c2fe9fa17d41fbfe1253313"
         },
-        "timestamp": 1779436971
+        "timestamp": 1778045678
       },
-      "upstream_only_count": 0,
-      "upstream_only_sample": [],
-      "upstream_test_count": 7584
+      "upstream_only_count": 5,
+      "upstream_only_sample": [
+        "Kubernetes e2e suite::Kubectl client Kubectl apply apply set/view last-applied",
+        "Kubernetes e2e suite::Kubectl client Kubectl apply should apply a new configuration to an existing RC",
+        "Kubernetes e2e suite::Kubectl client Kubectl apply should reuse port when apply to an existing SVC",
+        "Kubernetes e2e suite::Kubectl client Kubectl prune with applyset should apply and prune objects",
+        "Kubernetes e2e suite::Kubelet-Stats Kubelet stats collection for Windows nodes when running 10 pods should return within 10 seconds"
+      ],
+      "upstream_test_count": 7581
     },
     "upstream_testgrid_url": "https://testgrid.k8s.io/presubmits-kubernetes-blocking#pull-kubernetes-e2e-kind",
     "workflow_file": ".github/workflows/e2e-kind.yml",
