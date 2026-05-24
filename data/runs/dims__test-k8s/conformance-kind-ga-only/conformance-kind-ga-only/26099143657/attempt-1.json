@@ -65,17 +65,36 @@
     "schema_version": 1,
     "started_at": "2026-05-19T13:06:46Z",
     "upstream_comparison": {
-      "inventory_parity_status": "upstream-tests-missing",
+      "inventory_parity_status": "missing-local-tests",
+      "junit_files": [
+        "pr-logs/pull/139176/pull-kubernetes-conformance-kind-ga-only-parallel/2057227704230481920/artifacts/junit_01.xml"
+      ],
+      "local_only_count": 0,
+      "local_only_sample": [],
       "local_test_count": 7582,
       "reference_job_name": "pull-kubernetes-conformance-kind-ga-only-parallel",
-      "reference_kubernetes_base_sha": null,
+      "reference_kubernetes_base_sha": "5edef25b704d23ec01d46c3a7414f922a3a67aec",
       "reference_matches_kubernetes_sha": false,
-      "reference_pr_number": 135952,
-      "reference_pr_updated_at": "2026-05-24T07:08:45Z",
-      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/135952/pull-kubernetes-conformance-kind-ga-only-parallel/2004754645666238464",
+      "reference_pr_number": 139176,
+      "reference_pr_updated_at": "2026-05-24T08:00:49Z",
+      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/139176/pull-kubernetes-conformance-kind-ga-only-parallel/2057227704230481920",
       "reference_selection": "recent-success",
-      "reference_started_at": "2025-12-27T03:40:58Z",
-      "upstream_test_count": 0
+      "reference_started_at": "2026-05-20T22:50:07Z",
+      "reference_started_json": {
+        "pull": "139176",
+        "repo-commit": "80539d8aee840e09f1e1d77fee85e84eea43eb94",
+        "repo-version": "80539d8aee840e09f1e1d77fee85e84eea43eb94",
+        "repos": {
+          "kubernetes/kubernetes": "master:5edef25b704d23ec01d46c3a7414f922a3a67aec,139176:ab21151352df6359d68a44bae3a7ff0aab4f7675"
+        },
+        "timestamp": 1779316310
+      },
+      "upstream_only_count": 2,
+      "upstream_only_sample": [
+        "Kubernetes e2e suite::Netpol NetworkPolicy between server and client should not allow all ports if it cannot limit to the requested port",
+        "Kubernetes e2e suite::must prefer device plugin over DRA when both advertise the same resource on a node"
+      ],
+      "upstream_test_count": 7584
     },
     "upstream_testgrid_url": "https://testgrid.k8s.io/presubmits-kubernetes-blocking#pull-kubernetes-conformance-kind-ga-only-parallel",
     "workflow_file": ".github/workflows/conformance-kind.yml",

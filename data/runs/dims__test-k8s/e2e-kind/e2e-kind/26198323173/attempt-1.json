@@ -65,17 +65,33 @@
     "schema_version": 1,
     "started_at": "2026-05-21T00:37:49Z",
     "upstream_comparison": {
-      "inventory_parity_status": "upstream-tests-missing",
+      "inventory_parity_status": "match",
+      "junit_files": [
+        "pr-logs/pull/139176/pull-kubernetes-e2e-kind/2057227704121430016/artifacts/junit_01.xml"
+      ],
+      "local_only_count": 0,
+      "local_only_sample": [],
       "local_test_count": 7584,
       "reference_job_name": "pull-kubernetes-e2e-kind",
-      "reference_kubernetes_base_sha": null,
-      "reference_matches_kubernetes_sha": false,
-      "reference_pr_number": 135952,
-      "reference_pr_updated_at": "2026-05-24T07:08:45Z",
-      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/135952/pull-kubernetes-e2e-kind/2004754645599129600",
-      "reference_selection": "recent-success",
-      "reference_started_at": "2025-12-27T03:49:59Z",
-      "upstream_test_count": 0
+      "reference_kubernetes_base_sha": "5edef25b704d23ec01d46c3a7414f922a3a67aec",
+      "reference_matches_kubernetes_sha": true,
+      "reference_pr_number": 139176,
+      "reference_pr_updated_at": "2026-05-24T08:00:49Z",
+      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/139176/pull-kubernetes-e2e-kind/2057227704121430016",
+      "reference_selection": "exact-kubernetes-sha",
+      "reference_started_at": "2026-05-20T23:00:57Z",
+      "reference_started_json": {
+        "pull": "139176",
+        "repo-commit": "80539d8aee840e09f1e1d77fee85e84eea43eb94",
+        "repo-version": "80539d8aee840e09f1e1d77fee85e84eea43eb94",
+        "repos": {
+          "kubernetes/kubernetes": "master:5edef25b704d23ec01d46c3a7414f922a3a67aec,139176:ab21151352df6359d68a44bae3a7ff0aab4f7675"
+        },
+        "timestamp": 1779316313
+      },
+      "upstream_only_count": 0,
+      "upstream_only_sample": [],
+      "upstream_test_count": 7584
     },
     "upstream_testgrid_url": "https://testgrid.k8s.io/presubmits-kubernetes-blocking#pull-kubernetes-e2e-kind",
     "workflow_file": ".github/workflows/e2e-kind.yml",
