@@ -65,35 +65,40 @@
     "schema_version": 1,
     "started_at": "2026-05-22T00:19:44Z",
     "upstream_comparison": {
-      "inventory_parity_status": "match",
+      "inventory_parity_status": "extra-local-tests",
       "junit_files": [
-        "pr-logs/pull/138567/pull-kubernetes-node-e2e-containerd/2057731731263328256/artifacts/junit_cos01.xml",
-        "pr-logs/pull/138567/pull-kubernetes-node-e2e-containerd/2057731731263328256/artifacts/junit_ubuntu01.xml"
+        "pr-logs/pull/134976/pull-kubernetes-node-e2e-containerd/2048591481362452480/artifacts/junit_cos01.xml",
+        "pr-logs/pull/134976/pull-kubernetes-node-e2e-containerd/2048591481362452480/artifacts/junit_ubuntu01.xml"
       ],
-      "local_only_count": 0,
-      "local_only_sample": [],
+      "local_only_count": 4,
+      "local_only_sample": [
+        "E2eNode Suite::Device Plugin Multiple [Feature:DevicePlugin] DevicePlugin Device Plugin Multiple: Basic rollout of device plugins with zero downtime",
+        "E2eNode Suite::Device Plugin Multiple [Feature:DevicePlugin] DevicePlugin Device Plugin Multiple: DP2 changed its mind",
+        "E2eNode Suite::Device Plugin Multiple [Feature:DevicePlugin] DevicePlugin Device Plugin Multiple: DP2 takes long time to start working",
+        "E2eNode Suite::MemoryQoS feature rollback should not clobber other cgroup values when clearing stale memory protection at startup"
+      ],
       "local_test_count": 1207,
       "reference_job_name": "pull-kubernetes-node-e2e-containerd",
-      "reference_kubernetes_base_sha": "e136f39334a72b7d35069a97d373ccaa0211dcae",
-      "reference_matches_kubernetes_sha": true,
-      "reference_pr_number": 138567,
-      "reference_pr_updated_at": "2026-05-25T09:23:18Z",
-      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/138567/pull-kubernetes-node-e2e-containerd/2057731731263328256",
-      "reference_selection": "exact-kubernetes-sha",
-      "reference_started_at": "2026-05-22T08:37:55Z",
+      "reference_kubernetes_base_sha": "75d51c440770f96b9725efea4145ba50fc6aef4b",
+      "reference_matches_kubernetes_sha": false,
+      "reference_pr_number": 134976,
+      "reference_pr_updated_at": "2026-05-25T11:31:02Z",
+      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/134976/pull-kubernetes-node-e2e-containerd/2048591481362452480",
+      "reference_selection": "recent-success",
+      "reference_started_at": "2026-04-27T03:11:02Z",
       "reference_started_json": {
-        "pull": "138567",
-        "repo-commit": "e1968eeaeb869c9bec62f862b4fa6d9b974ae501",
-        "repo-version": "e1968eeaeb869c9bec62f862b4fa6d9b974ae501",
+        "pull": "134976",
+        "repo-commit": "7110679f8428948692f03e2539b0a3aab6726e2c",
+        "repo-version": "7110679f8428948692f03e2539b0a3aab6726e2c",
         "repos": {
-          "kubernetes/kubernetes": "master:e136f39334a72b7d35069a97d373ccaa0211dcae,138567:c6ea4f923c401f7210be448068d9828add6459f9",
+          "kubernetes/kubernetes": "master:75d51c440770f96b9725efea4145ba50fc6aef4b,134976:4facf90aae0e976edab3c06632eaf89abcb07dd3",
           "kubernetes/test-infra": "master"
         },
-        "timestamp": 1779436776
+        "timestamp": 1777257275
       },
       "upstream_only_count": 0,
       "upstream_only_sample": [],
-      "upstream_test_count": 1207
+      "upstream_test_count": 1203
     },
     "upstream_testgrid_url": "https://testgrid.k8s.io/presubmits-kubernetes-blocking#pull-kubernetes-node-e2e-containerd",
     "workflow_file": ".github/workflows/node-e2e.yml",
