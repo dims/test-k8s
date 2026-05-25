@@ -65,33 +65,36 @@
     "schema_version": 1,
     "started_at": "2026-05-21T00:43:31Z",
     "upstream_comparison": {
-      "inventory_parity_status": "match",
+      "inventory_parity_status": "extra-local-tests",
       "junit_files": [
-        "pr-logs/pull/137547/pull-kubernetes-verify/2058887612982104064/artifacts/junit_verify.xml"
+        "pr-logs/pull/137026/pull-kubernetes-verify/2026321793827999744/artifacts/junit_verify.xml"
       ],
-      "local_only_count": 0,
-      "local_only_sample": [],
+      "local_only_count": 2,
+      "local_only_sample": [
+        "verify::metrics-documentation-list",
+        "verify::metrics-naming"
+      ],
       "local_test_count": 44,
       "reference_job_name": "pull-kubernetes-verify",
-      "reference_kubernetes_base_sha": "865560c3d264865c2cf7e86863feb220e7848bba",
+      "reference_kubernetes_base_sha": "5da88b908c92f7ae753e19b6a30bea2c45f8e431",
       "reference_matches_kubernetes_sha": false,
-      "reference_pr_number": 137547,
-      "reference_pr_updated_at": "2026-05-25T14:58:44Z",
-      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/137547/pull-kubernetes-verify/2058887612982104064",
+      "reference_pr_number": 137026,
+      "reference_pr_updated_at": "2026-05-25T16:51:39Z",
+      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/137026/pull-kubernetes-verify/2026321793827999744",
       "reference_selection": "recent-success",
-      "reference_started_at": "2026-05-25T12:51:02Z",
+      "reference_started_at": "2026-02-24T16:08:15Z",
       "reference_started_json": {
-        "pull": "137547",
-        "repo-commit": "f28abb5b7110df6127934713ca25dda600890b25",
-        "repo-version": "f28abb5b7110df6127934713ca25dda600890b25",
+        "pull": "137026",
+        "repo-commit": "f08d856abc7cea6b42f292598c413bf8d8ca4b66",
+        "repo-version": "f08d856abc7cea6b42f292598c413bf8d8ca4b66",
         "repos": {
-          "kubernetes/kubernetes": "master:865560c3d264865c2cf7e86863feb220e7848bba,137547:18259cb1469d3811203ba4dff086e30658536429"
+          "kubernetes/kubernetes": "master:5da88b908c92f7ae753e19b6a30bea2c45f8e431,137026:b5755e485bfcac5ed0e6a7bd52218c21b01d0945"
         },
-        "timestamp": 1779712065
+        "timestamp": 1771947987
       },
       "upstream_only_count": 0,
       "upstream_only_sample": [],
-      "upstream_test_count": 44
+      "upstream_test_count": 42
     },
     "upstream_testgrid_url": "https://testgrid.k8s.io/presubmits-kubernetes-blocking#pull-kubernetes-verify",
     "workflow_file": ".github/workflows/verify.yml",
