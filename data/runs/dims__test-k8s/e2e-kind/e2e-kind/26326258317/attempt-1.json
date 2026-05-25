@@ -65,33 +65,46 @@
     "schema_version": 1,
     "started_at": "2026-05-23T06:53:42Z",
     "upstream_comparison": {
-      "inventory_parity_status": "match",
+      "inventory_parity_status": "mismatch",
       "junit_files": [
-        "pr-logs/pull/138945/pull-kubernetes-e2e-kind/2058694584388554752/artifacts/junit_01.xml"
+        "pr-logs/pull/139119/pull-kubernetes-e2e-kind/2056315198607724544/artifacts/junit_01.xml"
       ],
-      "local_only_count": 0,
-      "local_only_sample": [],
+      "local_only_count": 7,
+      "local_only_sample": [
+        "Kubernetes e2e suite::Netpol NetworkPolicy between server and client should not allow all ports if it cannot limit to the requested port",
+        "Kubernetes e2e suite::Windows subpath cleanup pod with multiple subPath mounts should terminate cleanly",
+        "Kubernetes e2e suite::kubectl apply Kubectl prune with applyset should apply and prune objects",
+        "Kubernetes e2e suite::kubectl apply apply set/view last-applied",
+        "Kubernetes e2e suite::kubectl apply should apply a new configuration to an existing RC",
+        "Kubernetes e2e suite::kubectl apply should reuse port when apply to an existing SVC",
+        "Kubernetes e2e suite::must prefer device plugin over DRA when both advertise the same resource on a node"
+      ],
       "local_test_count": 7584,
       "reference_job_name": "pull-kubernetes-e2e-kind",
-      "reference_kubernetes_base_sha": "e09c6f3997e2529cbdd18ceae529ffcab8ac6693",
+      "reference_kubernetes_base_sha": "992d4dfeadef1c51d779d83051e1f9cb90fb9bbc",
       "reference_matches_kubernetes_sha": false,
-      "reference_pr_number": 138945,
-      "reference_pr_updated_at": "2026-05-25T00:31:44Z",
-      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/138945/pull-kubernetes-e2e-kind/2058694584388554752",
+      "reference_pr_number": 139119,
+      "reference_pr_updated_at": "2026-05-25T01:21:01Z",
+      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/139119/pull-kubernetes-e2e-kind/2056315198607724544",
       "reference_selection": "recent-success",
-      "reference_started_at": "2026-05-25T00:10:05Z",
+      "reference_started_at": "2026-05-18T10:35:15Z",
       "reference_started_json": {
-        "pull": "138945",
-        "repo-commit": "ce58fecefb93dd1ba2eedd259ab201bdb5185473",
-        "repo-version": "ce58fecefb93dd1ba2eedd259ab201bdb5185473",
+        "pull": "139119",
+        "repo-commit": "013197c15a56ef180511b300178ee49501dae426",
+        "repo-version": "013197c15a56ef180511b300178ee49501dae426",
         "repos": {
-          "kubernetes/kubernetes": "master:e09c6f3997e2529cbdd18ceae529ffcab8ac6693,138945:2731232ff057911b275add781be0e8f6e13687db"
+          "kubernetes/kubernetes": "master:992d4dfeadef1c51d779d83051e1f9cb90fb9bbc,139119:799ef86c0b9148492d4853602a79bb06493cf4be"
         },
-        "timestamp": 1779666042
+        "timestamp": 1779098753
       },
-      "upstream_only_count": 0,
-      "upstream_only_sample": [],
-      "upstream_test_count": 7584
+      "upstream_only_count": 4,
+      "upstream_only_sample": [
+        "Kubernetes e2e suite::Kubectl client Kubectl apply apply set/view last-applied",
+        "Kubernetes e2e suite::Kubectl client Kubectl apply should apply a new configuration to an existing RC",
+        "Kubernetes e2e suite::Kubectl client Kubectl apply should reuse port when apply to an existing SVC",
+        "Kubernetes e2e suite::Kubectl client Kubectl prune with applyset should apply and prune objects"
+      ],
+      "upstream_test_count": 7581
     },
     "upstream_testgrid_url": "https://testgrid.k8s.io/presubmits-kubernetes-blocking#pull-kubernetes-e2e-kind",
     "workflow_file": ".github/workflows/e2e-kind.yml",
