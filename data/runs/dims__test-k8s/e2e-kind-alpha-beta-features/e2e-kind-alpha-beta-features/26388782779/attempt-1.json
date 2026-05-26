@@ -65,33 +65,35 @@
     "schema_version": 1,
     "started_at": "2026-05-25T07:25:28Z",
     "upstream_comparison": {
-      "inventory_parity_status": "match",
+      "inventory_parity_status": "missing-local-tests",
       "junit_files": [
-        "pr-logs/pull/139266/pull-kubernetes-e2e-kind-alpha-beta-features/2059016677630152704/artifacts/junit_01.xml"
+        "pr-logs/pull/134639/pull-kubernetes-e2e-kind-alpha-beta-features/2059168722068705280/artifacts/junit_01.xml"
       ],
       "local_only_count": 0,
       "local_only_sample": [],
       "local_test_count": 7584,
       "reference_job_name": "pull-kubernetes-e2e-kind-alpha-beta-features",
-      "reference_kubernetes_base_sha": "704d4840d0f83e62ad7c9f90ec34df2c2d7b0159",
+      "reference_kubernetes_base_sha": "b859f5a5c1b5ece16624f5290b835fe63898cd37",
       "reference_matches_kubernetes_sha": false,
-      "reference_pr_number": 139266,
-      "reference_pr_updated_at": "2026-05-25T22:13:47Z",
-      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/139266/pull-kubernetes-e2e-kind-alpha-beta-features/2059016677630152704",
+      "reference_pr_number": 134639,
+      "reference_pr_updated_at": "2026-05-26T07:05:04Z",
+      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/134639/pull-kubernetes-e2e-kind-alpha-beta-features/2059168722068705280",
       "reference_selection": "recent-success",
-      "reference_started_at": "2026-05-25T21:28:47Z",
+      "reference_started_at": "2026-05-26T07:35:11Z",
       "reference_started_json": {
-        "pull": "139266",
-        "repo-commit": "78419bde5c30d35fd61d9edb29a1b866b91d8659",
-        "repo-version": "78419bde5c30d35fd61d9edb29a1b866b91d8659",
+        "pull": "134639",
+        "repo-commit": "b379740392f1ca28ac5f304487e282ebc7816e69",
+        "repo-version": "b379740392f1ca28ac5f304487e282ebc7816e69",
         "repos": {
-          "kubernetes/kubernetes": "master:704d4840d0f83e62ad7c9f90ec34df2c2d7b0159,139266:015cac79327bf30151cc7eb711a8931ad9b702b2"
+          "kubernetes/kubernetes": "master:b859f5a5c1b5ece16624f5290b835fe63898cd37,134639:f06de52ccb835bebe5077d19c38685fa42b1fefe"
         },
-        "timestamp": 1779742836
+        "timestamp": 1779779085
       },
-      "upstream_only_count": 0,
-      "upstream_only_sample": [],
-      "upstream_test_count": 7584
+      "upstream_only_count": 1,
+      "upstream_only_sample": [
+        "Kubernetes e2e suite::Kubelet running in user namespace [LinuxOnly] [Feature:KubeletInUserNamespace] [FeatureGate:KubeletInUserNamespace] when checking node system info should report RunningInUserNamespace"
+      ],
+      "upstream_test_count": 7585
     },
     "upstream_testgrid_url": "https://testgrid.k8s.io/presubmits-kubernetes-nonblocking#pull-kubernetes-e2e-kind-alpha-beta-features",
     "workflow_file": ".github/workflows/e2e-kind-alpha-beta-features.yml",
