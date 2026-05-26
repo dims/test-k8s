@@ -65,17 +65,33 @@
     "schema_version": 1,
     "started_at": "2026-05-22T12:43:33Z",
     "upstream_comparison": {
-      "inventory_parity_status": "upstream-tests-missing",
+      "inventory_parity_status": "match",
+      "junit_files": [
+        "pr-logs/pull/138653/pull-kubernetes-linter-hints/2057856311562866688/artifacts/junit_verify.xml"
+      ],
+      "local_only_count": 0,
+      "local_only_sample": [],
       "local_test_count": 1,
       "reference_job_name": "pull-kubernetes-linter-hints",
-      "reference_kubernetes_base_sha": null,
-      "reference_matches_kubernetes_sha": false,
-      "reference_pr_number": 135676,
-      "reference_pr_updated_at": "2026-05-26T15:00:49Z",
-      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/135676/pull-kubernetes-linter-hints/2001486751834574848",
-      "reference_selection": "recent-success",
-      "reference_started_at": "2025-12-18T03:17:30Z",
-      "upstream_test_count": 0
+      "reference_kubernetes_base_sha": "e136f39334a72b7d35069a97d373ccaa0211dcae",
+      "reference_matches_kubernetes_sha": true,
+      "reference_pr_number": 138653,
+      "reference_pr_updated_at": "2026-05-26T17:02:01Z",
+      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/138653/pull-kubernetes-linter-hints/2057856311562866688",
+      "reference_selection": "exact-kubernetes-sha",
+      "reference_started_at": "2026-05-22T16:31:04Z",
+      "reference_started_json": {
+        "pull": "138653",
+        "repo-commit": "8b0c4ae55d63942d688be292260b879f5a2a51b2",
+        "repo-version": "8b0c4ae55d63942d688be292260b879f5a2a51b2",
+        "repos": {
+          "kubernetes/kubernetes": "master:e136f39334a72b7d35069a97d373ccaa0211dcae,138653:8a31943e79107effe0495ea58081ade437bf47ba"
+        },
+        "timestamp": 1779466244
+      },
+      "upstream_only_count": 0,
+      "upstream_only_sample": [],
+      "upstream_test_count": 1
     },
     "upstream_testgrid_url": "https://testgrid.k8s.io/presubmits-kubernetes-blocking#pull-kubernetes-linter-hints",
     "workflow_file": ".github/workflows/linter-hints.yml",
