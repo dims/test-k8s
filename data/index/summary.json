@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-05-26T00:36:48Z",
+  "generated_at": "2026-05-26T00:58:05Z",
   "rows": [
     {
       "comparison_required": true,
@@ -1381,10 +1381,31 @@
       "inventory_parity_status": "match",
       "job_name": "Cmd Tests",
       "job_slug": "cmd-tests",
-      "latest_result": "success",
+      "latest_result": "failure",
       "local_only_count": 0,
       "mirrored_prow_job": "pull-kubernetes-cmd",
       "recent_attempts": [
+        {
+          "completed_at": "2026-05-26T00:49:38Z",
+          "containerd_sha": "125377b5768118e8489c2b9f0374bed22b1df495",
+          "duration_seconds": 781,
+          "failed_tests": 1,
+          "github_sha": "69c4cbe8607a92e2dce850a18e5887199c43de38",
+          "html_url": "https://github.com/dims/test-k8s/actions/runs/26425671218",
+          "inventory_parity_status": "match",
+          "kubernetes_sha": "b859f5a5c1b5ece16624f5290b835fe63898cd37",
+          "local_only_count": 0,
+          "passed_tests": 92,
+          "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/138809/pull-kubernetes-cmd/2059041033886371840",
+          "result": "failure",
+          "run_attempt": 1,
+          "run_id": 26425671218,
+          "run_path": "data/runs/dims__test-k8s/cmd-tests/cmd-tests/26425671218/attempt-1.json",
+          "started_at": "2026-05-26T00:36:37Z",
+          "tests": 93,
+          "upstream_only_count": 0,
+          "upstream_testgrid_url": "https://testgrid.k8s.io/presubmits-kubernetes-blocking#pull-kubernetes-cmd"
+        },
         {
           "completed_at": "2026-05-25T18:46:38Z",
           "containerd_sha": "125377b5768118e8489c2b9f0374bed22b1df495",
@@ -1573,30 +1594,9 @@
           "tests": 93,
           "upstream_only_count": 0,
           "upstream_testgrid_url": "https://testgrid.k8s.io/presubmits-kubernetes-blocking#pull-kubernetes-cmd"
-        },
-        {
-          "completed_at": "2026-05-23T12:34:21Z",
-          "containerd_sha": "125377b5768118e8489c2b9f0374bed22b1df495",
-          "duration_seconds": 869,
-          "failed_tests": 0,
-          "github_sha": "69c4cbe8607a92e2dce850a18e5887199c43de38",
-          "html_url": "https://github.com/dims/test-k8s/actions/runs/26332479860",
-          "inventory_parity_status": "match",
-          "kubernetes_sha": "3fa9f8f97d7ce21d128862f614549c454a2a4869",
-          "local_only_count": 0,
-          "passed_tests": 93,
-          "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/138809/pull-kubernetes-cmd/2059041033886371840",
-          "result": "success",
-          "run_attempt": 1,
-          "run_id": 26332479860,
-          "run_path": "data/runs/dims__test-k8s/cmd-tests/cmd-tests/26332479860/attempt-1.json",
-          "started_at": "2026-05-23T12:19:52Z",
-          "tests": 93,
-          "upstream_only_count": 0,
-          "upstream_testgrid_url": "https://testgrid.k8s.io/presubmits-kubernetes-blocking#pull-kubernetes-cmd"
         }
       ],
-      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/139036/pull-kubernetes-cmd/2058962858615508992",
+      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/138809/pull-kubernetes-cmd/2059041033886371840",
       "repo": "dims/test-k8s",
       "repo_slug": "dims__test-k8s",
       "upstream_only_count": 0,
