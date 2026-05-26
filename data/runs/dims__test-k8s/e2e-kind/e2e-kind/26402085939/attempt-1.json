@@ -65,33 +65,35 @@
     "schema_version": 1,
     "started_at": "2026-05-25T13:07:28Z",
     "upstream_comparison": {
-      "inventory_parity_status": "match",
+      "inventory_parity_status": "extra-local-tests",
       "junit_files": [
-        "pr-logs/pull/136731/pull-kubernetes-e2e-kind/2058747501074190336/artifacts/junit_01.xml"
+        "pr-logs/pull/139102/pull-kubernetes-e2e-kind/2057012088089350144/artifacts/junit_01.xml"
       ],
-      "local_only_count": 0,
-      "local_only_sample": [],
+      "local_only_count": 1,
+      "local_only_sample": [
+        "Kubernetes e2e suite::must prefer device plugin over DRA when both advertise the same resource on a node"
+      ],
       "local_test_count": 7584,
       "reference_job_name": "pull-kubernetes-e2e-kind",
-      "reference_kubernetes_base_sha": "e09c6f3997e2529cbdd18ceae529ffcab8ac6693",
+      "reference_kubernetes_base_sha": "621e250502ddeeab8274836e88b506c0c4f57232",
       "reference_matches_kubernetes_sha": false,
-      "reference_pr_number": 136731,
-      "reference_pr_updated_at": "2026-05-26T06:57:04Z",
-      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/136731/pull-kubernetes-e2e-kind/2058747501074190336",
+      "reference_pr_number": 139102,
+      "reference_pr_updated_at": "2026-05-26T07:14:31Z",
+      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/139102/pull-kubernetes-e2e-kind/2057012088089350144",
       "reference_selection": "recent-success",
-      "reference_started_at": "2026-05-25T03:40:34Z",
+      "reference_started_at": "2026-05-20T08:43:29Z",
       "reference_started_json": {
-        "pull": "136731",
-        "repo-commit": "2086e75dcec360c70253345157896ff07a514e25",
-        "repo-version": "2086e75dcec360c70253345157896ff07a514e25",
+        "pull": "139102",
+        "repo-commit": "54b1a1d6577bd1e991f2b8de1e7eeb69bf3131e6",
+        "repo-version": "54b1a1d6577bd1e991f2b8de1e7eeb69bf3131e6",
         "repos": {
-          "kubernetes/kubernetes": "master:e09c6f3997e2529cbdd18ceae529ffcab8ac6693,136731:b0216ec7c6109676ac3ea411a182adff9fd6fcc6"
+          "kubernetes/kubernetes": "master:621e250502ddeeab8274836e88b506c0c4f57232,139102:29162d5af72f18132394734f45fe15eda9006abb"
         },
-        "timestamp": 1779678659
+        "timestamp": 1779264904
       },
       "upstream_only_count": 0,
       "upstream_only_sample": [],
-      "upstream_test_count": 7584
+      "upstream_test_count": 7583
     },
     "upstream_testgrid_url": "https://testgrid.k8s.io/presubmits-kubernetes-blocking#pull-kubernetes-e2e-kind",
     "workflow_file": ".github/workflows/e2e-kind.yml",
