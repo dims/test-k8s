@@ -65,9 +65,9 @@
     "schema_version": 1,
     "started_at": "2026-05-26T00:42:03Z",
     "upstream_comparison": {
-      "inventory_parity_status": "match",
+      "inventory_parity_status": "missing-local-tests",
       "junit_files": [
-        "pr-logs/pull/139287/pull-kubernetes-conformance-kind-ga-only-parallel/2059112287632887808/artifacts/junit_01.xml"
+        "pr-logs/pull/134639/pull-kubernetes-conformance-kind-ga-only-parallel/2059168721145958400/artifacts/junit_01.xml"
       ],
       "local_only_count": 0,
       "local_only_sample": [],
@@ -75,23 +75,25 @@
       "reference_job_name": "pull-kubernetes-conformance-kind-ga-only-parallel",
       "reference_kubernetes_base_sha": "b859f5a5c1b5ece16624f5290b835fe63898cd37",
       "reference_matches_kubernetes_sha": true,
-      "reference_pr_number": 139287,
-      "reference_pr_updated_at": "2026-05-26T04:06:33Z",
-      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/139287/pull-kubernetes-conformance-kind-ga-only-parallel/2059112287632887808",
+      "reference_pr_number": 134639,
+      "reference_pr_updated_at": "2026-05-26T07:05:04Z",
+      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/134639/pull-kubernetes-conformance-kind-ga-only-parallel/2059168721145958400",
       "reference_selection": "exact-kubernetes-sha",
-      "reference_started_at": "2026-05-26T03:38:21Z",
+      "reference_started_at": "2026-05-26T07:22:38Z",
       "reference_started_json": {
-        "pull": "139287",
-        "repo-commit": "87f3e79e90f03a0b3b973a3fc6829b0e2b7a855f",
-        "repo-version": "87f3e79e90f03a0b3b973a3fc6829b0e2b7a855f",
+        "pull": "134639",
+        "repo-commit": "b379740392f1ca28ac5f304487e282ebc7816e69",
+        "repo-version": "b379740392f1ca28ac5f304487e282ebc7816e69",
         "repos": {
-          "kubernetes/kubernetes": "master:b859f5a5c1b5ece16624f5290b835fe63898cd37,139287:5c4e62759f83ea8a9cf7d2c1b09f59ef1f081882"
+          "kubernetes/kubernetes": "master:b859f5a5c1b5ece16624f5290b835fe63898cd37,134639:f06de52ccb835bebe5077d19c38685fa42b1fefe"
         },
-        "timestamp": 1779765630
+        "timestamp": 1779779086
       },
-      "upstream_only_count": 0,
-      "upstream_only_sample": [],
-      "upstream_test_count": 7584
+      "upstream_only_count": 1,
+      "upstream_only_sample": [
+        "Kubernetes e2e suite::Kubelet running in user namespace [LinuxOnly] [Feature:KubeletInUserNamespace] [FeatureGate:KubeletInUserNamespace] when checking node system info should report RunningInUserNamespace"
+      ],
+      "upstream_test_count": 7585
     },
     "upstream_testgrid_url": "https://testgrid.k8s.io/presubmits-kubernetes-blocking#pull-kubernetes-conformance-kind-ga-only-parallel",
     "workflow_file": ".github/workflows/conformance-kind.yml",
