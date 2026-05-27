@@ -65,17 +65,33 @@
     "schema_version": 1,
     "started_at": "2026-05-27T00:42:39Z",
     "upstream_comparison": {
-      "inventory_parity_status": "upstream-tests-missing",
+      "inventory_parity_status": "match",
+      "junit_files": [
+        "pr-logs/pull/138618/pull-kubernetes-verify/2059509153939853312/artifacts/junit_verify.xml"
+      ],
+      "local_only_count": 0,
+      "local_only_sample": [],
       "local_test_count": 44,
       "reference_job_name": "pull-kubernetes-verify",
-      "reference_kubernetes_base_sha": null,
-      "reference_matches_kubernetes_sha": false,
-      "reference_pr_number": 136029,
-      "reference_pr_updated_at": "2026-05-27T15:11:08Z",
-      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/136029/pull-kubernetes-verify/2008170606826098688",
-      "reference_selection": "recent-success",
-      "reference_started_at": "2026-01-05T13:58:37Z",
-      "upstream_test_count": 0
+      "reference_kubernetes_base_sha": "870565d3713d0c8d69f7959d0ce61a4a5ce66e3b",
+      "reference_matches_kubernetes_sha": true,
+      "reference_pr_number": 138618,
+      "reference_pr_updated_at": "2026-05-27T16:40:23Z",
+      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/138618/pull-kubernetes-verify/2059509153939853312",
+      "reference_selection": "exact-kubernetes-sha",
+      "reference_started_at": "2026-05-27T06:02:10Z",
+      "reference_started_json": {
+        "pull": "138618",
+        "repo-commit": "e2d0cd2e634b1a47ee6b4fdc47f9af0f40e0d990",
+        "repo-version": "e2d0cd2e634b1a47ee6b4fdc47f9af0f40e0d990",
+        "repos": {
+          "kubernetes/kubernetes": "master:870565d3713d0c8d69f7959d0ce61a4a5ce66e3b,138618:55f5587015005db4d34a0f023e666bcc45b5075e"
+        },
+        "timestamp": 1779860250
+      },
+      "upstream_only_count": 0,
+      "upstream_only_sample": [],
+      "upstream_test_count": 44
     },
     "upstream_testgrid_url": "https://testgrid.k8s.io/presubmits-kubernetes-blocking#pull-kubernetes-verify",
     "workflow_file": ".github/workflows/verify.yml",
