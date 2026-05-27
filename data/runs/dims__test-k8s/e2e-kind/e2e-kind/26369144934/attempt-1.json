@@ -65,35 +65,48 @@
     "schema_version": 1,
     "started_at": "2026-05-24T18:21:02Z",
     "upstream_comparison": {
-      "inventory_parity_status": "missing-local-tests",
+      "inventory_parity_status": "mismatch",
       "junit_files": [
-        "pr-logs/pull/139203/pull-kubernetes-e2e-kind/2059393585626746880/artifacts/junit_01.xml"
+        "pr-logs/pull/139021/pull-kubernetes-e2e-kind/2054543693439832064/artifacts/junit_01.xml"
       ],
-      "local_only_count": 0,
-      "local_only_sample": [],
+      "local_only_count": 8,
+      "local_only_sample": [
+        "Kubernetes e2e suite::Kubelet-Stats Kubelet stats collection for Windows nodes when running up to 10 pods should return within 10 seconds",
+        "Kubernetes e2e suite::Netpol NetworkPolicy between server and client should not allow all ports if it cannot limit to the requested port",
+        "Kubernetes e2e suite::Windows subpath cleanup pod with multiple subPath mounts should terminate cleanly",
+        "Kubernetes e2e suite::kubectl apply Kubectl prune with applyset should apply and prune objects",
+        "Kubernetes e2e suite::kubectl apply apply set/view last-applied",
+        "Kubernetes e2e suite::kubectl apply should apply a new configuration to an existing RC",
+        "Kubernetes e2e suite::kubectl apply should reuse port when apply to an existing SVC",
+        "Kubernetes e2e suite::must prefer device plugin over DRA when both advertise the same resource on a node"
+      ],
       "local_test_count": 7584,
       "reference_job_name": "pull-kubernetes-e2e-kind",
-      "reference_kubernetes_base_sha": "48ba469549a7621bb7de7a3ee0349aa292784a1c",
+      "reference_kubernetes_base_sha": "b151ef23a57e650389cad2e047e3db3ea4aecfd1",
       "reference_matches_kubernetes_sha": false,
-      "reference_pr_number": 139203,
-      "reference_pr_updated_at": "2026-05-27T02:19:13Z",
-      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/139203/pull-kubernetes-e2e-kind/2059393585626746880",
+      "reference_pr_number": 139021,
+      "reference_pr_updated_at": "2026-05-27T04:38:46Z",
+      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/139021/pull-kubernetes-e2e-kind/2054543693439832064",
       "reference_selection": "recent-success",
-      "reference_started_at": "2026-05-26T22:28:12Z",
+      "reference_started_at": "2026-05-13T13:21:06Z",
       "reference_started_json": {
-        "pull": "139203",
-        "repo-commit": "8c65d7c0dfd1cdbff816f64adff95c909d88e46d",
-        "repo-version": "8c65d7c0dfd1cdbff816f64adff95c909d88e46d",
+        "pull": "139021",
+        "repo-commit": "84880ae0c2940bc72e7d44cd28d432e856c3296e",
+        "repo-version": "84880ae0c2940bc72e7d44cd28d432e856c3296e",
         "repos": {
-          "kubernetes/kubernetes": "master:48ba469549a7621bb7de7a3ee0349aa292784a1c,139203:01a01e2ac4e82501cb9baef24a64bf1769d0b263"
+          "kubernetes/kubernetes": "master:b151ef23a57e650389cad2e047e3db3ea4aecfd1,139021:32b8fb148a012e365d17e3953fe3160ae6a31b4d"
         },
-        "timestamp": 1779832697
+        "timestamp": 1778676672
       },
-      "upstream_only_count": 1,
+      "upstream_only_count": 5,
       "upstream_only_sample": [
-        "Kubernetes e2e suite::CSI Mock volume expansion CSI offline volume expansion after PVC deletion should complete filesystem resize after PVC is deleted and new PVC binds to retained PV"
+        "Kubernetes e2e suite::Kubectl client Kubectl apply apply set/view last-applied",
+        "Kubernetes e2e suite::Kubectl client Kubectl apply should apply a new configuration to an existing RC",
+        "Kubernetes e2e suite::Kubectl client Kubectl apply should reuse port when apply to an existing SVC",
+        "Kubernetes e2e suite::Kubectl client Kubectl prune with applyset should apply and prune objects",
+        "Kubernetes e2e suite::Kubelet-Stats Kubelet stats collection for Windows nodes when running 10 pods should return within 10 seconds"
       ],
-      "upstream_test_count": 7585
+      "upstream_test_count": 7581
     },
     "upstream_testgrid_url": "https://testgrid.k8s.io/presubmits-kubernetes-blocking#pull-kubernetes-e2e-kind",
     "workflow_file": ".github/workflows/e2e-kind.yml",
