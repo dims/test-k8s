@@ -67,9 +67,9 @@
     "upstream_comparison": {
       "inventory_parity_status": "mismatch",
       "junit_files": [
-        "pr-logs/pull/138488/pull-kubernetes-e2e-kind-alpha-beta-features/2046418898043015168/artifacts/junit_01.xml"
+        "pr-logs/pull/137513/pull-kubernetes-e2e-kind-alpha-beta-features/2034180280482271232/artifacts/junit_01.xml"
       ],
-      "local_only_count": 2689,
+      "local_only_count": 2751,
       "local_only_sample": [
         "Kubernetes e2e suite::API Streaming (aka. WatchList) [FeatureGate:WatchList] reflector doesn't support receiving resources as Tables",
         "Kubernetes e2e suite::API Streaming (aka. WatchList) [FeatureGate:WatchList] reflector using standard List doesn't support receiving resources as Tables",
@@ -79,6 +79,7 @@
         "Kubernetes e2e suite::API Streaming (aka. WatchList) [FeatureGate:WatchList] should NOT be requested by metadata client's List method when WatchListClient is enabled",
         "Kubernetes e2e suite::API Streaming (aka. WatchList) [FeatureGate:WatchList] should be requested by informers when WatchListClient is enabled",
         "Kubernetes e2e suite::API Streaming (aka. WatchList) [FeatureGate:WatchList] should be requested by metadatainformer when WatchListClient is enabled",
+        "Kubernetes e2e suite::CRUD Tests resource.k8s.io/v1alpha3 ResourcePoolStatusRequest",
         "Kubernetes e2e suite::CRUD Tests resource.k8s.io/v1beta2 DeviceTaintRule",
         "Kubernetes e2e suite::CSI Mock Node Volume Health [FeatureGate:CSIVolumeHealth] CSI Mock Node Volume Health return normal volume stats",
         "Kubernetes e2e suite::CSI Mock Node Volume Health [FeatureGate:CSIVolumeHealth] CSI Mock Node Volume Health return normal volume stats with abnormal volume condition",
@@ -89,28 +90,27 @@
         "Kubernetes e2e suite::CSI Mock selinux on mount metrics and SELinuxWarningController SELinuxMount metrics [LinuxOnly] [Feature:SELinux] error is bumped on a privileged and unprivileged Pod with given SELinux with MountOption policy",
         "Kubernetes e2e suite::CSI Mock selinux on mount metrics and SELinuxWarningController SELinuxMount metrics [LinuxOnly] [Feature:SELinux] error is bumped on an unprivileged and privileged Pod with given SELinux with MountOption policy",
         "Kubernetes e2e suite::CSI Mock selinux on mount metrics and SELinuxWarningController SELinuxMount metrics [LinuxOnly] [Feature:SELinux] error is bumped on two Pods with MountOption policy and a different context on RWOP volume",
-        "Kubernetes e2e suite::CSI Mock selinux on mount metrics and SELinuxWarningController SELinuxMount metrics [LinuxOnly] [Feature:SELinux] error is bumped on two Pods with a different context on RWO volume and SELinuxMount enabled",
-        "Kubernetes e2e suite::CSI Mock selinux on mount metrics and SELinuxWarningController SELinuxMount metrics [LinuxOnly] [Feature:SELinux] error is bumped on two Pods with a different context on RWOP volume"
+        "Kubernetes e2e suite::CSI Mock selinux on mount metrics and SELinuxWarningController SELinuxMount metrics [LinuxOnly] [Feature:SELinux] error is bumped on two Pods with a different context on RWO volume and SELinuxMount enabled"
       ],
       "local_test_count": 7584,
       "reference_job_name": "pull-kubernetes-e2e-kind-alpha-beta-features",
-      "reference_kubernetes_base_sha": "b31119d205a839aab40b2d819a58d4fabacd9b47",
+      "reference_kubernetes_base_sha": "7d56731021ecb86428eea2cd910f0406372c897f",
       "reference_matches_kubernetes_sha": false,
-      "reference_pr_number": 138488,
-      "reference_pr_updated_at": "2026-05-27T17:28:30Z",
-      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/138488/pull-kubernetes-e2e-kind-alpha-beta-features/2046418898043015168",
+      "reference_pr_number": 137513,
+      "reference_pr_updated_at": "2026-05-27T18:49:34Z",
+      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/137513/pull-kubernetes-e2e-kind-alpha-beta-features/2034180280482271232",
       "reference_selection": "recent-success",
-      "reference_started_at": "2026-04-21T03:10:48Z",
+      "reference_started_at": "2026-03-18T08:37:41Z",
       "reference_started_json": {
-        "pull": "138488",
-        "repo-commit": "c1d4861acfd9823f53d3d62b2c8015d9e3df1d61",
-        "repo-version": "c1d4861acfd9823f53d3d62b2c8015d9e3df1d61",
+        "pull": "137513",
+        "repo-commit": "262f23b38c52d386906a1a9dfed4590ef569bb0a",
+        "repo-version": "262f23b38c52d386906a1a9dfed4590ef569bb0a",
         "repos": {
-          "kubernetes/kubernetes": "master:b31119d205a839aab40b2d819a58d4fabacd9b47,138488:fb6a7b610883bc8e4524661f5e45135783a77a2e"
+          "kubernetes/kubernetes": "master:7d56731021ecb86428eea2cd910f0406372c897f,137513:2d436d943a107ffa89ad7da0805ac3faecdb54ac"
         },
-        "timestamp": 1776739289
+        "timestamp": 1773821374
       },
-      "upstream_only_count": 2683,
+      "upstream_only_count": 2665,
       "upstream_only_sample": [
         "Kubernetes e2e suite::API Streaming (aka. WatchList) [FeatureGate:WatchList] [Beta] reflector doesn't support receiving resources as Tables",
         "Kubernetes e2e suite::API Streaming (aka. WatchList) [FeatureGate:WatchList] [Beta] reflector using standard List doesn't support receiving resources as Tables",
@@ -133,7 +133,7 @@
         "Kubernetes e2e suite::CSI Mock selinux on mount metrics and SELinuxWarningController SELinuxMount metrics [LinuxOnly] [Feature:SELinux] [Serial] error is bumped on two Pods with a different context on RWOP volume",
         "Kubernetes e2e suite::CSI Mock selinux on mount metrics and SELinuxWarningController SELinuxMount metrics [LinuxOnly] [Feature:SELinux] [Serial] error is bumped on two Pods with a different context on RWX volume and SELinuxMount enabled"
       ],
-      "upstream_test_count": 7578
+      "upstream_test_count": 7498
     },
     "upstream_testgrid_url": "https://testgrid.k8s.io/presubmits-kubernetes-nonblocking#pull-kubernetes-e2e-kind-alpha-beta-features",
     "workflow_file": ".github/workflows/e2e-kind-alpha-beta-features.yml",
