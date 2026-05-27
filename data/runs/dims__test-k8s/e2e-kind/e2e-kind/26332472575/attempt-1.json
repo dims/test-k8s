@@ -65,35 +65,35 @@
     "schema_version": 1,
     "started_at": "2026-05-23T12:19:31Z",
     "upstream_comparison": {
-      "inventory_parity_status": "extra-local-tests",
+      "inventory_parity_status": "missing-local-tests",
       "junit_files": [
-        "pr-logs/pull/139164/pull-kubernetes-e2e-kind/2056959910393942016/artifacts/junit_01.xml"
+        "pr-logs/pull/139203/pull-kubernetes-e2e-kind/2059393585626746880/artifacts/junit_01.xml"
       ],
-      "local_only_count": 1,
-      "local_only_sample": [
-        "Kubernetes e2e suite::must prefer device plugin over DRA when both advertise the same resource on a node"
-      ],
+      "local_only_count": 0,
+      "local_only_sample": [],
       "local_test_count": 7584,
       "reference_job_name": "pull-kubernetes-e2e-kind",
-      "reference_kubernetes_base_sha": "621e250502ddeeab8274836e88b506c0c4f57232",
+      "reference_kubernetes_base_sha": "48ba469549a7621bb7de7a3ee0349aa292784a1c",
       "reference_matches_kubernetes_sha": false,
-      "reference_pr_number": 139164,
-      "reference_pr_updated_at": "2026-05-27T02:07:32Z",
-      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/139164/pull-kubernetes-e2e-kind/2056959910393942016",
+      "reference_pr_number": 139203,
+      "reference_pr_updated_at": "2026-05-27T02:19:13Z",
+      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/139203/pull-kubernetes-e2e-kind/2059393585626746880",
       "reference_selection": "recent-success",
-      "reference_started_at": "2026-05-20T05:17:26Z",
+      "reference_started_at": "2026-05-26T22:28:12Z",
       "reference_started_json": {
-        "pull": "139164",
-        "repo-commit": "3ce03a5eca96a7e0652ddd2a3ff7523720d34ed1",
-        "repo-version": "3ce03a5eca96a7e0652ddd2a3ff7523720d34ed1",
+        "pull": "139203",
+        "repo-commit": "8c65d7c0dfd1cdbff816f64adff95c909d88e46d",
+        "repo-version": "8c65d7c0dfd1cdbff816f64adff95c909d88e46d",
         "repos": {
-          "kubernetes/kubernetes": "master:621e250502ddeeab8274836e88b506c0c4f57232,139164:f6c9a77da11bcca1f9022cffca737cc9b72fa246"
+          "kubernetes/kubernetes": "master:48ba469549a7621bb7de7a3ee0349aa292784a1c,139203:01a01e2ac4e82501cb9baef24a64bf1769d0b263"
         },
-        "timestamp": 1779252463
+        "timestamp": 1779832697
       },
-      "upstream_only_count": 0,
-      "upstream_only_sample": [],
-      "upstream_test_count": 7583
+      "upstream_only_count": 1,
+      "upstream_only_sample": [
+        "Kubernetes e2e suite::CSI Mock volume expansion CSI offline volume expansion after PVC deletion should complete filesystem resize after PVC is deleted and new PVC binds to retained PV"
+      ],
+      "upstream_test_count": 7585
     },
     "upstream_testgrid_url": "https://testgrid.k8s.io/presubmits-kubernetes-blocking#pull-kubernetes-e2e-kind",
     "workflow_file": ".github/workflows/e2e-kind.yml",
