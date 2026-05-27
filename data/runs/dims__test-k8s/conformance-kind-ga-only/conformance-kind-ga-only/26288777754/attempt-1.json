@@ -65,48 +65,33 @@
     "schema_version": 1,
     "started_at": "2026-05-22T12:50:16Z",
     "upstream_comparison": {
-      "inventory_parity_status": "mismatch",
+      "inventory_parity_status": "match",
       "junit_files": [
-        "pr-logs/pull/139021/pull-kubernetes-conformance-kind-ga-only-parallel/2054543693544689664/artifacts/junit_01.xml"
+        "pr-logs/pull/138235/pull-kubernetes-conformance-kind-ga-only-parallel/2059334923935813632/artifacts/junit_01.xml"
       ],
-      "local_only_count": 8,
-      "local_only_sample": [
-        "Kubernetes e2e suite::Kubelet-Stats Kubelet stats collection for Windows nodes when running up to 10 pods should return within 10 seconds",
-        "Kubernetes e2e suite::Netpol NetworkPolicy between server and client should not allow all ports if it cannot limit to the requested port",
-        "Kubernetes e2e suite::Windows subpath cleanup pod with multiple subPath mounts should terminate cleanly",
-        "Kubernetes e2e suite::kubectl apply Kubectl prune with applyset should apply and prune objects",
-        "Kubernetes e2e suite::kubectl apply apply set/view last-applied",
-        "Kubernetes e2e suite::kubectl apply should apply a new configuration to an existing RC",
-        "Kubernetes e2e suite::kubectl apply should reuse port when apply to an existing SVC",
-        "Kubernetes e2e suite::must prefer device plugin over DRA when both advertise the same resource on a node"
-      ],
+      "local_only_count": 0,
+      "local_only_sample": [],
       "local_test_count": 7584,
       "reference_job_name": "pull-kubernetes-conformance-kind-ga-only-parallel",
-      "reference_kubernetes_base_sha": "b151ef23a57e650389cad2e047e3db3ea4aecfd1",
+      "reference_kubernetes_base_sha": "083b28d8a68fee40ad0581b0281836432bc60235",
       "reference_matches_kubernetes_sha": false,
-      "reference_pr_number": 139021,
-      "reference_pr_updated_at": "2026-05-27T04:38:46Z",
-      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/139021/pull-kubernetes-conformance-kind-ga-only-parallel/2054543693544689664",
+      "reference_pr_number": 138235,
+      "reference_pr_updated_at": "2026-05-27T06:55:54Z",
+      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/138235/pull-kubernetes-conformance-kind-ga-only-parallel/2059334923935813632",
       "reference_selection": "recent-success",
-      "reference_started_at": "2026-05-13T13:05:23Z",
+      "reference_started_at": "2026-05-26T18:23:13Z",
       "reference_started_json": {
-        "pull": "139021",
-        "repo-commit": "84880ae0c2940bc72e7d44cd28d432e856c3296e",
-        "repo-version": "84880ae0c2940bc72e7d44cd28d432e856c3296e",
+        "pull": "138235",
+        "repo-commit": "fcf76f0b35baf79f76bce4f74d7de8c26dd290d1",
+        "repo-version": "fcf76f0b35baf79f76bce4f74d7de8c26dd290d1",
         "repos": {
-          "kubernetes/kubernetes": "master:b151ef23a57e650389cad2e047e3db3ea4aecfd1,139021:32b8fb148a012e365d17e3953fe3160ae6a31b4d"
+          "kubernetes/kubernetes": "master:083b28d8a68fee40ad0581b0281836432bc60235,138235:312d00189c90c8a8193abb26c298ed6ddf0acfef"
         },
-        "timestamp": 1778676419
+        "timestamp": 1779818711
       },
-      "upstream_only_count": 5,
-      "upstream_only_sample": [
-        "Kubernetes e2e suite::Kubectl client Kubectl apply apply set/view last-applied",
-        "Kubernetes e2e suite::Kubectl client Kubectl apply should apply a new configuration to an existing RC",
-        "Kubernetes e2e suite::Kubectl client Kubectl apply should reuse port when apply to an existing SVC",
-        "Kubernetes e2e suite::Kubectl client Kubectl prune with applyset should apply and prune objects",
-        "Kubernetes e2e suite::Kubelet-Stats Kubelet stats collection for Windows nodes when running 10 pods should return within 10 seconds"
-      ],
-      "upstream_test_count": 7581
+      "upstream_only_count": 0,
+      "upstream_only_sample": [],
+      "upstream_test_count": 7584
     },
     "upstream_testgrid_url": "https://testgrid.k8s.io/presubmits-kubernetes-blocking#pull-kubernetes-conformance-kind-ga-only-parallel",
     "workflow_file": ".github/workflows/conformance-kind.yml",
