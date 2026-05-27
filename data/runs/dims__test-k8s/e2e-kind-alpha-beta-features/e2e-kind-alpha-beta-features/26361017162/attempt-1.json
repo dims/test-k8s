@@ -65,33 +65,38 @@
     "schema_version": 1,
     "started_at": "2026-05-24T12:17:43Z",
     "upstream_comparison": {
-      "inventory_parity_status": "match",
+      "inventory_parity_status": "missing-local-tests",
       "junit_files": [
-        "pr-logs/pull/138916/pull-kubernetes-e2e-kind-alpha-beta-features/2059546840583376896/artifacts/junit_01.xml"
+        "pr-logs/pull/137762/pull-kubernetes-e2e-kind-alpha-beta-features/2059612025062952960/artifacts/junit_01.xml"
       ],
       "local_only_count": 0,
       "local_only_sample": [],
       "local_test_count": 7584,
       "reference_job_name": "pull-kubernetes-e2e-kind-alpha-beta-features",
-      "reference_kubernetes_base_sha": "8822656b909c5a3cf74ae1fe90151c7a3e461157",
+      "reference_kubernetes_base_sha": "abb213f9e9f3d90ab11c9fee32f699682a44e2e9",
       "reference_matches_kubernetes_sha": false,
-      "reference_pr_number": 138916,
-      "reference_pr_updated_at": "2026-05-27T11:02:20Z",
-      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/138916/pull-kubernetes-e2e-kind-alpha-beta-features/2059546840583376896",
+      "reference_pr_number": 137762,
+      "reference_pr_updated_at": "2026-05-27T13:07:39Z",
+      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/137762/pull-kubernetes-e2e-kind-alpha-beta-features/2059612025062952960",
       "reference_selection": "recent-success",
-      "reference_started_at": "2026-05-27T08:40:41Z",
+      "reference_started_at": "2026-05-27T12:58:40Z",
       "reference_started_json": {
-        "pull": "138916",
-        "repo-commit": "f884135f3309b2a515b54556d0025ddf29be1ad2",
-        "repo-version": "f884135f3309b2a515b54556d0025ddf29be1ad2",
+        "pull": "137762",
+        "repo-commit": "92ce81497b10c7c037069066893c8e1d0e393fcc",
+        "repo-version": "92ce81497b10c7c037069066893c8e1d0e393fcc",
         "repos": {
-          "kubernetes/kubernetes": "master:8822656b909c5a3cf74ae1fe90151c7a3e461157,138916:d61c3c36f552215766b545d83d7f11b5e5721389"
+          "kubernetes/kubernetes": "master:abb213f9e9f3d90ab11c9fee32f699682a44e2e9,137762:662b6453e72c6d45290fb0c9ff57ec9164dc5e0f"
         },
-        "timestamp": 1779869446
+        "timestamp": 1779884891
       },
-      "upstream_only_count": 0,
-      "upstream_only_sample": [],
-      "upstream_test_count": 7584
+      "upstream_only_count": 4,
+      "upstream_only_sample": [
+        "Kubernetes e2e suite::Probing container should *not* be restarted with a GRPC liveness probe with TLS mode",
+        "Kubernetes e2e suite::Probing container should be restarted with a GRPC liveness probe when not using TLS against a TLS server",
+        "Kubernetes e2e suite::Probing container should be restarted with a GRPC liveness probe with TLS mode on wrong port",
+        "Kubernetes e2e suite::Probing container should be restarted with a GRPC liveness probe with TLS mode when endpoint returns not healthy"
+      ],
+      "upstream_test_count": 7588
     },
     "upstream_testgrid_url": "https://testgrid.k8s.io/presubmits-kubernetes-nonblocking#pull-kubernetes-e2e-kind-alpha-beta-features",
     "workflow_file": ".github/workflows/e2e-kind-alpha-beta-features.yml",
