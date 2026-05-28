@@ -65,35 +65,38 @@
     "schema_version": 1,
     "started_at": "2026-05-27T00:21:04Z",
     "upstream_comparison": {
-      "inventory_parity_status": "match",
+      "inventory_parity_status": "missing-local-tests",
       "junit_files": [
-        "pr-logs/pull/139216/pull-kubernetes-node-e2e-containerd/2059391151189790720/artifacts/junit_cos01.xml",
-        "pr-logs/pull/139216/pull-kubernetes-node-e2e-containerd/2059391151189790720/artifacts/junit_ubuntu01.xml"
+        "pr-logs/pull/139310/pull-kubernetes-node-e2e-containerd/2059722466963492864/artifacts/junit_cos01.xml",
+        "pr-logs/pull/139310/pull-kubernetes-node-e2e-containerd/2059722466963492864/artifacts/junit_ubuntu01.xml"
       ],
       "local_only_count": 0,
       "local_only_sample": [],
       "local_test_count": 1207,
       "reference_job_name": "pull-kubernetes-node-e2e-containerd",
-      "reference_kubernetes_base_sha": "48ba469549a7621bb7de7a3ee0349aa292784a1c",
-      "reference_matches_kubernetes_sha": true,
-      "reference_pr_number": 139216,
-      "reference_pr_updated_at": "2026-05-28T16:23:18Z",
-      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/139216/pull-kubernetes-node-e2e-containerd/2059391151189790720",
-      "reference_selection": "exact-kubernetes-sha",
-      "reference_started_at": "2026-05-26T22:23:09Z",
+      "reference_kubernetes_base_sha": "e9a8a5910cace55b6521a49902b3c34d1db7c186",
+      "reference_matches_kubernetes_sha": false,
+      "reference_pr_number": 139310,
+      "reference_pr_updated_at": "2026-05-28T18:47:26Z",
+      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/139310/pull-kubernetes-node-e2e-containerd/2059722466963492864",
+      "reference_selection": "recent-success",
+      "reference_started_at": "2026-05-27T20:23:58Z",
       "reference_started_json": {
-        "pull": "139216",
-        "repo-commit": "26e02d28c0cf05f07beb5c698713fc5aab76d870",
-        "repo-version": "26e02d28c0cf05f07beb5c698713fc5aab76d870",
+        "pull": "139310",
+        "repo-commit": "1e44d519aec379ccf558483aebf4a9d1e24ec37b",
+        "repo-version": "1e44d519aec379ccf558483aebf4a9d1e24ec37b",
         "repos": {
-          "kubernetes/kubernetes": "master:48ba469549a7621bb7de7a3ee0349aa292784a1c,139216:80ffbae24683491fab278d1ca72934be27c227b2",
+          "kubernetes/kubernetes": "master:e9a8a5910cace55b6521a49902b3c34d1db7c186,139310:d17cb8f705a2272b350e9cb2baacd0a0039b9be5",
           "kubernetes/test-infra": "master"
         },
-        "timestamp": 1779832119
+        "timestamp": 1779911110
       },
-      "upstream_only_count": 0,
-      "upstream_only_sample": [],
-      "upstream_test_count": 1207
+      "upstream_only_count": 2,
+      "upstream_only_sample": [
+        "E2eNode Suite::Summary API when querying /stats/summary for memory events should report memory.high events for burstable pods",
+        "E2eNode Suite::Summary API when querying /stats/summary for memory events should report memory.max events when memory limit is hit"
+      ],
+      "upstream_test_count": 1209
     },
     "upstream_testgrid_url": "https://testgrid.k8s.io/presubmits-kubernetes-blocking#pull-kubernetes-node-e2e-containerd",
     "workflow_file": ".github/workflows/node-e2e.yml",
