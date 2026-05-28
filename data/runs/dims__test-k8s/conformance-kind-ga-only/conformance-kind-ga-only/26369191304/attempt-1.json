@@ -65,35 +65,33 @@
     "schema_version": 1,
     "started_at": "2026-05-24T18:23:12Z",
     "upstream_comparison": {
-      "inventory_parity_status": "missing-local-tests",
+      "inventory_parity_status": "match",
       "junit_files": [
-        "pr-logs/pull/138857/pull-kubernetes-conformance-kind-ga-only-parallel/2058719522688339968/artifacts/junit_01.xml"
+        "pr-logs/pull/139323/pull-kubernetes-conformance-kind-ga-only-parallel/2059574730557493248/artifacts/junit_01.xml"
       ],
       "local_only_count": 0,
       "local_only_sample": [],
       "local_test_count": 7584,
       "reference_job_name": "pull-kubernetes-conformance-kind-ga-only-parallel",
-      "reference_kubernetes_base_sha": "e09c6f3997e2529cbdd18ceae529ffcab8ac6693",
-      "reference_matches_kubernetes_sha": true,
-      "reference_pr_number": 138857,
-      "reference_pr_updated_at": "2026-05-28T06:51:32Z",
-      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/138857/pull-kubernetes-conformance-kind-ga-only-parallel/2058719522688339968",
-      "reference_selection": "exact-kubernetes-sha",
-      "reference_started_at": "2026-05-25T01:37:30Z",
+      "reference_kubernetes_base_sha": "8822656b909c5a3cf74ae1fe90151c7a3e461157",
+      "reference_matches_kubernetes_sha": false,
+      "reference_pr_number": 139323,
+      "reference_pr_updated_at": "2026-05-28T09:25:14Z",
+      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/139323/pull-kubernetes-conformance-kind-ga-only-parallel/2059574730557493248",
+      "reference_selection": "recent-success",
+      "reference_started_at": "2026-05-27T10:17:19Z",
       "reference_started_json": {
-        "pull": "138857",
-        "repo-commit": "39d6b644661b1e0ec6f3bd4f813dd138b991222d",
-        "repo-version": "39d6b644661b1e0ec6f3bd4f813dd138b991222d",
+        "pull": "139323",
+        "repo-commit": "6b4f9ed79095dd57e7a586dd49bdb4d2583123fe",
+        "repo-version": "6b4f9ed79095dd57e7a586dd49bdb4d2583123fe",
         "repos": {
-          "kubernetes/kubernetes": "master:e09c6f3997e2529cbdd18ceae529ffcab8ac6693,138857:deaf601f43ceeb40188d9e6cf1c4b92a0b9bdcf9"
+          "kubernetes/kubernetes": "master:8822656b909c5a3cf74ae1fe90151c7a3e461157,139323:8b6bc9ef1c15d5caaaddfd911c8122592980ed8e"
         },
-        "timestamp": 1779671987
+        "timestamp": 1779875956
       },
-      "upstream_only_count": 1,
-      "upstream_only_sample": [
-        "Kubernetes e2e suite::Pod InPlace Resize Container should update pod-level cgroup after resizing an OOMKilled container"
-      ],
-      "upstream_test_count": 7585
+      "upstream_only_count": 0,
+      "upstream_only_sample": [],
+      "upstream_test_count": 7584
     },
     "upstream_testgrid_url": "https://testgrid.k8s.io/presubmits-kubernetes-blocking#pull-kubernetes-conformance-kind-ga-only-parallel",
     "workflow_file": ".github/workflows/conformance-kind.yml",

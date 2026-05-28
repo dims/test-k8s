@@ -65,35 +65,33 @@
     "schema_version": 1,
     "started_at": "2026-05-26T13:00:37Z",
     "upstream_comparison": {
-      "inventory_parity_status": "missing-local-tests",
+      "inventory_parity_status": "match",
       "junit_files": [
-        "pr-logs/pull/139343/pull-kubernetes-conformance-kind-ga-only-parallel/2059901455774519296/artifacts/junit_01.xml"
+        "pr-logs/pull/139280/pull-kubernetes-conformance-kind-ga-only-parallel/2059247724124966912/artifacts/junit_01.xml"
       ],
       "local_only_count": 0,
       "local_only_sample": [],
       "local_test_count": 7584,
       "reference_job_name": "pull-kubernetes-conformance-kind-ga-only-parallel",
-      "reference_kubernetes_base_sha": "2cf6f1701e031e6f9e962762265f6da4fae2c85a",
-      "reference_matches_kubernetes_sha": false,
-      "reference_pr_number": 139343,
-      "reference_pr_updated_at": "2026-05-28T07:59:55Z",
-      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/139343/pull-kubernetes-conformance-kind-ga-only-parallel/2059901455774519296",
-      "reference_selection": "recent-success",
-      "reference_started_at": "2026-05-28T07:57:42Z",
+      "reference_kubernetes_base_sha": "556b2f9d6bd751fe19be4ceefd1b4808f81f603b",
+      "reference_matches_kubernetes_sha": true,
+      "reference_pr_number": 139280,
+      "reference_pr_updated_at": "2026-05-28T09:02:57Z",
+      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/139280/pull-kubernetes-conformance-kind-ga-only-parallel/2059247724124966912",
+      "reference_selection": "exact-kubernetes-sha",
+      "reference_started_at": "2026-05-26T12:36:27Z",
       "reference_started_json": {
-        "pull": "139343",
-        "repo-commit": "49c4be8b033b75611ecbed1db46d242f445c23ad",
-        "repo-version": "49c4be8b033b75611ecbed1db46d242f445c23ad",
+        "pull": "139280",
+        "repo-commit": "1009e40484b5a0d07dc436d572d108d5ba4bec97",
+        "repo-version": "1009e40484b5a0d07dc436d572d108d5ba4bec97",
         "repos": {
-          "kubernetes/kubernetes": "master:2cf6f1701e031e6f9e962762265f6da4fae2c85a,139343:d952a85cb84ccd68fd8660e17a779c061a297a47"
+          "kubernetes/kubernetes": "master:556b2f9d6bd751fe19be4ceefd1b4808f81f603b,139280:5ce47812ae9df8e82566e80030b9b623d09d3b24"
         },
-        "timestamp": 1779953989
+        "timestamp": 1779797922
       },
-      "upstream_only_count": 1,
-      "upstream_only_sample": [
-        "Kubernetes e2e suite::CSI Mock volume expansion CSI offline volume expansion after PVC deletion should complete filesystem resize after PVC is deleted and new PVC binds to retained PV"
-      ],
-      "upstream_test_count": 7585
+      "upstream_only_count": 0,
+      "upstream_only_sample": [],
+      "upstream_test_count": 7584
     },
     "upstream_testgrid_url": "https://testgrid.k8s.io/presubmits-kubernetes-blocking#pull-kubernetes-conformance-kind-ga-only-parallel",
     "workflow_file": ".github/workflows/conformance-kind.yml",
