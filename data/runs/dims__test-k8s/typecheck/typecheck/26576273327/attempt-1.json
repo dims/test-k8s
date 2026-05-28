@@ -1,76 +1,66 @@
 {
   "discovery": {
-    "build_log_found": true,
-    "build_logs": [
-      "build-log.txt"
-    ],
+    "build_log_found": false,
+    "build_logs": [],
     "ginkgo_json_found": false,
-    "junit_files": [
-      "junit_verify.xml"
-    ],
-    "junit_found": true
+    "junit_files": [],
+    "junit_found": false
   },
   "files": {
     "artifacts_dir": "/home/runner/work/test-k8s/test-k8s/_artifacts",
-    "build_logs": [
-      "build-log.txt"
-    ],
-    "junit_files": [
-      "junit_verify.xml"
-    ],
-    "runner_metadata_files": [
-      "tested-revisions.json"
-    ]
+    "build_logs": [],
+    "junit_files": [],
+    "runner_metadata_files": []
   },
   "metadata": {
     "artifacts": {
-      "build_log": "build-log.txt",
-      "junit_files": [
-        "junit_verify.xml"
-      ]
+      "build_log": null,
+      "junit_files": []
     },
-    "collected_at": "2026-05-26T18:48:29Z",
+    "collected_at": "2026-05-28T13:03:53Z",
     "comparison_required": true,
-    "completed_at": "2026-05-26T18:48:34Z",
-    "containerd_ref": "main",
-    "containerd_repo": "containerd/containerd",
-    "containerd_sha": "024a267eee2a71ec1322b99c07340ea10797de29",
+    "completed_at": "2026-05-28T13:03:57Z",
+    "containerd_ref": null,
+    "containerd_repo": null,
+    "containerd_sha": null,
     "data_quality": {
       "fallback_synthetic_cases": true,
       "inventory_state": "present",
-      "junit_found": true,
-      "result_source": "junit",
+      "junit_found": false,
+      "result_source": "synthetic-fallback",
       "synthetic_cases": false
     },
     "display_order": 140,
-    "duration_seconds": 340,
+    "duration_seconds": 167,
     "event": "schedule",
     "github_ref": "main",
     "github_sha": "69c4cbe8607a92e2dce850a18e5887199c43de38",
-    "html_url": "https://github.com/dims/test-k8s/actions/runs/26467999691",
+    "html_url": "https://github.com/dims/test-k8s/actions/runs/26576273327",
     "job_id": "typecheck",
     "job_name": "Typecheck",
     "job_slug": "typecheck",
-    "kubernetes_ref": "master",
-    "kubernetes_repo": "kubernetes/kubernetes",
-    "kubernetes_sha": "083b28d8a68fee40ad0581b0281836432bc60235",
+    "kubernetes_ref": null,
+    "kubernetes_repo": null,
+    "kubernetes_sha": null,
     "mirrored_prow_job": "pull-kubernetes-typecheck",
     "repo": "dims/test-k8s",
     "repo_slug": "dims__test-k8s",
-    "result": "success",
+    "result": "failure",
     "run_attempt": 1,
-    "run_id": 26467999691,
-    "runner_label": "GitHub Actions 1000031033",
-    "runner_name": "GitHub Actions 1000031033",
+    "run_id": 26576273327,
+    "runner_label": "GitHub Actions 1000031567",
+    "runner_name": "GitHub Actions 1000031567",
     "schema_version": 1,
-    "started_at": "2026-05-26T18:42:54Z",
+    "started_at": "2026-05-28T13:01:10Z",
     "upstream_comparison": {
-      "inventory_parity_status": "match",
+      "inventory_parity_status": "mismatch",
       "junit_files": [
         "pr-logs/pull/139323/pull-kubernetes-typecheck/2059961286216650752/artifacts/junit_verify.xml"
       ],
-      "local_only_count": 0,
-      "local_only_sample": [],
+      "local_only_count": 1,
+      "local_only_sample": [
+        "Typecheck::verify WHAT=typecheck"
+      ],
       "local_test_count": 1,
       "reference_job_name": "pull-kubernetes-typecheck",
       "reference_kubernetes_base_sha": "602860417ec6ddcac997745958dbacf412c73c65",
@@ -89,8 +79,10 @@
         },
         "timestamp": 1779968103
       },
-      "upstream_only_count": 0,
-      "upstream_only_sample": [],
+      "upstream_only_count": 1,
+      "upstream_only_sample": [
+        "verify::typecheck"
+      ],
       "upstream_test_count": 1
     },
     "upstream_testgrid_url": "https://testgrid.k8s.io/presubmits-kubernetes-blocking#pull-kubernetes-typecheck",
@@ -101,40 +93,38 @@
   "suites": [
     {
       "cancelled": 0,
-      "duration_seconds": 182.082,
+      "duration_seconds": 0.0,
       "failed": 0,
-      "file_source": "junit_verify.xml",
-      "passed": 1,
-      "skipped": 0,
-      "source": "junit",
-      "suite": "verify",
-      "suite_slug": "verify",
+      "passed": 0,
+      "skipped": 1,
+      "source": "synthetic",
+      "suite": "Typecheck",
+      "suite_slug": "typecheck",
       "tests": 1,
       "unknown": 0
     }
   ],
   "summary": {
     "cancelled": 0,
-    "duration_seconds": 182.082,
+    "duration_seconds": 0.0,
     "failed": 0,
-    "passed": 1,
-    "skipped": 0,
+    "passed": 0,
+    "skipped": 1,
     "tests": 1,
     "unknown": 0
   },
   "tests": [
     {
-      "classname": "verify",
-      "duration_seconds": 182.082,
+      "classname": "Typecheck",
+      "duration_seconds": 0.0,
       "failure_text": "",
-      "file_source": "junit_verify.xml",
-      "name": "typecheck",
-      "name_slug": "typecheck",
-      "owner_hint": "verify",
-      "source": "junit",
-      "status": "passed",
-      "suite": "verify",
-      "suite_slug": "verify"
+      "name": "verify WHAT=typecheck",
+      "name_slug": "verify-what-typecheck",
+      "owner_hint": "synthetic",
+      "source": "synthetic",
+      "status": "skipped",
+      "suite": "Typecheck",
+      "suite_slug": "typecheck"
     }
   ]
 }
