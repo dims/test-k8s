@@ -65,48 +65,33 @@
     "schema_version": 1,
     "started_at": "2026-05-25T13:07:28Z",
     "upstream_comparison": {
-      "inventory_parity_status": "mismatch",
+      "inventory_parity_status": "match",
       "junit_files": [
-        "pr-logs/pull/135160/pull-kubernetes-e2e-kind/2054391784456327168/artifacts/junit_01.xml"
+        "pr-logs/pull/139288/pull-kubernetes-e2e-kind/2059190908645019648/artifacts/junit_01.xml"
       ],
-      "local_only_count": 8,
-      "local_only_sample": [
-        "Kubernetes e2e suite::Kubelet-Stats Kubelet stats collection for Windows nodes when running up to 10 pods should return within 10 seconds",
-        "Kubernetes e2e suite::Netpol NetworkPolicy between server and client should not allow all ports if it cannot limit to the requested port",
-        "Kubernetes e2e suite::Windows subpath cleanup pod with multiple subPath mounts should terminate cleanly",
-        "Kubernetes e2e suite::kubectl apply Kubectl prune with applyset should apply and prune objects",
-        "Kubernetes e2e suite::kubectl apply apply set/view last-applied",
-        "Kubernetes e2e suite::kubectl apply should apply a new configuration to an existing RC",
-        "Kubernetes e2e suite::kubectl apply should reuse port when apply to an existing SVC",
-        "Kubernetes e2e suite::must prefer device plugin over DRA when both advertise the same resource on a node"
-      ],
+      "local_only_count": 0,
+      "local_only_sample": [],
       "local_test_count": 7584,
       "reference_job_name": "pull-kubernetes-e2e-kind",
-      "reference_kubernetes_base_sha": "34e600ec497ff6bd81a0c6c98b0f764900fa2643",
+      "reference_kubernetes_base_sha": "b859f5a5c1b5ece16624f5290b835fe63898cd37",
       "reference_matches_kubernetes_sha": false,
-      "reference_pr_number": 135160,
-      "reference_pr_updated_at": "2026-05-28T05:30:58Z",
-      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/135160/pull-kubernetes-e2e-kind/2054391784456327168",
+      "reference_pr_number": 139288,
+      "reference_pr_updated_at": "2026-05-28T07:01:35Z",
+      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/139288/pull-kubernetes-e2e-kind/2059190908645019648",
       "reference_selection": "recent-success",
-      "reference_started_at": "2026-05-13T03:13:18Z",
+      "reference_started_at": "2026-05-26T09:02:09Z",
       "reference_started_json": {
-        "pull": "135160",
-        "repo-commit": "1c2bbd525b582885ba2f928aed0de4ed7a995b3d",
-        "repo-version": "1c2bbd525b582885ba2f928aed0de4ed7a995b3d",
+        "pull": "139288",
+        "repo-commit": "a1e6e5e9e3cbb153597816dd156eeb639954a847",
+        "repo-version": "a1e6e5e9e3cbb153597816dd156eeb639954a847",
         "repos": {
-          "kubernetes/kubernetes": "master:34e600ec497ff6bd81a0c6c98b0f764900fa2643,135160:3f66e12841d8cdb5b11a63de5e122bd44209e4a8"
+          "kubernetes/kubernetes": "master:b859f5a5c1b5ece16624f5290b835fe63898cd37,139288:3ae7ed0ac1a3d56ebbe9f5a8e23b196ab451731c"
         },
-        "timestamp": 1778640173
+        "timestamp": 1779784376
       },
-      "upstream_only_count": 5,
-      "upstream_only_sample": [
-        "Kubernetes e2e suite::Kubectl client Kubectl apply apply set/view last-applied",
-        "Kubernetes e2e suite::Kubectl client Kubectl apply should apply a new configuration to an existing RC",
-        "Kubernetes e2e suite::Kubectl client Kubectl apply should reuse port when apply to an existing SVC",
-        "Kubernetes e2e suite::Kubectl client Kubectl prune with applyset should apply and prune objects",
-        "Kubernetes e2e suite::Kubelet-Stats Kubelet stats collection for Windows nodes when running 10 pods should return within 10 seconds"
-      ],
-      "upstream_test_count": 7581
+      "upstream_only_count": 0,
+      "upstream_only_sample": [],
+      "upstream_test_count": 7584
     },
     "upstream_testgrid_url": "https://testgrid.k8s.io/presubmits-kubernetes-blocking#pull-kubernetes-e2e-kind",
     "workflow_file": ".github/workflows/e2e-kind.yml",

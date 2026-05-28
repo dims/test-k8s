@@ -65,37 +65,37 @@
     "schema_version": 1,
     "started_at": "2026-05-25T00:19:20Z",
     "upstream_comparison": {
-      "inventory_parity_status": "extra-local-tests",
+      "inventory_parity_status": "missing-local-tests",
       "junit_files": [
-        "pr-logs/pull/135160/pull-kubernetes-node-e2e-containerd/2054391784766705664/artifacts/junit_cos01.xml",
-        "pr-logs/pull/135160/pull-kubernetes-node-e2e-containerd/2054391784766705664/artifacts/junit_ubuntu01.xml"
+        "pr-logs/pull/138857/pull-kubernetes-node-e2e-containerd/2058719522881277952/artifacts/junit_cos01.xml",
+        "pr-logs/pull/138857/pull-kubernetes-node-e2e-containerd/2058719522881277952/artifacts/junit_ubuntu01.xml"
       ],
-      "local_only_count": 1,
-      "local_only_sample": [
-        "E2eNode Suite::MemoryQoS feature rollback should not clobber other cgroup values when clearing stale memory protection at startup"
-      ],
+      "local_only_count": 0,
+      "local_only_sample": [],
       "local_test_count": 1207,
       "reference_job_name": "pull-kubernetes-node-e2e-containerd",
-      "reference_kubernetes_base_sha": "34e600ec497ff6bd81a0c6c98b0f764900fa2643",
-      "reference_matches_kubernetes_sha": false,
-      "reference_pr_number": 135160,
-      "reference_pr_updated_at": "2026-05-28T05:30:58Z",
-      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/135160/pull-kubernetes-node-e2e-containerd/2054391784766705664",
-      "reference_selection": "recent-success",
-      "reference_started_at": "2026-05-13T03:20:21Z",
+      "reference_kubernetes_base_sha": "e09c6f3997e2529cbdd18ceae529ffcab8ac6693",
+      "reference_matches_kubernetes_sha": true,
+      "reference_pr_number": 138857,
+      "reference_pr_updated_at": "2026-05-28T06:51:32Z",
+      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/138857/pull-kubernetes-node-e2e-containerd/2058719522881277952",
+      "reference_selection": "exact-kubernetes-sha",
+      "reference_started_at": "2026-05-25T01:57:17Z",
       "reference_started_json": {
-        "pull": "135160",
-        "repo-commit": "1c2bbd525b582885ba2f928aed0de4ed7a995b3d",
-        "repo-version": "1c2bbd525b582885ba2f928aed0de4ed7a995b3d",
+        "pull": "138857",
+        "repo-commit": "39d6b644661b1e0ec6f3bd4f813dd138b991222d",
+        "repo-version": "39d6b644661b1e0ec6f3bd4f813dd138b991222d",
         "repos": {
-          "kubernetes/kubernetes": "master:34e600ec497ff6bd81a0c6c98b0f764900fa2643,135160:3f66e12841d8cdb5b11a63de5e122bd44209e4a8",
+          "kubernetes/kubernetes": "master:e09c6f3997e2529cbdd18ceae529ffcab8ac6693,138857:deaf601f43ceeb40188d9e6cf1c4b92a0b9bdcf9",
           "kubernetes/test-infra": "master"
         },
-        "timestamp": 1778640184
+        "timestamp": 1779672015
       },
-      "upstream_only_count": 0,
-      "upstream_only_sample": [],
-      "upstream_test_count": 1206
+      "upstream_only_count": 1,
+      "upstream_only_sample": [
+        "E2eNode Suite::Pod InPlace Resize Container should update pod-level cgroup after resizing an OOMKilled container"
+      ],
+      "upstream_test_count": 1208
     },
     "upstream_testgrid_url": "https://testgrid.k8s.io/presubmits-kubernetes-blocking#pull-kubernetes-node-e2e-containerd",
     "workflow_file": ".github/workflows/node-e2e.yml",
