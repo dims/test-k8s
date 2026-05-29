@@ -65,40 +65,41 @@
     "schema_version": 1,
     "started_at": "2026-05-25T18:29:05Z",
     "upstream_comparison": {
-      "inventory_parity_status": "mismatch",
+      "inventory_parity_status": "missing-local-tests",
       "junit_files": [
-        "pr-logs/pull/138676/pull-kubernetes-e2e-kind-alpha-beta-features/2060385658110742528/artifacts/junit_01.xml"
+        "pr-logs/pull/137762/pull-kubernetes-e2e-kind-alpha-beta-features/2060347651504738304/artifacts/junit_01.xml"
       ],
-      "local_only_count": 1,
-      "local_only_sample": [
-        "Kubernetes e2e suite::CRUD Tests resource.k8s.io/v1beta2 DeviceTaintRule"
-      ],
+      "local_only_count": 0,
+      "local_only_sample": [],
       "local_test_count": 7584,
       "reference_job_name": "pull-kubernetes-e2e-kind-alpha-beta-features",
       "reference_kubernetes_base_sha": "f352123f2e8fbddfbb59d3daa59234c07ddef2ab",
       "reference_matches_kubernetes_sha": false,
-      "reference_pr_number": 138676,
-      "reference_pr_updated_at": "2026-05-29T16:04:08Z",
-      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/138676/pull-kubernetes-e2e-kind-alpha-beta-features/2060385658110742528",
+      "reference_pr_number": 137762,
+      "reference_pr_updated_at": "2026-05-29T18:45:32Z",
+      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/137762/pull-kubernetes-e2e-kind-alpha-beta-features/2060347651504738304",
       "reference_selection": "recent-success",
-      "reference_started_at": "2026-05-29T16:11:06Z",
+      "reference_started_at": "2026-05-29T13:40:22Z",
       "reference_started_json": {
-        "pull": "138676",
-        "repo-commit": "4e07d0bb3f05d563a9a7397a0c0d9863101feffb",
-        "repo-version": "4e07d0bb3f05d563a9a7397a0c0d9863101feffb",
+        "pull": "137762",
+        "repo-commit": "beb9c0315cbec7199bcf1baf13434902ed1246f8",
+        "repo-version": "beb9c0315cbec7199bcf1baf13434902ed1246f8",
         "repos": {
-          "kubernetes/kubernetes": "master:f352123f2e8fbddfbb59d3daa59234c07ddef2ab,138676:f429c2d7d7aed152e67e4cc2cb377f727ab6f926"
+          "kubernetes/kubernetes": "master:f352123f2e8fbddfbb59d3daa59234c07ddef2ab,137762:381f6bd970409670c5a498e5bf7905ddba74fc38"
         },
-        "timestamp": 1780069229
+        "timestamp": 1780060225
       },
-      "upstream_only_count": 4,
+      "upstream_only_count": 7,
       "upstream_only_sample": [
-        "Kubernetes e2e suite::CRUD Tests resource.k8s.io/v1 DeviceTaintRule",
         "Kubernetes e2e suite::CSI Mock volume expansion CSI offline volume expansion after PVC deletion should complete filesystem resize after PVC is deleted and new PVC binds to retained PV",
         "Kubernetes e2e suite::GangScheduling [FeatureGate:GangScheduling] should schedule pods only when quorum is reached",
-        "Kubernetes e2e suite::GangScheduling [FeatureGate:GangScheduling] should schedule pods with basic scheduling policy"
+        "Kubernetes e2e suite::GangScheduling [FeatureGate:GangScheduling] should schedule pods with basic scheduling policy",
+        "Kubernetes e2e suite::Probing container should *not* be restarted with a GRPC liveness probe with TLS mode",
+        "Kubernetes e2e suite::Probing container should be restarted with a GRPC liveness probe when not using TLS against a TLS server",
+        "Kubernetes e2e suite::Probing container should be restarted with a GRPC liveness probe with TLS mode on wrong port",
+        "Kubernetes e2e suite::Probing container should be restarted with a GRPC liveness probe with TLS mode when endpoint returns not healthy"
       ],
-      "upstream_test_count": 7587
+      "upstream_test_count": 7591
     },
     "upstream_testgrid_url": "https://testgrid.k8s.io/presubmits-kubernetes-nonblocking#pull-kubernetes-e2e-kind-alpha-beta-features",
     "workflow_file": ".github/workflows/e2e-kind-alpha-beta-features.yml",

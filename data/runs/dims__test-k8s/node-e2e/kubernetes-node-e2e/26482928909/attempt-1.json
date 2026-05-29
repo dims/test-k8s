@@ -65,10 +65,10 @@
     "schema_version": 1,
     "started_at": "2026-05-27T00:21:04Z",
     "upstream_comparison": {
-      "inventory_parity_status": "match",
+      "inventory_parity_status": "missing-local-tests",
       "junit_files": [
-        "pr-logs/pull/139294/pull-kubernetes-node-e2e-containerd/2060370281322516480/artifacts/junit_cos01.xml",
-        "pr-logs/pull/139294/pull-kubernetes-node-e2e-containerd/2060370281322516480/artifacts/junit_ubuntu01.xml"
+        "pr-logs/pull/137762/pull-kubernetes-node-e2e-containerd/2060347655296389120/artifacts/junit_cos01.xml",
+        "pr-logs/pull/137762/pull-kubernetes-node-e2e-containerd/2060347655296389120/artifacts/junit_ubuntu01.xml"
       ],
       "local_only_count": 0,
       "local_only_sample": [],
@@ -76,24 +76,29 @@
       "reference_job_name": "pull-kubernetes-node-e2e-containerd",
       "reference_kubernetes_base_sha": "f352123f2e8fbddfbb59d3daa59234c07ddef2ab",
       "reference_matches_kubernetes_sha": false,
-      "reference_pr_number": 139294,
-      "reference_pr_updated_at": "2026-05-29T17:23:45Z",
-      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/139294/pull-kubernetes-node-e2e-containerd/2060370281322516480",
+      "reference_pr_number": 137762,
+      "reference_pr_updated_at": "2026-05-29T18:45:32Z",
+      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/137762/pull-kubernetes-node-e2e-containerd/2060347655296389120",
       "reference_selection": "recent-success",
-      "reference_started_at": "2026-05-29T15:15:05Z",
+      "reference_started_at": "2026-05-29T13:46:13Z",
       "reference_started_json": {
-        "pull": "139294",
-        "repo-commit": "aeff651e1f4e67c628a8ba5002e6ac429fa46a94",
-        "repo-version": "aeff651e1f4e67c628a8ba5002e6ac429fa46a94",
+        "pull": "137762",
+        "repo-commit": "beb9c0315cbec7199bcf1baf13434902ed1246f8",
+        "repo-version": "beb9c0315cbec7199bcf1baf13434902ed1246f8",
         "repos": {
-          "kubernetes/kubernetes": "master:f352123f2e8fbddfbb59d3daa59234c07ddef2ab,139294:a14562b4f04287e828cb78201bceee8fe1956f14",
+          "kubernetes/kubernetes": "master:f352123f2e8fbddfbb59d3daa59234c07ddef2ab,137762:381f6bd970409670c5a498e5bf7905ddba74fc38",
           "kubernetes/test-infra": "master"
         },
-        "timestamp": 1780065559
+        "timestamp": 1780060192
       },
-      "upstream_only_count": 0,
-      "upstream_only_sample": [],
-      "upstream_test_count": 1207
+      "upstream_only_count": 4,
+      "upstream_only_sample": [
+        "E2eNode Suite::Probing container should *not* be restarted with a GRPC liveness probe with TLS mode",
+        "E2eNode Suite::Probing container should be restarted with a GRPC liveness probe when not using TLS against a TLS server",
+        "E2eNode Suite::Probing container should be restarted with a GRPC liveness probe with TLS mode on wrong port",
+        "E2eNode Suite::Probing container should be restarted with a GRPC liveness probe with TLS mode when endpoint returns not healthy"
+      ],
+      "upstream_test_count": 1211
     },
     "upstream_testgrid_url": "https://testgrid.k8s.io/presubmits-kubernetes-blocking#pull-kubernetes-node-e2e-containerd",
     "workflow_file": ".github/workflows/node-e2e.yml",
