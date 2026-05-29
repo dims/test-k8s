@@ -65,17 +65,35 @@
     "schema_version": 1,
     "started_at": "2026-05-25T07:22:22Z",
     "upstream_comparison": {
-      "inventory_parity_status": "upstream-tests-missing",
+      "inventory_parity_status": "match",
+      "junit_files": [
+        "pr-logs/pull/139378/pull-kubernetes-node-e2e-containerd/2060417068464869376/artifacts/junit_cos01.xml",
+        "pr-logs/pull/139378/pull-kubernetes-node-e2e-containerd/2060417068464869376/artifacts/junit_ubuntu01.xml"
+      ],
+      "local_only_count": 0,
+      "local_only_sample": [],
       "local_test_count": 1207,
       "reference_job_name": "pull-kubernetes-node-e2e-containerd",
-      "reference_kubernetes_base_sha": null,
+      "reference_kubernetes_base_sha": "519a05108a927b9f1f14f0daaa2e008ad7ba8767",
       "reference_matches_kubernetes_sha": false,
-      "reference_pr_number": 136470,
-      "reference_pr_updated_at": "2026-05-29T19:12:48Z",
-      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/136470/pull-kubernetes-node-e2e-containerd/2014704867087486976",
+      "reference_pr_number": 139378,
+      "reference_pr_updated_at": "2026-05-29T20:31:38Z",
+      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/139378/pull-kubernetes-node-e2e-containerd/2060417068464869376",
       "reference_selection": "recent-success",
-      "reference_started_at": "2026-01-23T14:55:09Z",
-      "upstream_test_count": 0
+      "reference_started_at": "2026-05-29T18:20:53Z",
+      "reference_started_json": {
+        "pull": "139378",
+        "repo-commit": "6ba6cbf621ad2b177f7fc34db05a1c57ba770e00",
+        "repo-version": "6ba6cbf621ad2b177f7fc34db05a1c57ba770e00",
+        "repos": {
+          "kubernetes/kubernetes": "master:519a05108a927b9f1f14f0daaa2e008ad7ba8767,139378:9aca424f76724f579a0fb9be5e995aef95ea53b0",
+          "kubernetes/test-infra": "master"
+        },
+        "timestamp": 1780076714
+      },
+      "upstream_only_count": 0,
+      "upstream_only_sample": [],
+      "upstream_test_count": 1207
     },
     "upstream_testgrid_url": "https://testgrid.k8s.io/presubmits-kubernetes-blocking#pull-kubernetes-node-e2e-containerd",
     "workflow_file": ".github/workflows/node-e2e.yml",
