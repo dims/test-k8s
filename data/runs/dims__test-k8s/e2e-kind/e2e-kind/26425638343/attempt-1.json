@@ -65,35 +65,40 @@
     "schema_version": 1,
     "started_at": "2026-05-26T00:35:22Z",
     "upstream_comparison": {
-      "inventory_parity_status": "missing-local-tests",
+      "inventory_parity_status": "mismatch",
       "junit_files": [
-        "pr-logs/pull/138351/pull-kubernetes-e2e-kind/2060056813964890112/artifacts/junit_01.xml"
+        "pr-logs/pull/138676/pull-kubernetes-e2e-kind/2060334673539633152/artifacts/junit_01.xml"
       ],
-      "local_only_count": 0,
-      "local_only_sample": [],
+      "local_only_count": 1,
+      "local_only_sample": [
+        "Kubernetes e2e suite::CRUD Tests resource.k8s.io/v1beta2 DeviceTaintRule"
+      ],
       "local_test_count": 7584,
       "reference_job_name": "pull-kubernetes-e2e-kind",
-      "reference_kubernetes_base_sha": "80a11c4be79f5076bf370bc16dfdbc4f54efc0f2",
+      "reference_kubernetes_base_sha": "f352123f2e8fbddfbb59d3daa59234c07ddef2ab",
       "reference_matches_kubernetes_sha": false,
-      "reference_pr_number": 138351,
-      "reference_pr_updated_at": "2026-05-29T11:00:49Z",
-      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/138351/pull-kubernetes-e2e-kind/2060056813964890112",
+      "reference_pr_number": 138676,
+      "reference_pr_updated_at": "2026-05-29T12:54:27Z",
+      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/138676/pull-kubernetes-e2e-kind/2060334673539633152",
       "reference_selection": "recent-success",
-      "reference_started_at": "2026-05-28T18:22:08Z",
+      "reference_started_at": "2026-05-29T12:51:48Z",
       "reference_started_json": {
-        "pull": "138351",
-        "repo-commit": "ad6d43227445e0a8a35d49fdb6858400c617c4e4",
-        "repo-version": "ad6d43227445e0a8a35d49fdb6858400c617c4e4",
+        "pull": "138676",
+        "repo-commit": "887a0a1cb926e28762ae1bc55d8f12efc6dcc63a",
+        "repo-version": "887a0a1cb926e28762ae1bc55d8f12efc6dcc63a",
         "repos": {
-          "kubernetes/kubernetes": "master:80a11c4be79f5076bf370bc16dfdbc4f54efc0f2,138351:2669583cb06a2857605f1886a20e2ab1ec7e0b00"
+          "kubernetes/kubernetes": "master:f352123f2e8fbddfbb59d3daa59234c07ddef2ab,138676:8f8b13acf95e36bff106425dfeff548dd1905457"
         },
-        "timestamp": 1779990824
+        "timestamp": 1780057280
       },
-      "upstream_only_count": 1,
+      "upstream_only_count": 4,
       "upstream_only_sample": [
-        "Kubernetes e2e suite::CSI Mock volume expansion CSI offline volume expansion after PVC deletion should complete filesystem resize after PVC is deleted and new PVC binds to retained PV"
+        "Kubernetes e2e suite::CRUD Tests resource.k8s.io/v1 DeviceTaintRule",
+        "Kubernetes e2e suite::CSI Mock volume expansion CSI offline volume expansion after PVC deletion should complete filesystem resize after PVC is deleted and new PVC binds to retained PV",
+        "Kubernetes e2e suite::GangScheduling [FeatureGate:GangScheduling] should schedule pods only when quorum is reached",
+        "Kubernetes e2e suite::GangScheduling [FeatureGate:GangScheduling] should schedule pods with basic scheduling policy"
       ],
-      "upstream_test_count": 7585
+      "upstream_test_count": 7587
     },
     "upstream_testgrid_url": "https://testgrid.k8s.io/presubmits-kubernetes-blocking#pull-kubernetes-e2e-kind",
     "workflow_file": ".github/workflows/e2e-kind.yml",
