@@ -65,17 +65,37 @@
     "schema_version": 1,
     "started_at": "2026-05-27T00:37:07Z",
     "upstream_comparison": {
-      "inventory_parity_status": "upstream-tests-missing",
+      "inventory_parity_status": "missing-local-tests",
+      "junit_files": [
+        "pr-logs/pull/135460/pull-kubernetes-e2e-kind/2060702585869832192/artifacts/junit_01.xml"
+      ],
+      "local_only_count": 0,
+      "local_only_sample": [],
       "local_test_count": 7584,
       "reference_job_name": "pull-kubernetes-e2e-kind",
-      "reference_kubernetes_base_sha": null,
+      "reference_kubernetes_base_sha": "66904291e83b7cfb3d98817f2fe087aab04b648c",
       "reference_matches_kubernetes_sha": false,
-      "reference_pr_number": 136063,
-      "reference_pr_updated_at": "2026-05-30T11:19:48Z",
-      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/136063/pull-kubernetes-e2e-kind/2016529945496391680",
+      "reference_pr_number": 135460,
+      "reference_pr_updated_at": "2026-05-30T13:51:04Z",
+      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/135460/pull-kubernetes-e2e-kind/2060702585869832192",
       "reference_selection": "recent-success",
-      "reference_started_at": "2026-01-28T15:42:32Z",
-      "upstream_test_count": 0
+      "reference_started_at": "2026-05-30T13:08:16Z",
+      "reference_started_json": {
+        "pull": "135460",
+        "repo-commit": "6407cb235c0d77bab595ba5af61c7abf444f81e2",
+        "repo-version": "6407cb235c0d77bab595ba5af61c7abf444f81e2",
+        "repos": {
+          "kubernetes/kubernetes": "master:66904291e83b7cfb3d98817f2fe087aab04b648c,135460:7314b9c58b08f8b591bbe93a16b232e904459b1e"
+        },
+        "timestamp": 1780144787
+      },
+      "upstream_only_count": 3,
+      "upstream_only_sample": [
+        "Kubernetes e2e suite::CSI Mock volume expansion CSI offline volume expansion after PVC deletion should complete filesystem resize after PVC is deleted and new PVC binds to retained PV",
+        "Kubernetes e2e suite::GangScheduling [FeatureGate:GangScheduling] should schedule pods only when quorum is reached",
+        "Kubernetes e2e suite::GangScheduling [FeatureGate:GangScheduling] should schedule pods with basic scheduling policy"
+      ],
+      "upstream_test_count": 7587
     },
     "upstream_testgrid_url": "https://testgrid.k8s.io/presubmits-kubernetes-blocking#pull-kubernetes-e2e-kind",
     "workflow_file": ".github/workflows/e2e-kind.yml",
