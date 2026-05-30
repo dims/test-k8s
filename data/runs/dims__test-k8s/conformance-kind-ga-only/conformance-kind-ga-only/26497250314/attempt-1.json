@@ -65,36 +65,37 @@
     "schema_version": 1,
     "started_at": "2026-05-27T07:28:07Z",
     "upstream_comparison": {
-      "inventory_parity_status": "extra-local-tests",
+      "inventory_parity_status": "missing-local-tests",
       "junit_files": [
-        "pr-logs/pull/138467/pull-kubernetes-conformance-kind-ga-only-parallel/2056875574298677248/artifacts/junit_01.xml"
+        "pr-logs/pull/139377/pull-kubernetes-conformance-kind-ga-only-parallel/2060568654465994752/artifacts/junit_01.xml"
       ],
-      "local_only_count": 2,
-      "local_only_sample": [
-        "Kubernetes e2e suite::Netpol NetworkPolicy between server and client should not allow all ports if it cannot limit to the requested port",
-        "Kubernetes e2e suite::must prefer device plugin over DRA when both advertise the same resource on a node"
-      ],
+      "local_only_count": 0,
+      "local_only_sample": [],
       "local_test_count": 7584,
       "reference_job_name": "pull-kubernetes-conformance-kind-ga-only-parallel",
-      "reference_kubernetes_base_sha": "9bad8d66e7ff3d8fe2a0a23d68d560e9fdd34933",
+      "reference_kubernetes_base_sha": "bb7dec4604f18037bb2d9ddc3f2a41ab6b8d513d",
       "reference_matches_kubernetes_sha": false,
-      "reference_pr_number": 138467,
-      "reference_pr_updated_at": "2026-05-30T01:27:03Z",
-      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/138467/pull-kubernetes-conformance-kind-ga-only-parallel/2056875574298677248",
+      "reference_pr_number": 139377,
+      "reference_pr_updated_at": "2026-05-30T04:17:07Z",
+      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/139377/pull-kubernetes-conformance-kind-ga-only-parallel/2060568654465994752",
       "reference_selection": "recent-success",
-      "reference_started_at": "2026-05-19T23:33:32Z",
+      "reference_started_at": "2026-05-30T04:05:52Z",
       "reference_started_json": {
-        "pull": "138467",
-        "repo-commit": "47cd526b43b5636b654a70833ed70c2857d06c59",
-        "repo-version": "47cd526b43b5636b654a70833ed70c2857d06c59",
+        "pull": "139377",
+        "repo-commit": "98a11c7779490768b0d44cb26d6b30c5b659f2ae",
+        "repo-version": "98a11c7779490768b0d44cb26d6b30c5b659f2ae",
         "repos": {
-          "kubernetes/kubernetes": "master:9bad8d66e7ff3d8fe2a0a23d68d560e9fdd34933,138467:71ea5bb540931ea41eaaa482fbc7687edf5716ad"
+          "kubernetes/kubernetes": "master:bb7dec4604f18037bb2d9ddc3f2a41ab6b8d513d,139377:0e5d54a29a9ec86d7a61e2d4339b095f79364c48"
         },
-        "timestamp": 1779232541
+        "timestamp": 1780112863
       },
-      "upstream_only_count": 0,
-      "upstream_only_sample": [],
-      "upstream_test_count": 7582
+      "upstream_only_count": 3,
+      "upstream_only_sample": [
+        "Kubernetes e2e suite::CSI Mock volume expansion CSI offline volume expansion after PVC deletion should complete filesystem resize after PVC is deleted and new PVC binds to retained PV",
+        "Kubernetes e2e suite::GangScheduling [FeatureGate:GangScheduling] should schedule pods only when quorum is reached",
+        "Kubernetes e2e suite::GangScheduling [FeatureGate:GangScheduling] should schedule pods with basic scheduling policy"
+      ],
+      "upstream_test_count": 7587
     },
     "upstream_testgrid_url": "https://testgrid.k8s.io/presubmits-kubernetes-blocking#pull-kubernetes-conformance-kind-ga-only-parallel",
     "workflow_file": ".github/workflows/conformance-kind.yml",
