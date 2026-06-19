@@ -17,9 +17,9 @@
       "build_log": null,
       "junit_files": []
     },
-    "collected_at": "2026-06-18T07:44:14Z",
+    "collected_at": "2026-06-19T00:51:21Z",
     "comparison_required": true,
-    "completed_at": "2026-06-18T07:44:18Z",
+    "completed_at": "2026-06-19T00:51:24Z",
     "containerd_ref": null,
     "containerd_repo": null,
     "containerd_sha": null,
@@ -30,46 +30,46 @@
       "result_source": "synthetic-fallback",
       "synthetic_cases": false
     },
-    "display_order": 120,
-    "duration_seconds": 137,
+    "display_order": 160,
+    "duration_seconds": 135,
     "event": "schedule",
     "github_ref": "main",
     "github_sha": "69c4cbe8607a92e2dce850a18e5887199c43de38",
-    "html_url": "https://github.com/dims/test-k8s/actions/runs/27744454863",
-    "job_id": "verify",
-    "job_name": "Verify",
-    "job_slug": "verify",
+    "html_url": "https://github.com/dims/test-k8s/actions/runs/27798502520",
+    "job_id": "cmd",
+    "job_name": "Cmd Tests",
+    "job_slug": "cmd-tests",
     "kubernetes_ref": null,
     "kubernetes_repo": null,
     "kubernetes_sha": null,
-    "mirrored_prow_job": "pull-kubernetes-verify",
+    "mirrored_prow_job": "pull-kubernetes-cmd",
     "repo": "dims/test-k8s",
     "repo_slug": "dims__test-k8s",
     "result": "failure",
     "run_attempt": 1,
-    "run_id": 27744454863,
-    "runner_label": "GitHub Actions 1000038281",
-    "runner_name": "GitHub Actions 1000038281",
+    "run_id": 27798502520,
+    "runner_label": "GitHub Actions 1000038491",
+    "runner_name": "GitHub Actions 1000038491",
     "schema_version": 1,
-    "started_at": "2026-06-18T07:42:01Z",
+    "started_at": "2026-06-19T00:49:09Z",
     "upstream_comparison": {
       "inventory_parity_status": "mismatch",
       "junit_files": [
-        "pr-logs/pull/139605/pull-kubernetes-verify/2067772407652814848/artifacts/junit_verify.xml"
+        "pr-logs/pull/139605/pull-kubernetes-cmd/2067772398395985920/artifacts/junit_test-cmd.xml"
       ],
       "local_only_count": 1,
       "local_only_sample": [
-        "Verify::hack/jenkins/verify-dockerized.sh"
+        "Cmd Tests::hack/jenkins/test-cmd-dockerized.sh"
       ],
       "local_test_count": 1,
-      "reference_job_name": "pull-kubernetes-verify",
+      "reference_job_name": "pull-kubernetes-cmd",
       "reference_kubernetes_base_sha": "e9fcaa8af5952d2a95205d421421b0c464025b42",
       "reference_matches_kubernetes_sha": false,
       "reference_pr_number": 139858,
       "reference_pr_updated_at": "2026-06-19T01:27:02Z",
-      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/139605/pull-kubernetes-verify/2067772407652814848",
+      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/139605/pull-kubernetes-cmd/2067772398395985920",
       "reference_selection": "recent-success",
-      "reference_started_at": "2026-06-19T01:20:04Z",
+      "reference_started_at": "2026-06-19T01:07:07Z",
       "reference_started_json": {
         "pull": "139605",
         "repo-commit": "b0a0bd07cb652c44e4595b157bd4e444525b239a",
@@ -77,37 +77,37 @@
         "repos": {
           "kubernetes/kubernetes": "master:e9fcaa8af5952d2a95205d421421b0c464025b42,139605:81cbbd85c56e699b06060081d33b0b70a35eb179"
         },
-        "timestamp": 1781830594
+        "timestamp": 1781830413
       },
-      "upstream_only_count": 44,
+      "upstream_only_count": 92,
       "upstream_only_sample": [
-        "verify::api-groups",
-        "verify::boilerplate",
-        "verify::cli-conventions",
-        "verify::codegen",
-        "verify::conformance-requirements",
-        "verify::conformance-yaml",
-        "verify::deadcode-elimination",
-        "verify::description",
-        "verify::e2e-images",
-        "verify::e2e-test-ownership",
-        "verify::featuregates",
-        "verify::fieldname-docs",
-        "verify::file-sizes",
-        "verify::flags-underscore",
-        "verify::generated-docs",
-        "verify::generated-stable-metrics",
-        "verify::gofmt",
-        "verify::golangci-lint",
-        "verify::golangci-lint-config",
-        "verify::govulncheck"
+        "test-cmd::run_RESTMapper_evaluation_tests",
+        "test-cmd::run_ambiguous_shortname_tests",
+        "test-cmd::run_assert_categories_tests",
+        "test-cmd::run_assert_short_name_tests",
+        "test-cmd::run_assert_singular_name_tests",
+        "test-cmd::run_authorization_tests",
+        "test-cmd::run_certificates_tests",
+        "test-cmd::run_client_config_tests",
+        "test-cmd::run_cluster_management_tests",
+        "test-cmd::run_clusterroles_tests",
+        "test-cmd::run_configmap_tests",
+        "test-cmd::run_convert_tests",
+        "test-cmd::run_crd_deletion_recreation_tests",
+        "test-cmd::run_crd_tests",
+        "test-cmd::run_create_job_tests",
+        "test-cmd::run_create_secret_tests",
+        "test-cmd::run_daemonset_history_tests",
+        "test-cmd::run_daemonset_tests",
+        "test-cmd::run_deployment_tests",
+        "test-cmd::run_deprecated_api_tests"
       ],
-      "upstream_test_count": 44
+      "upstream_test_count": 92
     },
-    "upstream_testgrid_url": "https://testgrid.k8s.io/presubmits-kubernetes-blocking#pull-kubernetes-verify",
-    "workflow_file": ".github/workflows/verify.yml",
-    "workflow_name": "Verify",
-    "workflow_slug": "verify"
+    "upstream_testgrid_url": "https://testgrid.k8s.io/presubmits-kubernetes-blocking#pull-kubernetes-cmd",
+    "workflow_file": ".github/workflows/cmd-tests.yml",
+    "workflow_name": "Cmd Tests",
+    "workflow_slug": "cmd-tests"
   },
   "suites": [
     {
@@ -117,8 +117,8 @@
       "passed": 0,
       "skipped": 1,
       "source": "synthetic",
-      "suite": "Verify",
-      "suite_slug": "verify",
+      "suite": "Cmd Tests",
+      "suite_slug": "cmd-tests",
       "tests": 1,
       "unknown": 0
     }
@@ -134,16 +134,16 @@
   },
   "tests": [
     {
-      "classname": "Verify",
+      "classname": "Cmd Tests",
       "duration_seconds": 0.0,
       "failure_text": "",
-      "name": "hack/jenkins/verify-dockerized.sh",
-      "name_slug": "hack-jenkins-verify-dockerized-sh",
+      "name": "hack/jenkins/test-cmd-dockerized.sh",
+      "name_slug": "hack-jenkins-test-cmd-dockerized-sh",
       "owner_hint": "synthetic",
       "source": "synthetic",
       "status": "skipped",
-      "suite": "Verify",
-      "suite_slug": "verify"
+      "suite": "Cmd Tests",
+      "suite_slug": "cmd-tests"
     }
   ]
 }
