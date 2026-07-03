@@ -53,17 +53,41 @@
     "schema_version": 1,
     "started_at": "2026-06-29T18:46:26Z",
     "upstream_comparison": {
-      "inventory_parity_status": "upstream-tests-missing",
+      "inventory_parity_status": "mismatch",
+      "junit_files": [
+        "pr-logs/pull/140203/pull-kubernetes-dependencies/2072875649453789185/artifacts/junit_verify.xml"
+      ],
+      "local_only_count": 3,
+      "local_only_sample": [
+        "Dependencies::external-dependencies-version",
+        "Dependencies::vendor",
+        "Dependencies::vendor-licenses"
+      ],
       "local_test_count": 3,
       "reference_job_name": "pull-kubernetes-dependencies",
-      "reference_kubernetes_base_sha": null,
+      "reference_kubernetes_base_sha": "cbe5e3096ec29950198ed0b77ed9c611f3183c14",
       "reference_matches_kubernetes_sha": false,
-      "reference_pr_number": 138086,
-      "reference_pr_updated_at": "2026-07-03T06:44:24Z",
-      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/138086/pull-kubernetes-dependencies/2039073289195753472",
+      "reference_pr_number": 140203,
+      "reference_pr_updated_at": "2026-07-03T07:11:03Z",
+      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/140203/pull-kubernetes-dependencies/2072875649453789185",
       "reference_selection": "recent-success",
-      "reference_started_at": "2026-03-31T20:13:54Z",
-      "upstream_test_count": 0
+      "reference_started_at": "2026-07-03T02:52:37Z",
+      "reference_started_json": {
+        "pull": "140203",
+        "repo-commit": "2159eb8d480e3b4e7b1ac98c526bf57a51bd204b",
+        "repo-version": "2159eb8d480e3b4e7b1ac98c526bf57a51bd204b",
+        "repos": {
+          "kubernetes/kubernetes": "master:cbe5e3096ec29950198ed0b77ed9c611f3183c14,140203:c99a886b3d153af6144e9e914faf1212f542f73f"
+        },
+        "timestamp": 1783047073
+      },
+      "upstream_only_count": 3,
+      "upstream_only_sample": [
+        "verify::external-dependencies-version",
+        "verify::vendor",
+        "verify::vendor-licenses"
+      ],
+      "upstream_test_count": 3
     },
     "upstream_testgrid_url": "https://testgrid.k8s.io/presubmits-kubernetes-blocking#pull-kubernetes-dependencies",
     "workflow_file": ".github/workflows/dependencies.yml",
