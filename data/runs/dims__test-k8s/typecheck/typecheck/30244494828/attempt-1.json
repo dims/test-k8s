@@ -53,17 +53,37 @@
     "schema_version": 1,
     "started_at": "2026-07-27T06:58:55Z",
     "upstream_comparison": {
-      "inventory_parity_status": "upstream-tests-missing",
+      "inventory_parity_status": "mismatch",
+      "junit_files": [
+        "pr-logs/pull/140355/pull-kubernetes-typecheck/2081765489163374592/artifacts/junit_verify.xml"
+      ],
+      "local_only_count": 1,
+      "local_only_sample": [
+        "Typecheck::verify WHAT=typecheck"
+      ],
       "local_test_count": 1,
       "reference_job_name": "pull-kubernetes-typecheck",
-      "reference_kubernetes_base_sha": null,
+      "reference_kubernetes_base_sha": "42850664fd99edca42ca8bbfd20ecfb197fdbdc7",
       "reference_matches_kubernetes_sha": false,
-      "reference_pr_number": 138062,
-      "reference_pr_updated_at": "2026-07-27T20:33:14Z",
-      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/138062/pull-kubernetes-typecheck/2037559860282789888",
+      "reference_pr_number": 140355,
+      "reference_pr_updated_at": "2026-07-27T22:20:48Z",
+      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/140355/pull-kubernetes-typecheck/2081765489163374592",
       "reference_selection": "recent-success",
-      "reference_started_at": "2026-03-27T16:06:23Z",
-      "upstream_test_count": 0
+      "reference_started_at": "2026-07-27T15:38:00Z",
+      "reference_started_json": {
+        "pull": "140355",
+        "repo-commit": "1e20f4e1aec96961685bd0c37cb645faf994ea4d",
+        "repo-version": "1e20f4e1aec96961685bd0c37cb645faf994ea4d",
+        "repos": {
+          "kubernetes/kubernetes": "master:42850664fd99edca42ca8bbfd20ecfb197fdbdc7,140355:5369678f767d561d625541f984f5147b207ea77d"
+        },
+        "timestamp": 1785166578
+      },
+      "upstream_only_count": 1,
+      "upstream_only_sample": [
+        "verify::typecheck"
+      ],
+      "upstream_test_count": 1
     },
     "upstream_testgrid_url": "https://testgrid.k8s.io/presubmits-kubernetes-blocking#pull-kubernetes-typecheck",
     "workflow_file": ".github/workflows/typecheck.yml",
