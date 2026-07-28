@@ -53,7 +53,41 @@
     "schema_version": 1,
     "started_at": "2026-07-25T18:21:39Z",
     "upstream_comparison": {
-      "inventory_parity_status": "upstream-reference-missing"
+      "inventory_parity_status": "mismatch",
+      "junit_files": [
+        "pr-logs/pull/140917/pull-kubernetes-dependencies/2080703069401649152/artifacts/junit_verify.xml"
+      ],
+      "local_only_count": 3,
+      "local_only_sample": [
+        "Dependencies::external-dependencies-version",
+        "Dependencies::vendor",
+        "Dependencies::vendor-licenses"
+      ],
+      "local_test_count": 3,
+      "reference_job_name": "pull-kubernetes-dependencies",
+      "reference_kubernetes_base_sha": "2a5a1c06c4bb33424a8253d876a094cc01957b07",
+      "reference_matches_kubernetes_sha": false,
+      "reference_pr_number": 140917,
+      "reference_pr_updated_at": "2026-07-28T18:33:35Z",
+      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/140917/pull-kubernetes-dependencies/2080703069401649152",
+      "reference_selection": "recent-success",
+      "reference_started_at": "2026-07-24T17:15:51Z",
+      "reference_started_json": {
+        "pull": "140917",
+        "repo-commit": "8cd447373082204293e55942fa2d7e970d6399d9",
+        "repo-version": "8cd447373082204293e55942fa2d7e970d6399d9",
+        "repos": {
+          "kubernetes/kubernetes": "master:2a5a1c06c4bb33424a8253d876a094cc01957b07,140917:b98489cbbf89608b708be12e5a526e8b814cb84f"
+        },
+        "timestamp": 1784913272
+      },
+      "upstream_only_count": 3,
+      "upstream_only_sample": [
+        "verify::external-dependencies-version",
+        "verify::vendor",
+        "verify::vendor-licenses"
+      ],
+      "upstream_test_count": 3
     },
     "upstream_testgrid_url": "https://testgrid.k8s.io/presubmits-kubernetes-blocking#pull-kubernetes-dependencies",
     "workflow_file": ".github/workflows/dependencies.yml",

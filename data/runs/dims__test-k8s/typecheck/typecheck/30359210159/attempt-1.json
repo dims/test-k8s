@@ -53,7 +53,37 @@
     "schema_version": 1,
     "started_at": "2026-07-28T12:30:00Z",
     "upstream_comparison": {
-      "inventory_parity_status": "upstream-reference-missing"
+      "inventory_parity_status": "mismatch",
+      "junit_files": [
+        "pr-logs/pull/140917/pull-kubernetes-typecheck/2080703070647357440/artifacts/junit_verify.xml"
+      ],
+      "local_only_count": 1,
+      "local_only_sample": [
+        "Typecheck::verify WHAT=typecheck"
+      ],
+      "local_test_count": 1,
+      "reference_job_name": "pull-kubernetes-typecheck",
+      "reference_kubernetes_base_sha": "2a5a1c06c4bb33424a8253d876a094cc01957b07",
+      "reference_matches_kubernetes_sha": false,
+      "reference_pr_number": 140917,
+      "reference_pr_updated_at": "2026-07-28T18:33:35Z",
+      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/140917/pull-kubernetes-typecheck/2080703070647357440",
+      "reference_selection": "recent-success",
+      "reference_started_at": "2026-07-24T17:16:19Z",
+      "reference_started_json": {
+        "pull": "140917",
+        "repo-commit": "8cd447373082204293e55942fa2d7e970d6399d9",
+        "repo-version": "8cd447373082204293e55942fa2d7e970d6399d9",
+        "repos": {
+          "kubernetes/kubernetes": "master:2a5a1c06c4bb33424a8253d876a094cc01957b07,140917:b98489cbbf89608b708be12e5a526e8b814cb84f"
+        },
+        "timestamp": 1784913277
+      },
+      "upstream_only_count": 1,
+      "upstream_only_sample": [
+        "verify::typecheck"
+      ],
+      "upstream_test_count": 1
     },
     "upstream_testgrid_url": "https://testgrid.k8s.io/presubmits-kubernetes-blocking#pull-kubernetes-typecheck",
     "workflow_file": ".github/workflows/typecheck.yml",
