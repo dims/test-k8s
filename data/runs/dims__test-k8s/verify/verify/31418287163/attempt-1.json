@@ -17,9 +17,9 @@
       "build_log": null,
       "junit_files": []
     },
-    "collected_at": "2026-08-05T18:34:47Z",
+    "collected_at": "2026-08-10T18:19:55Z",
     "comparison_required": true,
-    "completed_at": "2026-08-05T18:34:53Z",
+    "completed_at": "2026-08-10T18:20:01Z",
     "containerd_ref": null,
     "containerd_repo": null,
     "containerd_sha": null,
@@ -31,11 +31,11 @@
       "synthetic_cases": false
     },
     "display_order": 120,
-    "duration_seconds": 152,
+    "duration_seconds": 179,
     "event": "schedule",
     "github_ref": "main",
     "github_sha": "69c4cbe8607a92e2dce850a18e5887199c43de38",
-    "html_url": "https://github.com/dims/test-k8s/actions/runs/31035198005",
+    "html_url": "https://github.com/dims/test-k8s/actions/runs/31418287163",
     "job_id": "verify",
     "job_name": "Verify",
     "job_slug": "verify",
@@ -47,15 +47,15 @@
     "repo_slug": "dims__test-k8s",
     "result": "failure",
     "run_attempt": 1,
-    "run_id": 31035198005,
-    "runner_label": "GitHub Actions 1000056868",
-    "runner_name": "GitHub Actions 1000056868",
+    "run_id": 31418287163,
+    "runner_label": "GitHub Actions 1000058845",
+    "runner_name": "GitHub Actions 1000058845",
     "schema_version": 1,
-    "started_at": "2026-08-05T18:32:21Z",
+    "started_at": "2026-08-10T18:17:02Z",
     "upstream_comparison": {
       "inventory_parity_status": "mismatch",
       "junit_files": [
-        "pr-logs/pull/140803/pull-kubernetes-verify/2079737799665258496/artifacts/junit_verify.xml"
+        "pr-logs/pull/140558/pull-kubernetes-verify/2086855612737523712/artifacts/junit_verify.xml"
       ],
       "local_only_count": 1,
       "local_only_sample": [
@@ -63,23 +63,23 @@
       ],
       "local_test_count": 1,
       "reference_job_name": "pull-kubernetes-verify",
-      "reference_kubernetes_base_sha": "faba7e6a94df833524a619874172cd77fdeaf760",
+      "reference_kubernetes_base_sha": "9d6e640ac263447b195371ed358fda9b7edec6a0",
       "reference_matches_kubernetes_sha": false,
-      "reference_pr_number": 140803,
-      "reference_pr_updated_at": "2026-08-10T16:26:47Z",
-      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/140803/pull-kubernetes-verify/2079737799665258496",
+      "reference_pr_number": 140558,
+      "reference_pr_updated_at": "2026-08-10T18:13:02Z",
+      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/140558/pull-kubernetes-verify/2086855612737523712",
       "reference_selection": "recent-success",
-      "reference_started_at": "2026-07-22T01:46:19Z",
+      "reference_started_at": "2026-08-10T17:05:07Z",
       "reference_started_json": {
-        "pull": "140803",
-        "repo-commit": "1f79c7567cc5f50d477702e4ad1bf378ab5d45b7",
-        "repo-version": "1f79c7567cc5f50d477702e4ad1bf378ab5d45b7",
+        "pull": "140558",
+        "repo-commit": "5ec9bb6281206fea2265489ae9214c0da0ba2387",
+        "repo-version": "5ec9bb6281206fea2265489ae9214c0da0ba2387",
         "repos": {
-          "kubernetes/kubernetes": "master:faba7e6a94df833524a619874172cd77fdeaf760,140803:3fa504506a21797fe80e1286d74e33f60a1a2b2d"
+          "kubernetes/kubernetes": "release-1.35:9d6e640ac263447b195371ed358fda9b7edec6a0,140558:36793dffd85bddbe2d5e0853c67961021b50975e"
         },
-        "timestamp": 1784683136
+        "timestamp": 1786380207
       },
-      "upstream_only_count": 45,
+      "upstream_only_count": 42,
       "upstream_only_sample": [
         "verify::api-groups",
         "verify::boilerplate",
@@ -97,12 +97,12 @@
         "verify::flags-underscore",
         "verify::generated-docs",
         "verify::generated-stable-metrics",
-        "verify::go-apidocs",
         "verify::gofmt",
         "verify::golangci-lint",
-        "verify::golangci-lint-config"
+        "verify::golangci-lint-config",
+        "verify::govulncheck"
       ],
-      "upstream_test_count": 45
+      "upstream_test_count": 42
     },
     "upstream_testgrid_url": "https://testgrid.k8s.io/presubmits-kubernetes-blocking#pull-kubernetes-verify",
     "workflow_file": ".github/workflows/verify.yml",
