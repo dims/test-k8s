@@ -17,9 +17,9 @@
       "build_log": null,
       "junit_files": []
     },
-    "collected_at": "2026-08-08T06:17:45Z",
+    "collected_at": "2026-08-13T06:27:51Z",
     "comparison_required": true,
-    "completed_at": "2026-08-08T06:17:52Z",
+    "completed_at": "2026-08-13T06:27:55Z",
     "containerd_ref": null,
     "containerd_repo": null,
     "containerd_sha": null,
@@ -30,46 +30,46 @@
       "result_source": "synthetic-fallback",
       "synthetic_cases": false
     },
-    "display_order": 120,
-    "duration_seconds": 178,
+    "display_order": 140,
+    "duration_seconds": 186,
     "event": "schedule",
     "github_ref": "main",
     "github_sha": "69c4cbe8607a92e2dce850a18e5887199c43de38",
-    "html_url": "https://github.com/dims/test-k8s/actions/runs/31243485532",
-    "job_id": "verify",
-    "job_name": "Verify",
-    "job_slug": "verify",
+    "html_url": "https://github.com/dims/test-k8s/actions/runs/31673734176",
+    "job_id": "typecheck",
+    "job_name": "Typecheck",
+    "job_slug": "typecheck",
     "kubernetes_ref": null,
     "kubernetes_repo": null,
     "kubernetes_sha": null,
-    "mirrored_prow_job": "pull-kubernetes-verify",
+    "mirrored_prow_job": "pull-kubernetes-typecheck",
     "repo": "dims/test-k8s",
     "repo_slug": "dims__test-k8s",
     "result": "failure",
     "run_attempt": 1,
-    "run_id": 31243485532,
-    "runner_label": "GitHub Actions 1000058030",
-    "runner_name": "GitHub Actions 1000058030",
+    "run_id": 31673734176,
+    "runner_label": "GitHub Actions 1000060057",
+    "runner_name": "GitHub Actions 1000060057",
     "schema_version": 1,
-    "started_at": "2026-08-08T06:14:54Z",
+    "started_at": "2026-08-13T06:24:49Z",
     "upstream_comparison": {
       "inventory_parity_status": "mismatch",
       "junit_files": [
-        "pr-logs/pull/141307/pull-kubernetes-verify/2087363893063061504/artifacts/junit_verify.xml"
+        "pr-logs/pull/141307/pull-kubernetes-typecheck/2087363892232589312/artifacts/junit_verify.xml"
       ],
       "local_only_count": 1,
       "local_only_sample": [
-        "Verify::hack/jenkins/verify-dockerized.sh"
+        "Typecheck::verify WHAT=typecheck"
       ],
       "local_test_count": 1,
-      "reference_job_name": "pull-kubernetes-verify",
+      "reference_job_name": "pull-kubernetes-typecheck",
       "reference_kubernetes_base_sha": "d244fad12002f3e85ed6d3ee9ad6664d154e5d04",
       "reference_matches_kubernetes_sha": false,
       "reference_pr_number": 141307,
       "reference_pr_updated_at": "2026-08-13T05:47:05Z",
-      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/141307/pull-kubernetes-verify/2087363893063061504",
+      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/141307/pull-kubernetes-typecheck/2087363892232589312",
       "reference_selection": "recent-success",
-      "reference_started_at": "2026-08-12T02:56:23Z",
+      "reference_started_at": "2026-08-12T02:24:03Z",
       "reference_started_json": {
         "pull": "141307",
         "repo-commit": "ac30732c78941d1a3360f70b69a3400c3a67b06d",
@@ -77,37 +77,18 @@
         "repos": {
           "kubernetes/kubernetes": "master:d244fad12002f3e85ed6d3ee9ad6664d154e5d04,141307:88b592f6772ff2445cf96912dfeb758870facde9"
         },
-        "timestamp": 1786501614
+        "timestamp": 1786501340
       },
-      "upstream_only_count": 45,
+      "upstream_only_count": 1,
       "upstream_only_sample": [
-        "verify::api-groups",
-        "verify::boilerplate",
-        "verify::cli-conventions",
-        "verify::codegen",
-        "verify::conformance-requirements",
-        "verify::conformance-yaml",
-        "verify::deadcode-elimination",
-        "verify::description",
-        "verify::e2e-images",
-        "verify::e2e-test-ownership",
-        "verify::featuregates",
-        "verify::fieldname-docs",
-        "verify::file-sizes",
-        "verify::flags-underscore",
-        "verify::generated-docs",
-        "verify::generated-stable-metrics",
-        "verify::go-apidocs",
-        "verify::gofmt",
-        "verify::golangci-lint",
-        "verify::golangci-lint-config"
+        "verify::typecheck"
       ],
-      "upstream_test_count": 45
+      "upstream_test_count": 1
     },
-    "upstream_testgrid_url": "https://testgrid.k8s.io/presubmits-kubernetes-blocking#pull-kubernetes-verify",
-    "workflow_file": ".github/workflows/verify.yml",
-    "workflow_name": "Verify",
-    "workflow_slug": "verify"
+    "upstream_testgrid_url": "https://testgrid.k8s.io/presubmits-kubernetes-blocking#pull-kubernetes-typecheck",
+    "workflow_file": ".github/workflows/typecheck.yml",
+    "workflow_name": "Typecheck",
+    "workflow_slug": "typecheck"
   },
   "suites": [
     {
@@ -117,8 +98,8 @@
       "passed": 0,
       "skipped": 1,
       "source": "synthetic",
-      "suite": "Verify",
-      "suite_slug": "verify",
+      "suite": "Typecheck",
+      "suite_slug": "typecheck",
       "tests": 1,
       "unknown": 0
     }
@@ -134,16 +115,16 @@
   },
   "tests": [
     {
-      "classname": "Verify",
+      "classname": "Typecheck",
       "duration_seconds": 0.0,
       "failure_text": "",
-      "name": "hack/jenkins/verify-dockerized.sh",
-      "name_slug": "hack-jenkins-verify-dockerized-sh",
+      "name": "verify WHAT=typecheck",
+      "name_slug": "verify-what-typecheck",
       "owner_hint": "synthetic",
       "source": "synthetic",
       "status": "skipped",
-      "suite": "Verify",
-      "suite_slug": "verify"
+      "suite": "Typecheck",
+      "suite_slug": "typecheck"
     }
   ]
 }
