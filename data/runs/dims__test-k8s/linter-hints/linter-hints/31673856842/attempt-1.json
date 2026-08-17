@@ -53,37 +53,8 @@
     "schema_version": 1,
     "started_at": "2026-08-13T06:26:49Z",
     "upstream_comparison": {
-      "inventory_parity_status": "mismatch",
-      "junit_files": [
-        "pr-logs/pull/141107/pull-kubernetes-linter-hints/2083719465584824320/artifacts/junit_verify.xml"
-      ],
-      "local_only_count": 1,
-      "local_only_sample": [
-        "Linter Hints::verify WHAT=golangci-lint-pr-hints"
-      ],
-      "local_test_count": 1,
-      "reference_job_name": "pull-kubernetes-linter-hints",
-      "reference_kubernetes_base_sha": "a818af18fe29d999d6741234c8cd72709ef2f424",
-      "reference_matches_kubernetes_sha": false,
-      "reference_pr_number": 141107,
-      "reference_pr_updated_at": "2026-08-17T18:08:17Z",
-      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/141107/pull-kubernetes-linter-hints/2083719465584824320",
-      "reference_selection": "recent-success",
-      "reference_started_at": "2026-08-02T01:11:51Z",
-      "reference_started_json": {
-        "pull": "141107",
-        "repo-commit": "ed37de098273522c7690fec53e00d7152961a593",
-        "repo-version": "ed37de098273522c7690fec53e00d7152961a593",
-        "repos": {
-          "kubernetes/kubernetes": "master:a818af18fe29d999d6741234c8cd72709ef2f424,141107:9957fd222328f28572091692402f79b3cad99670"
-        },
-        "timestamp": 1785632440
-      },
-      "upstream_only_count": 1,
-      "upstream_only_sample": [
-        "verify::golangci-lint-pr-hints"
-      ],
-      "upstream_test_count": 1
+      "error": "command failed: gh pr list --repo kubernetes/kubernetes --state all --search sort:updated-desc --limit 50 --json number,updatedAt,statusCheckRollup\nstdout:\n\nstderr:\nnon-200 OK status code: 503 Service Unavailable body: \"{\\\"message\\\": \\\"No server is currently available to service your request. Sorry about that. Please try resubmitting your request and contact us if the problem persists.\\\"}\\r\\n\"\n",
+      "inventory_parity_status": "upstream-reference-error"
     },
     "upstream_testgrid_url": "https://testgrid.k8s.io/presubmits-kubernetes-blocking#pull-kubernetes-linter-hints",
     "workflow_file": ".github/workflows/linter-hints.yml",

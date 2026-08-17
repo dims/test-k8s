@@ -53,56 +53,8 @@
     "schema_version": 1,
     "started_at": "2026-08-16T00:11:04Z",
     "upstream_comparison": {
-      "inventory_parity_status": "mismatch",
-      "junit_files": [
-        "pr-logs/pull/140557/pull-kubernetes-verify/2089387701332611072/artifacts/junit_verify.xml"
-      ],
-      "local_only_count": 1,
-      "local_only_sample": [
-        "Verify::hack/jenkins/verify-dockerized.sh"
-      ],
-      "local_test_count": 1,
-      "reference_job_name": "pull-kubernetes-verify",
-      "reference_kubernetes_base_sha": "e460e27c50dd60b417e281591565fc5a25119b04",
-      "reference_matches_kubernetes_sha": false,
-      "reference_pr_number": 140557,
-      "reference_pr_updated_at": "2026-08-17T18:10:09Z",
-      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/140557/pull-kubernetes-verify/2089387701332611072",
-      "reference_selection": "recent-success",
-      "reference_started_at": "2026-08-17T16:50:42Z",
-      "reference_started_json": {
-        "pull": "140557",
-        "repo-commit": "f36da4e72f8793d7cc9b285a06f888d0c0f43a4c",
-        "repo-version": "f36da4e72f8793d7cc9b285a06f888d0c0f43a4c",
-        "repos": {
-          "kubernetes/kubernetes": "release-1.36:e460e27c50dd60b417e281591565fc5a25119b04,140557:737926ac0eedb15e4fa07c79ecb0c7d6ba2c7b0b"
-        },
-        "timestamp": 1786984064
-      },
-      "upstream_only_count": 42,
-      "upstream_only_sample": [
-        "verify::api-groups",
-        "verify::boilerplate",
-        "verify::cli-conventions",
-        "verify::codegen",
-        "verify::conformance-requirements",
-        "verify::conformance-yaml",
-        "verify::deadcode-elimination",
-        "verify::description",
-        "verify::e2e-images",
-        "verify::e2e-test-ownership",
-        "verify::featuregates",
-        "verify::fieldname-docs",
-        "verify::file-sizes",
-        "verify::flags-underscore",
-        "verify::generated-docs",
-        "verify::generated-stable-metrics",
-        "verify::gofmt",
-        "verify::golangci-lint",
-        "verify::golangci-lint-config",
-        "verify::govulncheck"
-      ],
-      "upstream_test_count": 42
+      "error": "command failed: gh pr list --repo kubernetes/kubernetes --state all --search sort:updated-desc --limit 50 --json number,updatedAt,statusCheckRollup\nstdout:\n\nstderr:\nnon-200 OK status code: 503 Service Unavailable body: \"{\\\"message\\\": \\\"No server is currently available to service your request. Sorry about that. Please try resubmitting your request and contact us if the problem persists.\\\"}\\r\\n\"\n",
+      "inventory_parity_status": "upstream-reference-error"
     },
     "upstream_testgrid_url": "https://testgrid.k8s.io/presubmits-kubernetes-blocking#pull-kubernetes-verify",
     "workflow_file": ".github/workflows/verify.yml",

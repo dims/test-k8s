@@ -53,37 +53,8 @@
     "schema_version": 1,
     "started_at": "2026-08-14T00:10:47Z",
     "upstream_comparison": {
-      "inventory_parity_status": "mismatch",
-      "junit_files": [
-        "pr-logs/pull/140557/pull-kubernetes-typecheck/2089387700502138880/artifacts/junit_verify.xml"
-      ],
-      "local_only_count": 1,
-      "local_only_sample": [
-        "Typecheck::verify WHAT=typecheck"
-      ],
-      "local_test_count": 1,
-      "reference_job_name": "pull-kubernetes-typecheck",
-      "reference_kubernetes_base_sha": "e460e27c50dd60b417e281591565fc5a25119b04",
-      "reference_matches_kubernetes_sha": false,
-      "reference_pr_number": 140557,
-      "reference_pr_updated_at": "2026-08-17T18:10:09Z",
-      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/140557/pull-kubernetes-typecheck/2089387700502138880",
-      "reference_selection": "recent-success",
-      "reference_started_at": "2026-08-17T16:27:03Z",
-      "reference_started_json": {
-        "pull": "140557",
-        "repo-commit": "f36da4e72f8793d7cc9b285a06f888d0c0f43a4c",
-        "repo-version": "f36da4e72f8793d7cc9b285a06f888d0c0f43a4c",
-        "repos": {
-          "kubernetes/kubernetes": "release-1.36:e460e27c50dd60b417e281591565fc5a25119b04,140557:737926ac0eedb15e4fa07c79ecb0c7d6ba2c7b0b"
-        },
-        "timestamp": 1786983883
-      },
-      "upstream_only_count": 1,
-      "upstream_only_sample": [
-        "verify::typecheck"
-      ],
-      "upstream_test_count": 1
+      "error": "command failed: gh pr list --repo kubernetes/kubernetes --state all --search sort:updated-desc --limit 50 --json number,updatedAt,statusCheckRollup\nstdout:\n\nstderr:\nnon-200 OK status code: 503 Service Unavailable body: \"{\\\"message\\\": \\\"No server is currently available to service your request. Sorry about that. Please try resubmitting your request and contact us if the problem persists.\\\"}\\r\\n\"\n",
+      "inventory_parity_status": "upstream-reference-error"
     },
     "upstream_testgrid_url": "https://testgrid.k8s.io/presubmits-kubernetes-blocking#pull-kubernetes-typecheck",
     "workflow_file": ".github/workflows/typecheck.yml",

@@ -53,20 +53,8 @@
     "schema_version": 1,
     "started_at": "2026-08-14T00:22:41Z",
     "upstream_comparison": {
-      "inventory_parity_status": "local-tests-missing",
-      "junit_files": [
-        "pr-logs/pull/140557/pull-kubernetes-conformance-kind-ga-only-parallel/2089387699583586304/artifacts/junit_01.xml"
-      ],
-      "local_test_count": 0,
-      "reference_job_name": "pull-kubernetes-conformance-kind-ga-only-parallel",
-      "reference_kubernetes_base_sha": "e460e27c50dd60b417e281591565fc5a25119b04",
-      "reference_matches_kubernetes_sha": false,
-      "reference_pr_number": 140557,
-      "reference_pr_updated_at": "2026-08-17T18:10:09Z",
-      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/140557/pull-kubernetes-conformance-kind-ga-only-parallel/2089387699583586304",
-      "reference_selection": "recent-success",
-      "reference_started_at": "2026-08-17T16:45:27Z",
-      "upstream_test_count": 7578
+      "error": "command failed: gh pr list --repo kubernetes/kubernetes --state all --search sort:updated-desc --limit 50 --json number,updatedAt,statusCheckRollup\nstdout:\n\nstderr:\nnon-200 OK status code: 503 Service Unavailable body: \"{\\\"message\\\": \\\"No server is currently available to service your request. Sorry about that. Please try resubmitting your request and contact us if the problem persists.\\\"}\\r\\n\"\n",
+      "inventory_parity_status": "upstream-reference-error"
     },
     "upstream_testgrid_url": "https://testgrid.k8s.io/presubmits-kubernetes-blocking#pull-kubernetes-conformance-kind-ga-only-parallel",
     "workflow_file": ".github/workflows/conformance-kind.yml",
