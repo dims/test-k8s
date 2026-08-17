@@ -53,8 +53,20 @@
     "schema_version": 1,
     "started_at": "2026-08-16T18:06:27Z",
     "upstream_comparison": {
-      "error": "command failed: gh pr list --repo kubernetes/kubernetes --state all --search sort:updated-desc --limit 50 --json number,updatedAt,statusCheckRollup\nstdout:\n\nstderr:\nnon-200 OK status code: 503 Service Unavailable body: \"{\\\"message\\\": \\\"No server is currently available to service your request. Sorry about that. Please try resubmitting your request and contact us if the problem persists.\\\"}\\r\\n\"\n",
-      "inventory_parity_status": "upstream-reference-error"
+      "inventory_parity_status": "local-tests-missing",
+      "junit_files": [
+        "pr-logs/pull/140480/pull-kubernetes-integration/2085524142018269184/artifacts/junit_20260807-003200.xml"
+      ],
+      "local_test_count": 0,
+      "reference_job_name": "pull-kubernetes-integration",
+      "reference_kubernetes_base_sha": "b882c60b4023bdf09264c2d5d30a2cadebc240fb",
+      "reference_matches_kubernetes_sha": false,
+      "reference_pr_number": 140480,
+      "reference_pr_updated_at": "2026-08-17T20:27:29Z",
+      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/140480/pull-kubernetes-integration/2085524142018269184",
+      "reference_selection": "recent-success",
+      "reference_started_at": "2026-08-07T01:02:59Z",
+      "upstream_test_count": 131
     },
     "upstream_testgrid_url": "https://testgrid.k8s.io/presubmits-kubernetes-blocking#pull-kubernetes-integration",
     "workflow_file": ".github/workflows/integration.yml",

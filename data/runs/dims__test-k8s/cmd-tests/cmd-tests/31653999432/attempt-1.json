@@ -53,8 +53,56 @@
     "schema_version": 1,
     "started_at": "2026-08-13T00:18:57Z",
     "upstream_comparison": {
-      "error": "command failed: gh pr list --repo kubernetes/kubernetes --state all --search sort:updated-desc --limit 50 --json number,updatedAt,statusCheckRollup\nstdout:\n\nstderr:\nnon-200 OK status code: 503 Service Unavailable body: \"{\\\"message\\\": \\\"No server is currently available to service your request. Sorry about that. Please try resubmitting your request and contact us if the problem persists.\\\"}\\r\\n\"\n",
-      "inventory_parity_status": "upstream-reference-error"
+      "inventory_parity_status": "mismatch",
+      "junit_files": [
+        "pr-logs/pull/140480/pull-kubernetes-cmd/2085524141686919168/artifacts/junit_test-cmd.xml"
+      ],
+      "local_only_count": 1,
+      "local_only_sample": [
+        "Cmd Tests::hack/jenkins/test-cmd-dockerized.sh"
+      ],
+      "local_test_count": 1,
+      "reference_job_name": "pull-kubernetes-cmd",
+      "reference_kubernetes_base_sha": "b882c60b4023bdf09264c2d5d30a2cadebc240fb",
+      "reference_matches_kubernetes_sha": false,
+      "reference_pr_number": 140480,
+      "reference_pr_updated_at": "2026-08-17T20:27:29Z",
+      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/140480/pull-kubernetes-cmd/2085524141686919168",
+      "reference_selection": "recent-success",
+      "reference_started_at": "2026-08-07T00:40:47Z",
+      "reference_started_json": {
+        "pull": "140480",
+        "repo-commit": "55e10579b50baa5e1e0faf3250a0e0c00009ae52",
+        "repo-version": "55e10579b50baa5e1e0faf3250a0e0c00009ae52",
+        "repos": {
+          "kubernetes/kubernetes": "master:b882c60b4023bdf09264c2d5d30a2cadebc240fb,140480:db90992a0fb959b60c3d43470864e29cc3010ac2"
+        },
+        "timestamp": 1786062708
+      },
+      "upstream_only_count": 92,
+      "upstream_only_sample": [
+        "test-cmd::run_RESTMapper_evaluation_tests",
+        "test-cmd::run_ambiguous_shortname_tests",
+        "test-cmd::run_assert_categories_tests",
+        "test-cmd::run_assert_short_name_tests",
+        "test-cmd::run_assert_singular_name_tests",
+        "test-cmd::run_authorization_tests",
+        "test-cmd::run_certificates_tests",
+        "test-cmd::run_client_config_tests",
+        "test-cmd::run_cluster_management_tests",
+        "test-cmd::run_clusterroles_tests",
+        "test-cmd::run_configmap_tests",
+        "test-cmd::run_convert_tests",
+        "test-cmd::run_crd_deletion_recreation_tests",
+        "test-cmd::run_crd_tests",
+        "test-cmd::run_create_job_tests",
+        "test-cmd::run_create_secret_tests",
+        "test-cmd::run_daemonset_history_tests",
+        "test-cmd::run_daemonset_tests",
+        "test-cmd::run_deployment_tests",
+        "test-cmd::run_deprecated_api_tests"
+      ],
+      "upstream_test_count": 92
     },
     "upstream_testgrid_url": "https://testgrid.k8s.io/presubmits-kubernetes-blocking#pull-kubernetes-cmd",
     "workflow_file": ".github/workflows/cmd-tests.yml",
