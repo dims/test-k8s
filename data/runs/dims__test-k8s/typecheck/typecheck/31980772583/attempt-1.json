@@ -17,9 +17,9 @@
       "build_log": null,
       "junit_files": []
     },
-    "collected_at": "2026-08-12T00:18:50Z",
+    "collected_at": "2026-08-17T00:04:38Z",
     "comparison_required": true,
-    "completed_at": "2026-08-12T00:18:55Z",
+    "completed_at": "2026-08-17T00:04:43Z",
     "containerd_ref": null,
     "containerd_repo": null,
     "containerd_sha": null,
@@ -30,65 +30,65 @@
       "result_source": "synthetic-fallback",
       "synthetic_cases": false
     },
-    "display_order": 130,
-    "duration_seconds": 280,
+    "display_order": 140,
+    "duration_seconds": 190,
     "event": "schedule",
     "github_ref": "main",
     "github_sha": "69c4cbe8607a92e2dce850a18e5887199c43de38",
-    "html_url": "https://github.com/dims/test-k8s/actions/runs/31549479092",
-    "job_id": "linter-hints",
-    "job_name": "Linter Hints",
-    "job_slug": "linter-hints",
+    "html_url": "https://github.com/dims/test-k8s/actions/runs/31980772583",
+    "job_id": "typecheck",
+    "job_name": "Typecheck",
+    "job_slug": "typecheck",
     "kubernetes_ref": null,
     "kubernetes_repo": null,
     "kubernetes_sha": null,
-    "mirrored_prow_job": "pull-kubernetes-linter-hints",
+    "mirrored_prow_job": "pull-kubernetes-typecheck",
     "repo": "dims/test-k8s",
     "repo_slug": "dims__test-k8s",
-    "result": "success",
+    "result": "failure",
     "run_attempt": 1,
-    "run_id": 31549479092,
-    "runner_label": "GitHub Actions 1000059389",
-    "runner_name": "GitHub Actions 1000059389",
+    "run_id": 31980772583,
+    "runner_label": "GitHub Actions 1000061745",
+    "runner_name": "GitHub Actions 1000061745",
     "schema_version": 1,
-    "started_at": "2026-08-12T00:14:15Z",
+    "started_at": "2026-08-17T00:01:33Z",
     "upstream_comparison": {
       "inventory_parity_status": "mismatch",
       "junit_files": [
-        "pr-logs/pull/141003/pull-kubernetes-linter-hints/2082181745062449152/artifacts/junit_verify.xml"
+        "pr-logs/pull/141003/pull-kubernetes-typecheck/2089053126169464832/artifacts/junit_verify.xml"
       ],
       "local_only_count": 1,
       "local_only_sample": [
-        "Linter Hints::verify WHAT=golangci-lint-pr-hints"
+        "Typecheck::verify WHAT=typecheck"
       ],
       "local_test_count": 1,
-      "reference_job_name": "pull-kubernetes-linter-hints",
-      "reference_kubernetes_base_sha": "28e0796fbff241014469bcd3f1ebfc420d0b576b",
+      "reference_job_name": "pull-kubernetes-typecheck",
+      "reference_kubernetes_base_sha": "7fad80f1cca5e0aabde84497b7f068e8d576afa3",
       "reference_matches_kubernetes_sha": false,
       "reference_pr_number": 141003,
       "reference_pr_updated_at": "2026-08-16T18:46:25Z",
-      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/141003/pull-kubernetes-linter-hints/2082181745062449152",
+      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/141003/pull-kubernetes-typecheck/2089053126169464832",
       "reference_selection": "recent-success",
-      "reference_started_at": "2026-07-28T19:18:27Z",
+      "reference_started_at": "2026-08-16T18:16:07Z",
       "reference_started_json": {
         "pull": "141003",
-        "repo-commit": "7c0d435fa21971f5dd15fb36f87ef1362c121f92",
-        "repo-version": "7c0d435fa21971f5dd15fb36f87ef1362c121f92",
+        "repo-commit": "18d6561d4b782ed9d1369eaea2108c2042ce2e35",
+        "repo-version": "18d6561d4b782ed9d1369eaea2108c2042ce2e35",
         "repos": {
-          "kubernetes/kubernetes": "release-1.35:28e0796fbff241014469bcd3f1ebfc420d0b576b,141003:bd79e93fc70a4d724fd40d2291e02b69a81c60c3"
+          "kubernetes/kubernetes": "release-1.35:7fad80f1cca5e0aabde84497b7f068e8d576afa3,141003:bd79e93fc70a4d724fd40d2291e02b69a81c60c3"
         },
-        "timestamp": 1785265815
+        "timestamp": 1786904082
       },
       "upstream_only_count": 1,
       "upstream_only_sample": [
-        "verify::golangci-lint-pr-hints"
+        "verify::typecheck"
       ],
       "upstream_test_count": 1
     },
-    "upstream_testgrid_url": "https://testgrid.k8s.io/presubmits-kubernetes-blocking#pull-kubernetes-linter-hints",
-    "workflow_file": ".github/workflows/linter-hints.yml",
-    "workflow_name": "Linter Hints",
-    "workflow_slug": "linter-hints"
+    "upstream_testgrid_url": "https://testgrid.k8s.io/presubmits-kubernetes-blocking#pull-kubernetes-typecheck",
+    "workflow_file": ".github/workflows/typecheck.yml",
+    "workflow_name": "Typecheck",
+    "workflow_slug": "typecheck"
   },
   "suites": [
     {
@@ -98,8 +98,8 @@
       "passed": 0,
       "skipped": 1,
       "source": "synthetic",
-      "suite": "Linter Hints",
-      "suite_slug": "linter-hints",
+      "suite": "Typecheck",
+      "suite_slug": "typecheck",
       "tests": 1,
       "unknown": 0
     }
@@ -115,16 +115,16 @@
   },
   "tests": [
     {
-      "classname": "Linter Hints",
+      "classname": "Typecheck",
       "duration_seconds": 0.0,
       "failure_text": "",
-      "name": "verify WHAT=golangci-lint-pr-hints",
-      "name_slug": "verify-what-golangci-lint-pr-hints",
+      "name": "verify WHAT=typecheck",
+      "name_slug": "verify-what-typecheck",
       "owner_hint": "synthetic",
       "source": "synthetic",
       "status": "skipped",
-      "suite": "Linter Hints",
-      "suite_slug": "linter-hints"
+      "suite": "Typecheck",
+      "suite_slug": "typecheck"
     }
   ]
 }
