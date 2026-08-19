@@ -53,17 +53,37 @@
     "schema_version": 1,
     "started_at": "2026-08-14T18:15:46Z",
     "upstream_comparison": {
-      "inventory_parity_status": "upstream-tests-missing",
+      "inventory_parity_status": "mismatch",
+      "junit_files": [
+        "pr-logs/pull/141412/pull-kubernetes-linter-hints/2089626068011978752/artifacts/junit_verify.xml"
+      ],
+      "local_only_count": 1,
+      "local_only_sample": [
+        "Linter Hints::verify WHAT=golangci-lint-pr-hints"
+      ],
       "local_test_count": 1,
       "reference_job_name": "pull-kubernetes-linter-hints",
-      "reference_kubernetes_base_sha": null,
+      "reference_kubernetes_base_sha": "c44d2a82ef7f87c8b4278cd13af0a55614ed2a53",
       "reference_matches_kubernetes_sha": false,
-      "reference_pr_number": 137389,
-      "reference_pr_updated_at": "2026-08-19T05:58:03Z",
-      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/137389/pull-kubernetes-linter-hints/2029038795885645824",
+      "reference_pr_number": 141412,
+      "reference_pr_updated_at": "2026-08-19T06:17:33Z",
+      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/141412/pull-kubernetes-linter-hints/2089626068011978752",
       "reference_selection": "recent-success",
-      "reference_started_at": "2026-03-04T03:58:54Z",
-      "upstream_test_count": 0
+      "reference_started_at": "2026-08-18T08:22:40Z",
+      "reference_started_json": {
+        "pull": "141412",
+        "repo-commit": "6ed1c2e948554f46a72cafcc4a61d4d062b58dd6",
+        "repo-version": "6ed1c2e948554f46a72cafcc4a61d4d062b58dd6",
+        "repos": {
+          "kubernetes/kubernetes": "master:c44d2a82ef7f87c8b4278cd13af0a55614ed2a53,141412:09bd69013526e3180c1fe446b3b6e88ee0d04760"
+        },
+        "timestamp": 1787040686
+      },
+      "upstream_only_count": 1,
+      "upstream_only_sample": [
+        "verify::golangci-lint-pr-hints"
+      ],
+      "upstream_test_count": 1
     },
     "upstream_testgrid_url": "https://testgrid.k8s.io/presubmits-kubernetes-blocking#pull-kubernetes-linter-hints",
     "workflow_file": ".github/workflows/linter-hints.yml",
