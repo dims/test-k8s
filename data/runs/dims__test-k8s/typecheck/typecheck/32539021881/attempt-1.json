@@ -17,9 +17,9 @@
       "build_log": null,
       "junit_files": []
     },
-    "collected_at": "2026-08-17T00:04:38Z",
+    "collected_at": "2026-08-22T00:05:50Z",
     "comparison_required": true,
-    "completed_at": "2026-08-17T00:04:43Z",
+    "completed_at": "2026-08-22T00:05:56Z",
     "containerd_ref": null,
     "containerd_repo": null,
     "containerd_sha": null,
@@ -31,11 +31,11 @@
       "synthetic_cases": false
     },
     "display_order": 140,
-    "duration_seconds": 190,
+    "duration_seconds": 194,
     "event": "schedule",
     "github_ref": "main",
     "github_sha": "69c4cbe8607a92e2dce850a18e5887199c43de38",
-    "html_url": "https://github.com/dims/test-k8s/actions/runs/31980772583",
+    "html_url": "https://github.com/dims/test-k8s/actions/runs/32539021881",
     "job_id": "typecheck",
     "job_name": "Typecheck",
     "job_slug": "typecheck",
@@ -47,23 +47,43 @@
     "repo_slug": "dims__test-k8s",
     "result": "failure",
     "run_attempt": 1,
-    "run_id": 31980772583,
-    "runner_label": "GitHub Actions 1000061745",
-    "runner_name": "GitHub Actions 1000061745",
+    "run_id": 32539021881,
+    "runner_label": "GitHub Actions 1000063972",
+    "runner_name": "GitHub Actions 1000063972",
     "schema_version": 1,
-    "started_at": "2026-08-17T00:01:33Z",
+    "started_at": "2026-08-22T00:02:42Z",
     "upstream_comparison": {
-      "inventory_parity_status": "upstream-tests-missing",
+      "inventory_parity_status": "mismatch",
+      "junit_files": [
+        "pr-logs/pull/141375/pull-kubernetes-typecheck/2090188254832758784/artifacts/junit_verify.xml"
+      ],
+      "local_only_count": 1,
+      "local_only_sample": [
+        "Typecheck::verify WHAT=typecheck"
+      ],
       "local_test_count": 1,
       "reference_job_name": "pull-kubernetes-typecheck",
-      "reference_kubernetes_base_sha": null,
+      "reference_kubernetes_base_sha": "2220c3853a2402ffc0502995c49b383f84ae8ceb",
       "reference_matches_kubernetes_sha": false,
-      "reference_pr_number": 132342,
-      "reference_pr_updated_at": "2026-08-21T20:03:43Z",
-      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/132342/pull-kubernetes-typecheck/1943437703223709696",
+      "reference_pr_number": 141375,
+      "reference_pr_updated_at": "2026-08-21T23:21:01Z",
+      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/141375/pull-kubernetes-typecheck/2090188254832758784",
       "reference_selection": "recent-success",
-      "reference_started_at": "2025-07-10T22:36:54Z",
-      "upstream_test_count": 0
+      "reference_started_at": "2026-08-19T21:27:15Z",
+      "reference_started_json": {
+        "pull": "141375",
+        "repo-commit": "0eca506fe9c8e87d6f67bb298c093d7dfb6b9ddd",
+        "repo-version": "0eca506fe9c8e87d6f67bb298c093d7dfb6b9ddd",
+        "repos": {
+          "kubernetes/kubernetes": "master:2220c3853a2402ffc0502995c49b383f84ae8ceb,141375:f42fb4bb309b3d2c3758eac0cfd34c60a628e2dc"
+        },
+        "timestamp": 1787174722
+      },
+      "upstream_only_count": 1,
+      "upstream_only_sample": [
+        "verify::typecheck"
+      ],
+      "upstream_test_count": 1
     },
     "upstream_testgrid_url": "https://testgrid.k8s.io/presubmits-kubernetes-blocking#pull-kubernetes-typecheck",
     "workflow_file": ".github/workflows/typecheck.yml",
