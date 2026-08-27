@@ -17,9 +17,9 @@
       "build_log": null,
       "junit_files": []
     },
-    "collected_at": "2026-08-25T06:06:41Z",
+    "collected_at": "2026-08-27T01:26:15Z",
     "comparison_required": true,
-    "completed_at": "2026-08-25T06:06:47Z",
+    "completed_at": "2026-08-27T01:26:20Z",
     "containerd_ref": null,
     "containerd_repo": null,
     "containerd_sha": null,
@@ -30,46 +30,46 @@
       "result_source": "synthetic-fallback",
       "synthetic_cases": false
     },
-    "display_order": 140,
-    "duration_seconds": 128,
+    "display_order": 160,
+    "duration_seconds": 184,
     "event": "schedule",
     "github_ref": "main",
     "github_sha": "69c4cbe8607a92e2dce850a18e5887199c43de38",
-    "html_url": "https://github.com/dims/test-k8s/actions/runs/32815400692",
-    "job_id": "typecheck",
-    "job_name": "Typecheck",
-    "job_slug": "typecheck",
+    "html_url": "https://github.com/dims/test-k8s/actions/runs/33029928655",
+    "job_id": "cmd",
+    "job_name": "Cmd Tests",
+    "job_slug": "cmd-tests",
     "kubernetes_ref": null,
     "kubernetes_repo": null,
     "kubernetes_sha": null,
-    "mirrored_prow_job": "pull-kubernetes-typecheck",
+    "mirrored_prow_job": "pull-kubernetes-cmd",
     "repo": "dims/test-k8s",
     "repo_slug": "dims__test-k8s",
     "result": "failure",
     "run_attempt": 1,
-    "run_id": 32815400692,
-    "runner_label": "GitHub Actions 1000065336",
-    "runner_name": "GitHub Actions 1000065336",
+    "run_id": 33029928655,
+    "runner_label": "GitHub Actions 1000065972",
+    "runner_name": "GitHub Actions 1000065972",
     "schema_version": 1,
-    "started_at": "2026-08-25T06:04:39Z",
+    "started_at": "2026-08-27T01:23:16Z",
     "upstream_comparison": {
       "inventory_parity_status": "mismatch",
       "junit_files": [
-        "pr-logs/pull/141172/pull-kubernetes-typecheck/2092780625269362688/artifacts/junit_verify.xml"
+        "pr-logs/pull/141172/pull-kubernetes-cmd/2092780624292089856/artifacts/junit_test-cmd.xml"
       ],
       "local_only_count": 1,
       "local_only_sample": [
-        "Typecheck::verify WHAT=typecheck"
+        "Cmd Tests::hack/jenkins/test-cmd-dockerized.sh"
       ],
       "local_test_count": 1,
-      "reference_job_name": "pull-kubernetes-typecheck",
+      "reference_job_name": "pull-kubernetes-cmd",
       "reference_kubernetes_base_sha": "53d286b8d0e5e424b880567a1efda9c7effe09f4",
       "reference_matches_kubernetes_sha": false,
       "reference_pr_number": 141172,
       "reference_pr_updated_at": "2026-08-27T01:34:58Z",
-      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/141172/pull-kubernetes-typecheck/2092780625269362688",
+      "reference_run_url": "https://prow.k8s.io/view/gs/kubernetes-ci-logs/pr-logs/pull/141172/pull-kubernetes-cmd/2092780624292089856",
       "reference_selection": "recent-success",
-      "reference_started_at": "2026-08-27T01:08:19Z",
+      "reference_started_at": "2026-08-27T01:15:33Z",
       "reference_started_json": {
         "pull": "141172",
         "repo-commit": "c80e7bcec88705ebca68117a46ef9f6e066a3ece",
@@ -79,16 +79,35 @@
         },
         "timestamp": 1787792790
       },
-      "upstream_only_count": 1,
+      "upstream_only_count": 92,
       "upstream_only_sample": [
-        "verify::typecheck"
+        "test-cmd::run_RESTMapper_evaluation_tests",
+        "test-cmd::run_ambiguous_shortname_tests",
+        "test-cmd::run_assert_categories_tests",
+        "test-cmd::run_assert_short_name_tests",
+        "test-cmd::run_assert_singular_name_tests",
+        "test-cmd::run_authorization_tests",
+        "test-cmd::run_certificates_tests",
+        "test-cmd::run_client_config_tests",
+        "test-cmd::run_cluster_management_tests",
+        "test-cmd::run_clusterroles_tests",
+        "test-cmd::run_configmap_tests",
+        "test-cmd::run_convert_tests",
+        "test-cmd::run_crd_deletion_recreation_tests",
+        "test-cmd::run_crd_tests",
+        "test-cmd::run_create_job_tests",
+        "test-cmd::run_create_secret_tests",
+        "test-cmd::run_daemonset_history_tests",
+        "test-cmd::run_daemonset_tests",
+        "test-cmd::run_deployment_tests",
+        "test-cmd::run_deprecated_api_tests"
       ],
-      "upstream_test_count": 1
+      "upstream_test_count": 92
     },
-    "upstream_testgrid_url": "https://testgrid.k8s.io/presubmits-kubernetes-blocking#pull-kubernetes-typecheck",
-    "workflow_file": ".github/workflows/typecheck.yml",
-    "workflow_name": "Typecheck",
-    "workflow_slug": "typecheck"
+    "upstream_testgrid_url": "https://testgrid.k8s.io/presubmits-kubernetes-blocking#pull-kubernetes-cmd",
+    "workflow_file": ".github/workflows/cmd-tests.yml",
+    "workflow_name": "Cmd Tests",
+    "workflow_slug": "cmd-tests"
   },
   "suites": [
     {
@@ -98,8 +117,8 @@
       "passed": 0,
       "skipped": 1,
       "source": "synthetic",
-      "suite": "Typecheck",
-      "suite_slug": "typecheck",
+      "suite": "Cmd Tests",
+      "suite_slug": "cmd-tests",
       "tests": 1,
       "unknown": 0
     }
@@ -115,16 +134,16 @@
   },
   "tests": [
     {
-      "classname": "Typecheck",
+      "classname": "Cmd Tests",
       "duration_seconds": 0.0,
       "failure_text": "",
-      "name": "verify WHAT=typecheck",
-      "name_slug": "verify-what-typecheck",
+      "name": "hack/jenkins/test-cmd-dockerized.sh",
+      "name_slug": "hack-jenkins-test-cmd-dockerized-sh",
       "owner_hint": "synthetic",
       "source": "synthetic",
       "status": "skipped",
-      "suite": "Typecheck",
-      "suite_slug": "typecheck"
+      "suite": "Cmd Tests",
+      "suite_slug": "cmd-tests"
     }
   ]
 }
